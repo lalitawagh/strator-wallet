@@ -1,0 +1,13 @@
+{
+    "name": "LedgerFoundation",
+    "alias": "ledger-foundation",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Riteserve\\LedgerFoundation\\LedgerFoundationServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

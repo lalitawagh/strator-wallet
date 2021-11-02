@@ -1,0 +1,46 @@
+{
+    "name": "riteserve/ledger-foundation",
+    "description": "This is my package Cms",
+    "keywords": [
+        "riteserve",
+        "laravel",
+        "ledger-foundation"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Riteserve",
+            "email": "team@riteserve.co",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Riteserve\\LedgerFoundation\\": "src",
+            "Riteserve\\LedgerFoundation\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Riteserve\\LedgerFoundation\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "psalm": "vendor/bin/psalm",
+        "test": "./vendor/bin/testbench package:test --parallel --no-coverage",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Riteserve\\LedgerFoundation\\LedgerFoundationServiceProvider"
+            ]
+
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
