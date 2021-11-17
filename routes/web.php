@@ -12,7 +12,6 @@ use Riteserve\LedgerFoundation\Http\Controllers\Wallet\PayoutController;
 use Riteserve\LedgerFoundation\Http\Controllers\Wallet\ReceiveController;
 use Riteserve\LedgerFoundation\Http\Controllers\Wallet\TransactionController;
 use Riteserve\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
