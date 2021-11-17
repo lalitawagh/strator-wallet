@@ -3,6 +3,11 @@ use Illuminate\Support\Facades\Route;
 use Riteserve\LedgerFoundation\Http\Controllers\LedgerFoundationController;
 use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\AssetClassController;
 use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\AssetTypeController;
+<<<<<<< Updated upstream
+=======
+use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\CommodityTypeController;
+use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\LedgerController;
+>>>>>>> Stashed changes
 use Riteserve\LedgerFoundation\Http\Controllers\Wallet\DepositController;
 use Riteserve\LedgerFoundation\Http\Controllers\Wallet\DisputeController;
 use Riteserve\LedgerFoundation\Http\Controllers\Wallet\ExchangeController;
@@ -25,6 +30,9 @@ use Riteserve\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
 Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/ledger-foundation','as'=>'dashboard.ledger-foundation.'],function()  {
     Route::get('/', [LedgerFoundationController::class,'index']);
     Route::resource("asset-class",AssetClassController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
+    Route::resource('asset-type', AssetTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
+    Route::resource('commodity-type', CommodityTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
+    Route::resource('ledger', LedgerController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('dispute', DisputeController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('wallet-payout', PayoutController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('wallet-receive', ReceiveController::class)->only(['index', 'create', 'store', 'show']);
