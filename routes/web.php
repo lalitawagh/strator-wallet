@@ -3,11 +3,8 @@ use Illuminate\Support\Facades\Route;
 use Riteserve\LedgerFoundation\Http\Controllers\LedgerFoundationController;
 use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\AssetClassController;
 use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\AssetTypeController;
-<<<<<<< Updated upstream
-=======
 use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\CommodityTypeController;
 use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\LedgerController;
->>>>>>> Stashed changes
 use Riteserve\LedgerFoundation\Http\Controllers\Wallet\DepositController;
 use Riteserve\LedgerFoundation\Http\Controllers\Wallet\DisputeController;
 use Riteserve\LedgerFoundation\Http\Controllers\Wallet\ExchangeController;
