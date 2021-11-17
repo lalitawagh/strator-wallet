@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use Riteserve\LedgerFoundation\Http\Controllers\LedgerFoundationController;
 use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\AssetClassController;
 use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\AssetTypeController;
+use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\CommodityTypeController;
 use Riteserve\LedgerFoundation\Http\Controllers\Wallet\DepositController;
 use Riteserve\LedgerFoundation\Http\Controllers\Wallet\DisputeController;
 use Riteserve\LedgerFoundation\Http\Controllers\Wallet\ExchangeController;
@@ -25,6 +26,8 @@ use Riteserve\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
 Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/ledger-foundation','as'=>'dashboard.ledger-foundation.'],function()  {
     Route::get('/', [LedgerFoundationController::class,'index']);
     Route::resource("asset-class",AssetClassController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
+    Route::resource('asset-type', AssetTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
+    Route::resource('commodity-type', CommodityTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('dispute', DisputeController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('wallet-payout', PayoutController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('wallet-receive', ReceiveController::class)->only(['index', 'create', 'store', 'show']);
@@ -32,7 +35,6 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/ledger-foundatio
     Route::resource('wallet-transaction', TransactionController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('wallet-exchange', ExchangeController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('wallet-withdraw', WithdrawController::class)->only(['index', 'create', 'store', 'show']);
-    Route::resource('asset-type', AssetTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::name('wallet.deposit-initial')->get('wallet-deposit-initial', [DepositController::class, 'depositInitial']);
     Route::name('wallet.deposit-detail')->get('wallet-deposit-detail', [DepositController::class, 'depositDetail']);
     Route::name('wallet.deposit-payment')->get('wallet-deposit-payment', [DepositController::class, 'depositPayment']);
