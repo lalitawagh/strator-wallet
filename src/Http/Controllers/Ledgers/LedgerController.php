@@ -42,7 +42,10 @@ class LedgerController extends Controller
     public function edit($id)
     {
         $ledger = Ledger::findOrFail($id);
-        return view("ledger-foundation::ledger.edit", compact('ledger'));
+        $asset_types = AssetType::get();
+        $asset_classes = AssetClass::get();
+        $commodity_types = CommodityType::get();
+        return view("ledger-foundation::ledger.edit", compact('ledger','asset_types','asset_classes','commodity_types'));
     }
 
     public function update(StoreLedgerRequest $request, $id)
