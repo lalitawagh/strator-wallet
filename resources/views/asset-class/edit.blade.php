@@ -1,10 +1,10 @@
-@extends('ledger-foundation::layouts.master')
+@extends("ledger-foundation::config-skeleton")
 
 @section("title", "Edit Asset Class")
 
-@section("content")
-    <div class="grid grid-cols-12 gap-6">
-        <div class="col-span-12">
+@section("config-content")
+    <div class="col-span-12 lg:col-span-8 xxl:col-span-9">
+        <div class="intro-y box">
             <div class="box">
                 <div class="flex items-center py-2 px-3 border-b border-gray-200 dark:border-dark-5">
                     <h2 class="font-medium text-base mr-auto">
