@@ -1,10 +1,10 @@
-@extends("cms::dashboard.layouts.default")
+@extends("ledger-foundation::config-skeleton")
 
 @section("title", "Create Asset Type")
 
-@section("content")
-    <div class="grid grid-cols-12 gap-6">
-        <div class="col-span-12">
+@section("config-content")
+    <div class="col-span-12 lg:col-span-8 xxl:col-span-9">
+        <div class="intro-y box">
             <div class="box">
                 <div class="flex items-center py-2 px-3 border-b border-gray-200 dark:border-dark-5">
                     <h2 class="font-medium text-base mr-auto">
@@ -17,7 +17,7 @@
                         @csrf
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="asset_category" class="form-label sm:w-28">Asset Category <span class="text-theme-6">*</span></label>
+                                <label for="asset_category" class="form-label sm:w-30">Asset Category <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     @php $asset_categories = \Riteserve\LedgerFoundation\Http\Enums\AssetCategoryEnum::toArray(); @endphp
                                     <select name="asset_category" id="asset_category"  data-search="true" class="tail-select w-full @error('asset_category') border-theme-6 @enderror">
@@ -47,7 +47,7 @@
                         </div>
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="logo" class="form-label sm:w-28"> Image </label>
+                                <label for="logo" class="form-label sm:w-30"> Image </label>
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">
 

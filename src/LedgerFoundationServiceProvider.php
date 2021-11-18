@@ -3,6 +3,7 @@
 namespace Riteserve\LedgerFoundation;
 
 use Riteserve\Cms\Traits\InteractsWithMigrations;
+use Riteserve\LedgerFoundation\Menu\WalletConfigurationMenuItem;
 use Riteserve\LedgerFoundation\Menu\WalletMenuItem;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -53,5 +54,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
     {
         parent::packageBooted();
         \Riteserve\Cms\Facades\SidebarMenu::addItem(new WalletMenuItem());
+        \Riteserve\Cms\Facades\SidebarMenu::addItem(new WalletConfigurationMenuItem());
+
     }
 }
