@@ -3,8 +3,8 @@
 namespace Riteserve\LedgerFoundation\Menu;
 
 use Illuminate\Support\Facades\Auth;
-use Riteserve\Cms\Menu\Contracts\Item;
-use Riteserve\Cms\Menu\MenuItem;
+use Kanexy\Cms\Menu\Contracts\Item;
+use Kanexy\Cms\Menu\MenuItem;
 
 class WalletConfigurationMenuItem extends Item
 {

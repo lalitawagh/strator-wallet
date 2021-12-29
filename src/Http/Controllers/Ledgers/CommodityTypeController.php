@@ -2,7 +2,7 @@
 
 namespace Riteserve\LedgerFoundation\Http\Controllers\Ledgers;
 
-use Riteserve\Cms\Controllers\Controller;
+use Kanexy\Cms\Controllers\Controller;
 use Riteserve\LedgerFoundation\Entities\CommodityType;
 use Riteserve\LedgerFoundation\Http\Requests\StoreCommodityRequest;
 

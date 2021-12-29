@@ -3,7 +3,7 @@
 namespace Riteserve\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Illuminate\Http\Request;
-use Riteserve\Cms\Controllers\Controller;
+use Kanexy\Cms\Controllers\Controller;
 use Riteserve\LedgerFoundation\Entities\AssetClass;
 use Riteserve\LedgerFoundation\Entities\AssetType;
 use Riteserve\LedgerFoundation\Entities\CommodityType;

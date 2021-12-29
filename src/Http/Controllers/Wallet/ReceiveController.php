@@ -2,7 +2,7 @@
 
 namespace Riteserve\LedgerFoundation\Http\Controllers\Wallet;
 
-use Riteserve\Cms\Controllers\Controller;
+use Kanexy\Cms\Controllers\Controller;
 
 class ReceiveController extends Controller
 {

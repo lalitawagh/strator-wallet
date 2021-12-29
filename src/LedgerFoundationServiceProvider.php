@@ -2,7 +2,7 @@
 
 namespace Riteserve\LedgerFoundation;
 
-use Riteserve\Cms\Traits\InteractsWithMigrations;
+use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Riteserve\LedgerFoundation\Menu\WalletConfigurationMenuItem;
 use Riteserve\LedgerFoundation\Menu\WalletMenuItem;
 use Spatie\LaravelPackageTools\Package;
@@ -53,8 +53,8 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
     public function packageBooted()
     {
         parent::packageBooted();
-        \Riteserve\Cms\Facades\SidebarMenu::addItem(new WalletMenuItem());
-        \Riteserve\Cms\Facades\SidebarMenu::addItem(new WalletConfigurationMenuItem());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletMenuItem());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletConfigurationMenuItem());
 
     }
 }
