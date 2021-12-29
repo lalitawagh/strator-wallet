@@ -48,7 +48,7 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="ledger_type" class="form-label sm:w-28">Ledger Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $ledger_types = \Riteserve\LedgerFoundation\Http\Enums\LedgerTypeEnum::toArray(); @endphp
+                                    @php $ledger_types = \Kanexy\LedgerFoundation\Http\Enums\LedgerTypeEnum::toArray(); @endphp
                                     <select name="ledger_type" id="ledger_type" data-search="true" class="tail-select w-full @error('ledger_type') border-theme-6 @enderror">
                                         @foreach($ledger_types as $key => $ledger_type)
                                             <option value="{{$key}}" @if(old("ledger_type",$ledger->ledger_type) ) selected @endif>{{ ucfirst(strtolower($ledger_type)) }}</option>
@@ -78,7 +78,7 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_type" class="form-label sm:w-28">Exchange Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $exchange_types = \Riteserve\LedgerFoundation\Http\Enums\ExchangeTypeEnum::toArray(); @endphp
+                                    @php $exchange_types = \Kanexy\LedgerFoundation\Http\Enums\ExchangeTypeEnum::toArray(); @endphp
                                     <select name="exchange_type" id="exchange_type"  data-search="true" class="tail-select w-full @error('exchange_type') border-theme-6 @enderror">
                                         @foreach($exchange_types as $key => $exchange_type)
                                             <option value="{{$key}}" @if(old("exchange_type",$ledger->exchange_type) ) selected @endif>{{ ucwords(str_replace('_', ' ', $exchange_type)) }}</option>
@@ -110,7 +110,7 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="asset_category" class="form-label sm:w-28">Asset Category <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $asset_categories = \Riteserve\LedgerFoundation\Http\Enums\AssetCategoryEnum::toArray(); @endphp
+                                    @php $asset_categories = \Kanexy\LedgerFoundation\Http\Enums\AssetCategoryEnum::toArray(); @endphp
                                     <select name="asset_category" onchange="getAssetCategory(this)" id="asset_category" data-search="true" class="tail-select w-full @error('asset_category') border-theme-6 @enderror">
                                         @foreach($asset_categories as $key => $asset_category)
                                             <option value="{{$key}}" @if(old('asset_category',$ledger->asset_category) == $key) selected @endif>{{ ucwords(str_replace('_', ' ', $asset_category)) }}</option>

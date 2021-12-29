@@ -1,6 +1,6 @@
 <?php
 
-namespace Riteserve\LedgerFoundation\Entities;
+namespace Kanexy\LedgerFoundation\Entities;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

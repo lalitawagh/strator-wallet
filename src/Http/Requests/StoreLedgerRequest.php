@@ -1,6 +1,6 @@
 <?php
 
-namespace Riteserve\LedgerFoundation\Http\Requests;
+namespace Kanexy\LedgerFoundation\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Riteserve\LedgerFoundation;
+namespace Kanexy\LedgerFoundation;
 
 use Kanexy\Cms\Traits\InteractsWithMigrations;
-use Riteserve\LedgerFoundation\Menu\WalletConfigurationMenuItem;
-use Riteserve\LedgerFoundation\Menu\WalletMenuItem;
+use Kanexy\LedgerFoundation\Menu\WalletConfigurationMenuItem;
+use Kanexy\LedgerFoundation\Menu\WalletMenuItem;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 

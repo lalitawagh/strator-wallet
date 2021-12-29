@@ -1,10 +1,10 @@
 <?php
 
-namespace Riteserve\LedgerFoundation\Http\Controllers\Ledgers;
+namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Kanexy\Cms\Controllers\Controller;
-use Riteserve\LedgerFoundation\Entities\CommodityType;
-use Riteserve\LedgerFoundation\Http\Requests\StoreCommodityRequest;
+use Kanexy\LedgerFoundation\Entities\CommodityType;
+use Kanexy\LedgerFoundation\Http\Requests\StoreCommodityRequest;
 
 class CommodityTypeController extends Controller
 {

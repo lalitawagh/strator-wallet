@@ -1,6 +1,6 @@
 <?php
 
-namespace Riteserve\LedgerFoundation\Http\Controllers\Wallet;
+namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
 use Kanexy\Cms\Controllers\Controller;
 

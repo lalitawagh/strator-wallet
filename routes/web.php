@@ -1,17 +1,17 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use Riteserve\LedgerFoundation\Http\Controllers\LedgerFoundationController;
-use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\AssetClassController;
-use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\AssetTypeController;
-use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\CommodityTypeController;
-use Riteserve\LedgerFoundation\Http\Controllers\Ledgers\LedgerController;
-use Riteserve\LedgerFoundation\Http\Controllers\Wallet\DepositController;
-use Riteserve\LedgerFoundation\Http\Controllers\Wallet\DisputeController;
-use Riteserve\LedgerFoundation\Http\Controllers\Wallet\ExchangeController;
-use Riteserve\LedgerFoundation\Http\Controllers\Wallet\PayoutController;
-use Riteserve\LedgerFoundation\Http\Controllers\Wallet\ReceiveController;
-use Riteserve\LedgerFoundation\Http\Controllers\Wallet\TransactionController;
-use Riteserve\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
+use Kanexy\LedgerFoundation\Http\Controllers\LedgerFoundationController;
+use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetClassController;
+use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetTypeController;
+use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\CommodityTypeController;
+use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\LedgerController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\DepositController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\DisputeController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\ExchangeController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\PayoutController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\ReceiveController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\TransactionController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes

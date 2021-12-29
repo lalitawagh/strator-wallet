@@ -1,14 +1,14 @@
 <?php
 
-namespace Riteserve\LedgerFoundation\Http\Controllers\Ledgers;
+namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Illuminate\Http\Request;
 use Kanexy\Cms\Controllers\Controller;
-use Riteserve\LedgerFoundation\Entities\AssetClass;
-use Riteserve\LedgerFoundation\Entities\AssetType;
-use Riteserve\LedgerFoundation\Entities\CommodityType;
-use Riteserve\LedgerFoundation\Entities\Ledger;
-use Riteserve\LedgerFoundation\Http\Requests\StoreLedgerRequest;
+use Kanexy\LedgerFoundation\Entities\AssetClass;
+use Kanexy\LedgerFoundation\Entities\AssetType;
+use Kanexy\LedgerFoundation\Entities\CommodityType;
+use Kanexy\LedgerFoundation\Entities\Ledger;
+use Kanexy\LedgerFoundation\Http\Requests\StoreLedgerRequest;
 
 class LedgerController extends Controller
 {

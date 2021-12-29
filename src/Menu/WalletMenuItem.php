@@ -1,6 +1,6 @@
 <?php
 
-namespace Riteserve\LedgerFoundation\Menu;
+namespace Kanexy\LedgerFoundation\Menu;
 
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Menu\Contracts\Item;
