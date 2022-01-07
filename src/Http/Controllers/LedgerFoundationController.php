@@ -1,6 +1,6 @@
 <?php
 
-namespace Riteserve\LedgerFoundation\Http\Controllers;
+namespace Kanexy\LedgerFoundation\Http\Controllers;
 
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;

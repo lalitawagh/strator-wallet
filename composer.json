@@ -1,28 +1,28 @@
 {
-    "name": "riteserve/ledger-foundation",
-    "description": "This is my package Cms",
+    "name": "kanexy/ledger-foundation",
+    "description": "This is my package LedgerFoundation",
     "keywords": [
-        "riteserve",
+        "kanexy",
         "laravel",
         "ledger-foundation"
     ],
     "license": "MIT",
     "authors": [
         {
-            "name": "Riteserve",
-            "email": "team@riteserve.co",
+            "name": "Kanexy",
+            "email": "team@kanexy.co",
             "role": "Developer"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Riteserve\\LedgerFoundation\\": "src",
-            "Riteserve\\LedgerFoundation\\Database\\Factories\\": "database/factories"
+            "Kanexy\\LedgerFoundation\\": "src",
+            "Kanexy\\LedgerFoundation\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Riteserve\\LedgerFoundation\\Tests\\": "tests"
+            "Kanexy\\LedgerFoundation\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -36,7 +36,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Riteserve\\LedgerFoundation\\LedgerFoundationServiceProvider"
+                "Kanexy\\LedgerFoundation\\LedgerFoundationServiceProvider"
             ]
 
         }

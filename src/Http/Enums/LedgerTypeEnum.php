@@ -1,6 +1,6 @@
 <?php
 
-namespace Riteserve\LedgerFoundation\Http\Enums;
+namespace Kanexy\LedgerFoundation\Http\Enums;
 
 use MyCLabs\Enum\Enum;
 

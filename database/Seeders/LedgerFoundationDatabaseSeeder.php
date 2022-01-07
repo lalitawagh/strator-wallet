@@ -1,6 +1,6 @@
 <?php
 
-namespace Riteserve\LedgerFoundation\Database\Seeders;
+namespace Kanexy\LedgerFoundation\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;

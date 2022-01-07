@@ -1,10 +1,10 @@
 <?php
 
-namespace Riteserve\LedgerFoundation\Http\Controllers\Ledgers;
+namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Illuminate\Routing\Controller;
-use Riteserve\LedgerFoundation\Entities\AssetClass;
-use Riteserve\LedgerFoundation\Http\Requests\StoreAssetClassRequest;
+use Kanexy\LedgerFoundation\Entities\AssetClass;
+use Kanexy\LedgerFoundation\Http\Requests\StoreAssetClassRequest;
 
 class AssetClassController extends Controller
 {

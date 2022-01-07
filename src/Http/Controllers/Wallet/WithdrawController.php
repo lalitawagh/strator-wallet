@@ -1,8 +1,8 @@
 <?php
 
-namespace Riteserve\LedgerFoundation\Http\Controllers\Wallet;
+namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
-use Riteserve\Cms\Controllers\Controller;
+use Kanexy\Cms\Controllers\Controller;
 
 class WithdrawController extends Controller
 {
