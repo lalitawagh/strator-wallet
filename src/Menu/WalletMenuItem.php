@@ -20,7 +20,7 @@ class WalletMenuItem extends Item
         $user = Auth::user();
 
         if($user->isSubscriber()) {
-            return false;
+            return true;
         }
 
         return true;

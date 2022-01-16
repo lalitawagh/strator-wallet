@@ -11,6 +11,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\ExchangeController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\PayoutController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\ReceiveController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\TransactionController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WalletController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +42,8 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/ledger-foundatio
     Route::name('wallet.deposit-payment')->get('wallet-deposit-payment', [DepositController::class, 'depositPayment']);
     Route::name('wallet.deposit-final')->get('wallet-deposit-final', [DepositController::class, 'depositFinal']);
 
+});
+
+Route::group(['middleware' =>['web','auth'],'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {
+    Route::resource('wallet', WalletController::class)->only(['index', 'create', 'store', 'show']);
 });
