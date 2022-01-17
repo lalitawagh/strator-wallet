@@ -157,7 +157,7 @@
                                 <label for="logo" class="form-label sm:w-28"> Logo <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">
-                                    <img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('s3')->temporaryUrl($ledger->image, now()->addMinutes(5)) }}">
+                                    <img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}">
                                     @error('image')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
@@ -199,13 +199,14 @@
 
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="status" class="form-label sm:w-28"> Active<span class="text-theme-6">*</span></label>
+                                <label for="status" class="form-label sm:w-28"> Status <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <select name="status" id="status" data-search="true" class="tail-select w-full">
-                                        <option value="new" @if(old("status",$ledger->status)  === 'new') selected @endif>New</option>
-                                        <option value="active" @if(old("status",$ledger->status)  === 'active') selected @endif>Active</option>
-                                        <option value="hold" @if(old("status",$ledger->status)  === 'hold') selected @endif>Hold</option>
-                                        <option value="suspended" @if(old("status",$ledger->status)  === 'suspended') selected @endif>Suspended</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::NEW }}" @if(old("status",$ledger->status)  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::NEW) checked @endif>{{ ucfirst(\Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::NEW) }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::ACTIVE }}" @if(old("status",$ledger->status)  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::ACTIVE) checked @endif>{{ ucfirst(\Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::ACTIVE) }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::INACTIVE }}" @if(old("status",$ledger->status)  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::INACTIVE) checked @endif>{{ ucfirst(\Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::INACTIVE) }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::HOLD }}" @if(old("status",$ledger->status)  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::HOLD) checked @endif>{{ ucfirst(\Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::HOLD) }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::SUSPENDED }}" @if(old("suspended",$ledger->status)  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::SUSPENDED) checked @endif>{{ ucfirst(\Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::SUSPENDED) }}</option>
                                     </select>
 
                                     @error('status')

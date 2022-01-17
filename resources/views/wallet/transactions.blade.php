@@ -20,23 +20,24 @@
                             @endphp
                         <a id="{{ $key }}-tab" data-toggle="tab" data-target="#{{$key}}"
                             href="javascript:;" class="flex-1 flex items-center px-3 py-2 mt-2 pb-5 font-medium">
-                            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y w-full" id="k-wallet" data-toggle="tab" data-target="#k-wallet">
+                            <div class="col-span-12 sm:col-span-4 xl:col-span-3 intro-y w-full" id="k-wallet" data-toggle="tab" data-target="#k-wallet">
                                 <div class="report-box zoom-in">
                                     <div class="box p-5">
                                         <div class="flex">
+                                            <div class="text-2xl font-bold leading-8 mt-0">{{ $ledger->name }}</div>
                                             <div class="ml-auto">
-                                                <!-- <i data-feather="shopping-cart" class="report-box__icon text-theme-10"></i> -->
                                                 <div class="flex mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
-                                                    <img alt="" class="" src="../../dist/images/icons/1.png">
+                                                    <img alt="" class="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}">
                                                 </div>
                                             </div>
+
                                         </div>
-                                        <div class="text-2xl font-bold leading-8 mt-0">{{ $ledger->name }}</div>
+
                                         <div class="text-base text-gray-600 mt-1">{{ $wallet->urn }}</div>
                                         <div class="flex mt-3">
-                                            <span>Kx</span>
+                                            <span class="@if( $wallet->status == \Kanexy\LedgerFoundation\Http\Enums\WalletStatus::ACTIVE) text-theme-9 @else text-theme-6 @endif"> {{ ucfirst($wallet->status)}}</span>
                                             <div class="ml-auto">
-                                                <div class="report-box__indicator bg-theme-6 cursor-pointer"> {{ $wallet->balance }} </div>
+                                                <div class="report-box__indicator bg-theme-6 cursor-pointer"> {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($wallet?->balance) }}</div>
                                             </div>
                                         </div>
                                     </div>

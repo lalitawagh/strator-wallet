@@ -14,4 +14,9 @@ class AssetClass extends Model
         'image',
         'status',
     ];
+
+    public function ledgers()
+    {
+        return $this->belongsTo(Ledger::class);
+    }
 }

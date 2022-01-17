@@ -204,10 +204,11 @@
                                 <label for="status" class="form-label sm:w-28"> Status</label>
                                 <div class="sm:w-5/6">
                                     <select name="status" id="status" data-search="true" class="tail-select w-full">
-                                        <option value="new" @if(old("status")  === 'active') checked @endif>New</option>
-                                        <option value="active" @if(old("status")  === 'active') checked @endif>Active</option>
-                                        <option value="hold" @if(old("status")  === 'active') checked @endif>Hold</option>
-                                        <option value="suspended" @if(old("suspended")  === 'active') checked @endif>Suspended</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::NEW }}" @if(old("status")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::NEW) checked @endif>{{ ucfirst(\Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::NEW) }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::ACTIVE }}" @if(old("status")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::ACTIVE) checked @endif>{{ ucfirst(\Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::ACTIVE) }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::INACTIVE }}" @if(old("status")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::INACTIVE) checked @endif>{{ ucfirst(\Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::INACTIVE) }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::HOLD }}" @if(old("status")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::HOLD) checked @endif>{{ ucfirst(\Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::HOLD) }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::SUSPENDED }}" @if(old("suspended")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::SUSPENDED) checked @endif>{{ ucfirst(\Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::SUSPENDED) }}</option>
                                     </select>
                                     @error('status')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
