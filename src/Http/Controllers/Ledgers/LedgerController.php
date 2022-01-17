@@ -14,7 +14,7 @@ class LedgerController extends Controller
 {
     public function index()
     {
-        $ledgers = Ledger::with('assetType','assetClass')->get();
+        $ledgers = Ledger::with('assetType','assetClass')->paginate();
 
         return view("ledger-foundation::ledger.index", compact('ledgers'));
     }
