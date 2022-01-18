@@ -23,7 +23,7 @@
                                     @php $asset_categories = \Kanexy\LedgerFoundation\Http\Enums\AssetCategoryEnum::toArray(); @endphp
                                     <select name="asset_category" id="asset_category" data-search="true" class="tail-select w-full @error('asset_category') border-theme-6 @enderror">
                                         @foreach($asset_categories as $key => $asset_category)
-                                            <option value="{{$key}}" @if(old('asset_category',$asset_type->asset_category) == $key) selected @endif>{{ ucwords(str_replace('_', ' ', $asset_category)) }}</option>
+                                            <option value="{{ $asset_category }}" @if(old('asset_category',$asset_type->asset_category) == $asset_category) selected @endif>{{ ucwords(str_replace('_', ' ', $asset_category)) }}</option>
                                         @endforeach
                                     </select>
 
