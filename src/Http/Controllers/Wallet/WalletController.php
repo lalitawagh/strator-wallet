@@ -20,7 +20,7 @@ class WalletController extends Controller
 
         collect($ledgers)->map(function ($ledger) use($user) {
 
-            if($ledger->status == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::ACTIVE)
+            if($ledger->status == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatusEnum::ACTIVE && $ledger->ledger_type == 'wallet')
             {
                 $data = [
                     "name" => $user->getFullName(),
