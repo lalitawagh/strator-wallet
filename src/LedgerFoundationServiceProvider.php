@@ -54,7 +54,6 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
     {
         parent::packageBooted();
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletMenuItem());
-        \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletConfigurationMenuItem());
 
     }
 }
