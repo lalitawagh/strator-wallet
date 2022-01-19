@@ -91,7 +91,7 @@
                 <div class="side-nav p-5 border-t border-gray-200 dark:border-dark-5">
                     <ul>
                         <li>
-                            <a href="side-menu-light-dashboard-overview-2.html" class="side-menu">
+                            <a href="#" class="side-menu">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="side-menu__title"> General </div>
                             </a>
@@ -164,31 +164,31 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="side-menu-light-dashboard-overview-2.html" class="side-menu">
+                            <a href="#" class="side-menu">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="side-menu__title"> Notifications </div>
                             </a>
                         </li>
                         <li>
-                            <a href="side-menu-light-dashboard-overview-2.html" class="side-menu">
+                            <a href="#" class="side-menu">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="side-menu__title"> ForEx </div>
                             </a>
                         </li>
                         <li>
-                            <a href="side-menu-light-dashboard-overview-2.html" class="side-menu">
+                            <a href="#" class="side-menu">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="side-menu__title"> Fees Setup </div>
                             </a>
                         </li>
                         <li>
-                            <a href="side-menu-light-dashboard-overview-2.html" class="side-menu">
+                            <a href="#" class="side-menu">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="side-menu__title"> Payment Methods </div>
                             </a>
                         </li>
                         <li>
-                            <a href="side-menu-light-dashboard-overview-2.html" class="side-menu">
+                            <a href="#" class="side-menu">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="side-menu__title"> Preferences </div>
                             </a>
@@ -204,59 +204,19 @@
 
         </div>
         @yield('config-content')
-        {{-- <div class="col-span-12">
-            <div class="grid grid-cols-12 gap-6">
-
-                <div class="col-span-12 lg:col-span-4 xxl:col-span-3 flex lg:block flex-col-reverse">
-                    <div class="intro-y box">
-
-
-                        <div class="p-5 border-t border-gray-200 dark:border-dark-5">
-                            <a
-                                class="flex items-center @if (\Illuminate\Support\Facades\Route::currentRouteName() === 'dashboard.ledger-foundation.asset-type.index' || \Illuminate\Support\Facades\Route::currentRouteName() === 'dashboard.ledger-foundation.asset-type.create') text-theme-1 dark:text-theme-10 font-medium @endif"
-                                href="{{ route('dashboard.ledger-foundation.asset-type.index') }}"
-                            >
-                                <i data-feather="activity" class="w-4 h-4 mr-2"></i> Asset Type
-                            </a>
-
-                            <a
-                                class="flex items-center mt-5 @if (\Illuminate\Support\Facades\Route::currentRouteName() === 'dashboard.ledger-foundation.asset-class.index' || \Illuminate\Support\Facades\Route::currentRouteName() === 'dashboard.ledger-foundation.asset-class.create') text-theme-1 dark:text-theme-10 font-medium @endif"
-                                href="{{ route('dashboard.ledger-foundation.asset-class.index') }}"
-                            >
-                                <i data-feather="activity" class="w-4 h-4 mr-2"></i> Asset Class
-                            </a>
-
-                            <a
-                                class="flex items-center mt-5 @if (\Illuminate\Support\Facades\Route::currentRouteName() === 'dashboard.ledger-foundation.commodity-type.index' || \Illuminate\Support\Facades\Route::currentRouteName() === 'dashboard.ledger-foundation.commodity-type.create') text-theme-1 dark:text-theme-10 font-medium @endif"
-                                href="{{ route('dashboard.ledger-foundation.commodity-type.index') }}"
-                            >
-                                <i data-feather="activity" class="w-4 h-4 mr-2"></i> Commodity type
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-
-                @yield('config-content')
-            </div>
-        </div> --}}
     </div>
 @endsection
 
 @push('scripts')
-
-    <script>
-        function toggleConfigurationSidebarMenu() {
-
-            return {
-                toggle() {
-                    $(".configuration-layout-sidebar").toggleClass("side-nav--simple");
-                    $(".configuration-container").toggleClass("active");
-                }
+<script>
+    function toggleConfigurationSidebarMenu() {
+        return {
+            toggle() {
+                $(".configuration-layout-sidebar").toggleClass("side-nav--simple");
+                $(".configuration-container").toggleClass("active");
             }
         }
-
-    </script>
-
+    }
+</script>
 @endpush
 
