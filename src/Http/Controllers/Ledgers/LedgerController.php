@@ -14,7 +14,8 @@ class LedgerController extends Controller
 {
     public function index()
     {
-        $ledgers = Ledger::paginate();
+        $ledgers = Ledger::with('assetType','assetClass')->paginate();
+
         return view("ledger-foundation::ledger.index", compact('ledgers'));
     }
 
@@ -29,7 +30,7 @@ class LedgerController extends Controller
     public function store(StoreLedgerRequest $request)
     {
         $data = $request->validated();
-        $data['image'] = $request->hasFile('image') ? $request->file('image')->store('documentImages', 's3') : 'demo.jpg';
+        $data['image'] = $request->hasFile('image') ? $request->file('image')->store('walletImages', 'azure') : 'demo.jpg';
 
         Ledger::create($data);
 
@@ -54,7 +55,7 @@ class LedgerController extends Controller
         $data = $request->validated();
         if($request->hasFile('image'))
         {
-            $data['image'] = $request->file('image')->store('documentImages', 's3');
+            $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
 
         $ledger->update($data);

@@ -24,4 +24,14 @@ class Ledger extends Model
         'image',
         'status',
     ];
+
+    public function assetClass()
+    {
+        return $this->hasOne(AssetClass::class,'id','asset_class');
+    }
+
+    public function assetType()
+    {
+        return $this->hasOne(AssetType::class,'id','asset_type');
+    }
 }
