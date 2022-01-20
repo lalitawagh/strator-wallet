@@ -23,4 +23,9 @@ class Wallet extends Model
     {
         return $query->where(['holder_id' => $model->getKey(), 'holder_type' => $model->getMorphClass()]);
     }
+
+    public function ledger()
+    {
+        return $this->hasOne(Ledger::class,'id','ledger_id');
+    }
 }

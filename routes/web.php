@@ -38,6 +38,7 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/ledger-foundatio
     Route::resource('wallet-exchange', ExchangeController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('wallet-withdraw', WithdrawController::class)->only(['index', 'create', 'store', 'show']);
     Route::name('wallet.deposit-initial')->get('wallet-deposit-initial', [DepositController::class, 'depositInitial']);
+    Route::name('wallet.store-deposit-initial')->post('wallet-deposit-initial', [DepositController::class, 'storeDepositInitial']);
     Route::name('wallet.deposit-detail')->get('wallet-deposit-detail', [DepositController::class, 'depositDetail']);
     Route::name('wallet.deposit-payment')->get('wallet-deposit-payment', [DepositController::class, 'depositPayment']);
     Route::name('wallet.deposit-final')->get('wallet-deposit-final', [DepositController::class, 'depositFinal']);
