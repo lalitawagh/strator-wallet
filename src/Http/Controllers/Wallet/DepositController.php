@@ -106,6 +106,11 @@ class DepositController extends Controller
         return response()->json(['status' => 'success']);
     }
 
+    public function storeDepositPaymentStripe(Request $request)
+    {
+
+    }
+
     public function depositFinal()
     {
         $details = session('deposit_request');
