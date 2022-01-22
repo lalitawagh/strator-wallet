@@ -4,11 +4,13 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\LedgerFoundation\Entities\AssetType;
 use Kanexy\LedgerFoundation\Entities\Wallet;
 use Kanexy\LedgerFoundation\Http\Enums\AssetCategoryEnum;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Stripe;
 
 class DepositController extends Controller
 {
@@ -108,7 +110,69 @@ class DepositController extends Controller
 
     public function storeDepositPaymentStripe(Request $request)
     {
+        $depositRequest = session('deposit_request');
+        $stripe =  Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        $data = Stripe\Charge::create ([
+                "amount" => $request->input('amount') * 100,
+                "currency" => $depositRequest['currency'],
+                "source" => $request->input('stripeToken'),
+                "description" => "Test payment."
+        ]);
 
+        $headers = array('Authorization: Bearer '.config('services.stripe.secret'));
+        $url = 'https://api.stripe.com/v1/balance/history/'. $data->balance_transaction;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $output = curl_exec($ch);
+        curl_close($ch);
+        $feeDetails = json_decode($output, true);
+
+        if($data->status == 'succeeded')
+        {
+
+            $user = Auth::user();
+            $workspace = $user->workspaces()->first();
+            $depositRequest['stripe_fee'] = $feeDetails['fee']/100;
+            $depositRequest['stripe_receipt_url'] = $data->receipt_url;
+            session(['deposit_request' => $depositRequest]);
+
+            Transaction::create([
+                'urn' => Transaction::generateUrn(),
+                'amount' => $depositRequest['amount'] + $depositRequest['fee'],
+                'workspace_id' => $workspace->getKey(),
+                'type' => 'credit',
+                'payment_method' => 'wallet',
+                'note' => null,
+                // 'ref_id' =>  $data['paymentDetails'][0]['payments']['captures'][0]['id'],
+                'ref_type' => 'stripe',
+                'settled_amount' => $depositRequest['amount'] + $depositRequest['fee'],
+                'settled_currency' => $depositRequest['currency'],
+                'settlement_date' => date('Y-m-d'),
+                'settled_at' => now(),
+                'transaction_fee' => $depositRequest['fee'],
+                'status' => 'accepted',
+                'meta' => [
+                    'sender_payment_id' => $data->id,
+                    'sender_name' => $request->name,
+                    'sender_card_id' => $data->payment_method,
+                    'sender_card_fingerprint' => $data->source->fingerprint,
+                    'stripe_balance_transaction' => $data->balance_transaction,
+                    'beneficiary_id' => Auth::user()->id,
+                    'beneficiary_ref_id' => $depositRequest['wallet'],
+                    'beneficiary_name' => Auth::user()->getFullName(),
+                    'stripe_fee' => ($feeDetails['fee'])/100,
+                    'stripe_receipt_url' => $data->receipt_url
+                ],
+            ]);
+            $totalAmount = $depositRequest['amount'] - ($feeDetails['fee']/100);
+            $wallet = Wallet::find($depositRequest['wallet']);
+            $balance = $wallet->balance + $totalAmount;
+            $wallet->update(['balance' => $balance]);
+        }
+        return redirect()->route('dashboard.ledger-foundation.wallet.deposit-final');
     }
 
     public function depositFinal()
