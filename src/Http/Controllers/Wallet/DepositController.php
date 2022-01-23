@@ -110,6 +110,7 @@ class DepositController extends Controller
 
     public function storeDepositPaymentStripe(Request $request)
     {
+
         $depositRequest = session('deposit_request');
         $stripe =  Stripe\Stripe::setApiKey(config('services.stripe.secret'));
         $data = Stripe\Charge::create ([
@@ -119,24 +120,43 @@ class DepositController extends Controller
                 "description" => "Test payment."
         ]);
 
-        $headers = array('Authorization: Bearer '.config('services.stripe.secret'));
-        $url = 'https://api.stripe.com/v1/balance/history/'. $data->balance_transaction;
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $output = curl_exec($ch);
-        curl_close($ch);
-        $feeDetails = json_decode($output, true);
+        // $headers = array('Authorization: Bearer '.config('services.stripe.secret'));
+        // $url = 'https://api.stripe.com/v1/balance/history/'. $data->balance_transaction;
+        // $ch = curl_init();
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        // curl_setopt($ch, CURLOPT_URL, $url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // $output = curl_exec($ch);
+        // curl_close($ch);
+        // $feeDetails = json_decode($output, true);
 
-        if($data->status == 'succeeded')
+        $feeDetails = Http::withToken(config('services.stripe.secret'))
+            ->acceptJson()
+            ->get('https://api.stripe.com/v1/balance/history/'. $data->balance_transaction)
+            ->throw()
+            ->json();
+
+        $data['transaction_fee'] = $feeDetails['fee'];
+
+        return response()->json(['status' => 'success','data' => $data]);
+
+    }
+
+
+    public function storeDepositPaymentStripeFinal(Request $request)
+    {
+
+        $depositRequest = session('deposit_request');
+        $response = $request->all();
+
+        if($response['data']['status'] == 'succeeded')
         {
 
             $user = Auth::user();
             $workspace = $user->workspaces()->first();
-            $depositRequest['stripe_fee'] = $feeDetails['fee']/100;
-            $depositRequest['stripe_receipt_url'] = $data->receipt_url;
+            $depositRequest['stripe_fee'] = $response['data']['transaction_fee']/100;
+            $depositRequest['stripe_receipt_url'] = $response['data']['receipt_url'];
             session(['deposit_request' => $depositRequest]);
 
             Transaction::create([
@@ -155,28 +175,34 @@ class DepositController extends Controller
                 'transaction_fee' => $depositRequest['fee'],
                 'status' => 'accepted',
                 'meta' => [
-                    'sender_payment_id' => $data->id,
-                    'sender_name' => $request->name,
-                    'sender_card_id' => $data->payment_method,
-                    'sender_card_fingerprint' => $data->source->fingerprint,
-                    'stripe_balance_transaction' => $data->balance_transaction,
+                    'sender_payment_id' => $response['data']['id'],
+                    'sender_name' => $response['data']['source']['name'],
+                    'sender_card_id' => $response['data']['payment_method'],
+                    'sender_card_fingerprint' => $response['data']['source']['fingerprint'],
+                    'stripe_balance_transaction' => $response['data']['balance_transaction'],
                     'beneficiary_id' => Auth::user()->id,
                     'beneficiary_ref_id' => $depositRequest['wallet'],
                     'beneficiary_name' => Auth::user()->getFullName(),
-                    'stripe_fee' => ($feeDetails['fee'])/100,
-                    'stripe_receipt_url' => $data->receipt_url
+                    'stripe_fee' => ($response['data']['transaction_fee'])/100,
+                    'stripe_receipt_url' => $response['data']['receipt_url']
                 ],
             ]);
-            $totalAmount = $depositRequest['amount'] - ($feeDetails['fee']/100);
+            $totalAmount = $depositRequest['amount'] - ($response['data']['transaction_fee']/100);
             $wallet = Wallet::find($depositRequest['wallet']);
             $balance = $wallet->balance + $totalAmount;
             $wallet->update(['balance' => $balance]);
         }
-        return redirect()->route('dashboard.ledger-foundation.wallet.deposit-final');
+        return response()->json(['status' => 'success']);
     }
 
     public function depositFinal()
     {
+
+        $balance = 'txn_3KKNEQCedkQGNQbl0Hzuxtxa';
+         $headers = array('Authorization: Bearer '.config('services.stripe.secret'));
+        // dd($headers);
+
+            dd($data['fee']);
         $details = session('deposit_request');
         return view("ledger-foundation::wallet.deposit.deposit-final",compact('details'));
     }
