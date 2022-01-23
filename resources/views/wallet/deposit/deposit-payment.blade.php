@@ -16,6 +16,13 @@
         vertical-align: middle;
         width: 61%;
     }
+    .CardField-input-wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    white-space: nowrap;
+    /* overflow: hidden; */
+}
 </style>
 @endpush
 
