@@ -47,8 +47,8 @@
                             .then(status)
                             .then(function(response) {
                                 // redirect to the completed page if paid
-                                window.location.href =
-                                    '/dashboard/ledger-foundation/wallet-deposit-final';
+                                // window.location.href =
+                                //     '/dashboard/ledger-foundation/wallet-deposit-final';
                             })
                             .catch(function(error) {
                                 // redirect to failed page if internal error occurs

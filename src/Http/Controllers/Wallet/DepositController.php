@@ -61,6 +61,17 @@ class DepositController extends Controller
     {
         $details = session('deposit_request');
 
+        $info = [
+            'username' => 'AeforqqMHXaTY851kjKzrQ904YjpVlpApPLlX42smwx0eeqNo9kJ0rX9TdMcoVZBo7AHj8kYGRSKkkqa',
+            'password' => 'EOROviWARf51WzGg3NxtV8MVetp36bEZuX8JB9fyU33QjSXTSjkljVxHkeKGI-HxcxTY8fNwDtsMaEbT',
+            'grant_type' => 'client_credentials'
+        ];
+        $token = Http::withBasicAuth('AeforqqMHXaTY851kjKzrQ904YjpVlpApPLlX42smwx0eeqNo9kJ0rX9TdMcoVZBo7AHj8kYGRSKkkqa','EOROviWARf51WzGg3NxtV8MVetp36bEZuX8JB9fyU33QjSXTSjkljVxHkeKGI-HxcxTY8fNwDtsMaEbT')->acceptJson()
+            ->get('https://api.stripe.com/v1/balance/history/', $info)
+            ->throw()
+            ->json();
+        dd($token);
+
         return view("ledger-foundation::wallet.deposit.deposit-payment",compact('details'));
     }
 
@@ -197,12 +208,6 @@ class DepositController extends Controller
 
     public function depositFinal()
     {
-
-        $balance = 'txn_3KKNEQCedkQGNQbl0Hzuxtxa';
-         $headers = array('Authorization: Bearer '.config('services.stripe.secret'));
-        // dd($headers);
-
-            dd($data['fee']);
         $details = session('deposit_request');
         return view("ledger-foundation::wallet.deposit.deposit-final",compact('details'));
     }
