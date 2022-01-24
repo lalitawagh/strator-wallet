@@ -61,22 +61,7 @@ class DepositController extends Controller
     public function depositPayment()
     {
         $details = session('deposit_request');
-        $provider = new PayPalClient;
-        $provider = \PayPal::setProvider();
-        $response = $provider->setApiCredentials(config('paypal.sandbox'));
-        // $provider->getAccessToken();
-        // $response = $provider->capturePaymentOrder('8JD359893W150113B');
-        dd($response);
-        $info = [
-            'username' => 'AeforqqMHXaTY851kjKzrQ904YjpVlpApPLlX42smwx0eeqNo9kJ0rX9TdMcoVZBo7AHj8kYGRSKkkqa',
-            'password' => 'EOROviWARf51WzGg3NxtV8MVetp36bEZuX8JB9fyU33QjSXTSjkljVxHkeKGI-HxcxTY8fNwDtsMaEbT',
-            'grant_type' => 'client_credentials'
-        ];
-        $token = Http::withBasicAuth('AeforqqMHXaTY851kjKzrQ904YjpVlpApPLlX42smwx0eeqNo9kJ0rX9TdMcoVZBo7AHj8kYGRSKkkqa','EOROviWARf51WzGg3NxtV8MVetp36bEZuX8JB9fyU33QjSXTSjkljVxHkeKGI-HxcxTY8fNwDtsMaEbT')->acceptJson()
-            ->get('https://api.stripe.com/v1/balance/history/', $info)
-            ->throw()
-            ->json();
-        dd($token);
+
 
         return view("ledger-foundation::wallet.deposit.deposit-payment",compact('details'));
     }
@@ -84,8 +69,8 @@ class DepositController extends Controller
     public function storeDepositPayment(Request $request)
     {
         $data = json_decode($request->getContent(), true);
-
         $depositRequest = session('deposit_request');
+
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
 
@@ -113,7 +98,7 @@ class DepositController extends Controller
                     'beneficiary_id' => Auth::user()->id,
                     'beneficiary_ref_id' => $depositRequest['wallet'],
                     'beneficiary_name' => Auth::user()->getFullName(),
-                    'transaction_id' => $data['paymentDetails'][0]['payments']['captures'][0]['id']
+                    'transaction_id' => $data['paymentDetails'][0]['payments']['captures'][0]['id'],
                 ],
             ]);
 
@@ -127,7 +112,6 @@ class DepositController extends Controller
 
     public function storeDepositPaymentStripe(Request $request)
     {
-
         $depositRequest = session('deposit_request');
         $stripe =  Stripe\Stripe::setApiKey(config('services.stripe.secret'));
         $data = Stripe\Charge::create ([
@@ -136,17 +120,6 @@ class DepositController extends Controller
                 "source" => $request->input('stripeToken'),
                 "description" => "Test payment."
         ]);
-
-        // $headers = array('Authorization: Bearer '.config('services.stripe.secret'));
-        // $url = 'https://api.stripe.com/v1/balance/history/'. $data->balance_transaction;
-        // $ch = curl_init();
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        // curl_setopt($ch, CURLOPT_URL, $url);
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        // $output = curl_exec($ch);
-        // curl_close($ch);
-        // $feeDetails = json_decode($output, true);
 
         $feeDetails = Http::withToken(config('services.stripe.secret'))
             ->acceptJson()
@@ -163,7 +136,6 @@ class DepositController extends Controller
 
     public function storeDepositPaymentStripeFinal(Request $request)
     {
-
         $depositRequest = session('deposit_request');
         $response = $request->all();
 

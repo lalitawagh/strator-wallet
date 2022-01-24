@@ -1,4 +1,5 @@
 <div id="paypal-button-container"></div>
+@php $total = $details['fee'] + $details['amount']; @endphp
 <script src="https://www.paypal.com/sdk/js?client-id={{ config('paypal.sandbox.client_id') }}"></script>
 @push('scripts')
     <script>
@@ -12,7 +13,7 @@
                     },
                     purchase_units: [{
                         amount: {
-                            value: '{{ $details['amount'] }}'
+                            value: '{{ $total }}'
                         }
                     }],
                 });
@@ -47,8 +48,8 @@
                             .then(status)
                             .then(function(response) {
                                 // redirect to the completed page if paid
-                                // window.location.href =
-                                //     '/dashboard/ledger-foundation/wallet-deposit-final';
+                                window.location.href =
+                                    '/dashboard/ledger-foundation/wallet-deposit-final';
                             })
                             .catch(function(error) {
                                 // redirect to failed page if internal error occurs
