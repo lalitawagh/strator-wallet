@@ -10,6 +10,7 @@ use Kanexy\LedgerFoundation\Entities\AssetType;
 use Kanexy\LedgerFoundation\Entities\Wallet;
 use Kanexy\LedgerFoundation\Http\Enums\AssetCategoryEnum;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Stripe;
 
 class DepositController extends Controller
@@ -60,7 +61,12 @@ class DepositController extends Controller
     public function depositPayment()
     {
         $details = session('deposit_request');
-
+        $provider = new PayPalClient;
+        $provider = \PayPal::setProvider();
+        $response = $provider->setApiCredentials(config('paypal.sandbox'));
+        // $provider->getAccessToken();
+        // $response = $provider->capturePaymentOrder('8JD359893W150113B');
+        dd($response);
         $info = [
             'username' => 'AeforqqMHXaTY851kjKzrQ904YjpVlpApPLlX42smwx0eeqNo9kJ0rX9TdMcoVZBo7AHj8kYGRSKkkqa',
             'password' => 'EOROviWARf51WzGg3NxtV8MVetp36bEZuX8JB9fyU33QjSXTSjkljVxHkeKGI-HxcxTY8fNwDtsMaEbT',
