@@ -22,7 +22,7 @@ class CommodityTypeController extends Controller
     public function store(StoreCommodityRequest $request)
     {
         $data = $request->validated();
-        $data['image'] = $request->hasFile('image') ? $request->file('image')->store('documentImages', 's3') : 'demo.jpg';
+        $data['image'] = $request->hasFile('image') ? $request->file('image')->store('walletImages', 'azure') : 'demo.jpg';
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
 
         CommodityType::create($data);
@@ -45,7 +45,7 @@ class CommodityTypeController extends Controller
         $data = $request->validated();
         if($request->hasFile('image'))
         {
-            $data['image'] = $request->file('image')->store('documentImages', 's3');
+            $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
 

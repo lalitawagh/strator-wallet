@@ -14,106 +14,37 @@
 
                 <div class="p-5">
                     <div class="nav nav-tabs flex-col sm:flex-row" role="tablist">
-                        <a id="1-tab" data-toggle="tab" data-target="#1"
+                        @foreach($wallets as $key =>  $wallet)
+                            @php
+                            $ledger = \Kanexy\LedgerFoundation\Entities\Ledger::whereId($wallet->ledger_id)->first();
+                            @endphp
+                        <a id="{{ $key }}-tab" data-toggle="tab" data-target="#{{$key}}"
                             href="javascript:;" class="flex-1 flex items-center px-3 py-2 mt-2 pb-5 font-medium">
-                            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y w-full" id="k-wallet" data-toggle="tab" data-target="#k-wallet">
+                            <div class="col-span-12 sm:col-span-4 xl:col-span-3 intro-y w-full" id="k-wallet" data-toggle="tab" data-target="#k-wallet">
                                 <div class="report-box zoom-in">
                                     <div class="box p-5">
                                         <div class="flex">
+                                            <div class="text-2xl font-bold leading-8 mt-0">{{ $ledger->name }}</div>
                                             <div class="ml-auto">
-                                                <!-- <i data-feather="shopping-cart" class="report-box__icon text-theme-10"></i> -->
                                                 <div class="flex mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
-                                                    <img alt="" class="" src="../../dist/images/icons/1.png">
+                                                    <img alt="" class="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}">
                                                 </div>
                                             </div>
+
                                         </div>
-                                        <div class="text-2xl font-bold leading-8 mt-0">K-Wallet</div>
-                                        <div class="text-base text-gray-600 mt-1">K14523698</div>
+
+                                        <div class="text-base text-gray-600 mt-1">{{ $wallet->urn }}</div>
                                         <div class="flex mt-3">
-                                            <span>Kx</span>
+                                            <span class="@if( $wallet->status == \Kanexy\LedgerFoundation\Http\Enums\WalletStatus::ACTIVE) text-theme-9 @else text-theme-6 @endif"> {{ ucfirst($wallet->status)}}</span>
                                             <div class="ml-auto">
-                                                <div class="report-box__indicator bg-theme-6 cursor-pointer"> 1500 </div>
+                                                <div class="report-box__indicator bg-theme-6 cursor-pointer"> {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($wallet?->balance) }}</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </a>
-                        <a id="2-tab" data-toggle="tab" data-target="#2"
-                            href="javascript:;" class="flex-1 flex items-center px-3 py-2 mt-2">
-                            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y w-full" id="k-wallet1" data-toggle="tab" data-target="#k-wallet1">
-                                <div class="report-box zoom-in">
-                                    <div class="box p-5">
-                                        <div class="flex">
-                                            <div class="ml-auto">
-                                                <!-- <i data-feather="shopping-cart" class="report-box__icon text-theme-10"></i> -->
-                                                <div class="flex mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
-                                                    <img alt="" class="" src="../../dist/images/icons/2.png">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="text-2xl font-bold leading-8 mt-0">Bank</div>
-                                        <div class="text-base text-gray-600 mt-1">040305 / 14523645</div>
-                                        <div class="flex mt-3">
-                                            <span>&#8356;</span>
-                                            <div class="ml-auto">
-                                                <div class="report-box__indicator bg-theme-1 cursor-pointer"> 2785.45</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a id="3-tab" data-toggle="tab" data-target="#3"
-                            href="javascript:;" class="flex-1 flex items-center px-3 py-2 mt-2">
-                            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y w-full" id="k-wallet2" data-toggle="tab" data-target="#k-wallet2">
-                                <div class="report-box zoom-in">
-                                    <div class="box p-5">
-                                        <div class="flex">
-                                            <div class="ml-auto">
-                                                <!-- <i data-feather="shopping-cart" class="report-box__icon text-theme-10"></i> -->
-                                                <div class="flex mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
-                                                    <img alt="" class="" src="../../dist/images/icons/3.png">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="text-2xl font-bold leading-8 mt-0">Bank</div>
-                                        <div class="text-base text-gray-600 mt-1">78478456214</div>
-                                        <div class="flex mt-3">
-                                            <span>&#36;</span>
-                                            <div class="ml-auto">
-                                                <div class="report-box__indicator bg-theme-9 cursor-pointer"> 954.55 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a id="4-tab" data-toggle="tab" data-target="#4"
-                            href="javascript:;" class="flex-1 flex items-center px-3 py-2 mt-2">
-                            <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y w-full" id="k-wallet3" data-toggle="tab" data-target="#k-wallet3">
-                                <div class="report-box zoom-in">
-                                    <div class="box p-5">
-                                        <div class="flex">
-                                            <div class="ml-auto">
-                                                <!-- <i data-feather="shopping-cart" class="report-box__icon text-theme-10"></i> -->
-                                                <div class="flex mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
-                                                    <img alt="" class="" src="../../dist/images/icons/4.png">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="text-2xl font-bold leading-8 mt-0">Paypal</div>
-                                        <div class="text-base text-gray-600 mt-1">7896541235</div>
-                                        <div class="flex mt-3">
-                                            <span>&#8356;</span>
-                                            <div class="ml-auto">
-                                                <div class="report-box__indicator bg-theme-26 cursor-pointer"> 785.15 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
+                        @endforeach
 
                     </div>
                     <div class="tab-content">

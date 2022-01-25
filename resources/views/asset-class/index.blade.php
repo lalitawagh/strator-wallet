@@ -36,7 +36,7 @@
                                 <tr>
                                     <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
                                     <td class="border-b dark:border-dark-5">{{ $asset_class_list->name }}</td>
-                                    <td class="border-b dark:border-dark-5"><img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('s3')->temporaryUrl($asset_class_list->image, now()->addMinutes(5)) }}"></td>
+                                    <td class="border-b dark:border-dark-5"><img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_class_list->image) }}"></td>
                                     <td class="border-b dark:border-dark-5">{{ ucfirst($asset_class_list->status) }}</td>
                                     <td class="border-b dark:border-dark-5">
                                         <div class="dropdown">

@@ -14,9 +14,9 @@ class StoreAssetClassRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'               =>    ['required'],
-            'image'              =>    ['nullable', 'image'],
-            'status'             =>    ['nullable']
+            'name'        =>    ['required'],
+            'image'       =>    ['nullable', 'image'],
+            'status'      =>    ['nullable']
         ];
     }
 }
