@@ -29,7 +29,9 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         '2021_11_11_131923_create_asset_classes_table',
         '2021_11_18_090458_create_commodity_types_table',
         '2021_11_18_090541_create_ledgers_table',
-        '2022_01_18_012628_create_fees_table'
+        '2022_01_18_012628_create_fees_table',
+        '2022_01_25_115840_add_column_in_ledgers_table',
+        '2022_01_25_122500_create_exchange_rates_table'
     ];
 
     /**
