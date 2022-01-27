@@ -30,7 +30,7 @@ class ExchangeRateController extends Controller
         $data = $request->validated();
         $data['is_hard_stop'] = $request->has('is_hard_stop') ? '1' : '0';
 
-        if(Ledger::whereId($data['base_currency'])->first()->asset_category != 'virtual' && AssetType::whereId($data['exchange_currency'])->first()->asset_category != 'virtual')
+        if(Ledger::whereId($data['base_currency'])->first()->asset_category != 'VIRTUAL' && AssetType::whereId($data['exchange_currency'])->first()->asset_category != 'virtual')
         {
             return back()->withError('Select at least one virtual currency');
         }
