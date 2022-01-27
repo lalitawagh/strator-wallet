@@ -25,11 +25,8 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
      */
 
     protected array $migrationsWithPresetDateTime = [
-        '2021_11_11_131746_create_asset_types_table',
-        '2021_11_11_131923_create_asset_classes_table',
-        '2021_11_18_090458_create_commodity_types_table',
         '2021_11_18_090541_create_ledgers_table',
-        '2022_01_18_012628_create_fees_table'
+        '2022_01_17_130105_create_wallets_table'
     ];
 
     /**

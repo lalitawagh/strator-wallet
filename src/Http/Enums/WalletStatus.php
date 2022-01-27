@@ -2,7 +2,7 @@
 
 namespace Kanexy\LedgerFoundation\Http\Enums;
 
-use MyCLabs\Enum\Enum;
+use Kanexy\Cms\Enums\Enum;
 
 class WalletStatus extends Enum {
     public const ACTIVE = 'active';

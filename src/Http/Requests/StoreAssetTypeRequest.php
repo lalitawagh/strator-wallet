@@ -8,7 +8,7 @@ class StoreAssetTypeRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        return auth()->check() && auth()->user()->isSuperAdmin();
     }
 
     public function rules()

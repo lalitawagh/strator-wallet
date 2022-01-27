@@ -3,14 +3,15 @@
 namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Kanexy\Cms\Controllers\Controller;
-use Kanexy\LedgerFoundation\Entities\AssetType;
+use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\StoreAssetTypeRequest;
 
 class AssetTypeController extends Controller
 {
     public function index()
     {
-        $asset_type_lists = AssetType::get();
+        $asset_type_lists = Setting::getValue('asset_types',[]);
+
         return view("ledger-foundation::asset-type.index", compact('asset_type_lists'));
     }
 
@@ -24,8 +25,11 @@ class AssetTypeController extends Controller
         $data = $request->validated();
         $data['image'] = $request->hasFile('image') ? $request->file('image')->store('walletImages', 'azure') : 'demo.jpg';
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
+        $data['id'] = now()->format('dmYHis');
 
-        AssetType::create($data);
+        $settings = collect(Setting::getValue('asset_types',[]))->push($data);
+
+        Setting::updateOrCreate(['key' => 'asset_types'], ['value' => $settings]);
 
         return redirect()->route("dashboard.ledger-foundation.asset-type.index")->with([
             'status' => 'success',
@@ -35,21 +39,31 @@ class AssetTypeController extends Controller
 
     public function edit($id)
     {
-        $asset_type = AssetType::findOrFail($id);
+        $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $id);
         return view("ledger-foundation::asset-type.edit", compact('asset_type'));
     }
 
     public function update(StoreAssetTypeRequest $request,$id)
     {
-        $asset_type = AssetType::findOrFail($id);
         $data = $request->validated();
+        $data['id'] = $id;
+
         if($request->hasFile('image'))
         {
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
 
-        $asset_type->update($data);
+        $settings = collect(Setting::getValue('asset_types'))->filter(function ($item) use ($id) {
+            if ($item['id'] != $id) {
+                return $item;
+            }
+        });
+
+        $settings->push($data);
+
+        Setting::updateOrCreate(['key' => 'asset_types'], ['value' => $settings]);
+
 
         return redirect()->route("dashboard.ledger-foundation.asset-type.index")->with([
             'status' => 'success',
@@ -59,8 +73,13 @@ class AssetTypeController extends Controller
 
     public function destroy($id)
     {
-        $asset_type = AssetType::findOrFail($id);
-        $asset_type->delete();
+        $settings = collect(Setting::getValue('asset_types', []))->filter(function ($item) use ($id) {
+            if ($item['id'] != $id) {
+                return $item;
+            }
+        });
+
+        Setting::updateOrCreate(['key' => 'asset_types'], ['value' => $settings]);
 
         return redirect()->route("dashboard.ledger-foundation.asset-type.index")->with([
             'status' => 'success',

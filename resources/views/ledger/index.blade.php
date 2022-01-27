@@ -38,6 +38,10 @@
 
                             <tbody>
                                 @foreach ($ledgers as $index => $ledger)
+                                @php
+                                    $assetType  = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types',[]))->firstWhere('id', $ledger->asset_type);
+                                    $assetClass = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_classes',[]))->firstWhere('id', $ledger->asset_class);
+                                @endphp
                                 <tr>
                                     <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
                                     <td class="border-b dark:border-dark-5">{{ $ledger->name }}</td>
@@ -45,8 +49,8 @@
                                     <td class="border-b dark:border-dark-5">{{ ucwords(strtolower($ledger->ledger_type)) }}</td>
                                     <td class="border-b dark:border-dark-5">{{ ucwords(strtolower(str_replace('_',' ',$ledger->exchange_type))) }}</td>
                                     <td class="border-b dark:border-dark-5">{{ ucwords(strtolower(str_replace('_',' ',$ledger->asset_category))) }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ $ledger->assetType?->name }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ $ledger->assetClass?->name }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ $assetType['name'] }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ $assetClass['name'] }}</td>
                                     <td class="border-b dark:border-dark-5">{{ ucfirst($ledger->status) }}</td>
                                     <td class="border-b dark:border-dark-5">
                                         <div class="dropdown">

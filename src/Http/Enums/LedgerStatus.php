@@ -2,9 +2,9 @@
 
 namespace Kanexy\LedgerFoundation\Http\Enums;
 
-use MyCLabs\Enum\Enum;
+use Kanexy\Cms\Enums\Enum;
 
-class LedgerStatusEnum extends Enum {
+class LedgerStatus extends Enum {
     public const NEW = 'new';
     public const ACTIVE = 'active';
     public const INACTIVE = 'inactive';

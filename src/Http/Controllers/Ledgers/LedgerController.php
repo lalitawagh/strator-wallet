@@ -2,28 +2,25 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
-use Illuminate\Http\Request;
 use Kanexy\Cms\Controllers\Controller;
-use Kanexy\LedgerFoundation\Entities\AssetClass;
-use Kanexy\LedgerFoundation\Entities\AssetType;
-use Kanexy\LedgerFoundation\Entities\CommodityType;
-use Kanexy\LedgerFoundation\Entities\Ledger;
+use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Http\Requests\StoreLedgerRequest;
 
 class LedgerController extends Controller
 {
     public function index()
     {
-        $ledgers = Ledger::with('assetType','assetClass')->paginate();
+        $ledgers = Ledger::paginate();
 
         return view("ledger-foundation::ledger.index", compact('ledgers'));
     }
 
     public function create()
     {
-        $asset_types = AssetType::get();
-        $asset_classes = AssetClass::get();
-        $commodity_types = CommodityType::get();
+        $asset_types = Setting::getValue('asset_types',[]);
+        $asset_classes = Setting::getValue('asset_classes',[]);
+        $commodity_types = Setting::getValue('commodity_types',[]);
         return view("ledger-foundation::ledger.create", compact('asset_types','asset_classes','commodity_types'));
     }
 
@@ -43,9 +40,9 @@ class LedgerController extends Controller
     public function edit($id)
     {
         $ledger = Ledger::findOrFail($id);
-        $asset_types = AssetType::get();
-        $asset_classes = AssetClass::get();
-        $commodity_types = CommodityType::get();
+        $asset_types = Setting::getValue('asset_types',[]);
+        $asset_classes = Setting::getValue('asset_classes',[]);
+        $commodity_types = Setting::getValue('commodity_types',[]);
         return view("ledger-foundation::ledger.edit", compact('ledger','asset_types','asset_classes','commodity_types'));
     }
 
@@ -75,18 +72,5 @@ class LedgerController extends Controller
             'status' => 'success',
             'message' => 'Ledger deleted successfully.'
         ]);
-    }
-
-    public function getAssetType(Request $request)
-    {
-        $asset_types = AssetType::whereAssetCategory($request->input('assetCategory'))->get();
-        $html = '';
-
-        foreach($asset_types as $asset_type)
-        {
-            $html .= '<option value="'.$asset_type->getKey().'">'.$asset_type->name.'</option>';
-        }
-
-        return $html;
     }
 }

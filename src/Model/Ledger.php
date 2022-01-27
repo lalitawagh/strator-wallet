@@ -1,6 +1,6 @@
 <?php
 
-namespace Kanexy\LedgerFoundation\Entities;
+namespace Kanexy\LedgerFoundation\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,14 +24,4 @@ class Ledger extends Model
         'image',
         'status',
     ];
-
-    public function assetClass()
-    {
-        return $this->hasOne(AssetClass::class,'id','asset_class');
-    }
-
-    public function assetType()
-    {
-        return $this->hasOne(AssetType::class,'id','asset_type');
-    }
 }

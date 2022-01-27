@@ -35,9 +35,9 @@
                                 @foreach ($asset_class_lists as $index => $asset_class_list)
                                 <tr>
                                     <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ $asset_class_list->name }}</td>
-                                    <td class="border-b dark:border-dark-5"><img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_class_list->image) }}"></td>
-                                    <td class="border-b dark:border-dark-5">{{ ucfirst($asset_class_list->status) }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ $asset_class_list['name'] }}</td>
+                                    <td class="border-b dark:border-dark-5"><img class="rounded-md proof-default" style="width:100px;" alt="" src="@isset($asset_class_list['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_class_list['image']) }}@endisset"></td>
+                                    <td class="border-b dark:border-dark-5">{{ ucfirst($asset_class_list['status']) }}</td>
                                     <td class="border-b dark:border-dark-5">
                                         <div class="dropdown">
                                             <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
@@ -46,10 +46,10 @@
 
                                             <div class="dropdown-menu w-48">
                                                 <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                    <a href="{{ route('dashboard.ledger-foundation.asset-class.edit', $asset_class_list->id) }}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                    <a href="{{ route('dashboard.ledger-foundation.asset-class.edit', $asset_class_list['id']) }}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                         <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                     </a>
-                                                    <form action="{{ route('dashboard.ledger-foundation.asset-class.destroy', $asset_class_list->id) }}" method="POST">
+                                                    <form action="{{ route('dashboard.ledger-foundation.asset-class.destroy', $asset_class_list['id']) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
 
