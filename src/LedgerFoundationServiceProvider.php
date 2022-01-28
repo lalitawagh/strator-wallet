@@ -2,8 +2,11 @@
 
 namespace Kanexy\LedgerFoundation;
 
+use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Facades\Cms;
+use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
+use Kanexy\LedgerFoundation\Http\Policies\CommodityTypePolicy;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
 use Kanexy\LedgerFoundation\Menu\WalletConfigurationMenuItem;
 use Kanexy\LedgerFoundation\Menu\WalletMenuItem;
@@ -29,6 +32,16 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         '2022_01_17_130105_create_wallets_table'
     ];
 
+    private array $policies = [
+        Setting::class => CommodityTypePolicy::class,
+    ];
+
+    public function registerDefaultPolicies()
+    {
+        foreach ($this->policies as $key => $value) {
+            Gate::policy($key, $value);
+        }
+    }
     /**
      * A new date and time for these migrations will be appended in the
      * files when published.
@@ -61,6 +74,9 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
     public function packageBooted()
     {
         parent::packageBooted();
+
+        $this->registerDefaultPolicies();
+
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletMenuItem());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletConfigurationMenuItem());
         \Kanexy\Cms\Facades\SignupViewContent::addItem(new WalletContent());
