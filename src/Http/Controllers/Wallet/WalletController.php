@@ -8,7 +8,6 @@ use Kanexy\Cms\Enums\RegistrationStep;
 use Kanexy\LedgerFoundation\Entities\Ledger;
 use Kanexy\LedgerFoundation\Entities\Wallet;
 use Kanexy\LedgerFoundation\Http\Enums\WalletStatus;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 
 class WalletController extends Controller

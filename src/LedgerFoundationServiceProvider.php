@@ -63,7 +63,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         parent::packageBooted();
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletMenuItem());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletConfigurationMenuItem());
-        \Kanexy\Cms\Facades\RegistrationContent::addItem(WalletContent::class);
+        \Kanexy\Cms\Facades\SignupViewContent::addItem(new WalletContent());
 
         Cms::setRedirectRouteAfterRegistrationEmailVerification(function (){
             return route("customer.signup.wallet.create");
