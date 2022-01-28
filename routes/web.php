@@ -48,6 +48,7 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/ledger-foundatio
     Route::name('wallet.store-deposit-payment-stripe')->post('wallet-deposit-payment-stripe', [DepositController::class, 'storeDepositPaymentStripe']);
     Route::name('wallet.store-deposit-payment-stripe-final')->post('wallet-deposit-payment-stripe-final', [DepositController::class, 'storeDepositPaymentStripeFinal']);
     Route::name('wallet.deposit-final')->get('wallet-deposit-final', [DepositController::class, 'depositFinal']);
+    Route::name('wallet.deposit-money')->get('wallet-deposit-money', [DepositController::class, 'depositMoney']);
 
 });
 

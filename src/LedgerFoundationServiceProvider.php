@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation;
 
 use Kanexy\Cms\Facades\Cms;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
+use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
 use Kanexy\LedgerFoundation\Menu\WalletConfigurationMenuItem;
 use Kanexy\LedgerFoundation\Menu\WalletMenuItem;
@@ -78,6 +79,8 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
             return route("customer.signup.wallet.create");
         });
 
+        Livewire::component('deposit-wallet-component', DepositWalletComponent::class);
         Livewire::component('ledger-config-field-component', LedgerConfigFieldComponent::class);
+
     }
 }

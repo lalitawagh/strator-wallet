@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Http;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\LedgerFoundation\Entities\AssetType;
 use Kanexy\LedgerFoundation\Entities\Wallet;
-use Kanexy\LedgerFoundation\Http\Enums\AssetCategoryEnum;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
-use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Stripe;
 
 class DepositController extends Controller
@@ -19,7 +17,7 @@ class DepositController extends Controller
     {
         $user = Auth::user();
         $wallets = Wallet::forHolder($user)->with('ledger')->get();
-        $currencies = AssetType::whereAssetCategory(AssetCategoryEnum::FIAT_CURRENCY)->get();
+        $currencies = AssetType::get();
 
         return view("ledger-foundation::wallet.deposit.deposit-initial", compact('wallets', 'currencies'));
     }
@@ -37,7 +35,9 @@ class DepositController extends Controller
             'amount'            => 'required',
             'payment_method'    => 'required'
         ]);
-        $data['fee'] = 2;
+
+        $data['fee'] = session('fee');
+        $data['currency'] = AssetType::whereId($data['currency'])->first()->name;
 
         session(['deposit_request' => $data]);
 
@@ -62,7 +62,6 @@ class DepositController extends Controller
     {
         $details = session('deposit_request');
 
-
         return view("ledger-foundation::wallet.deposit.deposit-payment",compact('details'));
     }
 
@@ -78,14 +77,14 @@ class DepositController extends Controller
         {
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
-                'amount' => $depositRequest['amount'],
+                'amount' => $depositRequest['amount'] + $depositRequest['fee'],
                 'workspace_id' => $workspace->getKey(),
                 'type' => 'credit',
                 'payment_method' => 'wallet',
                 'note' => null,
                 // 'ref_id' =>  $data['paymentDetails'][0]['payments']['captures'][0]['id'],
                 'ref_type' => 'paypal',
-                'settled_amount' => $depositRequest['amount'],
+                'settled_amount' => $depositRequest['amount'] + $depositRequest['fee'],
                 'settled_currency' => $depositRequest['currency'],
                 'settlement_date' => date('Y-m-d'),
                 'settled_at' => now(),
@@ -99,11 +98,14 @@ class DepositController extends Controller
                     'beneficiary_ref_id' => $depositRequest['wallet'],
                     'beneficiary_name' => Auth::user()->getFullName(),
                     'transaction_id' => $data['paymentDetails'][0]['payments']['captures'][0]['id'],
+                    'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
+                    'base_currency' => session('base_currency') ? session('base_currency') : null,
+                    'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                 ],
             ]);
-
+            $amount = session('exchange_rate') ? session('exchange_rate') * $depositRequest['amount'] : $depositRequest['amount'];
             $wallet = Wallet::find($depositRequest['wallet']);
-            $balance = $wallet->balance + $depositRequest['amount'];
+            $balance = $wallet->balance + $amount;
             $wallet->update(['balance' => $balance]);
         }
 
@@ -173,12 +175,15 @@ class DepositController extends Controller
                     'beneficiary_ref_id' => $depositRequest['wallet'],
                     'beneficiary_name' => Auth::user()->getFullName(),
                     'stripe_fee' => ($response['data']['transaction_fee'])/100,
-                    'stripe_receipt_url' => $response['data']['receipt_url']
+                    'stripe_receipt_url' => $response['data']['receipt_url'],
+                    'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
+                    'base_currency' => session('base_currency') ? session('base_currency') : null,
+                    'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                 ],
             ]);
-            $totalAmount = $depositRequest['amount'] - ($response['data']['transaction_fee']/100);
+            $totalAmount = session('exchange_rate') ? ($depositRequest['amount'] - ($response['data']['transaction_fee']/100)) * session('exchange_rate') : $depositRequest['amount'] - ($response['data']['transaction_fee']/100);
             $wallet = Wallet::find($depositRequest['wallet']);
-            $balance = $wallet->balance + $totalAmount;
+            $balance = $wallet?->balance + $totalAmount;
             $wallet->update(['balance' => $balance]);
         }
         return response()->json(['status' => 'success']);
@@ -188,5 +193,12 @@ class DepositController extends Controller
     {
         $details = session('deposit_request');
         return view("ledger-foundation::wallet.deposit.deposit-final",compact('details'));
+    }
+
+    public function depositMoney()
+    {
+        session()->forget(['fee', 'exchange_rate', 'exchange_currency', 'base_currency', 'wallet', 'currency', 'amount' ,'deposit_request']);
+
+        return redirect()->route('dashboard.ledger-foundation.wallet-deposit.index');
     }
 }

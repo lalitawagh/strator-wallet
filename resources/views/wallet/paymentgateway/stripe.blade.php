@@ -1,8 +1,9 @@
-
 <form role="form" action="" method="" class="require-validation" data-token-on-file="false"
     data-stripe-publishable-key="{{ config('services.stripe.stripe_key') }}" id="payment-form">
     @csrf
-    @php $total = $details['fee'] + $details['amount']; @endphp
+    @php
+        $total = $details['fee'] + $details['amount'];
+    @endphp
     <div class="overlay"></div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 required">
         <label for="horizontal-form-3" class="form-label sm:w-24">Total Amount</label>
@@ -25,34 +26,37 @@
         </div>
     </div>
     <div id="card-errors" role="alert"></div>
-
-
     <div class="text-right mt-5 form-inline text-right mt-5 float-right">
         <a href="#" class="btn btn-secondary w-20 inline-block mr-2">Preview</a>
         <button type="submit" class="btn btn-primary w-24">Submit</button>
     </div>
 </form>
 
-{{-- <script type="text/javascript" src="https://js.stripe.com/v2/"></script> --}}
 <script src="https://js.stripe.com/v3/"></script>
+
 @push('scripts')
     <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         $(document).on({
-                ajaxStart: function() {
-                    $("body").addClass("loading");
-                },
-                ajaxStop: function() {
-                    $("body").removeClass("loading");
-                }
-            });
+            ajaxStart: function() {
+                $("body").addClass("loading");
+            },
+            ajaxStop: function() {
+                $("body").removeClass("loading");
+            }
+        });
 
         (function() {
             // Create a Stripe client
-            var stripe = Stripe('{{ config('services.stripe.stripe_key') }}');
+            var stripe = Stripe("{{ config('services.stripe.stripe_key') }}");
             // Create an instance of Elements
             var elements = stripe.elements();
             // Custom styling can be passed to options when creating an Element.
-            // (Note that this demo uses a wider set of styles than the guide below.)
             var style = {
                 base: {
                     color: '#32325d',
@@ -104,12 +108,6 @@
                 });
             });
 
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
             function stripeTokenHandler(token) {
                 // Insert the token ID into the form so it gets submitted to the server
                 let csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -122,16 +120,16 @@
                 // Submit the form
                 $.ajax({
                     type: 'post',
-                    url: '/dashboard/ledger-foundation/wallet-deposit-payment-stripe',
+                    url: "{{ route('dashboard.ledger-foundation.wallet.store-deposit-payment-stripe') }}",
                     data: $('form').serialize(),
                     success: function(response) {
                         $.ajax({
                             type: 'post',
-                            url: '/dashboard/ledger-foundation/wallet-deposit-payment-stripe-final',
+                            url: "{{ route('dashboard.ledger-foundation.wallet.store-deposit-payment-stripe-final') }}",
                             data: response,
                             success: function(data) {
                                 window.location.href =
-                                    '/dashboard/ledger-foundation/wallet-deposit-final';
+                                    "{{ route('dashboard.ledger-foundation.wallet.deposit-final') }}";
                             },
                             error: function(data) {
                                 console.log('An error occurred.');

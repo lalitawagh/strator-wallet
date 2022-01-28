@@ -29,7 +29,7 @@
             </div>
 
             <div class="text-right mt-5 form-inline text-right mt-5 float-right">
-                <a href="#" class="btn btn-secondary w-20 inline-block mr-2">Previous</a>
+                <a href="{{ route('dashboard.ledger-foundation.wallet-deposit.index') }}" class="btn btn-secondary w-20 inline-block mr-2">Previous</a>
                 <button type="submit" class="btn btn-primary w-24">Next</a>
             </div>
         </div>
