@@ -6,7 +6,7 @@
                 @php $asset_categories = \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::toArray(); @endphp
                 <select name="asset_category" wire:change="changeAssetCategory($event.target.value)" id="asset_category" data-search="true" class="tail-select w-full @error('asset_category') border-theme-6 @enderror form-control">
                     @foreach($asset_categories as $key => $asset_category)
-                        <option value="{{ $asset_category }}" @if(old('asset_category') == $key) selected @endif>{{ ucwords(str_replace('_', ' ', $asset_category)) }}</option>
+                        <option value="{{ $asset_category }}" @if(old('asset_category') == $asset_category) selected @endif>{{ trans('ledger-foundation::configuration.'.$asset_category) }}</option>
                     @endforeach
                 </select>
 

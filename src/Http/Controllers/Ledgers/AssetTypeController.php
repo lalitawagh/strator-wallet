@@ -5,11 +5,14 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\StoreAssetTypeRequest;
+use Kanexy\LedgerFoundation\Policies\AssetTypePolicy;
 
 class AssetTypeController extends Controller
 {
     public function index()
     {
+        $this->authorize(AssetTypePolicy::VIEW, Setting::class);
+
         $asset_type_lists = Setting::getValue('asset_types',[]);
 
         return view("ledger-foundation::asset-type.index", compact('asset_type_lists'));
@@ -17,6 +20,8 @@ class AssetTypeController extends Controller
 
     public function create()
     {
+        $this->authorize(AssetTypePolicy::CREATE, Setting::class);
+
         return view("ledger-foundation::asset-type.create");
     }
 
@@ -39,7 +44,10 @@ class AssetTypeController extends Controller
 
     public function edit($id)
     {
+        $this->authorize(AssetTypePolicy::EDIT, Setting::class);
+
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $id);
+
         return view("ledger-foundation::asset-type.edit", compact('asset_type'));
     }
 
@@ -56,8 +64,9 @@ class AssetTypeController extends Controller
 
         $settings = collect(Setting::getValue('asset_types'))->filter(function ($item) use ($id) {
             if ($item['id'] != $id) {
-                return $item;
+                return true;
             }
+            return false;
         });
 
         $settings->push($data);
@@ -73,10 +82,13 @@ class AssetTypeController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize(AssetTypePolicy::DELETE, Setting::class);
+
         $settings = collect(Setting::getValue('asset_types', []))->filter(function ($item) use ($id) {
             if ($item['id'] != $id) {
-                return $item;
+                return true;
             }
+            return false;
         });
 
         Setting::updateOrCreate(['key' => 'asset_types'], ['value' => $settings]);

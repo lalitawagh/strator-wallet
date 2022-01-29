@@ -3,12 +3,14 @@
 namespace Kanexy\LedgerFoundation\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Kanexy\LedgerFoundation\Model\Ledger;
+use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
 
 class StoreLedgerRequest extends FormRequest
 {
     public function authorize()
     {
-        return auth()->check() && auth()->user()->isSuperAdmin();
+        return $this->user()->can(LedgerPolicy::CREATE, Ledger::class);
     }
 
     public function rules()

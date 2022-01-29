@@ -1,12 +1,12 @@
 <?php
 
-namespace Kanexy\LedgerFoundation\Http\Policies;
+namespace Kanexy\LedgerFoundation\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Kanexy\LedgerFoundation\Http\Enums\Permission;
 
-class CommodityTypePolicy
+class AssetClassPolicy
 {
     use HandlesAuthorization;
 
@@ -14,9 +14,9 @@ class CommodityTypePolicy
 
     public const CREATE = 'create';
 
-    public const DELETE = 'delete';
-
     public const EDIT = 'edit';
+
+    public const DELETE = 'delete';
 
     /**
      * Create a new policy instance.
@@ -30,21 +30,21 @@ class CommodityTypePolicy
 
     public function view(User $user)
     {
-        return $user->hasPermissionTo(Permission::COMMODITY_TYPE_VIEW);
+        return $user->hasPermissionTo(Permission::ASSET_CLASS_VIEW);
     }
 
     public function create(User $user)
     {
-        return $user->hasPermissionTo(Permission::COMMODITY_TYPE_CREATE);
-    }
-
-    public function delete(User $user)
-    {
-        return $user->hasPermissionTo(Permission::COMMODITY_TYPE_DELETE);
+        return $user->hasPermissionTo(Permission::ASSET_CLASS_CREATE);
     }
 
     public function edit(User $user)
     {
-        return $user->hasPermissionTo(Permission::COMMODITY_TYPE_EDIT);
+        return $user->hasPermissionTo(Permission::ASSET_CLASS_EDIT);
+    }
+
+    public function delete(User $user)
+    {
+        return $user->hasPermissionTo(Permission::ASSET_CLASS_DELETE);
     }
 }

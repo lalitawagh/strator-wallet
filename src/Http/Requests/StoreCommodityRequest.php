@@ -3,12 +3,14 @@
 namespace Kanexy\LedgerFoundation\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Policies\CommodityTypePolicy;
 
 class StoreCommodityRequest extends FormRequest
 {
     public function authorize()
     {
-        return auth()->check() && auth()->user()->isSuperAdmin();
+        return $this->user()->can(CommodityTypePolicy::CREATE, Setting::class);
     }
 
     public function rules()

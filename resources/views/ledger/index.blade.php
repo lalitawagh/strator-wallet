@@ -11,11 +11,9 @@
                         Ledger
                     </h2>
 
-
                     <div>
                         <a href="{{ route('dashboard.ledger-foundation.ledger.create') }}" class="btn btn-sm btn-primary shadow-md">Create New</a>
                     </div>
-
                 </div>
 
                 <div class="p-5">
@@ -35,7 +33,6 @@
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Action</th>
                             </tr>
                             </thead>
-
                             <tbody>
                                 @foreach ($ledgers as $index => $ledger)
                                 @php
@@ -49,8 +46,8 @@
                                     <td class="border-b dark:border-dark-5">{{ ucwords(strtolower($ledger->ledger_type)) }}</td>
                                     <td class="border-b dark:border-dark-5">{{ ucwords(strtolower(str_replace('_',' ',$ledger->exchange_type))) }}</td>
                                     <td class="border-b dark:border-dark-5">{{ ucwords(strtolower(str_replace('_',' ',$ledger->asset_category))) }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ $assetType['name'] }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ $assetClass['name'] }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ @$assetType['name'] }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ @$assetClass['name'] }}</td>
                                     <td class="border-b dark:border-dark-5">{{ ucfirst($ledger->status) }}</td>
                                     <td class="border-b dark:border-dark-5">
                                         <div class="dropdown">
@@ -75,16 +72,13 @@
                                             </div>
                                         </div>
                                     </td>
-
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-
-
                     </div>
                     <div class="my-2">
-
+                        {{ $ledgers->links() }}
                     </div>
                 </div>
             </div>
