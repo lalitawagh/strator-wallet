@@ -14,7 +14,6 @@ class WalletController extends Controller
 {
     public function create()
     {
-
         $user = Auth::user();
         $ledgers = Ledger::get();
 

@@ -2,11 +2,17 @@
 
 namespace Kanexy\LedgerFoundation;
 
+use App\Models\User;
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Facades\Cms;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
+use Kanexy\LedgerFoundation\Livewire\GetMembershipDetails;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
+use Kanexy\LedgerFoundation\Livewire\WalletBeneficiary;
 use Kanexy\LedgerFoundation\Menu\WalletConfigurationMenuItem;
 use Kanexy\LedgerFoundation\Menu\WalletMenuItem;
 use Kanexy\LedgerFoundation\Model\Ledger;
@@ -89,14 +95,31 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletConfigurationMenuItem());
         \Kanexy\Cms\Facades\SignupViewContent::addItem(new WalletContent());
 
-        Cms::setRedirectRouteAfterRegistrationEmailVerification(function (){
-            return route("customer.signup.wallet.create");
-        });
+
+
+        \Kanexy\Cms\Facades\Cms::setRedirectRouteAfterRegistrationVerification(function (Request $request,User $user) {
+            if($user->is_banking_user != true)
+            {
+                return route("customer.signup.wallet.create");
+            }
+
+           // return $next($request);
+            return false;
+        },3000);
+
+        // Cms::setRedirectRouteAfterRegistrationVerification(function (User $user,Closure $next, Request $request){
+        //     if($user->is_banking_user != true)
+        //     {
+        //         return route("customer.signup.wallet.create");
+        //     }
+        //     return $next($request);
+        // });
 
         PartnerFoundation::setRedirectRouteAfterBanking(function () {
             return route("customer.signup.wallet.create");
         });
 
         Livewire::component('ledger-config-field-component', LedgerConfigFieldComponent::class);
+        Livewire::component('wallet-beneficiary', WalletBeneficiary::class);
     }
 }
