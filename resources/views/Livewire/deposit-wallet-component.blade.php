@@ -5,7 +5,7 @@
             <select wire:model="wallet" name="wallet" class="form-control" >
                 <option value="">Select Wallet</option>
                 @foreach ($wallets as $wallet)
-                    <option value="{{ $wallet->getKey() }}" @if(session('wallet') == $wallet->getKey()) selected @endif>{{ $wallet->ledger->name }}</option>
+                    <option value="{{ $wallet->getKey() }}" @if(session('wallet') == $wallet->getKey()) selected @endif>{{ $wallet->ledger?->name }}</option>
                 @endforeach
             </select>
             <span class="block text-theme-6 mt-2"></span>
@@ -17,7 +17,7 @@
             <select wire:change="changeCurrency($event.target.value)" name="currency" id="currency" class="form-control">
                 <option value="">Select Currency</option>
                 @foreach ($currencies as $currencies)
-                    <option value="{{ $currencies->getKey() }}" @if(session('currency') == $currencies->getKey()) selected @endif>{{ $currencies->name }}</option>
+                    <option value="{{ $currencies->getKey() }}" @if(session('currency') == $currencies->getKey()) selected @endif>{{ $currencies?->name }}</option>
                 @endforeach
             </select>
             <span class="block text-theme-6 mt-2"></span>
