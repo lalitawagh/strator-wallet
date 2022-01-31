@@ -43,12 +43,12 @@
                                     <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
                                     <td class="border-b dark:border-dark-5">{{ $ledger->name }}</td>
                                     <td class="border-b dark:border-dark-5"><img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}"></td>
-                                    <td class="border-b dark:border-dark-5">{{ ucwords(strtolower($ledger->ledger_type)) }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ ucwords(strtolower(str_replace('_',' ',$ledger->exchange_type))) }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ ucwords(strtolower(str_replace('_',' ',$ledger->asset_category))) }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$ledger->ledger_type) }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$ledger->exchange_type) }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$ledger->asset_category) }}</td>
                                     <td class="border-b dark:border-dark-5">{{ @$assetType['name'] }}</td>
                                     <td class="border-b dark:border-dark-5">{{ @$assetClass['name'] }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ ucfirst($ledger->status) }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$ledger->status) }}</td>
                                     <td class="border-b dark:border-dark-5">
                                         <div class="dropdown">
                                             <button class="dropdown-toggle btn btn-sm" aria-expanded="false">

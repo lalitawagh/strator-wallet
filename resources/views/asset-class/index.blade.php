@@ -38,7 +38,7 @@
                                                 style="width:100px;" alt=""
                                                 src="@isset($asset_class_list['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_class_list['image']) }}@endisset">
                                             </td>
-                                            <td class="border-b dark:border-dark-5"> {{ trans('ledger-foundation::configuration.'.$asset_class_list['status']); }}
+                                            <td class="border-b dark:border-dark-5"> {{ trans('ledger-foundation::configuration.'.$asset_class_list['status']) }}
                                             </td>
                                             <td class="border-b dark:border-dark-5">
                                                 <div class="dropdown">
