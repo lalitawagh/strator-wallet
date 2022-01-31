@@ -14,12 +14,13 @@ class WalletController extends Controller
 {
     public function create()
     {
+
         $user = Auth::user();
         $ledgers = Ledger::get();
 
         collect($ledgers)->map(function ($ledger) use($user) {
 
-            if($ledger->status == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::ACTIVE && $ledger->ledger_type == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::ACTIVE)
+            if($ledger->status == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::ACTIVE && $ledger->ledger_type == \Kanexy\LedgerFoundation\Http\Enums\LedgerType::WALLET)
             {
                 $data = [
                     "name" => $user->getFullName(),
@@ -33,7 +34,6 @@ class WalletController extends Controller
 
                 Wallet::create($data);
             }
-
         });
 
         if($user->is_banking_user == 1)
