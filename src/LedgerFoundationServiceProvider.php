@@ -2,6 +2,8 @@
 
 namespace Kanexy\LedgerFoundation;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Facades\Cms;
 use Kanexy\Cms\Setting\Models\Setting;
@@ -14,6 +16,7 @@ use Kanexy\LedgerFoundation\Policies\AssetClassPolicy;
 use Kanexy\LedgerFoundation\Policies\AssetTypePolicy;
 use Kanexy\LedgerFoundation\Policies\CommodityTypePolicy;
 use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
+use Kanexy\LedgerFoundation\Wallet\MembershipServiceSelectionContent;
 use Kanexy\LedgerFoundation\Wallet\WalletContent;
 use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
 use Livewire\Livewire;
@@ -87,11 +90,16 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
 
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletMenuItem());
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletConfigurationMenuItem());
-        \Kanexy\Cms\Facades\SignupViewContent::addItem(new WalletContent());
+        \Kanexy\Cms\Facades\MembershipServiceSelection::addItem(new MembershipServiceSelectionContent());
 
-        Cms::setRedirectRouteAfterRegistrationEmailVerification(function (){
-            return route("customer.signup.wallet.create");
-        });
+        \Kanexy\Cms\Facades\Cms::setRedirectRouteAfterRegistrationVerification(function (Request $request,User $user) {
+            if($user->is_banking_user != true)
+            {
+                return route("customer.signup.wallet.create");
+            }
+
+            return false;
+        },3000);
 
         PartnerFoundation::setRedirectRouteAfterBanking(function () {
             return route("customer.signup.wallet.create");
