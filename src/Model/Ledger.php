@@ -1,6 +1,6 @@
 <?php
 
-namespace Kanexy\LedgerFoundation\Entities;
+namespace Kanexy\LedgerFoundation\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

@@ -47,10 +47,10 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="ledger_type" class="form-label sm:w-28">Ledger Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $ledger_types = \Kanexy\LedgerFoundation\Http\Enums\LedgerTypeEnum::toArray(); @endphp
+                                    @php $ledger_types = \Kanexy\LedgerFoundation\Http\Enums\LedgerType::toArray(); @endphp
                                     <select name="ledger_type" id="ledger_type" data-search="true" class="tail-select w-full @error('ledger_type') border-theme-6 @enderror">
                                         @foreach($ledger_types as $key => $ledger_type)
-                                            <option value="{{$key}}">{{ ucfirst(strtolower($ledger_type)) }}</option>
+                                            <option value="{{ $ledger_type }}">{{ trans('ledger-foundation::configuration.'.$ledger_type) }}</option>
                                         @endforeach
                                     </select>
 
@@ -78,10 +78,10 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_type" class="form-label sm:w-28">Exchange Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $exchange_types = \Kanexy\LedgerFoundation\Http\Enums\ExchangeTypeEnum::toArray(); @endphp
+                                    @php $exchange_types = \Kanexy\LedgerFoundation\Http\Enums\ExchangeType::toArray(); @endphp
                                     <select name="exchange_type" id="exchange_type"  data-search="true" class="tail-select w-full @error('exchange_type') border-theme-6 @enderror">
                                         @foreach($exchange_types as $key => $exchange_type)
-                                            <option value="{{$key}}">{{ ucwords(str_replace('_', ' ', $exchange_type)) }}</option>
+                                            <option value="{{ $exchange_type }}">{{ trans('ledger-foundation::configuration.'.$exchange_type) }}</option>
                                         @endforeach
                                     </select>
 
@@ -105,31 +105,17 @@
                             </div>
                         </div>
 
-
+                        @livewire('ledger-config-field-component', ['asset_types' => $asset_types])
 
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="asset_category" class="form-label sm:w-28">Asset Category <span class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    @php $asset_categories = \Kanexy\LedgerFoundation\Http\Enums\AssetCategoryEnum::toArray(); @endphp
-                                    <select name="asset_category" onchange="getAssetCategory(this)" id="asset_category" data-search="true" class="tail-select w-full @error('asset_category') border-theme-6 @enderror">
-                                        @foreach($asset_categories as $key => $asset_category)
-                                            <option value="{{$key}}" @if(old('asset_category') == $key) selected @endif>{{ ucwords(str_replace('_', ' ', $asset_category)) }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('asset_category')
-                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_from" class="form-label sm:w-28">Exchange From  <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
+                                    @php $exchange_from = \Kanexy\LedgerFoundation\Http\Enums\ExchangeFrom::toArray(); @endphp
                                     <select name="exchange_from" id="exchange_from" data-search="true" class="tail-select w-full @error('exchange_from') border-theme-6 @enderror">
-                                        <option value="Railsbank" @if(old('exchange_from') == 'railsbank') selected @endif>Railsbank</option>
-                                        <option value="local" @if(old('exchange_from') == 'local') selected @endif>Local</option>
+                                        @foreach($exchange_from as $key => $exchange_from_val)
+                                            <option value="{{ $exchange_from_val }}" @if(old('exchange_from') == $exchange_from_val) selected @endif>{{ trans('ledger-foundation::configuration.'.$exchange_from_val) }}</option>
+                                        @endforeach
                                     </select>
 
                                     @error('exchange_from')
@@ -137,23 +123,7 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="asset_type" class="form-label sm:w-28"> Asset Type <span class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <select name="asset_type" id="asset_type" data-search="true" class="tail-select w-full  @error('asset_type') border-theme-6 @enderror">
-                                        @foreach ($asset_types as $asset_type)
-                                            <option value="{{$asset_type->id}}" @if(old('asset_type') == $asset_type->id) selected @endif>{{ ucfirst($asset_type->name) }}</option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('asset_type')
-                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="logo" class="form-label sm:w-28"> Logo </label>
@@ -173,7 +143,7 @@
                                 <div class="sm:w-5/6">
                                     <select name="asset_class" id="asset_class" data-search="true" class="tail-select w-full @error('asset_class') border-theme-6 @enderror">
                                         @foreach ($asset_classes as $asset_class)
-                                            <option value="{{$asset_class->id}}" @if(old('asset_class') == $asset_class->id) selected @endif>{{ ucfirst($asset_class->name) }}</option>
+                                            <option value="{{ $asset_class['id'] }}" @if(old('asset_class') == $asset_class['id']) selected @endif>{{ ucfirst($asset_class['name']) }}</option>
                                         @endforeach
                                     </select>
 
@@ -188,7 +158,7 @@
                                 <div class="sm:w-5/6">
                                     <select name="commodity_category" id="commodity_category" data-search="true" class="tail-select w-full @error('commodity_category') border-theme-6 @enderror">
                                         @foreach ($commodity_types as $commodity_type)
-                                            <option value="{{$commodity_type->id}}" @if(old('commodity_category') == $commodity_type->id) selected @endif>{{ ucfirst($commodity_type->name) }}</option>
+                                            <option value="{{ $commodity_type['id'] }}" @if(old('commodity_category') == $commodity_type['id']) selected @endif>{{ ucfirst($commodity_type['name']) }}</option>
                                         @endforeach
                                     </select>
 
@@ -204,10 +174,11 @@
                                 <label for="status" class="form-label sm:w-28"> Status</label>
                                 <div class="sm:w-5/6">
                                     <select name="status" id="status" data-search="true" class="tail-select w-full">
-                                        <option value="new" @if(old("status")  === 'active') checked @endif>New</option>
-                                        <option value="active" @if(old("status")  === 'active') checked @endif>Active</option>
-                                        <option value="hold" @if(old("status")  === 'active') checked @endif>Hold</option>
-                                        <option value="suspended" @if(old("suspended")  === 'active') checked @endif>Suspended</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::NEW }}" @if(old("status")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::NEW) checked @endif>{{ trans('ledger-foundation::configuration.new') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::ACTIVE }}" @if(old("status")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::ACTIVE) checked @endif>{{ trans('ledger-foundation::configuration.active') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::INACTIVE }}" @if(old("status")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::INACTIVE) checked @endif>{{ trans('ledger-foundation::configuration.inactive') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::HOLD }}" @if(old("status")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::HOLD) checked @endif>{{ trans('ledger-foundation::configuration.hold') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::SUSPENDED }}" @if(old("suspended")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::SUSPENDED) checked @endif>{{ trans('ledger-foundation::configuration.suspended') }}</option>
                                     </select>
                                     @error('status')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -225,25 +196,5 @@
             </div>
         </div>
     </div>
-
 @endsection
 
-@push('scripts')
-{{-- <script>
-    function getAssetCategory(the)
-    {
-        var assetCategory = $(the).val();
-        $.ajax({
-            type: 'POST',
-            url: "{{ route('dashboard.ledger.getAssetType')}}",
-            data: {
-                assetCategory : assetCategory,
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(resultData) {
-                $('#asset_type').html(resultData);
-            }
-        });
-    }
-</script> --}}
-@endpush

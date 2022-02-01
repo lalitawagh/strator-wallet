@@ -3,29 +3,38 @@
 namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Kanexy\Cms\Controllers\Controller;
-use Kanexy\LedgerFoundation\Entities\CommodityType;
+use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\StoreCommodityRequest;
+use Kanexy\LedgerFoundation\Policies\CommodityTypePolicy;
 
 class CommodityTypeController extends Controller
 {
     public function index()
     {
-        $commodity_type_lists = CommodityType::get();
+        $this->authorize(CommodityTypePolicy::VIEW, Setting::class);
+
+        $commodity_type_lists = Setting::getValue('commodity_types',[]);
+
         return view("ledger-foundation::commodity-type.index", compact('commodity_type_lists'));
     }
 
     public function create()
     {
+        $this->authorize(CommodityTypePolicy::CREATE, Setting::class);
+
         return view("ledger-foundation::commodity-type.create");
     }
 
     public function store(StoreCommodityRequest $request)
     {
         $data = $request->validated();
-        $data['image'] = $request->hasFile('image') ? $request->file('image')->store('documentImages', 's3') : 'demo.jpg';
+        $data['image'] = $request->hasFile('image') ? $request->file('image')->store('walletImages', 'azure') : 'demo.jpg';
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
+        $data['id'] = now()->format('dmYHis');
 
-        CommodityType::create($data);
+        $settings = collect(Setting::getValue('commodity_types',[]))->push($data);
+
+        Setting::updateOrCreate(['key' => 'commodity_types'], ['value' => $settings]);
 
         return redirect()->route("dashboard.ledger-foundation.commodity-type.index")->with([
             'status' => 'success',
@@ -35,21 +44,34 @@ class CommodityTypeController extends Controller
 
     public function edit($id)
     {
-        $commodity_type = CommodityType::findOrFail($id);
+        $this->authorize(CommodityTypePolicy::EDIT, Setting::class);
+
+        $commodity_type = collect(Setting::getValue('commodity_types',[]))->firstWhere('id', $id);
+
         return view("ledger-foundation::commodity-type.edit", compact('commodity_type'));
     }
 
     public function update(StoreCommodityRequest $request,$id)
     {
-        $commodity_type = CommodityType::findOrFail($id);
         $data = $request->validated();
+        $data['id'] = $id;
+
         if($request->hasFile('image'))
         {
-            $data['image'] = $request->file('image')->store('documentImages', 's3');
+            $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
 
-        $commodity_type->update($data);
+        $settings = collect(Setting::getValue('commodity_types'))->filter(function ($item) use ($id) {
+            if ($item['id'] != $id) {
+                return true;
+            }
+            return false;
+        });
+
+        $settings->push($data);
+
+        Setting::updateOrCreate(['key' => 'commodity_types'], ['value' => $settings]);
 
         return redirect()->route("dashboard.ledger-foundation.commodity-type.index")->with([
             'status' => 'success',
@@ -59,8 +81,16 @@ class CommodityTypeController extends Controller
 
     public function destroy($id)
     {
-        $commodity_type = CommodityType::findOrFail($id);
-        $commodity_type->delete();
+        $this->authorize(CommodityTypePolicy::DELETE, Setting::class);
+
+        $settings = collect(Setting::getValue('commodity_types', []))->filter(function ($item) use ($id) {
+            if ($item['id'] != $id) {
+                return true;
+            }
+            return false;
+        });
+
+        Setting::updateOrCreate(['key' => 'commodity_types'], ['value' => $settings]);
 
         return redirect()->route("dashboard.ledger-foundation.commodity-type.index")->with([
             'status' => 'success',

@@ -2,9 +2,9 @@
 
 namespace Kanexy\LedgerFoundation\Http\Enums;
 
-use MyCLabs\Enum\Enum;
+use Kanexy\Cms\Enums\Enum;
 
-class ExchangeTypeEnum extends Enum {
+class ExchangeType extends Enum {
    public const FIAT = 'fiat';
    public const NON_FIAT = 'non_fiat';
 

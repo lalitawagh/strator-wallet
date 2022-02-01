@@ -13,17 +13,17 @@
                 </div>
 
                 <div class="p-5">
-                    <form action="{{ route('dashboard.ledger-foundation.asset-type.update',$asset_type->getKey()) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.ledger-foundation.asset-type.update',$asset_type['id']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="asset_category" class="form-label sm:w-30">Asset Category <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $asset_categories = \Kanexy\LedgerFoundation\Http\Enums\AssetCategoryEnum::toArray(); @endphp
+                                    @php $asset_categories = \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::toArray(); @endphp
                                     <select name="asset_category" id="asset_category" data-search="true" class="tail-select w-full @error('asset_category') border-theme-6 @enderror">
                                         @foreach($asset_categories as $key => $asset_category)
-                                            <option value="{{$key}}" @if(old('asset_category',$asset_type->asset_category) == $key) selected @endif>{{ ucwords(str_replace('_', ' ', $asset_category)) }}</option>
+                                            <option value="{{ $asset_category }}" @if(old('asset_category',$asset_type['asset_category']) == $asset_category) selected @endif>{{ trans('ledger-foundation::configuration.'.$asset_category) }}</option>
                                         @endforeach
                                     </select>
 
@@ -38,7 +38,7 @@
                                 <div class="sm:w-5/6">
                                     <input id="name" name="name" type="text"
                                         class="form-control @error('name') border-theme-6 @enderror"
-                                        value="{{ old('name',$asset_type->name) }}" required>
+                                        value="{{ old('name',$asset_type['name']) }}" required>
 
                                     @error('name')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -52,7 +52,7 @@
                                 <label for="logo" class="form-label sm:w-30"> Image </label>
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">
-                                    <img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('s3')->temporaryUrl($asset_type->image, now()->addMinutes(5)) }}">
+                                    <img class="rounded-md proof-default" style="width:100px;" alt="" src="@isset($asset_type_list['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_type['image']) }}@endisset">
                                     @error('image')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
@@ -62,7 +62,7 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-28"> Active</label>
                                 <div class="sm:w-5/6">
-                                    <input id="status" name="status" type="checkbox" class="form-check-switch" @if(old("status",$asset_type->status)  === 'active') checked @endif>
+                                    <input id="status" name="status" type="checkbox" class="form-check-switch" @if(old("status",$asset_type['status'])  === \Kanexy\LedgerFoundation\Http\Enums\WalletStatus::ACTIVE) checked @endif>
 
                                     @error('status')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
