@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Kanexy\Cms\Controllers\Controller;
-use Kanexy\LedgerFoundation\Entities\AssetType;
-use Kanexy\LedgerFoundation\Entities\Wallet;
+use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Stripe;
 
@@ -17,7 +17,7 @@ class DepositController extends Controller
     {
         $user = Auth::user();
         $wallets = Wallet::forHolder($user)->with('ledger')->get();
-        $currencies = AssetType::get();
+        $currencies = Setting::getValue('asset_types',[]);
 
         return view("ledger-foundation::wallet.deposit.deposit-initial", compact('wallets', 'currencies'));
     }
@@ -36,8 +36,10 @@ class DepositController extends Controller
             'payment_method'    => 'required'
         ]);
 
+        $asset_type = Setting::getValue('asset_types',[])->firstWhere('id', $data['currency']);
+
         $data['fee'] = session('fee');
-        $data['currency'] = AssetType::whereId($data['currency'])->first()->name;
+        $data['currency'] = $asset_type['name'];
 
         session(['deposit_request' => $data]);
 

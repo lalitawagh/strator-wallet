@@ -3,27 +3,30 @@
 @section("title", "Edit Asset Type")
 
 @section("config-content")
-    <div class="col-span-12 lg:col-span-8 xxl:col-span-9">
-        <div class="intro-y box">
-            <div class="box">
-                <div class="flex items-center py-2 px-3 border-b border-gray-200 dark:border-dark-5">
-                    <h2 class="font-medium text-base mr-auto">
-                        Edit Asset Type
-                    </h2>
-                </div>
+    <div class="configuration-container">
+        <div class="grid grid-cols-12 gap-6">
+            <!-- BEGIN: Daily Sales -->
+            <div class="intro-y box col-span-12 xxl:col-span-12">
+                <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
+                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+                        <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <a href="" class="breadcrumb--active">Edit Asset Type</a>
+                    </div>
+                </div>
                 <div class="p-5">
-                    <form action="{{ route('dashboard.ledger-foundation.asset-type.update',$asset_type->getKey()) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.ledger-foundation.asset-type.update',$asset_type['id']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="asset_category" class="form-label sm:w-30">Asset Category <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $asset_categories = \Kanexy\LedgerFoundation\Http\Enums\AssetCategoryEnum::toArray(); @endphp
+                                    @php $asset_categories = \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::toArray(); @endphp
                                     <select name="asset_category" id="asset_category" data-search="true" class="tail-select w-full @error('asset_category') border-theme-6 @enderror">
                                         @foreach($asset_categories as $key => $asset_category)
-                                            <option value="{{ $asset_category }}" @if(old('asset_category',$asset_type->asset_category) == $asset_category) selected @endif>{{ ucwords(str_replace('_', ' ', $asset_category)) }}</option>
+                                            <option value="{{ $asset_category }}" @if(old('asset_category',$asset_type['asset_category']) == $asset_category) selected @endif>{{ trans('ledger-foundation::configuration.'.$asset_category) }}</option>
                                         @endforeach
                                     </select>
 
@@ -38,7 +41,7 @@
                                 <div class="sm:w-5/6">
                                     <input id="name" name="name" type="text"
                                         class="form-control @error('name') border-theme-6 @enderror"
-                                        value="{{ old('name',$asset_type->name) }}" required>
+                                        value="{{ old('name',$asset_type['name']) }}" required>
 
                                     @error('name')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -52,7 +55,7 @@
                                 <label for="logo" class="form-label sm:w-30"> Image </label>
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">
-                                    <img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_type->image) }}">
+                                    <img class="rounded-md proof-default" style="width:100px;" alt="" src="@isset($asset_type_list['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_type['image']) }}@endisset">
                                     @error('image')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
@@ -62,7 +65,7 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-28"> Active</label>
                                 <div class="sm:w-5/6">
-                                    <input id="status" name="status" type="checkbox" class="form-check-switch" @if(old("status",$asset_type->status)  === 'active') checked @endif>
+                                    <input id="status" name="status" type="checkbox" class="form-check-switch" @if(old("status",$asset_type['status'])  === \Kanexy\LedgerFoundation\Http\Enums\WalletStatus::ACTIVE) checked @endif>
 
                                     @error('status')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -78,6 +81,8 @@
                     </form>
                 </div>
             </div>
+            <!-- END: Daily Sales -->
+
         </div>
     </div>
 @endsection

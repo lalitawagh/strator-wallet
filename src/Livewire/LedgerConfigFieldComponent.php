@@ -2,7 +2,7 @@
 
 namespace Kanexy\LedgerFoundation\Livewire;
 
-use Kanexy\LedgerFoundation\Entities\AssetType;
+use Kanexy\Cms\Setting\Models\Setting;
 use Livewire\Component;
 
 class LedgerConfigFieldComponent extends Component
@@ -20,7 +20,8 @@ class LedgerConfigFieldComponent extends Component
     public function changeAssetCategory($value)
     {
         $this->asset_category = $value;
-        $this->asset_types = AssetType::whereAssetCategory($value)->get();
+        $this->asset_types = collect(Setting::getValue('asset_types',[]))->where('asset_category', $value);
+
     }
 
     public function render()

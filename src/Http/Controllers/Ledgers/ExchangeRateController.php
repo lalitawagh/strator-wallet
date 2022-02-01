@@ -3,24 +3,24 @@
 namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Kanexy\Cms\Controllers\Controller;
-use Kanexy\LedgerFoundation\Entities\AssetType;
-use Kanexy\LedgerFoundation\Entities\ExchangeRate;
-use Kanexy\LedgerFoundation\Entities\Ledger;
+use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\StoreExchangeRateRequest;
+use Kanexy\LedgerFoundation\Model\ExchangeRate;
+use Kanexy\LedgerFoundation\Model\Ledger;
 
 class ExchangeRateController extends Controller
 {
     public function index()
     {
-        $exchange_rates = ExchangeRate::with('assetType','ledger')->paginate();
+        $exchange_rates = ExchangeRate::with('ledger')->paginate();
 
         return view("ledger-foundation::exchange-rate.index", compact('exchange_rates'));
     }
 
     public function create()
     {
-        $asset_types = AssetType::get();
         $ledgers = Ledger::get();
+        $asset_types = Setting::getValue('asset_types',[]);
 
         return view("ledger-foundation::exchange-rate.create", compact('asset_types','ledgers'));
     }
@@ -30,7 +30,9 @@ class ExchangeRateController extends Controller
         $data = $request->validated();
         $data['is_hard_stop'] = $request->has('is_hard_stop') ? '1' : '0';
 
-        if(Ledger::whereId($data['base_currency'])->first()->asset_category != 'VIRTUAL' && AssetType::whereId($data['exchange_currency'])->first()->asset_category != 'virtual')
+        $asset_type = Setting::getValue('asset_types',[])->firstWhere('id', $data['exchange_currency']);
+
+        if(Ledger::whereId($data['base_currency'])->first()->asset_category != 'VIRTUAL' &&  $asset_type['asset_category'] != 'virtual')
         {
             return back()->withError('Select at least one virtual currency');
         }
@@ -45,7 +47,7 @@ class ExchangeRateController extends Controller
 
     public function edit($id)
     {
-        $asset_types = AssetType::get();
+        $asset_types = Setting::getValue('asset_types',[]);
         $ledgers = Ledger::get();
         $exchange_rate = ExchangeRate::findOrFail($id);
 
@@ -56,7 +58,10 @@ class ExchangeRateController extends Controller
     {
         $exchange_rate = ExchangeRate::findOrFail($id);
         $data = $request->validated();
-        if(Ledger::whereId($data['base_currency'])->first()->asset_category != 'virtual' && AssetType::whereId($data['exchange_currency'])->first()->asset_category != 'virtual')
+
+        $asset_type = Setting::getValue('asset_types',[])->firstWhere('id', $data['exchange_currency']);
+
+        if(Ledger::whereId($data['base_currency'])->first()->asset_category != 'virtual' && $asset_type['asset_category'] != 'virtual')
         {
             return back()->withError('Select at least one virtual currency');
         }

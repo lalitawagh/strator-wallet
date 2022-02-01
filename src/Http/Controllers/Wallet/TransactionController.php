@@ -2,11 +2,9 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Controllers\Controller;
-use Kanexy\LedgerFoundation\Entities\Wallet;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
+use Kanexy\LedgerFoundation\Model\Wallet;
 
 class TransactionController extends Controller
 {

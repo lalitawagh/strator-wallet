@@ -16,7 +16,7 @@
                     <div class="nav nav-tabs flex-col sm:flex-row" role="tablist">
                         @foreach($wallets as $key =>  $wallet)
                             @php
-                            $ledger = \Kanexy\LedgerFoundation\Entities\Ledger::whereId($wallet->ledger_id)->first();
+                            $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
                             @endphp
                         <a id="{{ $key }}-tab" data-toggle="tab" data-target="#{{$key}}"
                             href="javascript:;" class="flex-1 flex items-center px-3 py-2 mt-2 pb-5 font-medium">
@@ -24,16 +24,16 @@
                                 <div class="report-box zoom-in">
                                     <div class="box p-5">
                                         <div class="flex">
-                                            <div class="text-2xl font-bold leading-8 mt-0">{{ $ledger->name }}</div>
+                                            <div class="text-2xl font-bold leading-8 mt-0">{{ $ledger?->name }}</div>
                                             <div class="ml-auto">
                                                 <div class="flex mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
-                                                    <img alt="" class="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}">
+                                                    <img alt="" class="" src="@isset($ledger?->image){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}@endisset">
                                                 </div>
                                             </div>
 
                                         </div>
 
-                                        <div class="text-base text-gray-600 mt-1">{{ $wallet->urn }}</div>
+                                        <div class="text-base text-gray-600 mt-1">{{ $wallet?->urn }}</div>
                                         <div class="flex mt-3">
                                             <span class="@if( $wallet->status == \Kanexy\LedgerFoundation\Http\Enums\WalletStatus::ACTIVE) text-theme-9 @else text-theme-6 @endif"> {{ ucfirst($wallet->status)}}</span>
                                             <div class="ml-auto">

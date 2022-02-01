@@ -2,8 +2,7 @@
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="wallet" class="form-label sm:w-40"> Wallet <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">
-            <select wire:model="wallet" name="wallet" class="form-control" >
-                <option value="">Select Wallet</option>
+            <select wire:change="changeBaseCurrency($event.target.value)" name="wallet" class="form-control">
                 @foreach ($wallets as $wallet)
                     <option value="{{ $wallet->getKey() }}" @if(session('wallet') == $wallet->getKey()) selected @endif>{{ $wallet->ledger?->name }}</option>
                 @endforeach
@@ -16,8 +15,8 @@
         <div class="sm:w-5/6">
             <select wire:change="changeCurrency($event.target.value)" name="currency" id="currency" class="form-control">
                 <option value="">Select Currency</option>
-                @foreach ($currencies as $currencies)
-                    <option value="{{ $currencies->getKey() }}" @if(session('currency') == $currencies->getKey()) selected @endif>{{ $currencies?->name }}</option>
+                @foreach ($currencies as $currency)
+                    <option value="{{ $currency['id'] }}" @if(session('currency') == $currency['id']) selected @endif>{{ $currency['name'] }}</option>
                 @endforeach
             </select>
             <span class="block text-theme-6 mt-2"></span>

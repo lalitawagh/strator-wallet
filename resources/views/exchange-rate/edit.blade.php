@@ -1,17 +1,20 @@
-@extends("cms::dashboard.layouts.default")
+@extends("ledger-foundation::config-skeleton")
 
 @section("title", "Exchange Rate")
 
-@section("content")
-    <div class="grid grid-cols-12 gap-6">
-        <div class="col-span-12">
-            <div class="box">
-                <div class="flex items-center py-2 px-3 border-b border-gray-200 dark:border-dark-5">
-                    <h2 class="font-medium text-base mr-auto">
-                        Edit Exchange Rate
-                    </h2>
-                </div>
+@section("config-content")
+    <div class="configuration-container">
+        <div class="grid grid-cols-12 gap-6">
+            <!-- BEGIN: Daily Sales -->
+            <div class="intro-y box col-span-12 xxl:col-span-12">
+                <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
+                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+                        <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <a href="" class="breadcrumb--active">Edit Exchange rate</a>
+                    </div>
+                </div>
                 <div class="p-5">
                     @if (Session::has('error'))
                     <span class="block text-theme-6">{{ Session::get('error') }}</span>
@@ -41,7 +44,7 @@
                                 <div class="sm:w-5/6">
                                     <select name="exchange_currency" id="exchange_currency" class="tail-select">
                                         @foreach ($asset_types as $asset_type)
-                                            <option value="{{ $asset_type->getKey() }}" @if($exchange_rate->exchange_currency == $asset_type->getKey()) selected @endif>{{ $asset_type->name }}</option>
+                                            <option value="{{ $asset_type['id'] }}" @if($exchange_rate->exchange_currency == $asset_type['id']) selected @endif>{{ $asset_type['name'] }}</option>
                                         @endforeach
                                     </select>
 
@@ -149,22 +152,3 @@
 
 @endsection
 
-@push('scripts')
-{{-- <script>
-    function getAssetCategory(the)
-    {
-        var assetCategory = $(the).val();
-        $.ajax({
-            type: 'POST',
-            url: "{{ route('dashboard.ledger.getAssetType')}}",
-            data: {
-                assetCategory : assetCategory,
-                _token: "{{ csrf_token() }}"
-            },
-            success: function(resultData) {
-                $('#asset_type').html(resultData);
-            }
-        });
-    }
-</script> --}}
-@endpush

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kanexy\LedgerFoundation\Entities;
+namespace Kanexy\LedgerFoundation\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,11 +19,6 @@ class ExchangeRate extends Model
         'exchange_rate',
         'note'
     ];
-
-    public function assetType()
-    {
-        return $this->hasOne(AssetType::class,'id','exchange_currency');
-    }
 
     public function ledger()
     {
