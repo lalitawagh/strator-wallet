@@ -20,10 +20,10 @@ class WalletMenuItem extends Item
         $user = Auth::user();
 
         if($user->isSubscriber()) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public function getSubmenu(): array
@@ -37,8 +37,6 @@ class WalletMenuItem extends Item
             new MenuItem('Exchange', 'activity',url: route('dashboard.ledger-foundation.wallet-exchange.index')),
             new MenuItem('Transfers', 'activity'),
             new MenuItem('Disputes', 'activity',url: route('dashboard.ledger-foundation.dispute.index')),
-            new MenuItem('Configuration', 'activity',url: route('dashboard.ledger-foundation.ledger.index')),
-
         ];
     }
 }

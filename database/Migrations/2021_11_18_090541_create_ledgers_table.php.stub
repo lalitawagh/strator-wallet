@@ -1,0 +1,44 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateLedgersTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('ledgers', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('code');
+            $table->string('ledger_type');
+            $table->string('symbol');
+            $table->string('exchange_type');
+            $table->unsignedFloat('exchange_rate');
+            $table->string('exchange_from');
+            $table->string('asset_category');
+            $table->string('asset_class');
+            $table->string('asset_type');
+            $table->string('commodity_category');
+            $table->string('image')->nullable();
+            $table->string('status')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('ledgers');
+    }
+}

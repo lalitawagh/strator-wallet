@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="p-5">
-                    <form action="{{ route('dashboard.ledger-foundation.asset-class.update',$asset_class->getKey()) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.ledger-foundation.asset-class.update',$asset_class['id']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
@@ -25,7 +25,7 @@
                                 <div class="sm:w-5/6">
                                     <input id="name" name="name" type="text"
                                         class="form-control @error('name') border-theme-6 @enderror"
-                                        value="{{ old('name',$asset_class->name) }}" required>
+                                        value="{{ old('name',$asset_class['name']) }}" required>
 
                                     @error('name')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -37,7 +37,7 @@
                                 <label for="logo" class="form-label sm:w-28"> Image </label>
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">
-                                    <img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('s3')->temporaryUrl($asset_class->image, now()->addMinutes(5)) }}">
+                                    <img class="rounded-md proof-default" style="width:100px;" alt="" src="@isset($asset_class['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_class['image']) }}@endisset">
                                     @error('image')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
@@ -49,7 +49,7 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-28"> Status</label>
                                 <div class="sm:w-5/6">
-                                    <input id="status" name="status" type="checkbox" class="form-check-switch" @if($asset_class->status == 'active') checked @endif>
+                                    <input id="status" name="status" type="checkbox" class="form-check-switch" @if($asset_class['status'] == \Kanexy\LedgerFoundation\Http\Enums\WalletStatus::ACTIVE) checked @endif>
 
                                     @error('status')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>

@@ -2,9 +2,9 @@
 
 namespace Kanexy\LedgerFoundation\Http\Enums;
 
-use MyCLabs\Enum\Enum;
+use Kanexy\Cms\Enums\Enum;
 
-class LedgerTypeEnum extends Enum {
+class LedgerType extends Enum {
     public const BANK = 'bank';
     public const WALLET = 'wallet';
 }

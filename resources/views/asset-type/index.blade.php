@@ -1,6 +1,6 @@
 @extends("ledger-foundation::config-skeleton")
 
-@section("title", "Asset Type")
+@section('title', 'Asset Type')
 
 @section("config-content")
     <div class="configuration-container">
@@ -15,34 +15,38 @@
                         <a href="" class="breadcrumb--active">Asset Type</a>
                     </div>
                     <div>
-                        <a href="{{ route('dashboard.ledger-foundation.asset-type.create') }}" class="btn btn-sm btn-primary shadow-md">Create New</a>
+                        <a href="{{ route('dashboard.ledger-foundation.asset-type.create') }}"
+                            class="btn btn-sm btn-primary shadow-md">Create New</a>
                     </div>
                 </div>
                 <div class="p-5">
-                    <div id="1" class="tab-pane grid grid-cols-12 gap-3 pt-0 active" role="tabpanel" aria-labelledby="1-tab">
-                        <div class="active col-span-12 mt-0 w-full" role="tabpanel" id="k-wallet" aria-labelledby="k-wallet-tab">
+                    <div class="overflow-x-auto">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
+                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Name</th>
+                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Asset Category</th>
+                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Image</th>
+                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
+                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Action</th>
+                                </tr>
+                            </thead>
 
-                            <div class="overflow-x-auto box">
-                                <table class="table">
-                                    <thead>
-                                    <tr class="bg-gray-300 dark:bg-dark-1">
-                                        <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
-                                        <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Name</th>
-                                        <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Asset Category</th>
-                                        <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Image</th>
-                                        <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
-                                        <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Action</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        @foreach ($asset_type_lists as $index => $asset_type_list)
-                                        <tr>
-                                            <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
-                                            <td class="border-b dark:border-dark-5">{{ $asset_type_list->name }}</td>
-                                            <td class="border-b dark:border-dark-5">{{ ucwords(strtolower(str_replace('_', ' ', $asset_type_list->asset_category))) }}</td>
-                                            <td class="border-b dark:border-dark-5"><img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('s3')->temporaryUrl($asset_type_list->image, now()->addMinutes(5)) }}"></td>
-                                            <td class="border-b dark:border-dark-5">{{ ucfirst($asset_type_list->status) }}</td>
+                            <tbody>
+                                @foreach ($asset_type_lists as $index => $asset_type_list)
+                                    <tr>
+                                        <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
+                                        <td class="border-b dark:border-dark-5">{{ $asset_type_list['name'] }}</td>
+                                        <td class="border-b dark:border-dark-5">
+                                            {{ ucwords(strtolower(str_replace('_', ' ', $asset_type_list['asset_category']))) }}
+                                        </td>
+                                        <td class="border-b dark:border-dark-5"><img class="rounded-md proof-default"
+                                                style="width:100px;" alt=""
+                                                src="@isset($asset_type_list['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_type_list['image']) }}@endisset">
+                                            </td>
+                                            <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$asset_type_list['status']) }}
+                                            </td>
                                             <td class="border-b dark:border-dark-5">
                                                 <div class="dropdown">
                                                     <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
@@ -51,14 +55,18 @@
 
                                                     <div class="dropdown-menu w-48">
                                                         <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                            <a href="{{ route('dashboard.ledger-foundation.asset-type.edit', $asset_type_list->id) }}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                            <a href="{{ route('dashboard.ledger-foundation.asset-type.edit', $asset_type_list['id']) }}"
+                                                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                 <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                             </a>
-                                                            <form action="{{ route('dashboard.ledger-foundation.asset-type.destroy', $asset_type_list->id) }}" method="POST">
+                                                            <form
+                                                                action="{{ route('dashboard.ledger-foundation.asset-type.destroy', $asset_type_list['id']) }}"
+                                                                method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
 
-                                                                <button type="submit" class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                                <button type="submit"
+                                                                    class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
                                                                     <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete
                                                                 </button>
                                                             </form>
@@ -68,10 +76,9 @@
                                             </td>
 
                                         </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -79,5 +86,4 @@
             <!-- END: Daily Sales -->
 
         </div>
-    </div>
-@endsection
+    @endsection
