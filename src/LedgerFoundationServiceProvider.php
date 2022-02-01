@@ -101,6 +101,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
             return false;
         },3000);
 
+        /** Create wallet account by default from banking flow **/
         PartnerFoundation::setRedirectRouteAfterBanking(function () {
             return route("customer.signup.wallet.create");
         });
