@@ -9,7 +9,7 @@
         <label for="horizontal-form-3" class="form-label sm:w-24">Total Amount</label>
         <div class="sm:w-5/6">
             <div class="font-medium text-base">
-                {{ \Cknow\Money\Money::parseByIntlLocalizedDecimal($total, $details['currency']) }}</div>
+                {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($total, $details['currency']) }}</div>
         </div>
     </div>
     <input type="hidden" name="amount" id="amount" value="{{ $total }}">

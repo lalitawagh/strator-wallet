@@ -5,7 +5,6 @@
 @section("config-content")
     <div class="configuration-container">
         <div class="grid grid-cols-12 gap-6">
-            <!-- BEGIN: Daily Sales -->
             <div class="intro-y box col-span-12 xxl:col-span-12">
                 <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
@@ -29,7 +28,7 @@
 
                                         <select name="base_currency" id="base_currency" class="tail-select">
                                             @foreach ($ledgers as $ledger)
-                                                <option value="{{ $ledger->getKey() }}" @if($exchange_rate->base_currency == $ledger->getKey()) selected @endif>{{ $ledger->name }}</option>
+                                                <option value="{{ $ledger->getKey() }}" @if ($exchange_rate->base_currency == $ledger->getKey()) selected @endif>{{ $ledger->name }}</option>
                                             @endforeach
                                         </select>
 
@@ -44,7 +43,7 @@
                                 <div class="sm:w-5/6">
                                     <select name="exchange_currency" id="exchange_currency" class="tail-select">
                                         @foreach ($asset_types as $asset_type)
-                                            <option value="{{ $asset_type['id'] }}" @if($exchange_rate->exchange_currency == $asset_type['id']) selected @endif>{{ $asset_type['name'] }}</option>
+                                            <option value="{{ $asset_type['id'] }}" @if ($exchange_rate->exchange_currency == $asset_type['id']) selected @endif>{{ $asset_type['name'] }}</option>
                                         @endforeach
                                     </select>
 
@@ -59,13 +58,13 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="frequency" class="form-label sm:w-28">Frequency <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-
+                                    @php
+                                        $exchange_rate_frequencies = \Kanexy\LedgerFoundation\Http\Enums\ExchangeRateFrequency::toArray();
+                                    @endphp
                                     <select name="frequency" id="frequency" data-search="true" class="tail-select w-full @error('frequency') border-theme-6 @enderror">
-                                       <option value="daily" @if($exchange_rate->frequency == 'daily') selected @endif>Daily</option>
-                                       <option value="weekly" @if($exchange_rate->frequency == 'weekly') selected @endif>Weekly</option>
-                                       <option value="monthly" @if($exchange_rate->frequency == 'monthly') selected @endif>Monthly</option>
-                                       <option value="quarterly" @if($exchange_rate->frequency == 'quarterly') selected @endif>Quarterly</option>
-                                       <option value="yearly" @if($exchange_rate->frequency == 'yearly') selected @endif>Yearly</option>
+                                        @foreach ($exchange_rate_frequencies as $exchange_rate_frequency)
+                                            <option value="{{ $exchange_rate_frequency }}" @if ($exchange_rate->frequency == $exchange_rate_frequency) selected @endif >{{ trans('ledger-foundation::configuration.'.$exchange_rate_frequency) }}</option>
+                                        @endforeach
                                     </select>
 
                                     @error('frequency')
@@ -120,7 +119,7 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="note" class="form-label sm:w-28"> Note </label>
                                 <div class="sm:w-5/6">
-                                    <input type="text" class="form-control" name="note" value="{{ old('note',$exchange_rate->note)}}">
+                                    <input type="text" class="form-control" name="note" value="{{ old('note',$exchange_rate->note) }}">
 
                                     @error('note')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -130,7 +129,7 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="is_hard_stop" class="form-label sm:w-28">Hard Stop</label>
                                 <div class="sm:w-5/6">
-                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch" @if(old("is_hard_stop",$exchange_rate->is_hard_stop)  === 1) checked @endif>
+                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch" @if (old("is_hard_stop",$exchange_rate->is_hard_stop)  === 1) checked @endif>
 
                                     @error('is_hard_stop')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -138,7 +137,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="text-right mt-5">
                             <a href="#" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
@@ -149,6 +147,5 @@
             </div>
         </div>
     </div>
-
 @endsection
 

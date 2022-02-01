@@ -23,4 +23,9 @@ class Permission
     public const LEDGER_CREATE = 'ledger-foundation::ledger.create';
     public const LEDGER_EDIT   = 'ledger-foundation::ledger.edit';
     public const LEDGER_DELETE = 'ledger-foundation::ledger.delete';
+
+    public const EXCHANGE_RATE_VIEW   = 'ledger-foundation::exchange-rate.view';
+    public const EXCHANGE_RATE_CREATE = 'ledger-foundation::exchange-rate.create';
+    public const EXCHANGE_RATE_EDIT   = 'ledger-foundation::exchange-rate.edit';
+    public const EXCHANGE_RATE_DELETE = 'ledger-foundation::exchange-rate.delete';
 }

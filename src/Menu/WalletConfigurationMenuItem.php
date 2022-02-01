@@ -8,11 +8,11 @@ use Kanexy\Cms\Menu\MenuItem;
 
 class WalletConfigurationMenuItem extends Item
 {
+    public int $priority = 1502;
+
     protected string $label = 'Wallet Settings';
 
     protected string $icon = 'tool';
-
-    public int $priority = 1502;
 
     public function getIsVisible(): bool
     {

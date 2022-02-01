@@ -29,7 +29,7 @@ class WalletController extends Controller
                     "holder_type" => $user->getMorphClass(),
                     "holder_id" => $user->getKey(),
                     "balance" => 0,
-                    "status" => WalletStatus::INACTIVE
+                    "status" => WalletStatus::INACTIVE,
                 ];
 
                 Wallet::create($data);

@@ -14,7 +14,7 @@
 
                 <div class="p-5">
                     <div class="nav nav-tabs flex-col sm:flex-row" role="tablist">
-                        @foreach($wallets as $key =>  $wallet)
+                        @foreach ($wallets as $key =>  $wallet)
                             @php
                             $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
                             @endphp
@@ -35,7 +35,7 @@
 
                                         <div class="text-base text-gray-600 mt-1">{{ $wallet?->urn }}</div>
                                         <div class="flex mt-3">
-                                            <span class="@if( $wallet->status == \Kanexy\LedgerFoundation\Http\Enums\WalletStatus::ACTIVE) text-theme-9 @else text-theme-6 @endif"> {{ ucfirst($wallet->status)}}</span>
+                                            <span class="@if ($wallet->status == \Kanexy\LedgerFoundation\Http\Enums\WalletStatus::ACTIVE) text-theme-9 @else text-theme-6 @endif"> {{ trans('ledger-foundation::configuration.'.$wallet->status) }}</span>
                                             <div class="ml-auto">
                                                 <div class="report-box__indicator bg-theme-6 cursor-pointer"> {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($wallet?->balance) }}</div>
                                             </div>

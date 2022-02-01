@@ -5,20 +5,22 @@ namespace Kanexy\LedgerFoundation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Kanexy\Cms\Facades\Cms;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
 use Kanexy\LedgerFoundation\Menu\WalletConfigurationMenuItem;
 use Kanexy\LedgerFoundation\Menu\WalletMenuItem;
+use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
+use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\AssetClassPolicy;
 use Kanexy\LedgerFoundation\Policies\AssetTypePolicy;
 use Kanexy\LedgerFoundation\Policies\CommodityTypePolicy;
+use Kanexy\LedgerFoundation\Policies\DepositPolicy;
+use Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy;
 use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
 use Kanexy\LedgerFoundation\Wallet\MembershipServiceSelectionContent;
-use Kanexy\LedgerFoundation\Wallet\WalletContent;
 use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
@@ -47,6 +49,8 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Setting::class => AssetTypePolicy::class,
         Setting::class => AssetClassPolicy::class,
         Ledger::class => LedgerPolicy::class,
+        ExchangeRate::class => ExchangeRatePolicy::class,
+        Wallet::class => DepositPolicy::class,
     ];
 
     public function registerDefaultPolicies()

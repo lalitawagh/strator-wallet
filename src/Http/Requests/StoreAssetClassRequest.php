@@ -18,7 +18,7 @@ class StoreAssetClassRequest extends FormRequest
         return [
             'name'        =>    ['required'],
             'image'       =>    ['nullable', 'image'],
-            'status'      =>    ['nullable']
+            'status'      =>    ['nullable'],
         ];
     }
 }

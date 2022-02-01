@@ -5,7 +5,6 @@
 @section("config-content")
     <div class="configuration-container">
         <div class="grid grid-cols-12 gap-6">
-            <!-- BEGIN: Daily Sales -->
             <div class="intro-y box col-span-12 xxl:col-span-12">
                 <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
@@ -58,13 +57,13 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="frequency" class="form-label sm:w-28">Frequency <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-
+                                    @php
+                                        $exchange_rate_frequencies = \Kanexy\LedgerFoundation\Http\Enums\ExchangeRateFrequency::toArray();
+                                    @endphp
                                     <select name="frequency" id="frequency" data-search="true" class="tail-select w-full @error('frequency') border-theme-6 @enderror">
-                                       <option value="daily">Daily</option>
-                                       <option value="weekly">Weekly</option>
-                                       <option value="monthly">Monthly</option>
-                                       <option value="quarterly">Quarterly</option>
-                                       <option value="yearly">Yearly</option>
+                                        @foreach ($exchange_rate_frequencies as $exchange_rate_frequency)
+                                            <option value="{{ $exchange_rate_frequency }}">{{ trans('ledger-foundation::configuration.'.$exchange_rate_frequency) }}</option>
+                                        @endforeach
                                     </select>
 
                                     @error('frequency')
@@ -129,7 +128,7 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="is_hard_stop" class="form-label sm:w-28">Hard Stop</label>
                                 <div class="sm:w-5/6">
-                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch" @if(old("is_hard_stop")  === '1') checked @endif>
+                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch" @if (old("is_hard_stop")  === '1') checked @endif>
 
                                     @error('is_hard_stop')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -148,5 +147,4 @@
             </div>
         </div>
     </div>
-
 @endsection

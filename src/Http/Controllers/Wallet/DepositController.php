@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Model\Wallet;
+use Kanexy\LedgerFoundation\Policies\DepositPolicy;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Stripe;
 
@@ -15,6 +16,8 @@ class DepositController extends Controller
 {
     public function index()
     {
+        $this->authorize(DepositPolicy::VIEW, Wallet::class);
+
         $user = Auth::user();
         $wallets = Wallet::forHolder($user)->with('ledger')->get();
         $currencies = Setting::getValue('asset_types',[]);
@@ -22,18 +25,15 @@ class DepositController extends Controller
         return view("ledger-foundation::wallet.deposit.deposit-initial", compact('wallets', 'currencies'));
     }
 
-    public function depositInitial()
-    {
-        return view("ledger-foundation::wallet.deposit.deposit-initial");
-    }
-
     public function storeDepositInitial(Request $request)
     {
+        $this->authorize(DepositPolicy::CREATE, Wallet::class);
+
         $data = $request->validate([
             'wallet'            => 'required',
             'currency'          => 'required',
             'amount'            => 'required',
-            'payment_method'    => 'required'
+            'payment_method'    => 'required',
         ]);
 
         $asset_type = Setting::getValue('asset_types',[])->firstWhere('id', $data['currency']);
@@ -48,6 +48,8 @@ class DepositController extends Controller
 
     public function depositDetail()
     {
+        $this->authorize(DepositPolicy::CREATE, Wallet::class);
+
         $details = session('deposit_request');
 
         return view("ledger-foundation::wallet.deposit.deposit-detail", compact('details'));
@@ -55,6 +57,8 @@ class DepositController extends Controller
 
     public function storeDepositDetail()
     {
+        $this->authorize(DepositPolicy::CREATE, Wallet::class);
+
         $details = session('deposit_request');
 
         return redirect()->route('dashboard.ledger-foundation.wallet.deposit-payment');
@@ -62,6 +66,8 @@ class DepositController extends Controller
 
     public function depositPayment()
     {
+        $this->authorize(DepositPolicy::CREATE, Wallet::class);
+
         $details = session('deposit_request');
 
         return view("ledger-foundation::wallet.deposit.deposit-payment",compact('details'));
@@ -69,6 +75,8 @@ class DepositController extends Controller
 
     public function storeDepositPayment(Request $request)
     {
+        $this->authorize(DepositPolicy::CREATE, Wallet::class);
+
         $data = json_decode($request->getContent(), true);
         $depositRequest = session('deposit_request');
 
@@ -94,7 +102,7 @@ class DepositController extends Controller
                 'status' => 'accepted',
                 'meta' => [
                     'sender_ref_id' => $data['payer_id'],
-                    'sender_name' => $data['payer']['name']['given_name'].' '.$data['payer']['name']['surname'],
+                    'sender_name' => $data['payer']['name']['given_name'] . ' ' . $data['payer']['name']['surname'],
                     'sender_merchant_id' => $data['paymentDetails'][0]['payee']['merchant_id'],
                     'beneficiary_id' => Auth::user()->id,
                     'beneficiary_ref_id' => $depositRequest['wallet'],
@@ -116,18 +124,20 @@ class DepositController extends Controller
 
     public function storeDepositPaymentStripe(Request $request)
     {
+        $this->authorize(DepositPolicy::CREATE, Wallet::class);
+
         $depositRequest = session('deposit_request');
         $stripe =  Stripe\Stripe::setApiKey(config('services.stripe.secret'));
         $data = Stripe\Charge::create ([
                 "amount" => $request->input('amount') * 100,
                 "currency" => $depositRequest['currency'],
                 "source" => $request->input('stripeToken'),
-                "description" => "Test payment."
+                "description" => "Test payment.",
         ]);
 
         $feeDetails = Http::withToken(config('services.stripe.secret'))
             ->acceptJson()
-            ->get('https://api.stripe.com/v1/balance/history/'. $data->balance_transaction)
+            ->get('https://api.stripe.com/v1/balance/history/' . $data->balance_transaction)
             ->throw()
             ->json();
 
@@ -140,6 +150,8 @@ class DepositController extends Controller
 
     public function storeDepositPaymentStripeFinal(Request $request)
     {
+        $this->authorize(DepositPolicy::CREATE, Wallet::class);
+
         $depositRequest = session('deposit_request');
         $response = $request->all();
 
@@ -193,12 +205,16 @@ class DepositController extends Controller
 
     public function depositFinal()
     {
+        $this->authorize(DepositPolicy::CREATE, Wallet::class);
+
         $details = session('deposit_request');
         return view("ledger-foundation::wallet.deposit.deposit-final",compact('details'));
     }
 
     public function depositMoney()
     {
+        $this->authorize(DepositPolicy::CREATE, Wallet::class);
+
         session()->forget(['fee', 'exchange_rate', 'exchange_currency', 'base_currency', 'wallet', 'currency', 'amount' ,'deposit_request']);
 
         return redirect()->route('dashboard.ledger-foundation.wallet-deposit.index');

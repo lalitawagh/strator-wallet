@@ -14,6 +14,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\ReceiveController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\TransactionController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WalletController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

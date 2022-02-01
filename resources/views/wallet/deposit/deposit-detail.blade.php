@@ -1,4 +1,3 @@
-
 @extends("ledger-foundation::wallet.deposit.skeleton")
 
 @section('deposit-content')
@@ -10,16 +9,18 @@
             </div>
             <div class="flex">
                 <div class="mr-auto">Deposit Amount </div>
-                <div class="font-medium">{{ \Cknow\Money\Money::parseByIntlLocalizedDecimal($details['amount'], $details['currency']); }}</div>
+                <div class="font-medium">{{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($details['amount'], $details['currency']); }}</div>
             </div>
             <div class="flex mt-4">
                 <div class="mr-auto">Fee</div>
-                <div class="font-medium">{{ \Cknow\Money\Money::parseByIntlLocalizedDecimal($details['fee'], $details['currency']); }}</div>
+                <div class="font-medium">{{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($details['fee'], $details['currency']); }}</div>
             </div>
             <div class="flex mt-4 pt-4 border-t border-gray-200 dark:border-dark-5">
                 <div class="mr-auto font-medium text-base">Total</div>
-                @php $total = $details['fee'] + $details['amount']; @endphp
-                <div class="font-medium text-base">{{ \Cknow\Money\Money::parseByIntlLocalizedDecimal($total, $details['currency']); }}</div>
+                @php
+                    $total = $details['fee'] + $details['amount'];
+                @endphp
+                <div class="font-medium text-base">{{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($total, $details['currency']); }}</div>
             </div>
             <div class="text-right mt-5 form-inline text-right mt-5 float-right">
                 <a href="{{ route('dashboard.ledger-foundation.wallet-deposit.index') }}" class="btn btn-secondary w-20 inline-block mr-2">Previous</a>
@@ -27,5 +28,4 @@
             </div>
         </div>
     </form>
-
 @endsection

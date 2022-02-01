@@ -3,12 +3,14 @@
 namespace Kanexy\LedgerFoundation\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Kanexy\LedgerFoundation\Model\ExchangeRate;
+use Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy;
 
 class StoreExchangeRateRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        return $this->user()->can(ExchangeRatePolicy::CREATE, ExchangeRate::class);
     }
 
     public function rules()

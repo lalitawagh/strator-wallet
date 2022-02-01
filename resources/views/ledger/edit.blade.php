@@ -51,10 +51,12 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="ledger_type" class="form-label sm:w-28">Ledger Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $ledger_types = \Kanexy\LedgerFoundation\Http\Enums\LedgerType::toArray(); @endphp
+                                    @php
+                                        $ledger_types = \Kanexy\LedgerFoundation\Http\Enums\LedgerType::toArray();
+                                    @endphp
                                     <select name="ledger_type" id="ledger_type" data-search="true" class="tail-select w-full @error('ledger_type') border-theme-6 @enderror">
-                                        @foreach($ledger_types as $key => $ledger_type)
-                                            <option value="{{$ledger_type}}" @if(old("ledger_type",$ledger->ledger_type) ==  $ledger_type) selected @endif>{{ trans('ledger-foundation::configuration.'.$ledger_type) }}</option>
+                                        @foreach ($ledger_types as $key => $ledger_type)
+                                            <option value="{{ $ledger_type }}" @if (old("ledger_type",$ledger->ledger_type) ==  $ledger_type) selected @endif>{{ trans('ledger-foundation::configuration.'.$ledger_type) }}</option>
                                         @endforeach
                                     </select>
                                     @error('ledger_type')
@@ -81,10 +83,12 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_type" class="form-label sm:w-28">Exchange Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $exchange_types = \Kanexy\LedgerFoundation\Http\Enums\ExchangeType::toArray(); @endphp
+                                    @php
+                                        $exchange_types = \Kanexy\LedgerFoundation\Http\Enums\ExchangeType::toArray();
+                                    @endphp
                                     <select name="exchange_type" id="exchange_type"  data-search="true" class="tail-select w-full @error('exchange_type') border-theme-6 @enderror">
-                                        @foreach($exchange_types as $key => $exchange_type)
-                                            <option value="{{$exchange_type}}" @if(old("exchange_type",$ledger->exchange_type ) == $exchange_type) selected @endif>{{ trans('ledger-foundation::configuration.'.$exchange_type) }}</option>
+                                        @foreach ($exchange_types as $key => $exchange_type)
+                                            <option value="{{ $exchange_type }}" @if (old("exchange_type",$ledger->exchange_type ) == $exchange_type) selected @endif>{{ trans('ledger-foundation::configuration.'.$exchange_type) }}</option>
                                         @endforeach
                                     </select>
                                     @error('exchange_type')
@@ -111,10 +115,12 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="asset_category" class="form-label sm:w-28">Asset Category <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $asset_categories = \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::toArray(); @endphp
+                                    @php
+                                        $asset_categories = \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::toArray();
+                                    @endphp
                                     <select name="asset_category" onchange="getAssetCategory(this)" id="asset_category" data-search="true" class="tail-select w-full @error('asset_category') border-theme-6 @enderror">
-                                        @foreach($asset_categories as $key => $asset_category)
-                                            <option value="{{$asset_category}}" @if(old('asset_category',$ledger->asset_category) == $asset_category) selected @endif>{{ trans('ledger-foundation::configuration.'.$asset_category) }}</option>
+                                        @foreach ($asset_categories as $key => $asset_category)
+                                            <option value="{{ $asset_category }}" @if (old('asset_category',$ledger->asset_category) == $asset_category) selected @endif>{{ trans('ledger-foundation::configuration.'.$asset_category) }}</option>
                                         @endforeach
                                     </select>
                                     @error('asset_category')
@@ -126,10 +132,12 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_from" class="form-label sm:w-28">Exchange From  <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $exchange_from = \Kanexy\LedgerFoundation\Http\Enums\ExchangeFrom::toArray(); @endphp
+                                    @php
+                                        $exchange_from = \Kanexy\LedgerFoundation\Http\Enums\ExchangeFrom::toArray();
+                                    @endphp
                                     <select name="exchange_from" id="exchange_from" data-search="true" class="tail-select w-full @error('exchange_from') border-theme-6 @enderror">
-                                        @foreach($exchange_from as $key => $exchange_from_val)
-                                            <option value="{{ $exchange_from_val }}" @if(old('exchange_from',$ledger->exchange_from) == $exchange_from_val) selected @endif>{{ trans('ledger-foundation::configuration.'.$exchange_from_val) }}</option>
+                                        @foreach ($exchange_from as $key => $exchange_from_val)
+                                            <option value="{{ $exchange_from_val }}" @if (old('exchange_from',$ledger->exchange_from) == $exchange_from_val) selected @endif>{{ trans('ledger-foundation::configuration.'.$exchange_from_val) }}</option>
                                         @endforeach
                                     </select>
 
@@ -146,7 +154,7 @@
                                 <div class="sm:w-5/6">
                                     <select name="asset_type" id="asset_type" data-search="true" class="tail-select w-full @error('asset_type') border-theme-6 @enderror">
                                         @foreach ($asset_types as $asset_type)
-                                            <option value="{{$asset_type['id']}}" @if(old('asset_type',$ledger->asset_type) == $asset_type['id']) selected @endif>{{ ucfirst($asset_type['name']) }}</option>
+                                            <option value="{{ $asset_type['id'] }}" @if (old('asset_type',$ledger->asset_type) == $asset_type['id']) selected @endif>{{ ucfirst($asset_type['name']) }}</option>
                                         @endforeach
                                     </select>
 
@@ -174,7 +182,7 @@
                                 <div class="sm:w-5/6">
                                     <select name="asset_class" id="asset_class" data-search="true" class="tail-select w-full @error('asset_class') border-theme-6 @enderror">
                                         @foreach ($asset_classes as $asset_class)
-                                            <option value="{{$asset_class['id']}}" @if(old('asset_class',$ledger->asset_class) == $asset_class['id']) selected @endif>{{ ucfirst($asset_class['name']) }}</option>
+                                            <option value=" {{ $asset_class['id'] }} " @if (old('asset_class',$ledger->asset_class) == $asset_class['id']) selected @endif>{{ ucfirst($asset_class['name']) }}</option>
                                         @endforeach
                                     </select>
 
@@ -189,7 +197,7 @@
                                 <div class="sm:w-5/6">
                                     <select name="commodity_category" id="commodity_category" data-search="true" class="tail-select w-full @error('commodity_category') border-theme-6 @enderror">
                                         @foreach ($commodity_types as $commodity_type)
-                                            <option value="{{$commodity_type['id']}}" @if(old('commodity_category',$ledger->commodity_category) == $commodity_type['id']) selected @endif>{{ ucfirst($commodity_type['name']) }}</option>
+                                            <option value=" {{ $commodity_type['id'] }} " @if (old('commodity_category',$ledger->commodity_category) == $commodity_type['id']) selected @endif>{{ ucfirst($commodity_type['name']) }}</option>
                                         @endforeach
                                     </select>
 
@@ -245,11 +253,11 @@
                                 <div class="sm:w-5/6">
 
                                     <select name="status" id="status" data-search="true" class="tail-select w-full">
-                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::NEW }}" @if(old("status",$ledger->status)  == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::NEW) selected @endif>{{ trans('ledger-foundation::configuration.new') }}</option>
-                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::ACTIVE }}" @if(old("status",$ledger->status)  == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::ACTIVE) selected @endif>{{ trans('ledger-foundation::configuration.active') }}</option>
-                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::INACTIVE }}" @if(old("status",$ledger->status)  == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::INACTIVE) selected @endif>{{ trans('ledger-foundation::configuration.inactive') }}</option>
-                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::HOLD }}" @if(old("status",$ledger->status)  == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::HOLD) selected @endif>{{ trans('ledger-foundation::configuration.hold') }}</option>
-                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::SUSPENDED }}" @if(old("status",$ledger->status)  == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::SUSPENDED) selected @endif>{{ trans('ledger-foundation::configuration.suspended') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::NEW }}" @if (old("status",$ledger->status)  == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::NEW) selected @endif>{{ trans('ledger-foundation::configuration.new') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::ACTIVE }}" @if (old("status",$ledger->status)  == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::ACTIVE) selected @endif>{{ trans('ledger-foundation::configuration.active') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::INACTIVE }}" @if (old("status",$ledger->status)  == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::INACTIVE) selected @endif>{{ trans('ledger-foundation::configuration.inactive') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::HOLD }}" @if (old("status",$ledger->status)  == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::HOLD) selected @endif>{{ trans('ledger-foundation::configuration.hold') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::SUSPENDED }}" @if (old("status",$ledger->status)  == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::SUSPENDED) selected @endif>{{ trans('ledger-foundation::configuration.suspended') }}</option>
                                     </select>
 
                                     @error('status')

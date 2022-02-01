@@ -7,11 +7,14 @@ use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\StoreExchangeRateRequest;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
+use Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy;
 
 class ExchangeRateController extends Controller
 {
     public function index()
     {
+        $this->authorize(ExchangeRatePolicy::VIEW, ExchangeRate::class);
+
         $exchange_rates = ExchangeRate::with('ledger')->paginate();
 
         return view("ledger-foundation::exchange-rate.index", compact('exchange_rates'));
@@ -19,6 +22,8 @@ class ExchangeRateController extends Controller
 
     public function create()
     {
+        $this->authorize(ExchangeRatePolicy::CREATE, ExchangeRate::class);
+
         $ledgers = Ledger::get();
         $asset_types = Setting::getValue('asset_types',[]);
 
@@ -41,12 +46,14 @@ class ExchangeRateController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.exchange-rate.index")->with([
             'status' => 'success',
-            'message' => 'Exchange rate created successfully.'
+            'message' => 'Exchange rate created successfully.',
         ]);
     }
 
     public function edit($id)
     {
+        $this->authorize(ExchangeRatePolicy::EDIT, ExchangeRate::class);
+
         $asset_types = Setting::getValue('asset_types',[]);
         $ledgers = Ledger::get();
         $exchange_rate = ExchangeRate::findOrFail($id);
@@ -73,18 +80,20 @@ class ExchangeRateController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.exchange-rate.index")->with([
             'status' => 'success',
-            'message' => 'Ledger updated successfully.'
+            'message' => 'Ledger updated successfully.',
         ]);
     }
 
     public function destroy($id)
     {
+        $this->authorize(ExchangeRatePolicy::DELETE, ExchangeRate::class);
+
         $exchange_rate = ExchangeRate::findOrFail($id);
         $exchange_rate->delete();
 
         return redirect()->route("dashboard.ledger-foundation.exchange-rate.index")->with([
             'status' => 'success',
-            'message' => 'Exchange rate deleted successfully.'
+            'message' => 'Exchange rate deleted successfully.',
         ]);
     }
 }

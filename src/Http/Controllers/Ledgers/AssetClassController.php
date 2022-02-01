@@ -2,7 +2,6 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
-use Illuminate\Support\Facades\Lang;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\StoreAssetClassRequest;
@@ -39,7 +38,7 @@ class AssetClassController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.asset-class.index")->with([
             'status' => 'success',
-            'message' => 'Asset Class created successfully.'
+            'message' => 'Asset Class created successfully.',
         ]);
     }
 
@@ -75,7 +74,7 @@ class AssetClassController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.asset-class.index")->with([
             'status' => 'success',
-            'message' => 'Asset Class updated successfully.'
+            'message' => 'Asset Class updated successfully.',
         ]);
     }
 
@@ -94,7 +93,7 @@ class AssetClassController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.asset-class.index")->with([
             'status' => 'success',
-            'message' => 'Asset Class deleted successfully.'
+            'message' => 'Asset Class deleted successfully.',
         ]);
     }
 
