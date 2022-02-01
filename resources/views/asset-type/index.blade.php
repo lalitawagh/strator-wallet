@@ -2,21 +2,23 @@
 
 @section('title', 'Asset Type')
 
-@section('config-content')
-    <div class="col-span-12 lg:col-span-8 xxl:col-span-9">
-        <div class="intro-y box">
-            <div class="box">
-                <div class="flex items-center py-2 px-3 border-b border-gray-200 dark:border-dark-5">
-                    <h2 class="font-medium text-base mr-auto">
-                        Asset Type
-                    </h2>
+@section("config-content")
+    <div class="configuration-container">
+        <div class="grid grid-cols-12 gap-6">
+            <!-- BEGIN: Daily Sales -->
+            <div class="intro-y box col-span-12 xxl:col-span-12">
+                <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
+                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+                        <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <a href="" class="breadcrumb--active">Asset Type</a>
+                    </div>
                     <div>
                         <a href="{{ route('dashboard.ledger-foundation.asset-type.create') }}"
                             class="btn btn-sm btn-primary shadow-md">Create New</a>
                     </div>
                 </div>
-
                 <div class="p-5">
                     <div class="overflow-x-auto">
                         <table class="table">
@@ -81,5 +83,7 @@
                     </div>
                 </div>
             </div>
+            <!-- END: Daily Sales -->
+
         </div>
     @endsection
