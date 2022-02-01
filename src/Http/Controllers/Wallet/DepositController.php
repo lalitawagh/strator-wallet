@@ -82,19 +82,19 @@ class DepositController extends Controller
 
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
+        $amount =  $depositRequest['amount'] + $depositRequest['fee'];
 
         if($data['status'] == 'COMPLETED')
         {
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
-                'amount' => $depositRequest['amount'] + $depositRequest['fee'],
+                'amount' => $amount,
                 'workspace_id' => $workspace->getKey(),
                 'type' => 'credit',
                 'payment_method' => 'wallet',
                 'note' => null,
-                // 'ref_id' =>  $data['paymentDetails'][0]['payments']['captures'][0]['id'],
                 'ref_type' => 'paypal',
-                'settled_amount' => $depositRequest['amount'] + $depositRequest['fee'],
+                'settled_amount' => $amount,
                 'settled_currency' => $depositRequest['currency'],
                 'settlement_date' => date('Y-m-d'),
                 'settled_at' => now(),
@@ -122,7 +122,7 @@ class DepositController extends Controller
         return response()->json(['status' => 'success']);
     }
 
-    public function storeDepositPaymentStripe(Request $request)
+    public function stripePayment(Request $request)
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
@@ -148,7 +148,7 @@ class DepositController extends Controller
     }
 
 
-    public function storeDepositPaymentStripeFinal(Request $request)
+    public function storeDepositStripePayment(Request $request)
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
@@ -160,20 +160,20 @@ class DepositController extends Controller
 
             $user = Auth::user();
             $workspace = $user->workspaces()->first();
+            $amount = $depositRequest['amount'] + $depositRequest['fee'];
             $depositRequest['stripe_fee'] = $response['data']['transaction_fee']/100;
             $depositRequest['stripe_receipt_url'] = $response['data']['receipt_url'];
             session(['deposit_request' => $depositRequest]);
 
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
-                'amount' => $depositRequest['amount'] + $depositRequest['fee'],
+                'amount' => $amount,
                 'workspace_id' => $workspace->getKey(),
                 'type' => 'credit',
                 'payment_method' => 'wallet',
                 'note' => null,
-                // 'ref_id' =>  $data['paymentDetails'][0]['payments']['captures'][0]['id'],
                 'ref_type' => 'stripe',
-                'settled_amount' => $depositRequest['amount'] + $depositRequest['fee'],
+                'settled_amount' => $amount,
                 'settled_currency' => $depositRequest['currency'],
                 'settlement_date' => date('Y-m-d'),
                 'settled_at' => now(),

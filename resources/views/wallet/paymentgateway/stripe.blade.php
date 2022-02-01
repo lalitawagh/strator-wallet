@@ -120,12 +120,12 @@
                 // Submit the form
                 $.ajax({
                     type: 'post',
-                    url: "{{ route('dashboard.ledger-foundation.wallet.store-deposit-payment-stripe') }}",
+                    url: "{{ route('dashboard.ledger-foundation.wallet.stripe-payment') }}",
                     data: $('form').serialize(),
                     success: function(response) {
                         $.ajax({
                             type: 'post',
-                            url: "{{ route('dashboard.ledger-foundation.wallet.store-deposit-payment-stripe-final') }}",
+                            url: "{{ route('dashboard.ledger-foundation.wallet.store-deposit-stripe-payment') }}",
                             data: response,
                             success: function(data) {
                                 window.location.href =
