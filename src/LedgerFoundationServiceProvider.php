@@ -97,7 +97,6 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         $this->registerDefaultPolicies();
 
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletMenuItem());
-        \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletConfigurationMenuItem());
         \Kanexy\Cms\Facades\MembershipServiceSelection::addItem(new MembershipServiceSelectionContent());
 
         \Kanexy\Cms\Facades\Cms::setRedirectRouteAfterRegistrationVerification(function (Request $request,User $user) {

@@ -66,7 +66,7 @@ class DepositController extends Controller
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
-        $details = session('deposit_request') ?? null;
+        $details = session('deposit_request');
 
         return view("ledger-foundation::wallet.deposit.deposit-detail", compact('details'));
     }
@@ -75,7 +75,7 @@ class DepositController extends Controller
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
-        $details = session('deposit_request') ?? null;
+        $details = session('deposit_request');
 
         return redirect()->route('dashboard.ledger-foundation.wallet.deposit-payment',['workspace_id' => $details['workspace_id']]);
     }
@@ -84,7 +84,7 @@ class DepositController extends Controller
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
-        $details = session('deposit_request') ?? null;
+        $details = session('deposit_request');
 
         return view("ledger-foundation::wallet.deposit.deposit-payment",compact('details'));
     }
@@ -94,7 +94,7 @@ class DepositController extends Controller
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $data = json_decode($request->getContent(), true);
-        $depositRequest = session('deposit_request') ?? null;
+        $depositRequest = session('deposit_request');
 
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
@@ -143,7 +143,7 @@ class DepositController extends Controller
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
-        $depositRequest = session('deposit_request') ?? null;
+        $depositRequest = session('deposit_request');
         $stripe =  Stripe\Stripe::setApiKey(config('services.stripe.secret'));
         $data = Stripe\Charge::create ([
                 "amount" => $request->input('amount') * 100,
@@ -169,7 +169,7 @@ class DepositController extends Controller
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
-        $depositRequest = session('deposit_request') ?? null;
+        $depositRequest = session('deposit_request');
         $response = $request->all();
 
         if($response['data']['status'] == 'succeeded')
@@ -225,7 +225,7 @@ class DepositController extends Controller
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
-        $details = session('deposit_request') ?? null;
+        $details = session('deposit_request');
         return view("ledger-foundation::wallet.deposit.deposit-final",compact('details'));
     }
 
@@ -233,7 +233,7 @@ class DepositController extends Controller
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
-        $workspace_id = session()->get('deposit_request.workspace_id') ?? null;
+        $workspace_id = session()->get('deposit_request.workspace_id');
         session()->forget(['fee', 'exchange_rate', 'exchange_currency', 'base_currency', 'wallet', 'currency', 'amount' ,'deposit_request']);
 
         return redirect()->route('dashboard.ledger-foundation.wallet-deposit.index',['filter' => ['workspace_id' => $workspace_id]]);

@@ -8,13 +8,11 @@ use Kanexy\Cms\Enums\RegistrationStep;
 use Kanexy\LedgerFoundation\Http\Enums\WalletStatus;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 
 class WalletController extends Controller
 {
     public function create()
     {
-
         $user = Auth::user();
         $ledgers = Ledger::get();
 
@@ -24,7 +22,7 @@ class WalletController extends Controller
             {
                 $data = [
                     "name" => $user->getFullName(),
-                    "urn" => Transaction::generateUrn(),
+                    "urn" => Wallet::generateUrn(),
                     "ledger_id" => $ledger->getKey(),
                     "holder_type" => $user->getMorphClass(),
                     "holder_id" => $user->getKey(),

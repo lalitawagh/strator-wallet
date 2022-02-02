@@ -31,7 +31,7 @@ class StoreLedgerRequest extends FormRequest
             'payout_fee'         => 'required',
             'deposit_fee'        => 'required',
             'withdraw_fee'       => 'required',
-            'status'             => 'nullable',
+            'status'             => 'required',
         ];
     }
 }

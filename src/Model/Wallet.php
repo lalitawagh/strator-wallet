@@ -4,10 +4,11 @@ namespace Kanexy\LedgerFoundation\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kanexy\PartnerFoundation\Core\Traits\InteractsWithUrn;
 
 class Wallet extends Model
 {
-    use HasFactory;
+    use HasFactory,InteractsWithUrn;
 
     protected $fillable = [
         'urn',
