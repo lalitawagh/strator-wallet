@@ -37,13 +37,17 @@ class WalletBeneficiary extends Component
 
     public $code;
 
+    public function mount($workspace)
+    {
+        $this->workspace = $workspace;
+    }
+
     public function changeMobile()
     {
        $workspace = User::wherePhone($this->mobile)->first()?->workspaces()->first();
        $membership = $workspace?->memberships()->first();
        $this->membership_urn = $membership?->urn;
        $this->membership_name = $membership?->name;
-       $this->workspace = $workspace?->getKey();
     }
 
     public function createBeneficiary()
@@ -57,7 +61,7 @@ class WalletBeneficiary extends Component
                 'notes' => 'nullable',
                 'nick_name' => 'nullable'
             ]);
-        $data['workspace_id'] = $this->workspace;
+        $data['workspace_id'] = $this->workspace->id;
         $data['ref_type'] = 'wallet';
         $data['classification'] = $this->classification;
         $data['status'] = 'active';
@@ -69,7 +73,7 @@ class WalletBeneficiary extends Component
 
         /** @var \App\Models\User $user */
         $user = auth()->user();
-        //$user->notify(new EmailOneTimePasswordNotification($contact->generateOtp("email")));
+
         // $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
         $user->generateOtp("sms");
 
@@ -92,7 +96,7 @@ class WalletBeneficiary extends Component
 
             $oneTimePassword->update(['verified_at' => now()]);
 
-            return redirect()->route("dashboard.ledger-foundation.wallet-payout.create")->with([
+            return redirect()->route("dashboard.ledger-foundation.wallet-payout.create",['workspace_id' => $this->workspace->id])->with([
                 'status' => 'success',
                 'message' => 'The beneficiary created successfully.',
             ]);

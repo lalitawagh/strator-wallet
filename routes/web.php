@@ -41,7 +41,7 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/ledger-foundatio
     Route::name('wallet.deposit-detail')->get('wallet-deposit-detail', [DepositController::class, 'depositDetail']);
     Route::name('wallet.deposit-payment')->get('wallet-deposit-payment', [DepositController::class, 'depositPayment']);
     Route::name('wallet.deposit-final')->get('wallet-deposit-final', [DepositController::class, 'depositFinal']);
-
+    Route::name('wallet-payout-verify')->get('wallet-payout-verify', [PayoutController::class, 'verify']);
 });
 
 Route::group(['middleware' =>['web','auth'],'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {

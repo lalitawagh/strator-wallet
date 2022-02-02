@@ -24,28 +24,28 @@
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="" class="form-label sm:w-28"> Email <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" value="" placeholder="Email" wire:model="email">
+                    <input id="" type="text" class="form-control" value="" wire:model="email">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="" class="form-label sm:w-28"> Mobile <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" value="" placeholder="Mobile"  wire:model="mobile" wire:change="changeMobile()" onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);">
+                    <input id="" type="text" class="form-control" value="" wire:model="mobile" wire:change="changeMobile()" onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="" class="form-label sm:w-28"> Notes </label>
                 <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" value="" placeholder="Notes" wire:model="notes">
+                    <input id="" type="text" class="form-control" value="" wire:model="notes">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="" class="form-label sm:w-28"> Nick Name </label>
                 <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" value="" placeholder="Notes" wire:model="nick_name">
+                    <input id="" type="text" class="form-control" value="" wire:model="nick_name">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>

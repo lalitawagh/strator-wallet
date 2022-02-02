@@ -5,6 +5,7 @@ namespace Kanexy\LedgerFoundation\Menu;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Menu\Contracts\Item;
 use Kanexy\Cms\Menu\MenuItem;
+use Kanexy\PartnerFoundation\Core\Helper;
 
 class WalletMenuItem extends Item
 {
@@ -30,7 +31,7 @@ class WalletMenuItem extends Item
     {
         return [
             new MenuItem('Transactions', 'activity', url: route('dashboard.ledger-foundation.wallet-transaction.index')),
-            new MenuItem('Payouts', 'activity', url: route('dashboard.ledger-foundation.wallet-payout.index')),
+            new MenuItem('Payouts', 'activity', url: route('dashboard.ledger-foundation.wallet-payout.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
             new MenuItem('Request Payments', 'activity', url: route('dashboard.ledger-foundation.wallet-receive.index')),
             new MenuItem('Deposits', 'activity', url: route('dashboard.ledger-foundation.wallet-deposit.index')),
             new MenuItem('Withdraw', 'activity',url: route('dashboard.ledger-foundation.wallet-withdraw.index')),

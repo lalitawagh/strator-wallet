@@ -11,13 +11,16 @@ use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\LedgerFoundation\Livewire\GetMembershipDetails;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletBeneficiary;
+use Kanexy\LedgerFoundation\Livewire\WalletPayoutComponent;
 use Kanexy\LedgerFoundation\Menu\WalletConfigurationMenuItem;
 use Kanexy\LedgerFoundation\Menu\WalletMenuItem;
 use Kanexy\LedgerFoundation\Model\Ledger;
+use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\AssetClassPolicy;
 use Kanexy\LedgerFoundation\Policies\AssetTypePolicy;
 use Kanexy\LedgerFoundation\Policies\CommodityTypePolicy;
 use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
+use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
 use Kanexy\LedgerFoundation\Wallet\MembershipServiceSelectionContent;
 use Kanexy\LedgerFoundation\Wallet\WalletContent;
 use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
@@ -46,6 +49,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Setting::class => AssetTypePolicy::class,
         Setting::class => AssetClassPolicy::class,
         Ledger::class => LedgerPolicy::class,
+        Wallet::class => PayoutPolicy::class,
     ];
 
     public function registerDefaultPolicies()
@@ -110,5 +114,6 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
 
         Livewire::component('ledger-config-field-component', LedgerConfigFieldComponent::class);
         Livewire::component('wallet-beneficiary', WalletBeneficiary::class);
+        Livewire::component('wallet-payout-component', WalletPayoutComponent::class);
     }
 }

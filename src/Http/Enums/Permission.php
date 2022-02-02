@@ -23,4 +23,8 @@ class Permission
     public const LEDGER_CREATE = 'ledger-foundation::ledger.create';
     public const LEDGER_EDIT   = 'ledger-foundation::ledger.edit';
     public const LEDGER_DELETE = 'ledger-foundation::ledger.delete';
+
+    public const PAYOUT_VIEW   = 'ledger-foundation::wallet.payout.view';
+    public const PAYOUT_CREATE = 'ledger-foundation::wallet.payout.create';
+    public const PAYOUT_SHOW   = 'ledger-foundation::wallet.payout.show';
 }
