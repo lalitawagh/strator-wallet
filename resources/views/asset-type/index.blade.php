@@ -41,8 +41,8 @@
                                         <td class="border-b dark:border-dark-5">
                                             {{ ucwords(strtolower(str_replace('_', ' ', $asset_type_list['asset_category']))) }}
                                         </td>
-                                        <td class="border-b dark:border-dark-5"><img class="rounded-md proof-default"
-                                                style="width:100px;" alt=""
+                                        <td class="border-b dark:border-dark-5"><img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default"
+                                                alt=""
                                                 src="@isset($asset_type_list['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_type_list['image']) }}@endisset">
                                             </td>
                                             <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$asset_type_list['status']) }}

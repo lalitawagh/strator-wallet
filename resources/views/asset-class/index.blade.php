@@ -35,8 +35,8 @@
                                         <tr>
                                             <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
                                             <td class="border-b dark:border-dark-5">{{ $asset_class_list['name'] }}</td>
-                                            <td class="border-b dark:border-dark-5"><img class="rounded-md proof-default"
-                                                    style="width:100px;" alt=""
+                                            <td class="border-b dark:border-dark-5"><img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default"
+                                                    alt=""
                                                     src="@isset($asset_class_list['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_class_list['image']) }}@endisset">
                                             </td>
                                             <td class="border-b dark:border-dark-5"> {{ trans('ledger-foundation::configuration.'.$asset_class_list['status']) }}

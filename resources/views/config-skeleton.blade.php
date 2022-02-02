@@ -87,14 +87,143 @@
         .configuration-container {
             width: calc(100% - 305px);
             position: absolute;
-            padding-left: 270px;
+            padding-left: 250px;
         }
 
         .configuration-container.active {
             width: calc(100% - 305px);
             position: absolute;
-            padding-left: 86px;
+            padding-left: 80px;
         }
+
+
+        /* New */
+        .configuration-nav {
+    width: 235px;
+    overflow-x: hidden;
+    padding-right: 1.25rem;
+    padding-bottom: 4rem;
+    padding-top: 0;
+}
+.configuration-nav.side-nav--simple {
+    width: 65px;
+}
+.configuration-nav .side-nav .side-menu{
+    padding-left: 0.8rem;
+    height: 32px;
+}
+.configuration-nav.side-nav--simple a {
+    display: none;
+}
+.configuration-nav .side-nav {width: auto;color: #333;}
+
+.configuration-nav .side-nav .side-menu__title {
+    color: #333;
+}
+.configuration-nav .side-nav .side-menu.side-menu--active .side-menu__title,
+.configuration-nav .side-nav .side-menu.side-menu--active .side-menu__icon {
+    color: rgba(112, 41, 125, var(--tw-text-opacity)) !important;
+}
+.configuration-nav .side-nav .side-menu__icon {
+    color: #333;
+}
+.configuration-nav .side-nav>ul>li>.side-menu.side-menu--active {
+    --tw-bg-opacity: 1;
+    background-color:transparent !important;
+}
+.configuration-nav .side-nav>ul>li>.side-menu:hover:not(.side-menu--active):not(.side-menu--open) .side-menu__icon:before {
+    background-color: transparent;
+    width: 100%;
+    color: rgba(112, 41, 125, var(--tw-text-opacity)) !important;
+    border-radius: 9999px;
+}
+.configuration-nav .side-nav ul.side-menu__sub-open {
+    --tw-bg-opacity: 1;
+    background-color: transparent !important;
+}
+.configuration-nav .side-nav>ul ul {
+    --tw-bg-opacity: 0;
+    background-color: transparent !important;
+}
+.configuration-nav.side-nav--simple .configarrow-toggle {
+    top: 14px;
+    right: 20px;
+}
+.configarrow-toggle {
+    position: absolute;
+    right: 18px;
+    z-index: 10000000;
+    top: 10px;
+    cursor: pointer;
+}
+.configarrow-toggle svg {
+    width: 20px;
+}
+.configuration-nav.side-nav--simple .configarrow-toggle span {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+}
+.configuration-nav.side-nav--simple a {
+    display: flex;
+}
+.configuration-nav.side-nav--simple .breadcrumb {
+    display: none;
+}
+.configuration-nav.side-nav--simple .side-nav {
+    padding-left: 10px;
+    padding-top:40px;
+}
+.configuration-nav.side-nav--simple .side-nav .side-menu__title {
+    opacity: 0;
+}
+.configuration-nav .side-nav>ul>li>.side-menu.side-menu--active:before{
+    display: none;
+}
+
+.configuration-nav.side-nav--simple .side-nav>ul>li>.side-menu.side-menu--active{
+    background-color: transparent !important;
+}
+.configuration-container {
+    /* width: calc(100% - 305px);
+    position: absolute;
+    padding-left: 270px; */
+}
+.configuration-container.active {
+    /* width: calc(100% - 305px);
+    position: absolute;
+    padding-left: 86px; */
+}
+.configuration-nav .side-nav .side-menu__icon svg {
+    width: 20px;
+}
+/* .configuration-nav .side-nav, .configuration-nav .side-nav .side-menu__title {
+    display: block;
+} */
+
+@media (max-width:767px) {
+    .configarrow-toggle{
+        display: none;
+    }
+    .configuration-nav {
+        width: 100%;
+        margin-bottom: 20px;
+        padding-bottom: 0;
+    }
+    .configuration-nav .side-nav {
+        display: block;
+    }
+    .configuration-nav .side-nav .side-menu .side-menu__title,
+    .configuration-nav .side-nav .side-menu .side-menu__title .side-menu__sub-icon {
+        display: inherit;
+    }
+    .configuration-nav .side-nav ul.side-menu__sub-open {
+        --tw-bg-opacity: 1;
+        background-color: transparent !important;
+        padding-left: 30px;
+    }
+}
+        /* New */
 
     </style>
 @endpush
@@ -102,8 +231,8 @@
 @section('content')
     <div class="grid grid-cols-12 gap-6">
         <div class="flex lg:block flex-col-reverse configuration-nav configuration-layout-sidebar">
-            <div class="intro-y box mt-5 lg:mt-0" x-data="toggleConfigurationSidebarMenu()">
-                <div class="relative flex items-center p-5">
+            <div class="intro-y box mt-5 lg:mt-0 configuration-nav configuration-layout-sidebar" x-data="toggleConfigurationSidebarMenu()">
+                <div class="relative flex items-center p-3">
                     <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
                         <a href="">Wallets</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

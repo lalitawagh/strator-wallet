@@ -19,7 +19,7 @@ class StoreLedgerRequest extends FormRequest
             'name'               => 'required',
             'code'               => 'required',
             'ledger_type'        => 'required',
-            'symbol'             => 'required',
+            'symbol'             => 'nullable',
             'exchange_type'      => 'required',
             'exchange_rate'      => 'required',
             'exchange_from'      => 'required',
