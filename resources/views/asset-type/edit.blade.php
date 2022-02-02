@@ -24,7 +24,7 @@
                                 <label for="asset_category" class="form-label sm:w-30">Asset Category <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     @php
-                                        $asset_categories = \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::toArray();
+                                        $asset_categories = \Kanexy\LedgerFoundation\Enums\AssetCategory::toArray();
                                     @endphp
                                     <select name="asset_category" id="asset_category" data-search="true" class="tail-select w-full @error('asset_category') border-theme-6 @enderror">
                                         @foreach ($asset_categories as $key => $asset_category)
@@ -67,7 +67,7 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-28"> Active</label>
                                 <div class="sm:w-5/6">
-                                    <input id="status" name="status" type="checkbox" class="form-check-switch" @if (old("status",$asset_type['status'])  === \Kanexy\LedgerFoundation\Http\Enums\WalletStatus::ACTIVE) checked @endif>
+                                    <input id="status" name="status" type="checkbox" class="form-check-switch" @if (old("status",$asset_type['status'])  === \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) checked @endif>
 
                                     @error('status')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>

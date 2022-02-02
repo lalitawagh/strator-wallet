@@ -10,9 +10,11 @@
                     <h2 class="font-medium text-base mr-auto">
                         Wallet Deposit List
                     </h2>
+                    @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
                     <div>
                         <a href="{{ route('dashboard.ledger-foundation.wallet.deposit-initial',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md">Deposit</a>
                     </div>
+                    @endif
                 </div>
                 <div class="p-5">
                     <div class="overflow-x-auto">

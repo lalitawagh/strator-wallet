@@ -1,6 +1,6 @@
 <?php
 
-namespace Kanexy\LedgerFoundation\Http\Enums;
+namespace Kanexy\LedgerFoundation\Enums;
 
 class Permission
 {

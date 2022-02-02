@@ -58,7 +58,7 @@
                                 <label for="frequency" class="form-label sm:w-28">Frequency <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     @php
-                                        $exchange_rate_frequencies = \Kanexy\LedgerFoundation\Http\Enums\ExchangeRateFrequency::toArray();
+                                        $exchange_rate_frequencies = \Kanexy\LedgerFoundation\Enums\ExchangeRateFrequency::toArray();
                                     @endphp
                                     <select name="frequency" id="frequency" data-search="true" class="tail-select w-full @error('frequency') border-theme-6 @enderror">
                                         @foreach ($exchange_rate_frequencies as $exchange_rate_frequency)

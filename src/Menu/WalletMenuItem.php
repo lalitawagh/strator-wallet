@@ -5,7 +5,6 @@ namespace Kanexy\LedgerFoundation\Menu;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Menu\Contracts\Item;
 use Kanexy\Cms\Menu\MenuItem;
-use Kanexy\LedgerFoundation\Http\Enums\Permission;
 use Kanexy\PartnerFoundation\Core\Helper;
 
 class WalletMenuItem extends Item
@@ -18,9 +17,6 @@ class WalletMenuItem extends Item
 
     public function getIsVisible(): bool
     {
-        /** @var $user App\Model\User */
-        $user = Auth::user();
-
         return true;
     }
 
@@ -29,8 +25,7 @@ class WalletMenuItem extends Item
         /** @var $user App\Model\User */
         $user = Auth::user();
 
-        if ($user->isSubscriber()) {
-            $menus = [
+        $menus = [
                 new MenuItem('Transactions', 'activity', url: route('dashboard.ledger-foundation.wallet-transaction.index')),
                 new MenuItem('Payouts', 'activity', url: route('dashboard.ledger-foundation.wallet-payout.index')),
                 new MenuItem('Request Payments', 'activity', url: route('dashboard.ledger-foundation.wallet-receive.index')),
@@ -40,7 +35,6 @@ class WalletMenuItem extends Item
                 new MenuItem('Transfers', 'activity'),
                 new MenuItem('Disputes', 'activity',url: route('dashboard.ledger-foundation.dispute.index')),
             ];
-        }
 
         if ($user->isSuperAdmin()) {
             $menus[]=new MenuItem('Configuration', 'activity', url: route('dashboard.ledger-foundation.ledger.index'));

@@ -47,12 +47,14 @@ class DepositWalletComponent extends Component
     {
         $wallet = Wallet::whereId($this->wallet)->first();
         $ledger = Ledger::whereId($wallet?->ledger_id)->first();
-        $asset_type = Setting::getValue('asset_types',[])->firstWhere('id', $value);
+        $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
+        $base_asset_category = $ledger?->asset_category;
+        $exchange_asset_category = $asset_type['asset_category'];
 
-        if($ledger?->asset_category != 'VIRTUAL' &&  @$asset_type['asset_category'] != 'virtual')
+        if(@$base_asset_category != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL &&  @$exchange_asset_category != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
         {
-            $base_currency = Setting::getValue('asset_types',[])->firstWhere('id', $ledger->asset_type);
-            $exchange_currency = Setting::getValue('asset_types',[])->firstWhere('id', $value);
+            $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $ledger->asset_type);
+            $exchange_currency =  collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
 
             $this->base_currency = $base_currency['name'];
             $this->exchange_currency = $exchange_currency['name'];
@@ -60,13 +62,13 @@ class DepositWalletComponent extends Component
             $this->fee = $ledger->deposit_fee;
         }else{
             $exchange_rate_details = ExchangeRate::where(['base_currency' => $wallet->ledger_id,'exchange_currency' => $value])->first();
-            $base_currency = Setting::getValue('asset_types',[])->firstWhere('id', $ledger->asset_type);
-            $exchange_currency = Setting::getValue('asset_types',[])->firstWhere('id', $value);
+            $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $ledger->asset_type);
+            $exchange_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
 
-            $this->base_currency = ($ledger->asset_category == 'VIRTUAL') ? 'Coin' : $base_currency['name'];
-            $this->exchange_currency = ($exchange_currency['asset_category'] == 'virtual') ? 'Coin' : $exchange_currency['name'];
-            $this->exchange_rate =  $exchange_rate_details->exchange_rate;
-            $this->fee = $exchange_rate_details->exchange_fee;
+            $this->base_currency = ($ledger->asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL) ? 'Coin' : $base_currency['name'];
+            $this->exchange_currency = ($exchange_currency['asset_category'] == \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL) ? 'Coin' : $exchange_currency['name'];
+            $this->exchange_rate =  $exchange_rate_details?->exchange_rate;
+            $this->fee = $exchange_rate_details?->exchange_fee;
         }
 
         session(['fee' => $this->fee,'exchange_rate' => $this->exchange_rate,'exchange_currency' => $this->exchange_currency,'base_currency' => $this->base_currency,'wallet' => $this->wallet,'currency' => $value,'amount' => $this->amount]);

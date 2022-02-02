@@ -48,7 +48,7 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-28"> Status</label>
                                 <div class="sm:w-5/6">
-                                    <input id="status" name="status" type="checkbox" class="form-check-switch"  @if (old("status")  === \Kanexy\LedgerFoundation\Http\Enums\WalletStatus::ACTIVE) checked @endif>
+                                    <input id="status" name="status" type="checkbox" class="form-check-switch"  @if (old("status")  === \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) checked @endif>
 
                                     @error('status')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>

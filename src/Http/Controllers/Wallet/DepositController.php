@@ -4,20 +4,29 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\DepositPolicy;
+use Kanexy\LedgerFoundation\Services\WalletService;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Stripe;
 
 class DepositController extends Controller
 {
+    private WalletService $walletService;
+
+    public function __construct(WalletService $walletService)
+    {
+        $this->walletService = $walletService;
+    }
+
     public function index(Request $request)
     {
         $this->authorize(DepositPolicy::VIEW, Wallet::class);
+
+        $workspace = null;
 
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
@@ -38,9 +47,8 @@ class DepositController extends Controller
         return view("ledger-foundation::wallet.deposit.deposit-initial", compact('wallets', 'currencies', 'workspace'));
     }
 
-    public function storeDepositInitial(Request $request)
+    public function store(Request $request)
     {
-
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $data = $request->validate([
@@ -48,48 +56,69 @@ class DepositController extends Controller
             'currency'          => 'required',
             'amount'            => 'required',
             'payment_method'    => 'required',
+            'description'       => 'required',
         ]);
 
-        $asset_type = Setting::getValue('asset_types',[])->firstWhere('id', $data['currency']);
+        $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['currency']);
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
 
-        $data['fee'] = session('fee') ?? 0;
-        $data['currency'] = $asset_type['name'] ?? null;
-        $data['workspace_id'] = $workspace->id ?? null;
+        if(is_null($asset_type))
+        {
+            return back()->withError('Currency not exists');
+        }
+
+        $data['fee'] = session('fee');
+        $data['currency'] = $asset_type['name'];
+        $data['workspace_id'] = $workspace->id;
 
         session(['deposit_request' => $data]);
 
         return redirect()->route('dashboard.ledger-foundation.wallet.deposit-detail', ['workspace_id' => $workspace->id]);
     }
 
-    public function depositDetail()
+    public function showDepositOverview()
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $details = session('deposit_request');
+
+        if(is_null($details))
+        {
+            return redirect()->route('dashboard.ledger-foundation.wallet.deposit-initial');
+        }
 
         return view("ledger-foundation::wallet.deposit.deposit-detail", compact('details'));
     }
 
-    public function storeDepositDetail()
+    public function storeDepositOverviewDetail()
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $details = session('deposit_request');
+
+        if(is_null($details))
+        {
+            return redirect()->route('dashboard.ledger-foundation.wallet.deposit-initial');
+        }
 
         return redirect()->route('dashboard.ledger-foundation.wallet.deposit-payment',['workspace_id' => $details['workspace_id']]);
     }
 
-    public function depositPayment()
+    public function showDepositPayment()
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $details = session('deposit_request');
 
+        if(is_null($details))
+        {
+            return redirect()->route('dashboard.ledger-foundation.wallet.deposit-initial');
+        }
+
         return view("ledger-foundation::wallet.deposit.deposit-payment",compact('details'));
     }
 
-    public function storeDepositPayment(Request $request)
+    public function paypalPayment(Request $request)
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
@@ -130,10 +159,16 @@ class DepositController extends Controller
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                 ],
             ]);
-            $amount = session('exchange_rate') ? session('exchange_rate') * $depositRequest['amount'] : $depositRequest['amount'];
+
+            $amount = $depositRequest['amount'];
+
+            if(session('exchange_rate'))
+            {
+                $amount = session('exchange_rate') * $depositRequest['amount'];
+            }
+
             $wallet = Wallet::find($depositRequest['wallet']);
-            $balance = $wallet->balance + $amount;
-            $wallet->update(['balance' => $balance]);
+            $wallet->credit($wallet,$amount);
         }
 
         return response()->json(['status' => 'success']);
@@ -142,21 +177,16 @@ class DepositController extends Controller
     public function stripePayment(Request $request)
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
-
         $depositRequest = session('deposit_request');
         $stripe =  Stripe\Stripe::setApiKey(config('services.stripe.secret'));
         $data = Stripe\Charge::create ([
                 "amount" => $request->input('amount') * 100,
                 "currency" => $depositRequest['currency'],
                 "source" => $request->input('stripeToken'),
-                "description" => "Test payment.",
+                "description" => $depositRequest['description'],
         ]);
 
-        $feeDetails = Http::withToken(config('services.stripe.secret'))
-            ->acceptJson()
-            ->get('https://api.stripe.com/v1/balance/history/' . $data->balance_transaction)
-            ->throw()
-            ->json();
+        $feeDetails = $this->walletService->stripeBalanceTransactionHistoryDetails($data->balance_transaction);
 
         $data['transaction_fee'] = $feeDetails['fee'];
 
@@ -165,7 +195,7 @@ class DepositController extends Controller
     }
 
 
-    public function storeDepositStripePayment(Request $request)
+    public function storeStripeDepositPaymentDetails(Request $request)
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
@@ -213,15 +243,21 @@ class DepositController extends Controller
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                 ],
             ]);
-            $totalAmount = session('exchange_rate') ? ($depositRequest['amount'] - ($response['data']['transaction_fee']/100)) * session('exchange_rate') : $depositRequest['amount'] - ($response['data']['transaction_fee']/100);
+
+            $totalAmount = $depositRequest['amount'] - ($response['data']['transaction_fee']/100);
+
+            if(session('exchange_rate'))
+            {
+                $totalAmount = ($depositRequest['amount'] - ($response['data']['transaction_fee']/100)) * session('exchange_rate');
+            }
+
             $wallet = Wallet::find($depositRequest['wallet']);
-            $balance = $wallet?->balance + $totalAmount;
-            $wallet->update(['balance' => $balance]);
+            $wallet->credit($wallet,$totalAmount);
         }
         return response()->json(['status' => 'success']);
     }
 
-    public function depositFinal()
+    public function showFinalDepositDetail()
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
@@ -229,7 +265,7 @@ class DepositController extends Controller
         return view("ledger-foundation::wallet.deposit.deposit-final",compact('details'));
     }
 
-    public function depositMoney()
+    public function showDepositMoney()
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 

@@ -29,4 +29,16 @@ class Wallet extends Model
     {
         return $this->hasOne(Ledger::class,'id','ledger_id');
     }
+
+    public function debit(Wallet $wallet,$amount)
+    {
+        $balance = $wallet?->balance - $amount;
+        $wallet->update(['balance' => $balance]);
+    }
+
+    public function credit(Wallet $wallet,$amount)
+    {
+        $balance = $wallet?->balance + $amount;
+        $wallet->update(['balance' => $balance]);
+    }
 }

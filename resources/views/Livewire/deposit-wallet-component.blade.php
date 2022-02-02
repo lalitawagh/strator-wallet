@@ -34,7 +34,7 @@
         <label for="payment_method" class="form-label sm:w-40"> Payment Method <span class="text-theme-6">*</span></label>
         <div wire:ignore class="sm:w-5/6">
             @php
-                $payment_methods = \Kanexy\LedgerFoundation\Http\Enums\PaymentMethod::toArray();
+                $payment_methods = \Kanexy\LedgerFoundation\Enums\PaymentMethod::toArray();
             @endphp
             <select data-search="true" class="tail-select mt-0 sm:mr-2 w-full  form-control mb-1" name="payment_method">
                 <option value="">Select Payment Method</option>
@@ -42,6 +42,13 @@
                     <option value="{{ $payment_method }}"> {{ trans('ledger-foundation::configuration.'.$payment_method) }} </option>
                 @endforeach
             </select>
+            <span class="block text-theme-6 mt-2"></span>
+        </div>
+    </div>
+    <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
+        <label for="description" class="form-label sm:w-40"> Description <span class="text-theme-6">*</span></label>
+        <div class="sm:w-5/6">
+            <input id="description" type="text" class="form-control" name="description">
             <span class="block text-theme-6 mt-2"></span>
         </div>
     </div>

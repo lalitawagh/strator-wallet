@@ -35,9 +35,21 @@ class ExchangeRateController extends Controller
         $data = $request->validated();
         $data['is_hard_stop'] = $request->has('is_hard_stop') ? '1' : '0';
 
-        $asset_type = Setting::getValue('asset_types',[])->firstWhere('id', $data['exchange_currency']);
+        $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['exchange_currency']);
+        $base_asset_category = Ledger::whereId($data['base_currency'])->first()->asset_category;
+        $exchange_asset_category = $asset_type['asset_category'];
 
-        if(Ledger::whereId($data['base_currency'])->first()->asset_category != \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::VIRTUAL &&  $asset_type['asset_category'] != \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::VIRTUAL)
+        if(is_null($base_asset_category))
+        {
+            return back()->withError('Base currency not exists');
+        }
+
+        if(is_null($exchange_asset_category))
+        {
+            return back()->withError('Exchange currency not exists');
+        }
+
+        if($base_asset_category != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL &&  $exchange_asset_category != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
         {
             return back()->withError('Select at least one virtual currency');
         }
@@ -66,9 +78,21 @@ class ExchangeRateController extends Controller
         $exchange_rate = ExchangeRate::findOrFail($id);
         $data = $request->validated();
 
-        $asset_type = Setting::getValue('asset_types',[])->firstWhere('id', $data['exchange_currency']);
+        $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['exchange_currency']);
+        $base_asset_category = Ledger::whereId($data['base_currency'])->first()->asset_category;
+        $exchange_asset_category = $asset_type['asset_category'];
 
-        if(Ledger::whereId($data['base_currency'])->first()->asset_category != \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::VIRTUAL && $asset_type['asset_category'] != \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::VIRTUAL)
+        if(is_null($base_asset_category))
+        {
+            return back()->withError('Base currency not exists');
+        }
+
+        if(is_null($exchange_asset_category))
+        {
+            return back()->withError('Exchange currency not exists');
+        }
+
+        if($base_asset_category != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL && $exchange_asset_category != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
         {
             return back()->withError('Select at least one virtual currency');
         }

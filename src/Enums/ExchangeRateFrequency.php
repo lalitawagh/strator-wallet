@@ -1,6 +1,6 @@
 <?php
 
-namespace Kanexy\LedgerFoundation\Http\Enums;
+namespace Kanexy\LedgerFoundation\Enums;
 
 use Kanexy\Cms\Enums\Enum;
 

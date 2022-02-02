@@ -17,7 +17,7 @@ class ExchangeRate extends Model
         'is_hard_stop',
         'exchange_fee',
         'exchange_rate',
-        'note'
+        'note',
     ];
 
     public function ledger()
