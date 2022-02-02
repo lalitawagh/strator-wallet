@@ -165,7 +165,7 @@
                                         @endforeach
                                     </select>
 
-                                    @error('image')
+                                    @error('commodity_category')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
