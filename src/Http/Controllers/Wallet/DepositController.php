@@ -67,7 +67,7 @@ class DepositController extends Controller
             return back()->withError('Currency not exists');
         }
 
-        $data['fee'] = session('fee');
+        $data['fee'] = session('fee') ?? 0;
         $data['currency'] = $asset_type['name'];
         $data['workspace_id'] = $workspace->id;
 
