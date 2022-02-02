@@ -29,7 +29,7 @@ $total = $details['fee'] + $details['amount'];
 
                     if (details.status == 'COMPLETED') {
                         return fetch(
-                                "{{ route('dashboard.ledger-foundation.wallet.store-deposit-payment') }}", {
+                                "{{ route('dashboard.ledger-foundation.wallet.store-deposit-payment',['workspace_id' => $details['workspace_id']]) }}", {
                                     method: 'post',
                                     headers: {
                                         'content-type': 'application/json',
@@ -51,23 +51,23 @@ $total = $details['fee'] + $details['amount'];
                             .then(function(response) {
                                 // redirect to the completed page if paid
                                 window.location.href =
-                                    "{{ route('dashboard.ledger-foundation.wallet.deposit-final') }}";
+                                    "{{ route('dashboard.ledger-foundation.wallet.deposit-final',['workspace_id' => $details['workspace_id']]) }}";
 
                             })
                             .catch(function(error) {
                                 // redirect to failed page if internal error occurs
                                 window.location.href =
-                                    "{{ route('dashboard.ledger-foundation.wallet-deposit.index') }}";
+                                    "{{ route('dashboard.ledger-foundation.wallet-deposit-initial',['workspace_id' => $details['workspace_id']]) }}";
                             });
                     } else {
                         window.location.href =
-                            "{{ route('dashboard.ledger-foundation.wallet-deposit.index') }}";
+                            "{{ route('dashboard.ledger-foundation.wallet-deposit-initial',['workspace_id' => $details['workspace_id']]) }}";
                     }
                 });
             },
 
             onCancel: function(data) {
-                window.location.href = "{{ route('dashboard.ledger-foundation.wallet-deposit.index') }}";
+                window.location.href = "{{ route('dashboard.ledger-foundation.wallet-deposit-initial',['workspace_id' => $details['workspace_id']]') }}";
             }
 
         }).render('#paypal-button-container');

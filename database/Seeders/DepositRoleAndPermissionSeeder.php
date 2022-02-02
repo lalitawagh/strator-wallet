@@ -25,6 +25,10 @@ class DepositRoleAndPermissionSeeder extends Seeder
         $EXCHANGE_RATE_EDIT = Permission::create(['name' => EnumsPermission::EXCHANGE_RATE_EDIT]);
         $EXCHANGE_RATE_DELETE = Permission::create(['name' => EnumsPermission::EXCHANGE_RATE_DELETE]);
 
+        $DEPOSIT_VIEW = Permission::create(['name' => EnumsPermission::DEPOSIT_VIEW]);
+        $DEPOSIT_CREATE = Permission::create(['name' => EnumsPermission::DEPOSIT_CREATE]);
+        $DEPOSIT_SHOW = Permission::create(['name' => EnumsPermission::DEPOSIT_SHOW]);
+
         $SUPER_ADMIN = Role::where(['name' => EnumsRole::SUPER_ADMIN])->first();
         $SUPER_ADMIN->givePermissionTo(Permission::all());
     }

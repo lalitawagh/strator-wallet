@@ -3,6 +3,7 @@
 @section('deposit-content')
     <form action="{{ route('dashboard.ledger-foundation.wallet.store-deposit-detail') }}" method="POST">
     @csrf
+        <input type="hidden" name="workspace_id" value="{{ $details['workspace_id'] }}">
         <div class="px-5 sm:px-5 mt-0 pt-0">
             <div class="flex flex-col pb-5">
                 <span class="font-medium text-base">Deposit Money via <strong>{{ $details['payment_method'] }}</strong></span>

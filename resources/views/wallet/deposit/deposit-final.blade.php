@@ -29,7 +29,7 @@
     </div>
     <div class="px-5 pb-8 text-center mt-3">
         <a href="@isset($details['stripe_receipt_url']){{ $details['stripe_receipt_url'] }}@endisset" target="_blank" class="btn btn-secondary w-24 mr-2 mb-2">Print</button>
-        <a href="{{ route('dashboard.ledger-foundation.wallet.deposit-money') }}"  class="btn btn-primary">Deposit Money Again</a>
+        <a href="{{ route('dashboard.ledger-foundation.wallet.deposit-money',['workspace_id' => $details['workspace_id']]) }}"  class="btn btn-primary">Deposit Money Again</a>
     </div>
 </div>
 @endsection

@@ -10,23 +10,37 @@ use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\DepositPolicy;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Stripe;
 
 class DepositController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $this->authorize(DepositPolicy::VIEW, Wallet::class);
+
+        if ($request->has('filter.workspace_id')) {
+            $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
+        }
+
+        return view("ledger-foundation::wallet.deposit.index", compact('workspace'));
+    }
+
+    public function create(Request $request)
+    {
+        $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $user = Auth::user();
         $wallets = Wallet::forHolder($user)->with('ledger')->get();
         $currencies = Setting::getValue('asset_types',[]);
+        $workspace = Workspace::findOrFail($request->input('workspace_id'));
 
-        return view("ledger-foundation::wallet.deposit.deposit-initial", compact('wallets', 'currencies'));
+        return view("ledger-foundation::wallet.deposit.deposit-initial", compact('wallets', 'currencies', 'workspace'));
     }
 
     public function storeDepositInitial(Request $request)
     {
+
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $data = $request->validate([
@@ -37,13 +51,15 @@ class DepositController extends Controller
         ]);
 
         $asset_type = Setting::getValue('asset_types',[])->firstWhere('id', $data['currency']);
+        $workspace = Workspace::findOrFail($request->input('workspace_id'));
 
         $data['fee'] = session('fee');
         $data['currency'] = $asset_type['name'];
+        $data['workspace_id'] = $workspace->id;
 
         session(['deposit_request' => $data]);
 
-        return redirect()->route('dashboard.ledger-foundation.wallet.deposit-detail');
+        return redirect()->route('dashboard.ledger-foundation.wallet.deposit-detail', ['workspace_id' => $workspace->id]);
     }
 
     public function depositDetail()
@@ -61,7 +77,7 @@ class DepositController extends Controller
 
         $details = session('deposit_request');
 
-        return redirect()->route('dashboard.ledger-foundation.wallet.deposit-payment');
+        return redirect()->route('dashboard.ledger-foundation.wallet.deposit-payment',['workspace_id' => $details['workspace_id']]);
     }
 
     public function depositPayment()
@@ -215,8 +231,9 @@ class DepositController extends Controller
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
+        $workspace_id = session()->get('deposit_request.workspace_id');
         session()->forget(['fee', 'exchange_rate', 'exchange_currency', 'base_currency', 'wallet', 'currency', 'amount' ,'deposit_request']);
 
-        return redirect()->route('dashboard.ledger-foundation.wallet-deposit.index');
+        return redirect()->route('dashboard.ledger-foundation.wallet-deposit.index',['filter' => ['workspace_id' => $workspace_id]]);
     }
 }

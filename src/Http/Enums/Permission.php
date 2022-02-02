@@ -28,4 +28,8 @@ class Permission
     public const EXCHANGE_RATE_CREATE = 'ledger-foundation::exchange-rate.create';
     public const EXCHANGE_RATE_EDIT   = 'ledger-foundation::exchange-rate.edit';
     public const EXCHANGE_RATE_DELETE = 'ledger-foundation::exchange-rate.delete';
+
+    public const DEPOSIT_VIEW   = 'ledger-foundation::wallet.deposit.view';
+    public const DEPOSIT_CREATE = 'ledger-foundation::wallet.deposit.create';
+    public const DEPOSIT_SHOW   = 'ledger-foundation::wallet.deposit.show';
 }
