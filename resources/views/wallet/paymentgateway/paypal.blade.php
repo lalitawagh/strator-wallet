@@ -1,6 +1,6 @@
 <div id="paypal-button-container"></div>
 @php
-$total = $details['fee'] + $details['amount'];
+$total = @$details['fee'] + @$details['amount'];
 @endphp
 <script src="https://www.paypal.com/sdk/js?client-id={{ config('paypal.sandbox.client_id') }}"></script>
 @push('scripts')
@@ -57,18 +57,18 @@ $total = $details['fee'] + $details['amount'];
                             .catch(function(error) {
                                 // redirect to failed page if internal error occurs
                                 window.location.href =
-                                    "{{ route('dashboard.ledger-foundation.wallet-deposit-initial',['workspace_id' => $details['workspace_id']]) }}";
+                                    "{{ route('dashboard.ledger-foundation.wallet.deposit-initial',['workspace_id' => $details['workspace_id']]) }}";
                             });
                     } else {
                         window.location.href =
-                            "{{ route('dashboard.ledger-foundation.wallet-deposit-initial',['workspace_id' => $details['workspace_id']]) }}";
+                            "{{ route('dashboard.ledger-foundation.wallet.deposit-initial',['workspace_id' => $details['workspace_id']]) }}";
                     }
                 });
             },
 
             onCancel: function(data) {
-                window.location.href = "{{ route('dashboard.ledger-foundation.wallet-deposit-initial',['workspace_id' => $details['workspace_id']]') }}";
-            }
+                window.location.href = "{{ route('dashboard.ledger-foundation.wallet.deposit-initial',['workspace_id' => $details['workspace_id']]) }}";
+            },
 
         }).render('#paypal-button-container');
         // This function displays Smart Payment Buttons on your web page.

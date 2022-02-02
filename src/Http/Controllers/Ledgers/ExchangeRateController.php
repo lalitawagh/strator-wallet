@@ -37,7 +37,7 @@ class ExchangeRateController extends Controller
 
         $asset_type = Setting::getValue('asset_types',[])->firstWhere('id', $data['exchange_currency']);
 
-        if(Ledger::whereId($data['base_currency'])->first()->asset_category != 'VIRTUAL' &&  $asset_type['asset_category'] != 'virtual')
+        if(Ledger::whereId($data['base_currency'])->first()->asset_category != \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::VIRTUAL &&  $asset_type['asset_category'] != \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::VIRTUAL)
         {
             return back()->withError('Select at least one virtual currency');
         }
@@ -68,7 +68,7 @@ class ExchangeRateController extends Controller
 
         $asset_type = Setting::getValue('asset_types',[])->firstWhere('id', $data['exchange_currency']);
 
-        if(Ledger::whereId($data['base_currency'])->first()->asset_category != 'virtual' && $asset_type['asset_category'] != 'virtual')
+        if(Ledger::whereId($data['base_currency'])->first()->asset_category != \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::VIRTUAL && $asset_type['asset_category'] != \Kanexy\LedgerFoundation\Http\Enums\AssetCategory::VIRTUAL)
         {
             return back()->withError('Select at least one virtual currency');
         }

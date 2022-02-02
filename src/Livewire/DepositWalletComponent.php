@@ -46,10 +46,10 @@ class DepositWalletComponent extends Component
     public function changeCurrency($value)
     {
         $wallet = Wallet::whereId($this->wallet)->first();
-        $ledger = Ledger::whereId($wallet->ledger_id)->first();
+        $ledger = Ledger::whereId($wallet?->ledger_id)->first();
         $asset_type = Setting::getValue('asset_types',[])->firstWhere('id', $value);
 
-        if($ledger->asset_category != 'VIRTUAL' &&  $asset_type['asset_category'] != 'virtual')
+        if($ledger?->asset_category != 'VIRTUAL' &&  @$asset_type['asset_category'] != 'virtual')
         {
             $base_currency = Setting::getValue('asset_types',[])->firstWhere('id', $ledger->asset_type);
             $exchange_currency = Setting::getValue('asset_types',[])->firstWhere('id', $value);

@@ -3,6 +3,7 @@
         <label for="wallet" class="form-label sm:w-40"> Wallet <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">
             <select wire:change="changeBaseCurrency($event.target.value)" name="wallet" class="form-control">
+                <option value="">Select Wallet</option>
                 @foreach ($wallets as $wallet)
                     <option value="{{ $wallet->getKey() }}" @if (session('wallet') == $wallet->getKey()) selected @endif>{{ $wallet->ledger?->name }}</option>
                 @endforeach

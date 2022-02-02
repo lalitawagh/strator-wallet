@@ -2,7 +2,7 @@
     data-stripe-publishable-key="{{ config('services.stripe.stripe_key') }}" id="payment-form">
     @csrf
     @php
-        $total = $details['fee'] + $details['amount'];
+        $total = @$details['fee'] + @$details['amount'];
     @endphp
     <div class="overlay"></div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 required">
