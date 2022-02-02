@@ -5,7 +5,7 @@ namespace Kanexy\LedgerFoundation\Wallet;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Components\Contracts\Component;
 
-class WalletContent extends Component
+class MembershipServiceSelectionContent extends Component
 {
     public function render()
     {

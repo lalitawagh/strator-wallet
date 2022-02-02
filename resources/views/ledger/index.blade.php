@@ -1,20 +1,26 @@
-@extends("cms::dashboard.layouts.default")
+@extends("ledger-foundation::config-skeleton")
 
 @section("title", "Ledger")
 
-@section("content")
+@section("config-content")
+<div class="configuration-container">
     <div class="grid grid-cols-12 gap-6">
-        <div class="col-span-12">
-            <div class="box">
-                <div class="flex items-center py-2 px-3 border-b border-gray-200 dark:border-dark-5">
-                    <h2 class="font-medium text-base mr-auto">
-                        Ledger
-                    </h2>
+        <!-- BEGIN: Daily Sales -->
+        <div class="intro-y box col-span-12 xxl:col-span-12">
+            <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
-                    <div>
-                        <a href="{{ route('dashboard.ledger-foundation.ledger.create') }}" class="btn btn-sm btn-primary shadow-md">Create New</a>
-                    </div>
+                <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+                    <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <a href="" class="breadcrumb--active">Ledger</a>
                 </div>
+                <div>
+                    <a href="{{ route('dashboard.ledger-foundation.ledger.create') }}" class="btn btn-sm btn-primary shadow-md">Create New</a>
+                </div>
+            </div>
+            <div class="p-5">
+                <div id="1" class="tab-pane grid grid-cols-12 gap-3 pt-0 active" role="tabpanel" aria-labelledby="1-tab">
+                    <div class="active col-span-12 mt-0 w-full" role="tabpanel" id="k-wallet" aria-labelledby="k-wallet-tab">
 
                 <div class="p-5">
                     <div class="overflow-x-auto">
@@ -43,31 +49,32 @@
                                     <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
                                     <td class="border-b dark:border-dark-5">{{ $ledger->name }}</td>
                                     <td class="border-b dark:border-dark-5"><img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}"></td>
-                                    <td class="border-b dark:border-dark-5">{{ ucwords(strtolower($ledger->ledger_type)) }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ ucwords(strtolower(str_replace('_',' ',$ledger->exchange_type))) }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ ucwords(strtolower(str_replace('_',' ',$ledger->asset_category))) }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$ledger->ledger_type) }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$ledger->exchange_type) }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$ledger->asset_category) }}</td>
                                     <td class="border-b dark:border-dark-5">{{ @$assetType['name'] }}</td>
                                     <td class="border-b dark:border-dark-5">{{ @$assetClass['name'] }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ ucfirst($ledger->status) }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$ledger->status) }}</td>
                                     <td class="border-b dark:border-dark-5">
                                         <div class="dropdown">
                                             <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
                                                 <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
                                             </button>
 
-                                            <div class="dropdown-menu w-48">
-                                                <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                    <a href="{{ route('dashboard.ledger-foundation.ledger.edit', $ledger->id) }}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                        <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
-                                                    </a>
-                                                    <form action="{{ route('dashboard.ledger-foundation.ledger.destroy', $ledger->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
+                                                <div class="dropdown-menu w-48">
+                                                    <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                                                        <a href="{{ route('dashboard.ledger-foundation.ledger.edit', $ledger->id) }}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                            <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
+                                                        </a>
+                                                        <form action="{{ route('dashboard.ledger-foundation.ledger.destroy', $ledger->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
 
-                                                        <button type="submit" class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
-                                                            <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete
-                                                        </button>
-                                                    </form>
+                                                            <button type="submit" class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                                <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -83,5 +90,8 @@
                 </div>
             </div>
         </div>
+        <!-- END: Daily Sales -->
+
     </div>
+</div>
 @endsection

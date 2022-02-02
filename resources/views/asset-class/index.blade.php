@@ -2,43 +2,44 @@
 
 @section('title', 'Asset Class')
 
-@section('config-content')
-    <div class="col-span-12 lg:col-span-8 xxl:col-span-9">
-        <div class="intro-y box">
-            <div class="box">
-                <div class="flex items-center py-2 px-3 border-b border-gray-200 dark:border-dark-5">
-                    <h2 class="font-medium text-base mr-auto">
-                        Asset Class
-                    </h2>
-
-                    <div>
-                        <a href="{{ route('dashboard.ledger-foundation.asset-class.create') }}"
-                            class="btn btn-sm btn-primary shadow-md">Create New</a>
-                    </div>
+@section("config-content")
+<div class="configuration-container">
+    <div class="grid grid-cols-12 gap-6">
+        <div class="intro-y box col-span-12 xxl:col-span-12">
+            <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+                    <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <a href="" class="breadcrumb--active">Asset Class</a>
                 </div>
-
-                <div class="p-5">
-                    <div class="overflow-x-auto">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
-                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Name</th>
-                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Image</th>
-                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
-                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($asset_class_lists as $index => $asset_class_list)
-                                    <tr>
-                                        <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
-                                        <td class="border-b dark:border-dark-5">{{ $asset_class_list['name'] }}</td>
-                                        <td class="border-b dark:border-dark-5"><img class="rounded-md proof-default"
-                                                style="width:100px;" alt=""
-                                                src="@isset($asset_class_list['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_class_list['image']) }}@endisset">
+                <div>
+                    <a href="{{ route('dashboard.ledger-foundation.asset-class.create') }}" class="btn btn-sm btn-primary shadow-md">Create New</a>
+                </div>
+            </div>
+            <div class="p-5">
+                <div id="1" class="tab-pane grid grid-cols-12 gap-3 pt-0 active" role="tabpanel" aria-labelledby="1-tab">
+                    <div class="active col-span-12 mt-0 w-full" role="tabpanel" id="k-wallet" aria-labelledby="k-wallet-tab">
+                        <div class="overflow-x-auto box">
+                            <table class="table">
+                                <thead>
+                                    <tr class="bg-gray-300 dark:bg-dark-1">
+                                        <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
+                                        <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Name</th>
+                                        <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Image</th>
+                                        <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
+                                        <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($asset_class_lists as $index => $asset_class_list)
+                                        <tr>
+                                            <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
+                                            <td class="border-b dark:border-dark-5">{{ $asset_class_list['name'] }}</td>
+                                            <td class="border-b dark:border-dark-5"><img class="rounded-md proof-default"
+                                                    style="width:100px;" alt=""
+                                                    src="@isset($asset_class_list['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_class_list['image']) }}@endisset">
                                             </td>
-                                            <td class="border-b dark:border-dark-5"> {{ trans('ledger-foundation::configuration.'.$asset_class_list['status']); }}
+                                            <td class="border-b dark:border-dark-5"> {{ trans('ledger-foundation::configuration.'.$asset_class_list['status']) }}
                                             </td>
                                             <td class="border-b dark:border-dark-5">
                                                 <div class="dropdown">
@@ -76,4 +77,6 @@
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+</div>
+@endsection
