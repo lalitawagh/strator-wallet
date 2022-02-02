@@ -36,7 +36,7 @@ class CommodityTypeController extends Controller
 
         Setting::updateOrCreate(['key' => 'commodity_types'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.ledger-foundation.commodity-type.index")->with([
+        return redirect()->route("dashboard.wallet.commodity-type.index")->with([
             'status' => 'success',
             'message' => 'Commodity Type created successfully.',
         ]);
@@ -73,7 +73,7 @@ class CommodityTypeController extends Controller
 
         Setting::updateOrCreate(['key' => 'commodity_types'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.ledger-foundation.commodity-type.index")->with([
+        return redirect()->route("dashboard.wallet.commodity-type.index")->with([
             'status' => 'success',
             'message' => 'Commodity Type updated successfully.',
         ]);
@@ -92,7 +92,7 @@ class CommodityTypeController extends Controller
 
         Setting::updateOrCreate(['key' => 'commodity_types'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.ledger-foundation.commodity-type.index")->with([
+        return redirect()->route("dashboard.wallet.commodity-type.index")->with([
             'status' => 'success',
             'message' => 'Commodity Type deleted successfully.',
         ]);

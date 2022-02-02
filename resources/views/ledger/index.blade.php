@@ -15,7 +15,7 @@
                     <a href="" class="breadcrumb--active">Ledger</a>
                 </div>
                 <div>
-                    <a href="{{ route('dashboard.ledger-foundation.ledger.create') }}" class="btn btn-sm btn-primary shadow-md">Create New</a>
+                    <a href="{{ route('dashboard.wallet.ledger.create') }}" class="btn btn-sm btn-primary shadow-md">Create New</a>
                 </div>
             </div>
             <div class="p-5">
@@ -63,10 +63,10 @@
 
                                                 <div class="dropdown-menu w-48">
                                                     <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                        <a href="{{ route('dashboard.ledger-foundation.ledger.edit', $ledger->id) }}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                        <a href="{{ route('dashboard.wallet.ledger.edit', $ledger->id) }}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                             <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                         </a>
-                                                        <form action="{{ route('dashboard.ledger-foundation.ledger.destroy', $ledger->id) }}" method="POST">
+                                                        <form action="{{ route('dashboard.wallet.ledger.destroy', $ledger->id) }}" method="POST">
                                                             @csrf
                                                             @method('DELETE')
 

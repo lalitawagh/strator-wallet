@@ -73,7 +73,7 @@ class DepositController extends Controller
 
         session(['deposit_request' => $data]);
 
-        return redirect()->route('dashboard.ledger-foundation.wallet.deposit-detail', ['workspace_id' => $workspace->id]);
+        return redirect()->route('dashboard.wallet.deposit-overview', ['workspace_id' => $workspace->id]);
     }
 
     public function showDepositOverview()
@@ -84,7 +84,7 @@ class DepositController extends Controller
 
         if(is_null($details))
         {
-            return redirect()->route('dashboard.ledger-foundation.wallet.deposit-initial');
+            return redirect()->route('dashboard.wallet.deposit.create');
         }
 
         return view("ledger-foundation::wallet.deposit.deposit-detail", compact('details'));
@@ -98,10 +98,10 @@ class DepositController extends Controller
 
         if(is_null($details))
         {
-            return redirect()->route('dashboard.ledger-foundation.wallet.deposit-initial');
+            return redirect()->route('dashboard.wallet.deposit.create');
         }
 
-        return redirect()->route('dashboard.ledger-foundation.wallet.deposit-payment',['workspace_id' => $details['workspace_id']]);
+        return redirect()->route('dashboard.wallet.deposit-payment',['workspace_id' => $details['workspace_id']]);
     }
 
     public function showDepositPayment()
@@ -112,7 +112,7 @@ class DepositController extends Controller
 
         if(is_null($details))
         {
-            return redirect()->route('dashboard.ledger-foundation.wallet.deposit-initial');
+            return redirect()->route('dashboard.wallet.deposit.create');
         }
 
         return view("ledger-foundation::wallet.deposit.deposit-payment",compact('details'));
@@ -272,6 +272,6 @@ class DepositController extends Controller
         $workspace_id = session()->get('deposit_request.workspace_id');
         session()->forget(['fee', 'exchange_rate', 'exchange_currency', 'base_currency', 'wallet', 'currency', 'amount' ,'deposit_request']);
 
-        return redirect()->route('dashboard.ledger-foundation.wallet-deposit.index',['filter' => ['workspace_id' => $workspace_id]]);
+        return redirect()->route('dashboard.wallet.deposit.index',['filter' => ['workspace_id' => $workspace_id]]);
     }
 }

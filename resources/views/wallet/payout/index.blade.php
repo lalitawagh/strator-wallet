@@ -11,7 +11,7 @@
                         Wallet Payout List
                     </h2>
                     <div>
-                        <a href="{{ route('dashboard.ledger-foundation.wallet-payout.create') }}" class="btn btn-sm btn-primary shadow-md">Payout</a>
+                        <a href="{{ route('dashboard.wallet.payout.create') }}" class="btn btn-sm btn-primary shadow-md">Payout</a>
                     </div>
                 </div>
                 <div class="p-5">

@@ -37,7 +37,7 @@ class LedgerController extends Controller
 
         Ledger::create($data);
 
-        return redirect()->route("dashboard.ledger-foundation.ledger.index")->with([
+        return redirect()->route("dashboard.wallet.ledger.index")->with([
             'status' => 'success',
             'message' => 'Ledger created successfully.',
         ]);
@@ -66,7 +66,7 @@ class LedgerController extends Controller
 
         $ledger->update($data);
 
-        return redirect()->route("dashboard.ledger-foundation.ledger.index")->with([
+        return redirect()->route("dashboard.wallet.ledger.index")->with([
             'status' => 'success',
             'message' => 'Ledger updated successfully.',
         ]);
@@ -79,7 +79,7 @@ class LedgerController extends Controller
         $ledger = Ledger::findOrFail($id);
         $ledger->delete();
 
-        return redirect()->route("dashboard.ledger-foundation.ledger.index")->with([
+        return redirect()->route("dashboard.wallet.ledger.index")->with([
             'status' => 'success',
             'message' => 'Ledger deleted successfully.',
         ]);

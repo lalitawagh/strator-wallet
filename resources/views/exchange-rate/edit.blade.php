@@ -18,7 +18,7 @@
                     @if (Session::has('error'))
                     <span class="block text-theme-6">{{ Session::get('error') }}</span>
                     @endif
-                    <form action="{{ route('dashboard.ledger-foundation.exchange-rate.update',$exchange_rate->getKey()) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.wallet.exchange-rate.update',$exchange_rate->getKey()) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="grid grid-cols-12 md:gap-10 mt-0">

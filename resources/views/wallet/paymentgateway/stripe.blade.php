@@ -120,16 +120,16 @@
                 // Submit the form
                 $.ajax({
                     type: 'post',
-                    url: "{{ route('dashboard.ledger-foundation.wallet.stripe-payment',['workspace_id' => $details['workspace_id']]) }}",
+                    url: "{{ route('dashboard.wallet.stripe-payment',['workspace_id' => $details['workspace_id']]) }}",
                     data: $('form').serialize(),
                     success: function(response) {
                         $.ajax({
                             type: 'post',
-                            url: "{{ route('dashboard.ledger-foundation.wallet.store-deposit-stripe-payment',['workspace_id' => $details['workspace_id']]) }}",
+                            url: "{{ route('dashboard.wallet.deposit-stripe-payment',['workspace_id' => $details['workspace_id']]) }}",
                             data: response,
                             success: function(data) {
                                 window.location.href =
-                                    "{{ route('dashboard.ledger-foundation.wallet.deposit-final',['workspace_id' => $details['workspace_id']]) }}";
+                                    "{{ route('dashboard.wallet.deposit-final-detail',['workspace_id' => $details['workspace_id']]) }}";
                             },
                             error: function(data) {
                                 console.log('An error occurred.');

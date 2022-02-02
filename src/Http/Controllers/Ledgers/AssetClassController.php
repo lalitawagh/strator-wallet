@@ -36,7 +36,7 @@ class AssetClassController extends Controller
 
         Setting::updateOrCreate(['key' => 'asset_classes'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.ledger-foundation.asset-class.index")->with([
+        return redirect()->route("dashboard.wallet.asset-class.index")->with([
             'status' => 'success',
             'message' => 'Asset Class created successfully.',
         ]);
@@ -72,7 +72,7 @@ class AssetClassController extends Controller
 
         Setting::updateOrCreate(['key' => 'asset_classes'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.ledger-foundation.asset-class.index")->with([
+        return redirect()->route("dashboard.wallet.asset-class.index")->with([
             'status' => 'success',
             'message' => 'Asset Class updated successfully.',
         ]);
@@ -91,7 +91,7 @@ class AssetClassController extends Controller
 
         Setting::updateOrCreate(['key' => 'asset_classes'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.ledger-foundation.asset-class.index")->with([
+        return redirect()->route("dashboard.wallet.asset-class.index")->with([
             'status' => 'success',
             'message' => 'Asset Class deleted successfully.',
         ]);

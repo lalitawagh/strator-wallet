@@ -1,7 +1,7 @@
 @extends("ledger-foundation::wallet.deposit.skeleton")
 
 @section('deposit-content')
-    <form action="{{ route('dashboard.ledger-foundation.wallet.store-deposit-detail') }}" method="POST">
+    <form action="{{ route('dashboard.wallet.store-deposit-overview-detail') }}" method="POST">
     @csrf
         <input type="hidden" name="workspace_id" value="{{ @$details['workspace_id'] }}">
         <div class="px-5 sm:px-5 mt-0 pt-0">
@@ -24,7 +24,7 @@
                 <div class="font-medium text-base">@isset ($details) {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($total, $details['currency']); }} @endisset</div>
             </div>
             <div class="text-right mt-5 form-inline text-right mt-5 float-right">
-                <a href="{{ route('dashboard.ledger-foundation.wallet-deposit.index',['worksapce_id' => @$details['workspace_id']]) }}" class="btn btn-secondary w-20 inline-block mr-2">Previous</a>
+                <a href="{{ route('dashboard.wallet.deposit.index',['worksapce_id' => @$details['workspace_id']]) }}" class="btn btn-secondary w-20 inline-block mr-2">Previous</a>
                 <button type="submit" class="btn btn-primary w-24">Next</a>
             </div>
         </div>

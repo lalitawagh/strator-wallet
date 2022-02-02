@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Kanexy\Cms\Enums\Role as EnumsRole;
-use Kanexy\LedgerFoundation\Http\Enums\Permission as EnumsPermission;
+use Kanexy\LedgerFoundation\Enums\Permission as EnumsPermission;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 

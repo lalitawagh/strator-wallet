@@ -12,7 +12,7 @@
                         Receive/Request payment List
                     </h2>
                     <div>
-                        <a href="{{ route('dashboard.ledger-foundation.wallet-receive.create') }}" class="btn btn-sm btn-primary shadow-md">Receive</a>
+                        <a href="{{ route('dashboard.wallet.receive.create') }}" class="btn btn-sm btn-primary shadow-md">Receive</a>
                     </div>
                 </div>
                 <div class="p-5">

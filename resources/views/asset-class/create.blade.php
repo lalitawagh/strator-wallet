@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="p-5">
-                    <form action="{{ route('dashboard.ledger-foundation.asset-class.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.wallet.asset-class.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
@@ -58,7 +58,7 @@
                         </div>
 
                         <div class="text-right mt-5">
-                            <a href="{{ route('dashboard.ledger-foundation.asset-class.index') }}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
+                            <a href="{{ route('dashboard.wallet.asset-class.index') }}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
                             <button type="submit" class="btn btn-primary w-24">Create</button>
                         </div>
                     </form>

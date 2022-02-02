@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="p-5">
-                    <form action="{{ route('dashboard.ledger-foundation.asset-class.update',$asset_class['id']) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.wallet.asset-class.update',$asset_class['id']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="grid grid-cols-12 md:gap-10 mt-0">

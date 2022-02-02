@@ -26,30 +26,28 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
 |
 */
 
-Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/ledger-foundation','as'=>'dashboard.ledger-foundation.'],function()  {
+Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'dashboard.wallet.'],function()  {
     Route::get('/', [LedgerFoundationController::class,'index']);
     Route::resource("asset-class",AssetClassController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('asset-type', AssetTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('commodity-type', CommodityTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('ledger', LedgerController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('dispute', DisputeController::class)->only(['index', 'create', 'store', 'show']);
-    Route::resource('wallet-payout', PayoutController::class)->only(['index', 'create', 'store', 'show']);
-    Route::resource('wallet-receive', ReceiveController::class)->only(['index', 'create', 'store', 'show']);
-    Route::resource('wallet-deposit', DepositController::class)->only(['index', 'create', 'store', 'show']);
-    Route::resource('wallet-transaction', TransactionController::class)->only(['index', 'create', 'store', 'show']);
-    Route::resource('wallet-exchange', ExchangeController::class)->only(['index', 'create', 'store', 'show']);
-    Route::resource('wallet-withdraw', WithdrawController::class)->only(['index', 'create', 'store', 'show']);
+    Route::resource('payout', PayoutController::class)->only(['index', 'create', 'store', 'show']);
+    Route::resource('receive', ReceiveController::class)->only(['index', 'create', 'store', 'show']);
+    Route::resource('deposit', DepositController::class)->only(['index', 'create', 'store', 'show']);
+    Route::resource('transaction', TransactionController::class)->only(['index', 'create', 'store', 'show']);
+    Route::resource('exchange', ExchangeController::class)->only(['index', 'create', 'store', 'show']);
+    Route::resource('withdraw', WithdrawController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource("exchange-rate",ExchangeRateController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
-    Route::name('wallet.deposit-initial')->get('wallet-deposit-initial', [DepositController::class, 'create']);
-    Route::name('wallet.store-deposit-initial')->post('wallet-deposit-initial', [DepositController::class, 'store']);
-    Route::name('wallet.deposit-detail')->get('wallet-deposit-detail', [DepositController::class, 'showDepositOverview']);
-    Route::name('wallet.store-deposit-detail')->post('wallet-deposit-detail', [DepositController::class, 'storeDepositOverviewDetail']);
-    Route::name('wallet.deposit-payment')->get('wallet-deposit-payment', [DepositController::class, 'showDepositPayment']);
-    Route::name('wallet.store-deposit-payment')->post('wallet-deposit-payment-paypal', [DepositController::class, 'paypalPayment']);
-    Route::name('wallet.stripe-payment')->post('wallet-stripe-payment', [DepositController::class, 'stripePayment']);
-    Route::name('wallet.store-deposit-stripe-payment')->post('wallet-deposit-stripe-payment', [DepositController::class, 'storeStripeDepositPaymentDetails']);
-    Route::name('wallet.deposit-final')->get('wallet-deposit-final', [DepositController::class, 'showFinalDepositDetail']);
-    Route::name('wallet.deposit-money')->get('wallet-deposit-money', [DepositController::class, 'showDepositMoney']);
+    Route::name('deposit-overview')->get('deposit-overview', [DepositController::class, 'showDepositOverview']);
+    Route::name('store-deposit-overview-detail')->post('store-deposit-overview-detail', [DepositController::class, 'storeDepositOverviewDetail']);
+    Route::name('deposit-payment')->get('deposit-payment', [DepositController::class, 'showDepositPayment']);
+    Route::name('paypal-payment')->post('paypal-payment', [DepositController::class, 'paypalPayment']);
+    Route::name('stripe-payment')->post('stripe-payment', [DepositController::class, 'stripePayment']);
+    Route::name('deposit-stripe-payment')->post('deposit-stripe-payment', [DepositController::class, 'storeStripeDepositPaymentDetails']);
+    Route::name('deposit-final-detail')->get('deposit-final-detail', [DepositController::class, 'showFinalDepositDetail']);
+    Route::name('deposit-money')->get('deposit-money', [DepositController::class, 'showDepositMoney']);
 
 });
 

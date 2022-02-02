@@ -15,7 +15,7 @@
                         <a href="" class="breadcrumb--active">Commodity Type</a>
                     </div>
                     <div>
-                        <a href="{{ route('dashboard.ledger-foundation.commodity-type.create') }}"
+                        <a href="{{ route('dashboard.wallet.commodity-type.create') }}"
                             class="btn btn-sm btn-primary shadow-md">Create New</a>
                     </div>
                 </div>
@@ -51,12 +51,12 @@
 
                                                     <div class="dropdown-menu w-48">
                                                         <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                            <a href="{{ route('dashboard.ledger-foundation.commodity-type.edit', $commodity_type_list['id']) }}"
+                                                            <a href="{{ route('dashboard.wallet.commodity-type.edit', $commodity_type_list['id']) }}"
                                                                 class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                 <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                             </a>
                                                             <form
-                                                                action="{{ route('dashboard.ledger-foundation.commodity-type.destroy', $commodity_type_list['id']) }}"
+                                                                action="{{ route('dashboard.wallet.commodity-type.destroy', $commodity_type_list['id']) }}"
                                                                 method="POST">
                                                                 @csrf
                                                                 @method('DELETE')

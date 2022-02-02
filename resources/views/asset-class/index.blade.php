@@ -13,7 +13,7 @@
                     <a href="" class="breadcrumb--active">Asset Class</a>
                 </div>
                 <div>
-                    <a href="{{ route('dashboard.ledger-foundation.asset-class.create') }}" class="btn btn-sm btn-primary shadow-md">Create New</a>
+                    <a href="{{ route('dashboard.wallet.asset-class.create') }}" class="btn btn-sm btn-primary shadow-md">Create New</a>
                 </div>
             </div>
             <div class="p-5">
@@ -49,12 +49,12 @@
 
                                                     <div class="dropdown-menu w-48">
                                                         <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                            <a href="{{ route('dashboard.ledger-foundation.asset-class.edit', $asset_class_list['id']) }}"
+                                                            <a href="{{ route('dashboard.wallet.asset-class.edit', $asset_class_list['id']) }}"
                                                                 class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                 <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                             </a>
                                                             <form
-                                                                action="{{ route('dashboard.ledger-foundation.asset-class.destroy', $asset_class_list['id']) }}"
+                                                                action="{{ route('dashboard.wallet.asset-class.destroy', $asset_class_list['id']) }}"
                                                                 method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
