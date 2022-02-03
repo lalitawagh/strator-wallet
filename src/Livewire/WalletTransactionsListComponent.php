@@ -11,13 +11,8 @@ class WalletTransactionsListComponent extends Component
 
     public $transactions = [];
 
-    public Transaction $transaction;
-
-    public string $transactionType;
-
     protected $listeners = [
         'transactionList',
-        'showTransactionDetail',
     ];
 
     public function transactionList($walletID, $walletName)
@@ -27,12 +22,6 @@ class WalletTransactionsListComponent extends Component
         if(!empty($transactions)){
             $this->transactions = $transactions;
         }
-    }
-
-    public function showTransactionDetail(Transaction $transaction)
-    {
-        $this->transaction = $transaction;
-        $this->transactionType = (! isset($transaction->meta['card_id'])) ? 'Bank' : 'Card';
     }
 
     public function render()
