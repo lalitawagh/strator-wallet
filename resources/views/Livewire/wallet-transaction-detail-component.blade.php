@@ -69,21 +69,37 @@
                 </div>
             </div>
 
-            <div class="mt-5">
-                <p class="text-sm tracking-wide font-medium uppercase">Sender Account</p>
+            <div class="mt-5 float-right">
+                <p class="text-sm tracking-wide font-medium uppercase">Receiving Currency</p>
 
                 <div class="flex flex-col lg:flex-row mt-3">
                     <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
                         <x-feathericon-user height="12"/>
 
                         <span>
-                            {{ $transaction->meta['sender_name'] }}
+                            @if ($transaction->type === 'debit') {{ \Illuminate\Support\Str::upper($transaction->instructed_currency) }} @else {{ \Illuminate\Support\Str::upper($transaction->settled_currency) }} @endif
                         </span>
                     </div>
                 </div>
             </div>
 
             <div class="mt-5">
+                <p class="text-sm tracking-wide font-medium uppercase">Sending Currency</p>
+
+                <div class="flex flex-col lg:flex-row mt-3">
+                    <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
+                        <x-feathericon-user height="12"/>
+                        @php
+                            $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
+                        @endphp
+                        <span>
+                            {{ $ledger?->name }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5 float-right">
                 <p class="text-sm tracking-wide font-medium uppercase">Beneficiary Account</p>
 
                 <div class="flex flex-col lg:flex-row mt-3">
@@ -103,6 +119,20 @@
                         </span>
                     </div>
                     @endisset
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <p class="text-sm tracking-wide font-medium uppercase">Sender Account</p>
+
+                <div class="flex flex-col lg:flex-row mt-3">
+                    <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
+                        <x-feathericon-user height="12"/>
+
+                        <span>
+                            {{ $transaction->meta['sender_name'] }}
+                        </span>
+                    </div>
                 </div>
             </div>
 
