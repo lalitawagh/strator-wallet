@@ -32,54 +32,60 @@
                             </thead>
 
                             <tbody>
+                                @php
+                                    $i = 1;
+                                @endphp
                                 @foreach ($asset_type_lists as $index => $asset_type_list)
                                     <tr>
-                                        <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
+                                        <td class="border-b dark:border-dark-5">{{ $i }}</td>
                                         <td class="border-b dark:border-dark-5">{{ $asset_type_list['name'] }}</td>
                                         <td class="border-b dark:border-dark-5">
                                             {{ ucwords(strtolower(str_replace('_', ' ', $asset_type_list['asset_category']))) }}
                                         </td>
-                                        <td class="border-b dark:border-dark-5"><img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default"
-                                                alt=""
-                                                src="@isset($asset_type_list['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_type_list['image']) }}@endisset">
-                                            </td>
-                                            <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$asset_type_list['status']) }}
-                                            </td>
-                                            <td class="border-b dark:border-dark-5">
-                                                <div class="dropdown">
-                                                    <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                                        <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
-                                                    </button>
+                                        <td class="border-b dark:border-dark-5">
+                                            @isset($asset_type_list['image'])
+                                            <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_type_list['image']) }}">
+                                            @endisset
+                                        </td>
+                                        <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$asset_type_list['status']) }}
+                                        </td>
+                                        <td class="border-b dark:border-dark-5">
+                                            <div class="dropdown">
+                                                <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
+                                                    <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
+                                                </button>
 
-                                                    <div class="dropdown-menu w-48">
-                                                        <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                            <a href="{{ route('dashboard.ledger-foundation.asset-type.edit', $asset_type_list['id']) }}"
-                                                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
-                                                            </a>
-                                                            <form
-                                                                action="{{ route('dashboard.ledger-foundation.asset-type.destroy', $asset_type_list['id']) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
+                                                <div class="dropdown-menu w-48">
+                                                    <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                                                        <a href="{{ route('dashboard.ledger-foundation.asset-type.edit', $asset_type_list['id']) }}"
+                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                            <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
+                                                        </a>
+                                                        <form
+                                                            action="{{ route('dashboard.ledger-foundation.asset-type.destroy', $asset_type_list['id']) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
 
-                                                                <button type="submit"
-                                                                    class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete
-                                                                </button>
-                                                            </form>
-                                                        </div>
+                                                            <button type="submit"
+                                                                class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                                <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
-                                            </td>
-
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @php
+                                    $i++;
+                                    @endphp
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 @endsection

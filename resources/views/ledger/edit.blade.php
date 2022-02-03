@@ -102,7 +102,7 @@
                                 <div class="sm:w-5/6">
                                     <input id="exchange_rate" name="exchange_rate" type="text"
                                         class="form-control @error('exchange_rate') border-theme-6 @enderror"
-                                        value="{{ old('exchange_rate',$ledger->exchange_rate) }}"  onKeyPress="if(this.value.length==11) return false;" required>
+                                        value="{{ old('exchange_rate',$ledger->exchange_rate) }}" onKeyPress="if(this.value.length==11) return false;return isNumberKey(event);" required>
 
                                     @error('exchange_rate')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -214,7 +214,7 @@
                                 <div class="sm:w-5/6">
                                     <input id="deposit_fee" name="deposit_fee" type="text"
                                         class="form-control @error('deposit_fee') border-theme-6 @enderror"
-                                        value="{{ old('deposit_fee',$ledger->deposit_fee) }}" required>
+                                        value="{{ old('deposit_fee',$ledger->deposit_fee) }}" onKeyPress="return isNumberKey(event);" required>
 
                                     @error('deposit_fee')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -224,9 +224,9 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="withdraw_fee" class="form-label sm:w-30">Withdraw Fee <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <input id="withdraw_fee" name="withdraw_fee" type="text"
+                                    <input id="withdraw_fee" name="withdraw_fee" type="number"
                                         class="form-control @error('withdraw_fee') border-theme-6 @enderror"
-                                        value="{{ old('withdraw_fee',$ledger->withdraw_fee) }}" required>
+                                        value="{{ old('withdraw_fee',$ledger->withdraw_fee) }}" onKeyPress="return isNumberKey(event);" required>
 
                                     @error('withdraw_fee')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -239,9 +239,9 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="payout_fee" class="form-label sm:w-30">Payout Fee <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <input id="payout_fee" name="payout_fee" type="text"
+                                    <input id="payout_fee" name="payout_fee" type="number"
                                         class="form-control @error('payout_fee') border-theme-6 @enderror"
-                                        value="{{ old('payout_fee',$ledger->payout_fee) }}" required>
+                                        value="{{ old('payout_fee',$ledger->payout_fee) }}" onKeyPress="return isNumberKey(event);" required>
 
                                     @error('payout_fee')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -268,6 +268,7 @@
                         </div>
 
                         <div class="text-right mt-5">
+                            <a href="{{ route('dashboard.ledger-foundation.ledger.index') }}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
                             <button type="submit" class="btn btn-primary w-24">Update</button>
                         </div>
                     </form>
