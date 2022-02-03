@@ -19,7 +19,7 @@ class StoreAssetTypeRequest extends FormRequest
             'name'               =>    ['required'],
             'asset_category'     =>    ['required'],
             'image'              =>    ['nullable', 'image'],
-            'status'             =>    ['nullable']
+            'status'             =>    ['required'],
         ];
     }
 }

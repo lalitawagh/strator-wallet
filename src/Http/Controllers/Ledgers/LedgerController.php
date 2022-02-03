@@ -4,8 +4,8 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
-use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Http\Requests\StoreLedgerRequest;
+use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
 
 class LedgerController extends Controller
@@ -39,7 +39,7 @@ class LedgerController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.ledger.index")->with([
             'status' => 'success',
-            'message' => 'Ledger created successfully.'
+            'message' => 'Ledger created successfully.',
         ]);
     }
 
@@ -68,7 +68,7 @@ class LedgerController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.ledger.index")->with([
             'status' => 'success',
-            'message' => 'Ledger updated successfully.'
+            'message' => 'Ledger updated successfully.',
         ]);
     }
 
@@ -81,7 +81,7 @@ class LedgerController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.ledger.index")->with([
             'status' => 'success',
-            'message' => 'Ledger deleted successfully.'
+            'message' => 'Ledger deleted successfully.',
         ]);
     }
 }

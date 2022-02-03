@@ -38,7 +38,7 @@ class CommodityTypeController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.commodity-type.index")->with([
             'status' => 'success',
-            'message' => 'Commodity Type created successfully.'
+            'message' => 'Commodity Type created successfully.',
         ]);
     }
 
@@ -80,7 +80,7 @@ class CommodityTypeController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.commodity-type.index")->with([
             'status' => 'success',
-            'message' => 'Commodity Type updated successfully.'
+            'message' => 'Commodity Type updated successfully.',
         ]);
     }
 
@@ -99,7 +99,7 @@ class CommodityTypeController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.commodity-type.index")->with([
             'status' => 'success',
-            'message' => 'Commodity Type deleted successfully.'
+            'message' => 'Commodity Type deleted successfully.',
         ]);
     }
 }

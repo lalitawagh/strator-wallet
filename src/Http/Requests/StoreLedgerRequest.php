@@ -28,7 +28,10 @@ class StoreLedgerRequest extends FormRequest
             'asset_type'         => 'required',
             'commodity_category' => 'required',
             'image'              => 'nullable',
-            'status'             => 'nullable',
+            'payout_fee'         => 'required',
+            'deposit_fee'        => 'required',
+            'withdraw_fee'       => 'required',
+            'status'             => 'required',
         ];
     }
 }

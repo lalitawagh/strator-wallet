@@ -50,9 +50,11 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="ledger_type" class="form-label sm:w-30">Ledger Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $ledger_types = \Kanexy\LedgerFoundation\Http\Enums\LedgerType::toArray(); @endphp
+                                    @php
+                                        $ledger_types = \Kanexy\LedgerFoundation\Enums\LedgerType::toArray();
+                                    @endphp
                                     <select name="ledger_type" id="ledger_type" data-search="true" class="tail-select w-full @error('ledger_type') border-theme-6 @enderror">
-                                        @foreach($ledger_types as $key => $ledger_type)
+                                        @foreach ($ledger_types as $key => $ledger_type)
                                             <option value="{{ $ledger_type }}">{{ trans('ledger-foundation::configuration.'.$ledger_type) }}</option>
                                         @endforeach
                                     </select>
@@ -81,9 +83,11 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_type" class="form-label sm:w-30">Exchange Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $exchange_types = \Kanexy\LedgerFoundation\Http\Enums\ExchangeType::toArray(); @endphp
+                                    @php
+                                        $exchange_types = \Kanexy\LedgerFoundation\Enums\ExchangeType::toArray();
+                                    @endphp
                                     <select name="exchange_type" id="exchange_type"  data-search="true" class="tail-select w-full @error('exchange_type') border-theme-6 @enderror">
-                                        @foreach($exchange_types as $key => $exchange_type)
+                                        @foreach ($exchange_types as $key => $exchange_type)
                                             <option value="{{ $exchange_type }}">{{ trans('ledger-foundation::configuration.'.$exchange_type) }}</option>
                                         @endforeach
                                     </select>
@@ -114,10 +118,12 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_from" class="form-label sm:w-30">Exchange From  <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    @php $exchange_from = \Kanexy\LedgerFoundation\Http\Enums\ExchangeFrom::toArray(); @endphp
+                                    @php
+                                        $exchange_from = \Kanexy\LedgerFoundation\Enums\ExchangeFrom::toArray();
+                                    @endphp
                                     <select name="exchange_from" id="exchange_from" data-search="true" class="tail-select w-full @error('exchange_from') border-theme-6 @enderror">
-                                        @foreach($exchange_from as $key => $exchange_from_val)
-                                            <option value="{{ $exchange_from_val }}" @if(old('exchange_from') == $exchange_from_val) selected @endif>{{ trans('ledger-foundation::configuration.'.$exchange_from_val) }}</option>
+                                        @foreach ($exchange_from as $key => $exchange_from_val)
+                                            <option value="{{ $exchange_from_val }}" @if (old('exchange_from') == $exchange_from_val) selected @endif>{{ trans('ledger-foundation::configuration.'.$exchange_from_val) }}</option>
                                         @endforeach
                                     </select>
 
@@ -146,7 +152,7 @@
                                 <div class="sm:w-5/6">
                                     <select name="asset_class" id="asset_class" data-search="true" class="tail-select w-full @error('asset_class') border-theme-6 @enderror">
                                         @foreach ($asset_classes as $asset_class)
-                                            <option value="{{ $asset_class['id'] }}" @if(old('asset_class') == $asset_class['id']) selected @endif>{{ ucfirst($asset_class['name']) }}</option>
+                                            <option value="{{ $asset_class['id'] }}" @if (old('asset_class') == $asset_class['id']) selected @endif>{{ ucfirst($asset_class['name']) }}</option>
                                         @endforeach
                                     </select>
 
@@ -161,7 +167,7 @@
                                 <div class="sm:w-5/6">
                                     <select name="commodity_category" id="commodity_category" data-search="true" class="tail-select w-full @error('commodity_category') border-theme-6 @enderror">
                                         @foreach ($commodity_types as $commodity_type)
-                                            <option value="{{ $commodity_type['id'] }}" @if(old('commodity_category') == $commodity_type['id']) selected @endif>{{ ucfirst($commodity_type['name']) }}</option>
+                                            <option value="{{ $commodity_type['id'] }}" @if (old('commodity_category') == $commodity_type['id']) selected @endif>{{ ucfirst($commodity_type['name']) }}</option>
                                         @endforeach
                                     </select>
 
@@ -171,17 +177,54 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                                <label for="deposit_fee" class="form-label sm:w-30">Deposit Fee <span class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="deposit_fee" name="deposit_fee" type="text"
+                                        class="form-control @error('deposit_fee') border-theme-6 @enderror"
+                                        value="{{ old('deposit_fee') }}" required>
+
+                                    @error('deposit_fee')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                                <label for="withdraw_fee" class="form-label sm:w-30">Withdraw Fee <span class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="withdraw_fee" name="withdraw_fee" type="text"
+                                        class="form-control @error('withdraw_fee') border-theme-6 @enderror"
+                                        value="{{ old('withdraw_fee') }}" required>
+
+                                    @error('withdraw_fee')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                                <label for="payout_fee" class="form-label sm:w-30">Payout Fee <span class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="payout_fee" name="payout_fee" type="text"
+                                        class="form-control @error('payout_fee') border-theme-6 @enderror"
+                                        value="{{ old('payout_fee') }}" required>
+
+                                    @error('payout_fee')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-30"> Status</label>
                                 <div class="sm:w-5/6">
                                     <select name="status" id="status" data-search="true" class="tail-select w-full">
-                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::NEW }}" @if(old("status")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::NEW) checked @endif>{{ trans('ledger-foundation::configuration.new') }}</option>
-                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::ACTIVE }}" @if(old("status")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::ACTIVE) checked @endif>{{ trans('ledger-foundation::configuration.active') }}</option>
-                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::INACTIVE }}" @if(old("status")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::INACTIVE) checked @endif>{{ trans('ledger-foundation::configuration.inactive') }}</option>
-                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::HOLD }}" @if(old("status")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::HOLD) checked @endif>{{ trans('ledger-foundation::configuration.hold') }}</option>
-                                        <option value="{{ \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::SUSPENDED }}" @if(old("suspended")  === \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::SUSPENDED) checked @endif>{{ trans('ledger-foundation::configuration.suspended') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW) checked @endif>{{ trans('ledger-foundation::configuration.new') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE) checked @endif>{{ trans('ledger-foundation::configuration.active') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::INACTIVE }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::INACTIVE) checked @endif>{{ trans('ledger-foundation::configuration.inactive') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::HOLD }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::HOLD) checked @endif>{{ trans('ledger-foundation::configuration.hold') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::SUSPENDED }}" @if (old("suspended")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::SUSPENDED) checked @endif>{{ trans('ledger-foundation::configuration.suspended') }}</option>
                                     </select>
                                     @error('status')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -191,7 +234,7 @@
                         </div>
 
                         <div class="text-right mt-5">
-                            <a href="{{ route('dashboard.ledger-foundation.ledger.index')}}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
+                            <a href="{{ route('dashboard.ledger-foundation.ledger.index') }}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
                             <button type="submit" class="btn btn-primary w-24">Create</button>
                         </div>
                     </form>
