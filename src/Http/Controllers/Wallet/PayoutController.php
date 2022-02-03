@@ -7,14 +7,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\MessageBag;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
-use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\StorePayoutRequest;
-use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
@@ -62,7 +58,7 @@ class PayoutController extends Controller
 
             $base_currency_name = $base_currency['name'];
             $exchange_currency_name = $exchange_currency['name'];
-            $exchange_rate = Currency::convert()->from($base_currency)->to($exchange_currency)->get();
+            $exchange_rate = Currency::convert()->from($base_currency_name)->to($exchange_currency_name)->get();
             $fee = $sender_wallet?->ledger->payout_fee;
         }else{
             $exchange_rate_details = ExchangeRate::where(['base_currency' => $sender_wallet->ledger_id,'exchange_currency' => $receiver_ledger->ledger_id])->first();
@@ -122,7 +118,7 @@ class PayoutController extends Controller
             ],
         ]);
 
-        dd($transaction);
+
         // $transaction->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
         $transaction->generateOtp("sms");
 
