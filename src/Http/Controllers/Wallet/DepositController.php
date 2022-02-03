@@ -32,7 +32,9 @@ class DepositController extends Controller
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
 
-        return view("ledger-foundation::wallet.deposit.index", compact('workspace'));
+        $transactions = Transaction::where("ref_type", 'wallet')->latest()->paginate();
+
+        return view("ledger-foundation::wallet.deposit.index", compact('workspace', 'transactions'));
     }
 
     public function create(Request $request)
