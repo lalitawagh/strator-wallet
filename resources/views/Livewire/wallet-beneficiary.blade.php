@@ -9,43 +9,43 @@
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="" class="form-label sm:w-28"> Name <span class="text-theme-6">*</span></label>
                 <div class="sm:w-2/6 pr-2">
-                    <input id="" type="text" class="form-control" value="" placeholder="First Name" wire:model="first_name">
+                    <input id="" type="text" class="form-control" placeholder="First Name" wire:model="first_name">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
                 <div class="sm:w-2/6 pr-2">
-                    <input id="" type="text" class="form-control" value="" placeholder="Middle Name" wire:model="middle_name">
+                    <input id="" type="text" class="form-control" placeholder="Middle Name" wire:model="middle_name">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
                 <div class="sm:w-2/6 pr-2">
-                    <input id="" type="text" class="form-control" value="" placeholder="Last Name" wire:model="last_name">
+                    <input id="" type="text" class="form-control" placeholder="Last Name" wire:model="last_name">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="" class="form-label sm:w-28"> Email <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" value="" wire:model="email">
+                    <input id="" type="text" class="form-control" wire:model="email">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="" class="form-label sm:w-28"> Mobile <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" value="" wire:model="mobile" wire:change="getMembershipDetails()" onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);">
+                    <input id="" type="text" class="form-control" wire:model="mobile" wire:change="getMembershipDetails()" onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="" class="form-label sm:w-28"> Notes </label>
                 <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" value="" wire:model="notes">
+                    <input id="" type="text" class="form-control" wire:model="notes">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="" class="form-label sm:w-28"> Nick Name </label>
                 <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" value="" wire:model="nick_name">
+                    <input id="" type="text" class="form-control" wire:model="nick_name">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>
@@ -59,7 +59,7 @@
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="" class="form-label sm:w-28"> Enter Otp <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" value="" placeholder="Enter Otp"  wire:model="code">
+                    <input id="" type="text" class="form-control" placeholder="Enter Otp"  wire:model="code">
                     @error('code') <span class="block text-theme-6 mt-2">{{ $message }}</span>@enderror
                     <a class="block text-theme-1 mt-2">Resend Otp </a>
                 </div>

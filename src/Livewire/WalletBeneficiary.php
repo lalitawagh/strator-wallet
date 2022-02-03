@@ -78,7 +78,7 @@ class WalletBeneficiary extends Component
         $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
         //$user->generateOtp("sms");
 
-        $this->beneficiary_created = 1;
+        $this->beneficiary_created = true;
     }
 
     public function verifyOtp()

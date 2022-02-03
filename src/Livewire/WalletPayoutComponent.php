@@ -40,7 +40,7 @@ class WalletPayoutComponent extends Component
     {
         $wallet = Wallet::find($value);
         $this->wallet = $value;
-        $this->balance = $wallet->balance;
+        $this->balance = $wallet?->balance;
     }
 
     public function render()
