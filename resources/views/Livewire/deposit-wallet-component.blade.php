@@ -5,7 +5,7 @@
             <select wire:change="changeBaseCurrency($event.target.value)" name="wallet" class="form-control">
                 <option value="">Select Wallet</option>
                 @foreach ($wallets as $wallet)
-                    <option value="{{ $wallet->getKey() }}" @if (session('wallet') == $wallet->getKey()) selected @endif>{{ $wallet->ledger?->name }}</option>
+                    <option value="{{ $wallet->getKey() }}" @if ($selected_wallet == $wallet->getKey()) selected @endif>{{ $wallet->ledger?->name }}</option>
                 @endforeach
             </select>
             @error('wallet')
@@ -42,7 +42,7 @@
             @php
                 $payment_methods = \Kanexy\LedgerFoundation\Enums\PaymentMethod::toArray();
             @endphp
-            <select data-search="true" class="tail-select mt-0 sm:mr-2 w-full  form-control mb-1" name="payment_method">
+            <select class="mt-0 sm:mr-2 w-full  form-control mb-1" name="payment_method">
                 <option value="">Select Payment Method</option>
                 @foreach ($payment_methods as $payment_method)
                     <option value="{{ $payment_method }}"> {{ trans('ledger-foundation::configuration.'.$payment_method) }} </option>
