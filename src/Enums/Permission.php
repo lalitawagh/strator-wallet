@@ -29,11 +29,11 @@ class Permission
     public const EXCHANGE_RATE_EDIT   = 'ledger-foundation::exchange_rate.edit';
     public const EXCHANGE_RATE_DELETE = 'ledger-foundation::exchange_rate.delete';
 
-    public const DEPOSIT_VIEW   = 'ledger-foundation::wallet.deposit.view';
-    public const DEPOSIT_CREATE = 'ledger-foundation::wallet.deposit.create';
-    public const DEPOSIT_SHOW   = 'ledger-foundation::wallet.deposit.show';
+    public const DEPOSIT_VIEW   = 'ledger-foundation::wallet_deposit.view';
+    public const DEPOSIT_CREATE = 'ledger-foundation::wallet_deposit.create';
+    public const DEPOSIT_SHOW   = 'ledger-foundation::wallet_deposit.show';
 
-    public const PAYOUT_VIEW   = 'ledger-foundation::wallet.payout.view';
-    public const PAYOUT_CREATE = 'ledger-foundation::wallet.payout.create';
-    public const PAYOUT_SHOW   = 'ledger-foundation::wallet.payout.show';
+    public const PAYOUT_VIEW   = 'ledger-foundation::wallet_payout.view';
+    public const PAYOUT_CREATE = 'ledger-foundation::wallet_payout.create';
+    public const PAYOUT_SHOW   = 'ledger-foundation::wallet_payout.show';
 }
