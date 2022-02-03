@@ -10,7 +10,6 @@ use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionsListComponent;
-use Kanexy\LedgerFoundation\Menu\WalletConfigurationMenuItem;
 use Kanexy\LedgerFoundation\Menu\WalletMenuItem;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
