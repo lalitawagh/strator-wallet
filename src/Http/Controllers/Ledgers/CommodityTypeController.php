@@ -56,18 +56,23 @@ class CommodityTypeController extends Controller
         $data = $request->validated();
         $data['id'] = $id;
 
+        $existing_image = '';
+        $settings = collect(Setting::getValue('commodity_types'))->filter(function ($item) use ($id, &$existing_image) {
+            if ($item['id'] != $id) {
+                return true;
+            }
+
+            $existing_image = $item['image'] ?? 'demo.jpg';
+            return false;
+        });
+
+        $data['image'] = $existing_image;
         if($request->hasFile('image'))
         {
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
-        $data['status'] = $request->has('status') ? 'active' : 'inactive';
 
-        $settings = collect(Setting::getValue('commodity_types'))->filter(function ($item) use ($id) {
-            if ($item['id'] != $id) {
-                return true;
-            }
-            return false;
-        });
+        $data['status'] = $request->has('status') ? 'active' : 'inactive';
 
         $settings->push($data);
 
