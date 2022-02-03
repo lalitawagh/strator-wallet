@@ -12,10 +12,10 @@
         color: #959aa3;
     }
     .short-wrp span.short-icon {
-        position: absolute;
-        right: 30%;
-        top: 50%;
-        transform: translateY(-50%);
+        /*position: absolute;*/
+        /*right: 30%;*/
+        /*top: 50%;
+        transform: translateY(-50%);*/
     }
 
 thead.short-wrp th {
@@ -35,37 +35,38 @@ thead.short-wrp th {
                 </div>
 
                 <div class="p-5">
-                    <div class="nav nav-tabs flex-col sm:flex-row" role="tablist">
+                    <div class="nav nav-tabs flex-col sm:flex-row grid grid-cols-12 gap-6 mt-5" role="tablist">
                         @foreach ($wallets as $key =>  $wallet)
                             @php
                             $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
                             @endphp
-                        <a id="{{ $key }}-tab" href="javascript:void(0);" onclick="Livewire.emit('transactionList', '{{ $wallet?->urn }}')" data-toggle="tab"
-                            class="flex-1 flex items-center px-3 py-2 mt-2 pb-5 font-medium @if($key == 0) active @php $first_wallet_urn = $wallet?->urn @endphp @endif">
-                            <div class="col-span-12 sm:col-span-4 xl:col-span-3 intro-y w-full" id="k-wallet" data-toggle="tab" data-target="#k-wallet">
-                                <div class="report-box zoom-in">
-                                    <div class="box p-5">
-                                        <div class="flex">
-                                            <div class="text-2xl font-bold leading-8 mt-0">{{ $ledger?->name }}</div>
-                                            <div class="ml-auto">
-                                                <div class="flex mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
-                                                    <img alt="" class="" src="@isset($ledger?->image){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}@endisset">
+
+                            <div class="col-span-12 sm:col-span-3 xl:col-span-3 intro-y w-full" id="k-wallet" data-toggle="tab" data-target="#k-wallet">
+                                <a id="{{ $key }}-tab" href="javascript:void(0);" onclick="Livewire.emit('transactionList', '{{ $wallet?->urn }}')" data-toggle="tab"
+                                    class="px-3 py-2 mt-2 pb-5 font-medium @if($key == 0) active @php $first_wallet_urn = $wallet?->urn @endphp @endif">
+                                    <div class="report-box zoom-in">
+                                        <div class="box p-5">
+                                            <div class="flex">
+                                                <div class="text-2xl font-bold leading-8 mt-0">{{ $ledger?->name }}</div>
+                                                <div class="ml-auto">
+                                                    <div class="flex mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
+                                                        <img alt="" class="" src="@isset($ledger?->image){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}@endisset">
+                                                    </div>
                                                 </div>
+
                                             </div>
 
-                                        </div>
-
-                                        <div class="text-base text-gray-600 mt-1">{{ $wallet?->urn }}</div>
-                                        <div class="flex mt-3">
-                                            <span class="@if ($wallet->status == \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) text-theme-9 @else text-theme-6 @endif"> {{ trans('ledger-foundation::configuration.'.$wallet->status) }}</span>
-                                            <div class="ml-auto">
-                                                <div class="report-box__indicator bg-theme-6 cursor-pointer"> {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($wallet?->balance) }}</div>
+                                            <div class="text-base text-gray-600 mt-1">{{ $wallet?->urn }}</div>
+                                            <div class="flex mt-3">
+                                                <span class="@if ($wallet->status == \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) text-theme-9 @else text-theme-6 @endif"> {{ trans('ledger-foundation::configuration.'.$wallet->status) }}</span>
+                                                <div class="ml-auto">
+                                                    <div class="report-box__indicator bg-theme-6 cursor-pointer"> {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($wallet?->balance) }}</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
-                        </a>
                         @endforeach
                     </div>
 
