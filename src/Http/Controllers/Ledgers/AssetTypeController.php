@@ -38,7 +38,7 @@ class AssetTypeController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.asset-type.index")->with([
             'status' => 'success',
-            'message' => 'Asset Type created successfully.'
+            'message' => 'Asset Type created successfully.',
         ]);
     }
 
@@ -76,7 +76,7 @@ class AssetTypeController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.asset-type.index")->with([
             'status' => 'success',
-            'message' => 'Asset Type updated successfully.'
+            'message' => 'Asset Type updated successfully.',
         ]);
     }
 
@@ -95,7 +95,7 @@ class AssetTypeController extends Controller
 
         return redirect()->route("dashboard.ledger-foundation.asset-type.index")->with([
             'status' => 'success',
-            'message' => 'Asset Type deleted successfully.'
+            'message' => 'Asset Type deleted successfully.',
         ]);
     }
 }

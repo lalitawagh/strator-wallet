@@ -18,7 +18,7 @@ class StoreCommodityRequest extends FormRequest
         return [
             'name'               =>    ['required'],
             'image'              =>    ['nullable', 'image'],
-            'status'             =>    ['nullable']
+            'status'             =>    ['required'],
         ];
     }
 }

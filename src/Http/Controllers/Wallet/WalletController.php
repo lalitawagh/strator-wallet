@@ -5,10 +5,9 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Enums\RegistrationStep;
-use Kanexy\LedgerFoundation\Http\Enums\WalletStatus;
+use Kanexy\LedgerFoundation\Enums\WalletStatus;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 
 class WalletController extends Controller
 {
@@ -19,16 +18,16 @@ class WalletController extends Controller
 
         collect($ledgers)->map(function ($ledger) use($user) {
 
-            if($ledger->status == \Kanexy\LedgerFoundation\Http\Enums\LedgerStatus::ACTIVE && $ledger->ledger_type == \Kanexy\LedgerFoundation\Http\Enums\LedgerType::WALLET)
+            if($ledger->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $ledger->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET)
             {
                 $data = [
                     "name" => $user->getFullName(),
-                    "urn" => Transaction::generateUrn(),
+                    "urn" => Wallet::generateUrn(),
                     "ledger_id" => $ledger->getKey(),
                     "holder_type" => $user->getMorphClass(),
                     "holder_id" => $user->getKey(),
                     "balance" => 0,
-                    "status" => WalletStatus::INACTIVE
+                    "status" => WalletStatus::INACTIVE,
                 ];
 
                 Wallet::create($data);

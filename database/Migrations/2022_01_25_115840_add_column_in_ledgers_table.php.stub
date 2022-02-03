@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddColumnInLedgersTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('ledgers', function (Blueprint $table) {
+            if (!Schema::hasColumn('ledgers', 'deposit_fee')) {
+                $table->double('deposit_fee')->nullable();
+            }
+            if (!Schema::hasColumn('ledgers', 'payout_fee')) {
+                $table->double('payout_fee')->nullable();
+            }
+            if (!Schema::hasColumn('ledgers', 'withdraw_fee')) {
+                $table->double('withdraw_fee')->nullable();
+            }
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('ledger', function (Blueprint $table) {
+            $table->dropColumn('deposit_fee');
+            $table->dropColumn('payout_fee');
+            $table->dropColumn('withdraw_fee');
+        });
+    }
+}

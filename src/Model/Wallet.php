@@ -4,10 +4,11 @@ namespace Kanexy\LedgerFoundation\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kanexy\PartnerFoundation\Core\Traits\InteractsWithUrn;
 
 class Wallet extends Model
 {
-    use HasFactory;
+    use HasFactory,InteractsWithUrn;
 
     protected $fillable = [
         'urn',
@@ -27,5 +28,17 @@ class Wallet extends Model
     public function ledger()
     {
         return $this->hasOne(Ledger::class,'id','ledger_id');
+    }
+
+    public function debit(Wallet $wallet,$amount)
+    {
+        $balance = $wallet?->balance - $amount;
+        $wallet->update(['balance' => $balance]);
+    }
+
+    public function credit(Wallet $wallet,$amount)
+    {
+        $balance = $wallet?->balance + $amount;
+        $wallet->update(['balance' => $balance]);
     }
 }
