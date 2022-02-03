@@ -2,6 +2,28 @@
 
 @section('title', 'Wallet Transactions')
 
+@push('styles')
+<style>
+    .col-sm-12.col-md-6 {
+        float: left;
+        width: 50%;
+    }
+    .short-icon svg {
+        color: #959aa3;
+    }
+    .short-wrp span.short-icon {
+        position: absolute;
+        right: 30%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+thead.short-wrp th {
+    position: relative;
+}
+</style>
+@endpush
+
 @section('content')
     <div class="grid grid-cols-12 gap-6">
         <div class="col-span-12">
@@ -18,8 +40,8 @@
                             @php
                             $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
                             @endphp
-                        <a id="{{ $key }}-tab" data-toggle="tab" data-target="#{{$key}}"
-                            href="javascript:;" class="flex-1 flex items-center px-3 py-2 mt-2 pb-5 font-medium">
+                        <a id="{{ $key }}-tab" href="javascript:void(0);" onclick="Livewire.emit('transactionList', '{{ $wallet?->urn }}')" data-toggle="tab"
+                            class="flex-1 flex items-center px-3 py-2 mt-2 pb-5 font-medium @if($key == 0) active @php $first_wallet_urn = $wallet?->urn @endphp @endif">
                             <div class="col-span-12 sm:col-span-4 xl:col-span-3 intro-y w-full" id="k-wallet" data-toggle="tab" data-target="#k-wallet">
                                 <div class="report-box zoom-in">
                                     <div class="box p-5">
@@ -45,313 +67,9 @@
                             </div>
                         </a>
                         @endforeach
-
                     </div>
-                    <div class="tab-content">
-                        <div id="1" class="tab-pane grid grid-cols-12 gap-3 pt-4 active" role="tabpanel" aria-labelledby="1-tab">
-                            <div class="active col-span-12 mt-6 w-full" role="tabpanel" id="k-wallet" aria-labelledby="k-wallet-tab">
-                                <div class="intro-y block sm:flex items-center h-10">
-                                    <h2 class="text-lg font-medium truncate mr-5">
-                                        Weekly Top Products
-                                    </h2>
 
-                                </div>
-                                <div class="overflow-x-auto">
-                                    <table class="table">
-                                        <thead>
-                                        <tr class="bg-gray-200 dark:bg-dark-1">
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Date</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Wallet</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Description</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Fee</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Balance</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="border-b dark:border-dark-5">28 Aug 2021</td>
-                                                <td class="border-b dark:border-dark-5">Pay Coin</td>
-                                                <td class="border-b dark:border-dark-5">Send Pay Coin</td>
-                                                <td class="border-b dark:border-dark-5">Success</td>
-                                                <td class="border-b dark:border-dark-5">30</td>
-                                                <td class="border-b dark:border-dark-5">-20</td>
-                                                <td class="border-b whitespace-nowrap dark:border-dark-5">
-                                                    <div class="dropdown">
-                                                        <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                                            <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
-                                                        </button>
-
-                                                        <div class="dropdown-menu w-48">
-                                                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                                <a href="#" data-toggle="modal" data-target="#transaction-detail-modal" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-feather="eye" class="w-4 h-4 mr-2"></i> Show
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="border-b dark:border-dark-5">29 July 2021</td>
-                                                <td class="border-b dark:border-dark-5">Pay Coin</td>
-                                                <td class="border-b dark:border-dark-5">Recieve Pay coin</td>
-                                                <td class="border-b dark:border-dark-5">Success</td>
-                                                <td class="border-b dark:border-dark-5">30</td>
-                                                <td class="border-b dark:border-dark-5">-20</td>
-                                                <td class="border-b whitespace-nowrap dark:border-dark-5">
-                                                    <div class="dropdown">
-                                                        <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                                            <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
-                                                        </button>
-
-                                                        <div class="dropdown-menu w-48">
-                                                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                                <a href="#" data-toggle="modal" data-target="#transaction-detail-modal" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-feather="eye" class="w-4 h-4 mr-2"></i> Show
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="2" class="tab-pane grid grid-cols-12 gap-3 pt-4" role="tabpanel" aria-labelledby="2-tab">
-                            <div class="col-span-12 mt-6 w-full" role="tabpanel" id="k-wallet1" aria-labelledby="k-wallet1-tab">
-                                <div class="intro-y block sm:flex items-center h-10">
-                                    <h2 class="text-lg font-medium truncate mr-5">
-                                        Weekly Top Products 1
-                                    </h2>
-
-                                </div>
-                                <div class="overflow-x-auto">
-                                    <table class="table">
-                                        <thead>
-                                        <tr class="bg-gray-200 dark:bg-dark-1">
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Date</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Wallet</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Description</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Fee</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Balance</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="border-b dark:border-dark-5">28 Aug 2021</td>
-                                                <td class="border-b dark:border-dark-5">Pay Coin</td>
-                                                <td class="border-b dark:border-dark-5">Send Pay Coin</td>
-                                                <td class="border-b dark:border-dark-5">Success</td>
-                                                <td class="border-b dark:border-dark-5">30</td>
-                                                <td class="border-b dark:border-dark-5">-20</td>
-                                                <td class="border-b whitespace-nowrap dark:border-dark-5">
-                                                    <div class="dropdown">
-                                                        <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                                            <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
-                                                        </button>
-
-                                                        <div class="dropdown-menu w-48">
-                                                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                                <a href="#" data-toggle="modal" data-target="#transaction-detail-modal" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-feather="eye" class="w-4 h-4 mr-2"></i> Show
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="border-b dark:border-dark-5">29 July 2021</td>
-                                                <td class="border-b dark:border-dark-5">Pay Coin</td>
-                                                <td class="border-b dark:border-dark-5">Recieve Pay coin</td>
-                                                <td class="border-b dark:border-dark-5">Success</td>
-                                                <td class="border-b dark:border-dark-5">30</td>
-                                                <td class="border-b dark:border-dark-5">-20</td>
-                                                <td class="border-b whitespace-nowrap dark:border-dark-5">
-                                                    <div class="dropdown">
-                                                        <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                                            <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
-                                                        </button>
-
-                                                        <div class="dropdown-menu w-48">
-                                                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                                <a href="#" data-toggle="modal" data-target="#transaction-detail-modal" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-feather="eye" class="w-4 h-4 mr-2"></i> Show
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="3" class="tab-pane grid grid-cols-12 gap-3 pt-4" role="tabpanel" aria-labelledby="3-tab">
-                            <div class="col-span-12 mt-6 w-full" role="tabpanel" id="k-wallet2" aria-labelledby="k-wallet2-tab">
-                                <div class="intro-y block sm:flex items-center h-10">
-                                    <h2 class="text-lg font-medium truncate mr-5">
-                                        Weekly Top Products 2
-                                    </h2>
-
-                                </div>
-                                <div class="overflow-x-auto">
-                                    <table class="table">
-                                        <thead>
-                                        <tr class="bg-gray-200 dark:bg-dark-1">
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Date</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Wallet</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Description</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Fee</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Balance</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="border-b dark:border-dark-5">28 Aug 2021</td>
-                                                <td class="border-b dark:border-dark-5">Pay Coin</td>
-                                                <td class="border-b dark:border-dark-5">Send Pay Coin</td>
-                                                <td class="border-b dark:border-dark-5">Success</td>
-                                                <td class="border-b dark:border-dark-5">30</td>
-                                                <td class="border-b dark:border-dark-5">-20</td>
-                                                <td class="border-b whitespace-nowrap dark:border-dark-5">
-                                                    <div class="dropdown">
-                                                        <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                                            <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
-                                                        </button>
-
-                                                        <div class="dropdown-menu w-48">
-                                                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                                <a href="#" data-toggle="modal" data-target="#transaction-detail-modal" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-feather="eye" class="w-4 h-4 mr-2"></i> Show
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="border-b dark:border-dark-5">29 July 2021</td>
-                                                <td class="border-b dark:border-dark-5">Pay Coin</td>
-                                                <td class="border-b dark:border-dark-5">Recieve Pay coin</td>
-                                                <td class="border-b dark:border-dark-5">Success</td>
-                                                <td class="border-b dark:border-dark-5">30</td>
-                                                <td class="border-b dark:border-dark-5">-20</td>
-                                                <td class="border-b whitespace-nowrap dark:border-dark-5">
-                                                    <div class="dropdown">
-                                                        <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                                            <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
-                                                        </button>
-
-                                                        <div class="dropdown-menu w-48">
-                                                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                                <a href="#" data-toggle="modal" data-target="#transaction-detail-modal" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-feather="eye" class="w-4 h-4 mr-2"></i> Show
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="4" class="tab-pane grid grid-cols-12 gap-3 pt-4" role="tabpanel" aria-labelledby="4-tab">
-                            <div class="col-span-12 mt-6 w-full" role="tabpanel" id="k-wallet3" aria-labelledby="k-wallet3-tab">
-                                <div class="intro-y block sm:flex items-center h-10">
-                                    <h2 class="text-lg font-medium truncate mr-5">
-                                        Weekly Top Products 3
-                                    </h2>
-
-                                </div>
-                                <div class="overflow-x-auto">
-                                    <table class="table">
-                                        <thead>
-                                        <tr class="bg-gray-200 dark:bg-dark-1">
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Date</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Wallet</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Description</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Fee</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Balance</th>
-                                            <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="border-b dark:border-dark-5">28 Aug 2021</td>
-                                                <td class="border-b dark:border-dark-5">Pay Coin</td>
-                                                <td class="border-b dark:border-dark-5">Send Pay Coin</td>
-                                                <td class="border-b dark:border-dark-5">Success</td>
-                                                <td class="border-b dark:border-dark-5">30</td>
-                                                <td class="border-b dark:border-dark-5">-20</td>
-                                                <td class="border-b whitespace-nowrap dark:border-dark-5">
-                                                    <div class="dropdown">
-                                                        <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                                            <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
-                                                        </button>
-
-                                                        <div class="dropdown-menu w-48">
-                                                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                                <a href="#" data-toggle="modal" data-target="#transaction-detail-modal" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-feather="eye" class="w-4 h-4 mr-2"></i> Show
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="border-b dark:border-dark-5">29 July 2021</td>
-                                                <td class="border-b dark:border-dark-5">Pay Coin</td>
-                                                <td class="border-b dark:border-dark-5">Recieve Pay coin</td>
-                                                <td class="border-b dark:border-dark-5">Success</td>
-                                                <td class="border-b dark:border-dark-5">30</td>
-                                                <td class="border-b dark:border-dark-5">-20</td>
-                                                <td class="border-b whitespace-nowrap dark:border-dark-5">
-                                                    <div class="dropdown">
-                                                        <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                                            <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
-                                                        </button>
-
-                                                        <div class="dropdown-menu w-48">
-                                                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                                <a href="#" data-toggle="modal" data-target="#transaction-detail-modal" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-feather="eye" class="w-4 h-4 mr-2"></i> Show
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @livewire('wallet-transactions-list-component', ['wallet_urn' => $first_wallet_urn])
 
                     <div class="my-2">
                     </div>

@@ -9,6 +9,7 @@ use Kanexy\Cms\Facades\Cms;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
+use Kanexy\LedgerFoundation\Livewire\WalletTransactionsListComponent;
 use Kanexy\LedgerFoundation\Menu\WalletConfigurationMenuItem;
 use Kanexy\LedgerFoundation\Menu\WalletMenuItem;
 use Kanexy\LedgerFoundation\Model\Ledger;
@@ -107,5 +108,6 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         });
 
         Livewire::component('ledger-config-field-component', LedgerConfigFieldComponent::class);
+        Livewire::component('wallet-transactions-list-component', WalletTransactionsListComponent::class);
     }
 }
