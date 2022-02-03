@@ -11,14 +11,8 @@
     .short-icon svg {
         color: #959aa3;
     }
-    .short-wrp span.short-icon {
-        /*position: absolute;*/
-        /*right: 30%;*/
-        /*top: 50%;
-        transform: translateY(-50%);*/
-    }
 
-thead.short-wrp th {
+    thead.short-wrp th {
     position: relative;
 }
 </style>
@@ -42,8 +36,8 @@ thead.short-wrp th {
                             @endphp
 
                             <div class="col-span-12 sm:col-span-3 xl:col-span-3 intro-y w-full" id="k-wallet" data-toggle="tab" data-target="#k-wallet">
-                                <a id="{{ $key }}-tab" href="javascript:void(0);" onclick="Livewire.emit('transactionList', '{{ $wallet?->urn }}')" data-toggle="tab"
-                                    class="block px-3 py-2 mt-2 pb-5 font-medium @if($key == 0) active @php $first_wallet_urn = $wallet?->urn @endphp @endif">
+                                <a id="{{ $key }}-tab" href="javascript:void(0);" onclick="Livewire.emit('transactionList', '{{ $wallet->getKey() }}', '{{ $ledger?->name }}')" data-toggle="tab"
+                                    class="block px-3 py-2 mt-2 pb-5 font-medium @if($key == 0) active @php $first_wallet_id = $wallet->getKey(); $first_ledger_name = $ledger?->name; @endphp @endif">
                                     <div class="report-box zoom-in">
                                         <div class="box p-5">
                                             <div class="flex">
@@ -70,7 +64,7 @@ thead.short-wrp th {
                         @endforeach
                     </div>
 
-                    @livewire('wallet-transactions-list-component', ['wallet_urn' => $first_wallet_urn])
+                    @livewire('wallet-transactions-list-component')
 
                     <div class="my-2">
                     </div>
@@ -78,172 +72,32 @@ thead.short-wrp th {
             </div>
         </div>
     </div>
+
     <div id="transaction-detail-modal" class="modal modal-slide-over z-50" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header py-2">
+                <div class="modal-header p-5">
                     <h2 class="font-medium text-base mr-auto">Transaction Details</h2>
-                    <button class="btn btn-sm btn-elevated-secondary w-24 mr-0 mb-2"> Change Plan </button>
+                    <div class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip" title="Edit"> <i data-feather="edit" class="w-3 h-3"></i> </div>
+                    <a class="save-transaction cursor-pointer hidden intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip" title="Save"> <i data-feather="save" class="w-3 h-3"></i> </a>
+                    <a class="close intro-x cursor-pointer w-8 h-8 flex items-center justify-center rounded-full bg-theme-6 text-white ml-2 tooltip" title="Close" data-dismiss="modal"> <i data-feather="x" class="w-3 h-3"></i> </a>
+                    <!--<a href="" class="intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip" title="Share"> <i data-feather="share-2" class="w-3 h-3"></i> </a>
+                    <a href="" class="intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip" title="Download PDF"> <i data-feather="share" class="w-3 h-3"></i> </a>-->
                 </div>
 
                 <div class="modal-body">
-                    <div>
-                            <div>
-                                <div class="flex flex-col lg:flex-row px-1 sm:px-2 py-0 mb-2">
-                                    <div class="dark:text-theme-10">
-                                        <h2 class="text-theme-1 dark:text-theme-10 font-semibold text-2xl">$110/y</h2>
-                                        <p class="text-sm font-medium text-gray-700">t1</p>
-                                    </div>
-                                </div>
-                                <div class="mt-5 border-b border-dashed pb-3">
-                                    <p class="text-sm tracking-wide font-medium uppercase">Sender Account</p>
-                                    <div class="flex flex-col lg:flex-row mt-3">
-                                        <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                            <span>
-                                                Next Payment
-                                            </span>
-                                        </div>
-                                        <div class="sm:whitespace-normal items-center text-right sm:w-2/6 sm:ml-auto">
-                                            <span class="font-medium">
-                                                23 Jun, 2021
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col lg:flex-row mt-3">
-                                        <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                            <span>
-                                                Subscription plan
-                                            </span>
-                                        </div>
-                                        <div class="sm:whitespace-normal items-center text-right sm:w-2/6 sm:ml-auto">
-                                            <span class="font-medium">
-                                                Gold
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col lg:flex-row mt-3">
-                                        <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                            <span>
-                                                Payment Due Date
-                                            </span>
-                                        </div>
-                                        <div class="sm:whitespace-normal items-center text-right sm:w-2/6 sm:ml-auto">
-                                            <span class="font-medium">
-                                                25 Agust, 2021
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col lg:flex-row mt-3">
-                                        <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                            <span>
-                                                Subscription Start Date
-                                            </span>
-                                        </div>
-                                        <div class="sm:whitespace-normal items-center text-right sm:w-2/6 sm:ml-auto">
-                                            <span class="font-medium">
-                                                12 Jun, 2021
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col lg:flex-row mt-3">
-                                        <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                            <span>
-                                                Subscription End Date
-                                            </span>
-                                        </div>
-                                        <div class="sm:whitespace-normal items-center text-right sm:w-2/6 sm:ml-auto">
-                                            <span class="font-medium">
-                                                25 Jun, 2021
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col lg:flex-row mt-3">
-                                        <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                            <span>
-                                                Bill
-                                            </span>
-                                        </div>
-                                        <div class="sm:whitespace-normal items-center text-right sm:w-2/6 sm:ml-auto">
-                                            <span class="font-medium">
-                                                1,25,846
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mt-5 border-b border-dashed pb-3">
-
-                                    <div class="flex text-sm tracking-wide font-medium uppercase"><h4 class="font-medium text-base mr-auto">Billing Information </h4> <button class="btn btn-sm btn-elevated-secondary w-24 mr-0 mb-2"> Edit </button></div>
-                                    <div class="flex flex-col lg:flex-row mt-3">
-                                        <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                            <span>
-                                                Company Name
-                                            </span>
-                                        </div>
-                                        <div class="sm:whitespace-normal items-center text-right sm:w-2/6 sm:ml-auto">
-                                             <span class="font-medium">
-                                                Kanexy
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col lg:flex-row mt-3">
-                                        <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                            <span>
-                                                Email Address
-                                            </span>
-                                        </div>
-                                        <div class="sm:whitespace-normal items-center text-right sm:w-2/6 sm:ml-auto">
-                                             <span class="font-medium">
-                                                kanexy@gmail.co
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col lg:flex-row mt-3">
-                                        <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                            <span>
-                                                VAT number
-                                            </span>
-                                        </div>
-                                        <div class="sm:whitespace-normal items-center text-right sm:w-2/6 sm:ml-auto">
-                                             <span class="font-medium">
-                                                RF845762158762
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mt-5 border-b border-dashed pb-3">
-                                    <div class="flex text-sm tracking-wide font-medium uppercase"><h4 class="font-medium text-base mr-auto">Payment Method </h4> <button class="btn btn-sm btn-elevated-secondary w-24 mr-0 mb-2"> Edit </button></div>
-
-                                    <div class="flex flex-col lg:flex-row mt-3">
-                                        <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                            <span>
-                                                Credit Card
-                                            </span>
-                                        </div>
-                                        <div class="sm:whitespace-normal items-center text-right sm:w-2/6 sm:ml-auto">
-                                             <span class="font-medium">
-                                                Ending in 5845
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col lg:flex-row mt-3">
-                                        <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                                            <span>
-                                                Expiring
-                                            </span>
-                                        </div>
-                                        <div class="sm:whitespace-normal items-center text-right sm:w-2/6 sm:ml-auto">
-                                             <span class="font-medium">
-                                                09/28
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                    </div>
+                    @livewire('wallet-transaction-detail-component')
                 </div>
             </div>
         </div>
     </div>
+
 @endsection
+
+@push('scripts')
+<script>
+$(document).ready(function(){
+    Livewire.emit('transactionList', '{{ $first_wallet_id }}', '{{ $first_ledger_name }}');
+});
+</script>
+@endpush

@@ -5,29 +5,15 @@ namespace Kanexy\LedgerFoundation\Livewire;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Livewire\Component;
 
-class WalletTransactionsListComponent extends Component
+class WalletTransactionDetailComponent extends Component
 {
-    public $wallet_id, $wallet_name;
-
-    public $transactions = [];
-
     public Transaction $transaction;
 
     public string $transactionType;
 
     protected $listeners = [
-        'transactionList',
         'showTransactionDetail',
     ];
-
-    public function transactionList($walletID, $walletName)
-    {
-        $this->wallet_name = $walletName;
-        $transactions = Transaction::where("ref_id", $walletID)->latest()->take(15)->get();
-        if(!empty($transactions)){
-            $this->transactions = $transactions;
-        }
-    }
 
     public function showTransactionDetail(Transaction $transaction)
     {
@@ -37,6 +23,6 @@ class WalletTransactionsListComponent extends Component
 
     public function render()
     {
-       return view('ledger-foundation::Livewire.wallet-transactions-list-component');
+       return view('ledger-foundation::Livewire.wallet-transaction-detail-component');
     }
 }

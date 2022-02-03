@@ -9,6 +9,7 @@ use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
+use Kanexy\LedgerFoundation\Livewire\WalletTransactionDetailComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionsListComponent;
 use Kanexy\LedgerFoundation\Menu\WalletMenuItem;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
@@ -116,6 +117,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Livewire::component('deposit-wallet-component', DepositWalletComponent::class);
         Livewire::component('ledger-config-field-component', LedgerConfigFieldComponent::class);
         Livewire::component('wallet-transactions-list-component', WalletTransactionsListComponent::class);
+        Livewire::component('wallet-transaction-detail-component', WalletTransactionDetailComponent::class);
 
     }
 }
