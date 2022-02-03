@@ -1,7 +1,7 @@
 <div>
     <div class="modal-header py-2">
         <h2 class="font-medium text-base mr-auto">Beneficiary</h2>
-        <h4 class="font-medium text-base">@isset($membership_urn) Membership : {{ @$membership_urn }} - {{ @$membership_name }} @endisset</h4>
+        <h4 class="font-medium text-base">@isset($membership_urn) {{ @$membership_urn }} - {{ @$membership_name }} @endisset</h4>
     </div>
 
     <div class="modal-body">
@@ -31,7 +31,7 @@
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="" class="form-label sm:w-28"> Mobile <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" value="" wire:model="mobile" wire:change="changeMobile()" onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);">
+                    <input id="" type="text" class="form-control" value="" wire:model="mobile" wire:change="getMembershipDetails()" onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>

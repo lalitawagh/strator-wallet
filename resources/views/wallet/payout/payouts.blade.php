@@ -8,14 +8,9 @@
             <div class="box">
                 <div class="flex items-center p-3 border-b border-gray-200 dark:border-dark-5">
                     <h2 class="font-medium text-base mr-auto">
-                        Wallet Payout
+                        Payout
                     </h2>
-                    {{-- <div>
-                        <a class="btn btn-sm btn-primary shadow-md" data-toggle="modal"
-                            data-target="#WalletPayout-modal">Payout</a>
-                    </div> --}}
                 </div>
-                <!--S Payout list-->
                 <div class="p-5">
                     @if (Session::has('error'))
                     <span class="block text-theme-6">{{ Session::get('error') }}</span>
@@ -30,7 +25,7 @@
                                 <div class="sm:w-5/6">
                                     <select name="receiver_currency" id="receiver_currency" class="form-control" data-search="true" required>
                                         @foreach ($ledgers as $ledger)
-                                            <option value="{{ $ledger->getKey() }}">{{ $ledger->name }}</option>
+                                            <option value="{{ $ledger->getKey() }}" @if(old('receiver_currency') == $ledger->getKey()) selected @endif>{{ $ledger->name }}</option>
                                         @endforeach
                                     </select>
                                     @error('receiver_currency')
@@ -41,7 +36,7 @@
                             <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6  form-inline mt-2">
                                 <label for="reference" class="form-label sm:w-30"> Reference <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <input id="reference" name="reference" type="text" class="form-control" required>
+                                    <input id="reference" name="reference" type="text" class="form-control" value="{{ old('reference') }}" required>
                                     @error('reference')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
@@ -53,7 +48,7 @@
                                 style="align-items: center;">
                                 <label for="note" class="form-label sm:w-30"> Note </label>
                                 <div class="sm:w-5/6">
-                                    <input id="note" name="note" type="text" class="form-control">
+                                    <input id="note" name="note" type="text" class="form-control" value="{{ old('note') }}" >
                                     @error('note')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
@@ -75,9 +70,6 @@
                     </form>
 
                 </div>
-
-                <!--E payout list-->
-
             </div>
         </div>
     </div>

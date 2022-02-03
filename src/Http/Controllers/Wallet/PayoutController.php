@@ -11,6 +11,7 @@ use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\StorePayoutRequest;
+use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
@@ -50,11 +51,13 @@ class PayoutController extends Controller
         $user = Auth::user();
         $sender_wallet = Wallet::with('ledger')->find($data['wallet']);
         $receiver_ledger = Ledger::whereId($data['receiver_currency'])->first();
+        $sender_asset_category = $sender_wallet?->ledger->asset_category;
+        $receiver_asset_category = $receiver_ledger->asset_category;
 
-        if($sender_wallet?->ledger->asset_category != 'virtual' &&  @$receiver_ledger->asset_category != 'virtual')
+        if(@$sender_asset_category != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL &&  @$receiver_asset_category != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
         {
-            $base_currency = Setting::getValue('asset_types',[])->firstWhere('id',$sender_wallet?->ledger->asset_type);
-            $exchange_currency = Setting::getValue('asset_types',[])->firstWhere('id', $receiver_ledger->asset_type);
+            $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id',$sender_wallet?->ledger->asset_type);
+            $exchange_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $receiver_ledger->asset_type);
 
             $base_currency_name = $base_currency['name'];
             $exchange_currency_name = $exchange_currency['name'];
@@ -62,13 +65,13 @@ class PayoutController extends Controller
             $fee = $sender_wallet?->ledger->payout_fee;
         }else{
             $exchange_rate_details = ExchangeRate::where(['base_currency' => $sender_wallet->ledger_id,'exchange_currency' => $receiver_ledger->ledger_id])->first();
-            $base_currency = Setting::getValue('asset_types',[])->firstWhere('id', $sender_wallet?->ledger->asset_type);
-            $exchange_currency = Setting::getValue('asset_types',[])->firstWhere('id', $receiver_ledger->asset_type);
+            $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $sender_wallet?->ledger->asset_type);
+            $exchange_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $receiver_ledger->asset_type);
 
-            $base_currency_name = ($sender_wallet?->ledger->asset_category == 'virtual') ? 'Coin' : $base_currency['name'];
-            $exchange_currency_name = ($exchange_currency['asset_category'] == 'virtual') ? 'Coin' : $exchange_currency['name'];
-            $exchange_rate =  $exchange_rate_details->exchange_rate;
-            $fee = $exchange_rate_details->exchange_fee;
+            $base_currency_name = ($sender_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL) ? 'Coin' : $base_currency['name'];
+            $exchange_currency_name = ($exchange_currency['asset_category'] == \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL) ? 'Coin' : $exchange_currency['name'];
+            $exchange_rate =  $exchange_rate_details?->exchange_rate;
+            $fee = $exchange_rate_details?->exchange_fee;
         }
 
 
@@ -159,12 +162,10 @@ class PayoutController extends Controller
         $transaction->update();
 
         $sender_wallet = Wallet::find($transaction->meta['sender_ref_id']);
-        $sender_wallet->balance  = $sender_wallet->balance - $amount;
-        $sender_wallet->update();
+        $sender_wallet->debit($sender_wallet->balance,$amount);
 
         $beneficiary_wallet = Wallet::find($transaction->meta['beneficiary_ref_id']);
-        $beneficiary_wallet->balance  = $beneficiary_wallet->balance + $amount;
-        $beneficiary_wallet->update();
+        $beneficiary_wallet->credit($beneficiary_wallet->balance,$amount);
 
         return redirect()->route("dashboard.ledger-foundation.wallet-payout.index", ['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
             'message' => 'Processing the payment. It may take a while.',

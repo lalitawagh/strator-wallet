@@ -32,6 +32,8 @@ class WalletPayoutComponent extends Component
         $this->countryWithFlags = $countryWithFlags;
         $this->defaultCountry = $defaultCountry;
         $this->user = $user;
+        $this->balance = old('balance');
+        $this->amount = old('amount');
     }
 
     public function getWalletBalance($value)
@@ -43,7 +45,12 @@ class WalletPayoutComponent extends Component
 
     public function render()
     {
-        $this->remaining_amount = $this->balance - $this->amount;
+        $this->remaining_amount = 0;
+
+        if($this->amount)
+        {
+            $this->remaining_amount = $this->balance - $this->amount;
+        }
 
         return view('ledger-foundation::Livewire.wallet-payout-component');
     }

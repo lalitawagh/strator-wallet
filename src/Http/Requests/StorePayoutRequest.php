@@ -25,7 +25,7 @@ class StorePayoutRequest extends FormRequest
             'remaining_amount'  => 'required',
             'receiver_currency' => 'required',
             'reference'         => 'required',
-            'note'              => 'required',
+            'note'              => 'nullable',
             'attachment'        => 'nullable',
             'workspace_id'      => 'required',
         ];

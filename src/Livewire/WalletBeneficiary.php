@@ -3,7 +3,6 @@
 namespace Kanexy\LedgerFoundation\Livewire;
 
 use App\Models\User;
-use Kanexy\Cms\Models\OneTimePassword;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
@@ -42,10 +41,11 @@ class WalletBeneficiary extends Component
         $this->workspace = $workspace;
     }
 
-    public function changeMobile()
+    public function getMembershipDetails()
     {
        $workspace = User::wherePhone($this->mobile)->first()?->workspaces()->first();
        $membership = $workspace?->memberships()->first();
+
        $this->membership_urn = $membership?->urn;
        $this->membership_name = $membership?->name;
     }
@@ -54,13 +54,14 @@ class WalletBeneficiary extends Component
     {
         $data = $this->validate([
                 'first_name' => 'required',
-                'middle_name' => 'required',
+                'middle_name' => 'nullable',
                 'last_name' => 'required',
                 'email' => 'required',
                 'mobile' => 'required',
                 'notes' => 'nullable',
-                'nick_name' => 'nullable'
+                'nick_name' => 'nullable',
             ]);
+
         $data['workspace_id'] = $this->workspace->id;
         $data['ref_type'] = 'wallet';
         $data['classification'] = $this->classification;
@@ -74,8 +75,8 @@ class WalletBeneficiary extends Component
         /** @var \App\Models\User $user */
         $user = auth()->user();
 
-        // $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
-        $user->generateOtp("sms");
+        $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+        //$user->generateOtp("sms");
 
         $this->beneficiary_created = 1;
     }
@@ -88,12 +89,12 @@ class WalletBeneficiary extends Component
             ]);
 
         $oneTimePassword = $user->oneTimePasswords()->first();
+
         if ($oneTimePassword->code !== $data['code']) {
             $this->addError('code', 'The otp you entered did not match.');
         } else if (now()->greaterThan($oneTimePassword->expires_at)) {
             $this->addError('code', 'The otp you entered has expired.');
         }else{
-
             $oneTimePassword->update(['verified_at' => now()]);
 
             return redirect()->route("dashboard.ledger-foundation.wallet-payout.create",['workspace_id' => $this->workspace->id])->with([

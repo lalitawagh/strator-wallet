@@ -15,7 +15,7 @@
 
                         <div class="sm:flex items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5">
                             <div class="nav nav-tabs mr-auto hidden sm:flex" role="tablist">
-                                <a id="work-in-progress-mobile-new-tab" data-toggle="tab" data-target="#work-in-progress-new" href="javascript:;" class="py-2 ml-0 active" role="tab" aria-selected="true">Wallet Payout List</a>
+                                <a id="work-in-progress-mobile-new-tab" data-toggle="tab" data-target="#work-in-progress-new" href="javascript:;" class="py-2 ml-0 active" role="tab" aria-selected="true">Payouts</a>
                                 <!-- <a id="week-work-in-progress-mobile-last-week-tab" data-toggle="tab" data-target="#work-in-progress-last-week" href="javascript:;" class="py-2 ml-6" role="tab" aria-selected="false">ASSIGNED TO ME</a>  -->
                             </div>
                             <div class="flex items-center md:ml-auto mb-2">

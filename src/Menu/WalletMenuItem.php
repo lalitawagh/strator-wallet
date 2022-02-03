@@ -27,7 +27,7 @@ class WalletMenuItem extends Item
 
         $menus = [
                 new MenuItem('Transactions', 'activity', url: route('dashboard.ledger-foundation.wallet-transaction.index')),
-                new MenuItem('Payouts', 'activity', url: route('dashboard.ledger-foundation.wallet-payout.index')),
+                new MenuItem('Payouts', 'activity', url: route('dashboard.ledger-foundation.wallet-payout.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
                 new MenuItem('Request Payments', 'activity', url: route('dashboard.ledger-foundation.wallet-receive.index')),
                 new MenuItem('Deposits', 'activity', url: route('dashboard.ledger-foundation.wallet-deposit.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
                 new MenuItem('Withdraw', 'activity',url: route('dashboard.ledger-foundation.wallet-withdraw.index')),

@@ -5,7 +5,7 @@
             <div class="sm:w-5/6">
                 <select wire:change="getWalletBalance($event.target.value)" name="wallet" id="wallet" class="form-control"  data-search="true" required>
                     @foreach ($wallets as $wallet)
-                        <option value="{{ $wallet->getKey() }}">{{ \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first()?->name }}</option>
+                        <option value="{{ $wallet->getKey() }}" >{{ \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first()?->name }}</option>
                     @endforeach
                 </select>
                 @error('wallet')

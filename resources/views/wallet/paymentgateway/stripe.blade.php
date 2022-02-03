@@ -132,15 +132,13 @@
                                     "{{ route('dashboard.ledger-foundation.wallet.deposit-final',['workspace_id' => $details['workspace_id']]) }}";
                             },
                             error: function(data) {
-                                console.log('An error occurred.');
-                                console.log(data);
+                                $('#card-errors').html('Someting went wrong');
                             },
                         });
 
                     },
                     error: function(data) {
-                        console.log('An error occurred.');
-                        console.log(data);
+                        $('#card-errors').html('Someting went wrong');
                     },
                 });
             }
