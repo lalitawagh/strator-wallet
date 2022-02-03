@@ -136,10 +136,10 @@ class DepositController extends Controller
                 'amount' => $amount,
                 'workspace_id' => $workspace->getKey(),
                 'type' => 'credit',
-                'payment_method' => 'wallet',
+                'payment_method' => 'paypal',
                 'note' => null,
-                'ref_id' => $data['paymentDetails'][0]['payments']['captures'][0]['id'],
-                'ref_type' => 'paypal',
+                'ref_id' => $depositRequest['wallet'],
+                'ref_type' => 'wallet',
                 'settled_amount' => $amount,
                 'settled_currency' => $depositRequest['currency'],
                 'settlement_date' => date('Y-m-d'),
@@ -157,6 +157,7 @@ class DepositController extends Controller
                     'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
+                    'transaction_type' => 'deposit'
                 ],
             ]);
 
@@ -217,10 +218,10 @@ class DepositController extends Controller
                 'amount' => $amount,
                 'workspace_id' => $workspace->getKey(),
                 'type' => 'credit',
-                'payment_method' => 'wallet',
+                'payment_method' => 'stripe',
                 'note' => null,
-                'ref_id' =>  $response['data']['id'],
-                'ref_type' => 'stripe',
+                'ref_id' =>  $depositRequest['wallet'],
+                'ref_type' => 'wallet',
                 'settled_amount' => $amount,
                 'settled_currency' => $depositRequest['currency'],
                 'settlement_date' => date('Y-m-d'),
@@ -241,6 +242,7 @@ class DepositController extends Controller
                     'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
+                    'transaction_type' => 'deposit'
                 ],
             ]);
 
