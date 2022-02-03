@@ -207,8 +207,9 @@
     }
     .configuration-nav {
         width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         padding-bottom: 0;
+        padding-right: 0;
     }
     .configuration-nav .side-nav {
         display: block;
@@ -222,6 +223,14 @@
         background-color: transparent !important;
         padding-left: 30px;
     }
+    .breadcrumb{
+        display: flex;
+    }
+    .configuration-container{
+        width: 100%;
+        position: inherit;
+        padding-left: 0;
+    }
 }
         /* New */
 
@@ -229,7 +238,7 @@
 @endpush
 
 @section('content')
-    <div class="grid grid-cols-12 gap-6">
+    <div class="sm:flex w-full gap-3 mt-5">
         <div class="flex lg:block flex-col-reverse configuration-nav configuration-layout-sidebar">
             <div class="intro-y box mt-5 lg:mt-0 configuration-nav configuration-layout-sidebar" x-data="toggleConfigurationSidebarMenu()">
                 <div class="relative flex items-center p-3">

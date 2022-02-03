@@ -18,7 +18,7 @@
                     <a href="{{ route('dashboard.ledger-foundation.ledger.create') }}" class="btn btn-sm btn-primary shadow-md">Create New</a>
                 </div>
             </div>
-            <div class="p-5">
+            <div>
                 <div id="1" class="tab-pane grid grid-cols-12 gap-3 pt-0 active" role="tabpanel" aria-labelledby="1-tab">
                     <div class="active col-span-12 mt-0 w-full" role="tabpanel" id="k-wallet" aria-labelledby="k-wallet-tab">
 
@@ -26,7 +26,7 @@
                     <div class="overflow-x-auto">
                         <table class="table">
                             <thead>
-                            <tr>
+                            <tr class="bg-gray-300 dark:bg-dark-1">
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Name</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Image</th>
