@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Kanexy\Cms\Enums\Role as EnumsRole;
 use Kanexy\LedgerFoundation\Http\Enums\Permission as EnumsPermission;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -39,7 +40,7 @@ class LedgerFoundationRoleAndPermissionsSeeder extends Seeder
         $LEDGER_EDIT = Permission::create(['name' => EnumsPermission::LEDGER_EDIT]);
         $LEDGER_DELETE = Permission::create(['name' => EnumsPermission::LEDGER_DELETE]);
 
-        $SUPER_ADMIN = Role::where(['name' => \Kanexy\Cms\Enums\Role::SUPER_ADMIN])->first();
+        $SUPER_ADMIN = Role::where(['name' => EnumsRole::SUPER_ADMIN])->first();
         $SUPER_ADMIN->givePermissionTo(Permission::all());
     }
 }

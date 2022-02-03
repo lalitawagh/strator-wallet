@@ -15,6 +15,7 @@ return [
 
     'fiat_currency' => 'Fiat Currency',
     'crypto'        => 'Crypto',
+    'virtual'       => 'Virtual',
     'commodity'     => 'Commodity',
     'wrappex'       => 'Wrappex',
     'local'         => 'Local',
@@ -26,5 +27,12 @@ return [
     'suspended'     => 'Suspended',
     'new'           => 'New',
     'active'        => 'Active',
-    'inactive'      => 'Inactive'
+    'inactive'      => 'Inactive',
+    'paypal'        => 'Paypal',
+    'stripe'        => 'Stripe',
+    'daily'         => 'Daily',
+    'weekly'        => 'Weekly',
+    'monthly'       => 'Monthly',
+    'quarterly'     => 'Quarterly',
+    'yearly'        => 'Yearly',
 ];

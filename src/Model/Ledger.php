@@ -22,6 +22,9 @@ class Ledger extends Model
         'asset_type',
         'commodity_category',
         'image',
+        'payout_fee',
+        'deposit_fee',
+        'withdraw_fee',
         'status',
     ];
 }
