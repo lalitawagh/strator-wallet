@@ -127,7 +127,13 @@ class DepositController extends Controller
 
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
-        $amount =  $depositRequest['amount'] + $depositRequest['fee'];
+
+        $amount = $depositRequest['amount'];
+
+        if(session('exchange_rate'))
+        {
+            $amount = session('exchange_rate') * $depositRequest['amount'];
+        }
 
         if($data['status'] == 'COMPLETED')
         {
@@ -160,13 +166,6 @@ class DepositController extends Controller
                     'transaction_type' => 'deposit',
                 ],
             ]);
-
-            $amount = $depositRequest['amount'];
-
-            if(session('exchange_rate'))
-            {
-                $amount = session('exchange_rate') * $depositRequest['amount'];
-            }
 
             $wallet = Wallet::find($depositRequest['wallet']);
             $wallet->credit($wallet,$amount);
@@ -207,10 +206,16 @@ class DepositController extends Controller
         {
             $user = Auth::user();
             $workspace = $user->workspaces()->first();
-            $amount = $depositRequest['amount'] + $depositRequest['fee'];
             $depositRequest['stripe_fee'] = $response['data']['transaction_fee']/100;
             $depositRequest['stripe_receipt_url'] = $response['data']['receipt_url'];
             session(['deposit_request' => $depositRequest]);
+
+            $amount = $depositRequest['amount'] - ($response['data']['transaction_fee']/100);
+
+            if(session('exchange_rate'))
+            {
+                $amount = ($depositRequest['amount'] - ($response['data']['transaction_fee']/100)) * session('exchange_rate');
+            }
 
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
@@ -245,15 +250,8 @@ class DepositController extends Controller
                 ],
             ]);
 
-            $totalAmount = $depositRequest['amount'] - ($response['data']['transaction_fee']/100);
-
-            if(session('exchange_rate'))
-            {
-                $totalAmount = ($depositRequest['amount'] - ($response['data']['transaction_fee']/100)) * session('exchange_rate');
-            }
-
             $wallet = Wallet::find($depositRequest['wallet']);
-            $wallet->credit($wallet,$totalAmount);
+            $wallet->credit($wallet,$amount);
         }
         return response()->json(['status' => 'success']);
     }
