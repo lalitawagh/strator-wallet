@@ -54,12 +54,9 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Setting::class => AssetTypePolicy::class,
         Setting::class => AssetClassPolicy::class,
         Ledger::class => LedgerPolicy::class,
-<<<<<<< HEAD
         Wallet::class => PayoutPolicy::class,
-=======
         ExchangeRate::class => ExchangeRatePolicy::class,
         Wallet::class => DepositPolicy::class,
->>>>>>> a4bfac39556b14f6bc2f353d5e671dd2fd843dc8
     ];
 
     public function registerDefaultPolicies()
@@ -123,11 +120,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
 
         Livewire::component('deposit-wallet-component', DepositWalletComponent::class);
         Livewire::component('ledger-config-field-component', LedgerConfigFieldComponent::class);
-<<<<<<< HEAD
         Livewire::component('wallet-beneficiary', WalletBeneficiary::class);
         Livewire::component('wallet-payout-component', WalletPayoutComponent::class);
-=======
-
->>>>>>> a4bfac39556b14f6bc2f353d5e671dd2fd843dc8
     }
 }
