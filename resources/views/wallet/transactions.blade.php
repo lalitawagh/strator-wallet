@@ -43,7 +43,7 @@ thead.short-wrp th {
 
                             <div class="col-span-12 sm:col-span-3 xl:col-span-3 intro-y w-full" id="k-wallet" data-toggle="tab" data-target="#k-wallet">
                                 <a id="{{ $key }}-tab" href="javascript:void(0);" onclick="Livewire.emit('transactionList', '{{ $wallet?->urn }}')" data-toggle="tab"
-                                    class="px-3 py-2 mt-2 pb-5 font-medium @if($key == 0) active @php $first_wallet_urn = $wallet?->urn @endphp @endif">
+                                    class="block px-3 py-2 mt-2 pb-5 font-medium @if($key == 0) active @php $first_wallet_urn = $wallet?->urn @endphp @endif">
                                     <div class="report-box zoom-in">
                                         <div class="box p-5">
                                             <div class="flex">
