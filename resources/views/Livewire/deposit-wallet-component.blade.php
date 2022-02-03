@@ -8,7 +8,9 @@
                     <option value="{{ $wallet->getKey() }}" @if (session('wallet') == $wallet->getKey()) selected @endif>{{ $wallet->ledger?->name }}</option>
                 @endforeach
             </select>
-            <span class="block text-theme-6 mt-2"></span>
+            @error('wallet')
+            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+            @enderror
         </div>
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
@@ -20,14 +22,18 @@
                     <option value="{{ $currency['id'] }}" @if (session('currency') == $currency['id']) selected @endif>{{ $currency['name'] }}</option>
                 @endforeach
             </select>
-            <span class="block text-theme-6 mt-2"></span>
+            @error('currency')
+            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+            @enderror
         </div>
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="amount" class="form-label sm:w-40"> Amount <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">
             <input wire:model="amount" id="amount" type="text" class="form-control" name="amount">
-            <span class="block text-theme-6 mt-2"></span>
+            @error('amount')
+            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+            @enderror
         </div>
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
@@ -42,14 +48,18 @@
                     <option value="{{ $payment_method }}"> {{ trans('ledger-foundation::configuration.'.$payment_method) }} </option>
                 @endforeach
             </select>
-            <span class="block text-theme-6 mt-2"></span>
+            @error('payment_method')
+            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+            @enderror
         </div>
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="description" class="form-label sm:w-40"> Description <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">
             <input id="description" type="text" class="form-control" name="description">
-            <span class="block text-theme-6 mt-2"></span>
+            @error('description')
+            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+            @enderror
         </div>
     </div>
     @if (isset($fee))

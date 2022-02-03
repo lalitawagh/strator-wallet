@@ -48,7 +48,11 @@
                                 <tr>
                                     <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
                                     <td class="border-b dark:border-dark-5">{{ $ledger->name }}</td>
-                                    <td class="border-b dark:border-dark-5"><img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}"></td>
+                                    <td class="border-b dark:border-dark-5">
+                                        @isset($ledger->image)
+                                        <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}">
+                                        @endisset
+                                    </td>
                                     <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$ledger->ledger_type) }}</td>
                                     <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$ledger->exchange_type) }}</td>
                                     <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$ledger->asset_category) }}</td>

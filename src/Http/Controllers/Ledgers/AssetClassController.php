@@ -28,7 +28,7 @@ class AssetClassController extends Controller
     public function store(StoreAssetClassRequest $request)
     {
         $data = $request->validated();
-        $data['image'] = $request->hasFile('image') ? $request->file('image')->store('walletImages', 'azure') : 'demo.jpg';
+        $data['image'] = $request->hasFile('image') ?? $request->file('image')->store('walletImages', 'azure');
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
         $data['id'] = now()->format('dmYHis');
 
@@ -62,7 +62,7 @@ class AssetClassController extends Controller
                 return true;
             }
 
-            $existing_image = $item['image'] ?? 'demo.jpg';
+            $existing_image = $item['image'];
             return false;
         });
 

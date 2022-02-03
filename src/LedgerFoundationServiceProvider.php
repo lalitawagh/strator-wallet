@@ -41,7 +41,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         '2022_01_25_115840_add_column_in_ledgers_table',
         '2022_01_25_122500_create_exchange_rates_table',
         '2022_01_17_130105_create_wallets_table',
-        '2022_02_02_062027_change_ref_id_type_for_transaction'
+        '2022_02_02_062027_change_ref_id_type_for_transaction',
     ];
 
     private array $policies = [
