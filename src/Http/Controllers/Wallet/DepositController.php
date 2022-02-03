@@ -157,7 +157,7 @@ class DepositController extends Controller
                     'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
-                    'transaction_type' => 'deposit'
+                    'transaction_type' => 'deposit',
                 ],
             ]);
 
@@ -205,7 +205,6 @@ class DepositController extends Controller
 
         if($response['data']['status'] == 'succeeded')
         {
-
             $user = Auth::user();
             $workspace = $user->workspaces()->first();
             $amount = $depositRequest['amount'] + $depositRequest['fee'];
@@ -242,7 +241,7 @@ class DepositController extends Controller
                     'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
-                    'transaction_type' => 'deposit'
+                    'transaction_type' => 'deposit',
                 ],
             ]);
 

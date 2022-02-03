@@ -23,7 +23,7 @@ class StoreExchangeRateRequest extends FormRequest
             'is_hard_stop'           =>    ['required'],
             'exchange_fee'           =>    ['required'],
             'exchange_rate'          =>    ['required'],
-            'note'                   =>    ['required'],
+            'note'                   =>    ['nullable'],
         ];
     }
 }
