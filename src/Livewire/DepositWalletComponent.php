@@ -41,7 +41,6 @@ class DepositWalletComponent extends Component
     public function changeBaseCurrency($base_currency)
     {
         $this->wallet = $base_currency;
-        $this->dispatchBrowserEvent('UpdateLivewireSelect',['class' => 'walletLedgerEvent','options' => $this->wallets]);
     }
 
     public function changeCurrency($value)
