@@ -17,11 +17,11 @@
                             class="btn btn-sm btn-primary shadow-md">Create New</a>
                     </div>
                 </div>
-                <div class="p-5">
+                <div>
                     <div class="overflow-x-auto">
                         <table class="table">
                             <thead>
-                                <tr>
+                                <tr class="bg-gray-300 dark:bg-dark-1">
                                     <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
                                     <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Name</th>
                                     <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Asset Category</th>
@@ -39,8 +39,8 @@
                                         <td class="border-b dark:border-dark-5">
                                             {{ ucwords(strtolower(str_replace('_', ' ', $asset_type_list['asset_category']))) }}
                                         </td>
-                                        <td class="border-b dark:border-dark-5"><img class="rounded-md proof-default"
-                                                style="width:100px;" alt=""
+                                        <td class="border-b dark:border-dark-5"><img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default"
+                                                alt=""
                                                 src="@isset($asset_type_list['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_type_list['image']) }}@endisset">
                                             </td>
                                             <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$asset_type_list['status']) }}

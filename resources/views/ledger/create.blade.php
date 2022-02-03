@@ -20,7 +20,7 @@
                         @csrf
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="name" class="form-label sm:w-28">Ledger Name <span class="text-theme-6">*</span></label>
+                                <label for="name" class="form-label sm:w-30">Ledger Name <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="name" name="name" type="text"
                                         class="form-control @error('name') border-theme-6 @enderror"
@@ -33,7 +33,7 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="code" class="form-label sm:w-28">Code <span class="text-theme-6">*</span></label>
+                                <label for="code" class="form-label sm:w-30">Code <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="code" name="code" type="text"
                                         class="form-control @error('code') border-theme-6 @enderror"
@@ -48,7 +48,7 @@
 
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="ledger_type" class="form-label sm:w-28">Ledger Type <span class="text-theme-6">*</span></label>
+                                <label for="ledger_type" class="form-label sm:w-30">Ledger Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     @php
                                         $ledger_types = \Kanexy\LedgerFoundation\Enums\LedgerType::toArray();
@@ -66,7 +66,7 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="symbol" class="form-label sm:w-28">Symbol</label>
+                                <label for="symbol" class="form-label sm:w-30">Symbol</label>
                                 <div class="sm:w-5/6">
                                     <input id="symbol" name="symbol" type="symbol"
                                         class="form-control @error('symbol') border-theme-6 @enderror"
@@ -81,7 +81,7 @@
 
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="exchange_type" class="form-label sm:w-28">Exchange Type <span class="text-theme-6">*</span></label>
+                                <label for="exchange_type" class="form-label sm:w-30">Exchange Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     @php
                                         $exchange_types = \Kanexy\LedgerFoundation\Enums\ExchangeType::toArray();
@@ -99,7 +99,7 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="exchange_rate" class="form-label sm:w-28">Exchange Rate <span class="text-theme-6">*</span></label>
+                                <label for="exchange_rate" class="form-label sm:w-30">Exchange Rate <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="exchange_rate" name="exchange_rate" type="text"
                                         class="form-control @error('exchange_rate') border-theme-6 @enderror"
@@ -116,7 +116,7 @@
 
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="exchange_from" class="form-label sm:w-28">Exchange From  <span class="text-theme-6">*</span></label>
+                                <label for="exchange_from" class="form-label sm:w-30">Exchange From  <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     @php
                                         $exchange_from = \Kanexy\LedgerFoundation\Enums\ExchangeFrom::toArray();
@@ -135,7 +135,7 @@
 
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="logo" class="form-label sm:w-28"> Logo </label>
+                                <label for="logo" class="form-label sm:w-30"> Logo </label>
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">
 
@@ -148,7 +148,7 @@
 
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="asset_class" class="form-label sm:w-28"> Asset Class <span class="text-theme-6">*</span></label>
+                                <label for="asset_class" class="form-label sm:w-30"> Asset Class <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <select name="asset_class" id="asset_class" data-search="true" class="tail-select w-full @error('asset_class') border-theme-6 @enderror">
                                         @foreach ($asset_classes as $asset_class)
@@ -163,7 +163,7 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="commodity_category" class="form-label sm:w-28"> Commodity Category <span class="text-theme-6">*</span></label>
+                                <label for="commodity_category" class="form-label sm:w-30"> Commodity <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <select name="commodity_category" id="commodity_category" data-search="true" class="tail-select w-full @error('commodity_category') border-theme-6 @enderror">
                                         @foreach ($commodity_types as $commodity_type)
@@ -171,7 +171,7 @@
                                         @endforeach
                                     </select>
 
-                                    @error('image')
+                                    @error('commodity_category')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -179,7 +179,7 @@
                         </div>
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="deposit_fee" class="form-label sm:w-28">Deposit Fee <span class="text-theme-6">*</span></label>
+                                <label for="deposit_fee" class="form-label sm:w-30">Deposit Fee <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="deposit_fee" name="deposit_fee" type="text"
                                         class="form-control @error('deposit_fee') border-theme-6 @enderror"
@@ -191,7 +191,7 @@
                                 </div>
                             </div>
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="withdraw_fee" class="form-label sm:w-28">Withdraw Fee <span class="text-theme-6">*</span></label>
+                                <label for="withdraw_fee" class="form-label sm:w-30">Withdraw Fee <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="withdraw_fee" name="withdraw_fee" type="text"
                                         class="form-control @error('withdraw_fee') border-theme-6 @enderror"
@@ -205,7 +205,7 @@
                         </div>
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="payout_fee" class="form-label sm:w-28">Payout Fee <span class="text-theme-6">*</span></label>
+                                <label for="payout_fee" class="form-label sm:w-30">Payout Fee <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="payout_fee" name="payout_fee" type="text"
                                         class="form-control @error('payout_fee') border-theme-6 @enderror"
@@ -217,7 +217,7 @@
                                 </div>
                             </div>
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="status" class="form-label sm:w-28"> Status</label>
+                                <label for="status" class="form-label sm:w-30"> Status</label>
                                 <div class="sm:w-5/6">
                                     <select name="status" id="status" data-search="true" class="tail-select w-full">
                                         <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW) checked @endif>{{ trans('ledger-foundation::configuration.new') }}</option>
