@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Kanexy\Cms\Controllers\Controller;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
@@ -29,7 +31,14 @@ class PayoutController extends Controller
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
 
-        return view("ledger-foundation::wallet.payout.index", compact('workspace'));
+        $transactions = QueryBuilder::for(Transaction::class)
+            ->allowedFilters([
+                AllowedFilter::exact('workspace_id'),
+            ]);
+
+        $transactions = Transaction::where("meta->transaction_type", 'payout')->latest()->paginate();
+
+        return view("ledger-foundation::wallet.payout.index", compact('workspace', 'transactions'));
     }
 
     public function create(Request $request)

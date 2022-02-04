@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
+use Kanexy\LedgerFoundation\Livewire\WalletTransactionDetailComponent;
+use Kanexy\LedgerFoundation\Livewire\WalletTransactionsListComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletBeneficiary;
 use Kanexy\LedgerFoundation\Livewire\WalletPayoutComponent;
 use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
@@ -118,6 +120,9 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
 
         Livewire::component('deposit-wallet-component', DepositWalletComponent::class);
         Livewire::component('ledger-config-field-component', LedgerConfigFieldComponent::class);
+        Livewire::component('wallet-transactions-list-component', WalletTransactionsListComponent::class);
+        Livewire::component('wallet-transaction-detail-component', WalletTransactionDetailComponent::class);
+
         Livewire::component('wallet-beneficiary', WalletBeneficiary::class);
         Livewire::component('wallet-payout-component', WalletPayoutComponent::class);
     }
