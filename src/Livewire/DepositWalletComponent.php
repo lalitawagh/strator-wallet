@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class DepositWalletComponent extends Component
 {
-    public $wallet;
+    public $selected_wallet;
 
     public $currency;
 
@@ -33,20 +33,21 @@ class DepositWalletComponent extends Component
     {
         $this->wallets = $wallets;
         $this->currencies = $currencies;
-        $this->wallet = session('wallet');
+        $this->selected_wallet = session('wallet');
         $this->currency = session('currency');
         $this->amount = session('amount');
     }
 
     public function changeBaseCurrency($base_currency)
     {
-        $this->wallet = $base_currency;
+        $this->selected_wallet = $base_currency;
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
     public function changeCurrency($value)
     {
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
-        $wallet = Wallet::whereId($this->wallet)->first();
+        $wallet = Wallet::whereId($this->selected_wallet)->first();
         $ledger = Ledger::whereId($wallet?->ledger_id)->first();
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
         $base_asset_category = $ledger?->asset_category;
@@ -72,7 +73,7 @@ class DepositWalletComponent extends Component
             $this->fee = $exchange_rate_details?->exchange_fee;
         }
 
-        session(['fee' => $this->fee,'exchange_rate' => $this->exchange_rate,'exchange_currency' => $this->exchange_currency,'base_currency' => $this->base_currency,'wallet' => $this->wallet,'currency' => $value,'amount' => $this->amount]);
+        session(['fee' => $this->fee,'exchange_rate' => $this->exchange_rate,'exchange_currency' => $this->exchange_currency,'base_currency' => $this->base_currency,'wallet' => $this->selected_wallet,'currency' => $value,'amount' => $this->amount]);
     }
 
     public function render()
