@@ -78,7 +78,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a  href="{{ route('dashboard.ledger-foundation.wallet-payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary ml-2">Payout</a>
+                                <a  href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary ml-2">Payout</a>
                             </div>
                         </div>
                         <!-- BEGIN: HTML Table Data -->

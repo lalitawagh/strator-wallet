@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="p-5">
-                    <form action="{{ route('dashboard.ledger-foundation.ledger.update',$ledger->getKey()) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.wallet.ledger.update',$ledger->getKey()) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
@@ -168,7 +168,10 @@
                                 <label for="logo" class="form-label sm:w-30"> Logo <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">
+                                    @isset($ledger->image)
                                     <img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}">
+                                    @endisset
+
                                     @error('image')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
@@ -268,7 +271,7 @@
                         </div>
 
                         <div class="text-right mt-5">
-                            <a href="{{ route('dashboard.ledger-foundation.ledger.index') }}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
+                            <a href="{{ route('dashboard.wallet.ledger.index') }}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
                             <button type="submit" class="btn btn-primary w-24">Update</button>
                         </div>
                     </form>

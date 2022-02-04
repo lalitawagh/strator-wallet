@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="p-5">
-                    <form action="{{ route('dashboard.ledger-foundation.commodity-type.update',$commodity_type['id']) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.wallet.commodity-type.update',$commodity_type['id']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="text-right mt-5">
-                            <a href="{{ route('dashboard.ledger-foundation.commodity-type.index') }}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
+                            <a href="{{ route('dashboard.wallet.commodity-type.index') }}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
                             <button type="submit" class="btn btn-primary w-24">Update</button>
                         </div>
                     </form>

@@ -28,7 +28,10 @@ class CommodityTypeController extends Controller
     public function store(StoreCommodityRequest $request)
     {
         $data = $request->validated();
-        $data['image'] = $request->hasFile('image') ?? $request->file('image')->store('walletImages', 'azure');
+        if($request->hasFile('image'))
+        {
+            $data['image'] = $request->file('image')->store('walletImages', 'azure');
+        }
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
         $data['id'] = now()->format('dmYHis');
 
@@ -36,7 +39,7 @@ class CommodityTypeController extends Controller
 
         Setting::updateOrCreate(['key' => 'commodity_types'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.ledger-foundation.commodity-type.index")->with([
+        return redirect()->route("dashboard.wallet.commodity-type.index")->with([
             'status' => 'success',
             'message' => 'Commodity Type created successfully.',
         ]);
@@ -62,11 +65,12 @@ class CommodityTypeController extends Controller
                 return true;
             }
 
-            $existing_image = $item['image'];
+            $existing_image = @$item['image'];
             return false;
         });
 
         $data['image'] = $existing_image;
+
         if($request->hasFile('image'))
         {
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
@@ -78,7 +82,7 @@ class CommodityTypeController extends Controller
 
         Setting::updateOrCreate(['key' => 'commodity_types'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.ledger-foundation.commodity-type.index")->with([
+        return redirect()->route("dashboard.wallet.commodity-type.index")->with([
             'status' => 'success',
             'message' => 'Commodity Type updated successfully.',
         ]);
@@ -97,7 +101,7 @@ class CommodityTypeController extends Controller
 
         Setting::updateOrCreate(['key' => 'commodity_types'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.ledger-foundation.commodity-type.index")->with([
+        return redirect()->route("dashboard.wallet.commodity-type.index")->with([
             'status' => 'success',
             'message' => 'Commodity Type deleted successfully.',
         ]);

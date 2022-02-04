@@ -260,8 +260,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('dashboard.ledger-foundation.ledger.index') }}"
-                                class="side-menu @if (Route::current()->getName() == 'dashboard.ledger-foundation.ledger.index' || Route::current()->getName() == 'dashboard.ledger-foundation.ledger.create' || Route::current()->getName() == 'dashboard.ledger-foundation.ledger.edit') side-menu--active @endif">
+                            <a href="{{ route('dashboard.wallet.ledger.index') }}"
+                                class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.ledger.index' || Route::current()->getName() == 'dashboard.wallet.ledger.create' || Route::current()->getName() == 'dashboard.wallet.ledger.edit') side-menu--active @endif">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="side-menu__title"> Ledgers </div>
                             </a>
@@ -269,7 +269,7 @@
                         <li>
                             <a href="javascript:;.html"
                                 class="side-menu
-                                @if (Route::current()->getName() == 'dashboard.ledger-foundation.asset-type.index' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-type.create' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-type.edit' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-class.index' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-class.create' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-class.edit' || Route::current()->getName() == 'dashboard.ledger-foundation.commodity-type.index' || Route::current()->getName() == 'dashboard.ledger-foundation.commodity-type.create' || Route::current()->getName() == 'dashboard.ledger-foundation.commodity-type.edit')
+                                @if (Route::current()->getName() == 'dashboard.wallet.asset-type.index' || Route::current()->getName() == 'dashboard.wallet.asset-type.create' || Route::current()->getName() == 'dashboard.wallet.asset-type.edit' || Route::current()->getName() == 'dashboard.wallet.asset-class.index' || Route::current()->getName() == 'dashboard.wallet.asset-class.create' || Route::current()->getName() == 'dashboard.wallet.asset-class.edit' || Route::current()->getName() == 'dashboard.wallet.commodity-type.index' || Route::current()->getName() == 'dashboard.wallet.commodity-type.create' || Route::current()->getName() == 'dashboard.wallet.commodity-type.edit')
                                     side-menu--active side-menu--open
                                 @endif">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
@@ -278,31 +278,31 @@
                                     <div class="side-menu__sub-icon"> <i data-feather="chevron-down"></i> </div>
                                 </div>
                             </a>
-                            @if (Route::current()->getName() == 'dashboard.ledger-foundation.asset-type.index' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-type.create' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-type.edit' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-class.index' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-class.create' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-class.edit' || Route::current()->getName() == 'dashboard.ledger-foundation.commodity-type.index' || Route::current()->getName() == 'dashboard.ledger-foundation.commodity-type.create' || Route::current()->getName() == 'dashboard.ledger-foundation.commodity-type.edit')
+                            @if (Route::current()->getName() == 'dashboard.wallet.asset-type.index' || Route::current()->getName() == 'dashboard.wallet.asset-type.create' || Route::current()->getName() == 'dashboard.wallet.asset-type.edit' || Route::current()->getName() == 'dashboard.wallet.asset-class.index' || Route::current()->getName() == 'dashboard.wallet.asset-class.create' || Route::current()->getName() == 'dashboard.wallet.asset-class.edit' || Route::current()->getName() == 'dashboard.wallet.commodity-type.index' || Route::current()->getName() == 'dashboard.wallet.commodity-type.create' || Route::current()->getName() == 'dashboard.wallet.commodity-type.edit')
                                 <ul class="xl:pl-6 sm:pl-6 side-menu__sub-open" style="display: block;">
                                 @else
                                     <ul class="xl:pl-6 sm:pl-6">
                             @endif
                         <li>
-                            <a href="{{ route('dashboard.ledger-foundation.asset-type.index') }}"
-                                class="side-menu  @if (Route::current()->getName() == 'dashboard.ledger-foundation.asset-type.index' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-type.create' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-type.edit')
+                            <a href="{{ route('dashboard.wallet.asset-type.index') }}"
+                                class="side-menu  @if (Route::current()->getName() == 'dashboard.wallet.asset-type.index' || Route::current()->getName() == 'dashboard.wallet.asset-type.create' || Route::current()->getName() == 'dashboard.wallet.asset-type.edit')
                                          side-menu--active @endif">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="side-menu__title"> Asset Type </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('dashboard.ledger-foundation.asset-class.index') }}"
+                            <a href="{{ route('dashboard.wallet.asset-class.index') }}"
                                 class="side-menu
-                                    @if (Route::current()->getName() == 'dashboard.ledger-foundation.asset-class.index' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-class.create' || Route::current()->getName() == 'dashboard.ledger-foundation.asset-class.edit')
+                                    @if (Route::current()->getName() == 'dashboard.wallet.asset-class.index' || Route::current()->getName() == 'dashboard.wallet.asset-class.create' || Route::current()->getName() == 'dashboard.wallet.asset-class.edit')
                                          side-menu--active @endif">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="side-menu__title"> Asset Class </div>
                             </a>
                         </li>
                         <li>
-                            <a href="{{ route('dashboard.ledger-foundation.commodity-type.index') }}"
-                                class="side-menu @if (Route::current()->getName() == 'dashboard.ledger-foundation.commodity-type.index' || Route::current()->getName() == 'dashboard.ledger-foundation.commodity-type.create' || Route::current()->getName() == 'dashboard.ledger-foundation.commodity-type.edit')  side-menu--active @endif">
+                            <a href="{{ route('dashboard.wallet.commodity-type.index') }}"
+                                class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.commodity-type.index' || Route::current()->getName() == 'dashboard.wallet.commodity-type.create' || Route::current()->getName() == 'dashboard.wallet.commodity-type.edit')  side-menu--active @endif">
                                 <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                                 <div class="side-menu__title"> Commodity Type </div>
                             </a>
@@ -310,8 +310,8 @@
                     </ul>
                     </li>
                     <li>
-                        <a href="{{ route('dashboard.ledger-foundation.exchange-rate.index') }}"
-                            class="side-menu @if (Route::current()->getName() == 'dashboard.ledger-foundation.exchange-rate.index' || Route::current()->getName() == 'dashboard.ledger-foundation.exchange-rate.create' || Route::current()->getName() == 'dashboard.ledger-foundation.exchange-rate.edit') side-menu--active @endif">
+                        <a href="{{ route('dashboard.wallet.exchange-rate.index') }}"
+                            class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.exchange-rate.index' || Route::current()->getName() == 'dashboard.wallet.exchange-rate.create' || Route::current()->getName() == 'dashboard.wallet.exchange-rate.edit') side-menu--active @endif">
                             <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                             <div class="side-menu__title"> Exchange Rate </div>
                         </a>

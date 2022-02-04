@@ -8,11 +8,11 @@
             <div class="box">
                 <div class="flex items-center p-3 border-b border-gray-200 dark:border-dark-5">
                     <h2 class="font-medium text-base mr-auto">
-                        Wallet Deposit List
+                        Deposits
                     </h2>
                     @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
                     <div>
-                        <a href="{{ route('dashboard.ledger-foundation.wallet.deposit-initial',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md">Deposit</a>
+                        <a href="{{ route('dashboard.wallet.deposit.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md">Deposit</a>
                     </div>
                     @endif
                 </div>

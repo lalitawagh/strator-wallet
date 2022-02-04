@@ -28,7 +28,10 @@ class AssetClassController extends Controller
     public function store(StoreAssetClassRequest $request)
     {
         $data = $request->validated();
-        $data['image'] = $request->hasFile('image') ?? $request->file('image')->store('walletImages', 'azure');
+        if($request->hasFile('image'))
+        {
+            $data['image'] = $request->file('image')->store('walletImages', 'azure');
+        }
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
         $data['id'] = now()->format('dmYHis');
 
@@ -36,7 +39,7 @@ class AssetClassController extends Controller
 
         Setting::updateOrCreate(['key' => 'asset_classes'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.ledger-foundation.asset-class.index")->with([
+        return redirect()->route("dashboard.wallet.asset-class.index")->with([
             'status' => 'success',
             'message' => 'Asset Class created successfully.',
         ]);
@@ -62,11 +65,12 @@ class AssetClassController extends Controller
                 return true;
             }
 
-            $existing_image = $item['image'];
+            $existing_image = @$item['image'];
             return false;
         });
 
         $data['image'] = $existing_image;
+
         if($request->hasFile('image'))
         {
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
@@ -78,7 +82,7 @@ class AssetClassController extends Controller
 
         Setting::updateOrCreate(['key' => 'asset_classes'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.ledger-foundation.asset-class.index")->with([
+        return redirect()->route("dashboard.wallet.asset-class.index")->with([
             'status' => 'success',
             'message' => 'Asset Class updated successfully.',
         ]);
@@ -97,7 +101,7 @@ class AssetClassController extends Controller
 
         Setting::updateOrCreate(['key' => 'asset_classes'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.ledger-foundation.asset-class.index")->with([
+        return redirect()->route("dashboard.wallet.asset-class.index")->with([
             'status' => 'success',
             'message' => 'Asset Class deleted successfully.',
         ]);

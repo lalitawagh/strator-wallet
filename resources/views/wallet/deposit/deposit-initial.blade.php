@@ -2,7 +2,7 @@
 
 @section('deposit-content')
 <div class="px-5 sm:px-5 mt-0 pt-0">
-    <form action="{{ route('dashboard.ledger-foundation.wallet.store-deposit-initial') }}" method="POST">
+    <form action="{{ route('dashboard.wallet.deposit.store') }}" method="POST">
         @csrf
         <input type="hidden" name="workspace_id" value="{{ request()->input('workspace_id') }}">
         @livewire('deposit-wallet-component', ['wallets' => $wallets,'currencies' => $currencies])

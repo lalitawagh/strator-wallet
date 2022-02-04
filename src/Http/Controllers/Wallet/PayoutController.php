@@ -101,10 +101,10 @@ class PayoutController extends Controller
         ]);
 
 
-        $transaction->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
+        $user->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
         // $transaction->generateOtp("sms");
 
-        return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.ledger-foundation.wallet-payout-verify', now()->addMinutes(30),["id"=> $transaction->id]), 'sms');
+        return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.payout-verify', now()->addMinutes(30),["id"=> $transaction->id]), 'sms');
     }
 
     public function verify(Request $request)
@@ -146,7 +146,7 @@ class PayoutController extends Controller
         $beneficiary_wallet = Wallet::find($transaction->meta['beneficiary_ref_id']);
         $beneficiary_wallet->credit($amount);
 
-        return redirect()->route("dashboard.ledger-foundation.wallet-payout.index", ['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
+        return redirect()->route("dashboard.wallet.payout.index", ['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
             'message' => 'Processing the payment. It may take a while.',
             'status' => 'success',
         ]);
