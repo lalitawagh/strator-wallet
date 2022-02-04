@@ -141,10 +141,10 @@ class PayoutController extends Controller
         $transaction->update();
 
         $sender_wallet = Wallet::find($transaction->meta['sender_ref_id']);
-        $sender_wallet->debit($sender_wallet,$amount);
+        $sender_wallet->debit($amount);
 
         $beneficiary_wallet = Wallet::find($transaction->meta['beneficiary_ref_id']);
-        $beneficiary_wallet->credit($beneficiary_wallet,$amount);
+        $beneficiary_wallet->credit($amount);
 
         return redirect()->route("dashboard.ledger-foundation.wallet-payout.index", ['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
             'message' => 'Processing the payment. It may take a while.',
