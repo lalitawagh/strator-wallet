@@ -11,6 +11,8 @@ use Kanexy\LedgerFoundation\Policies\DepositPolicy;
 use Kanexy\LedgerFoundation\Services\WalletService;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 use Stripe;
 
 class DepositController extends Controller
@@ -32,7 +34,12 @@ class DepositController extends Controller
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
 
-        $transactions = Transaction::where("ref_type", 'wallet')->latest()->paginate();
+        $transactions = QueryBuilder::for(Transaction::class)
+            ->allowedFilters([
+                AllowedFilter::exact('workspace_id'),
+            ]);
+
+        $transactions = Transaction::where("meta->transaction_type", 'deposit')->latest()->paginate();
 
         return view("ledger-foundation::wallet.deposit.index", compact('workspace', 'transactions'));
     }
