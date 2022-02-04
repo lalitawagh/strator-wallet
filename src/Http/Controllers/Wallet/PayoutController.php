@@ -106,6 +106,7 @@ class PayoutController extends Controller
                 'receiver_currency' => $exchange_rate_details['exchange_currency_name'],
                 'exchange_rate' => $exchange_rate_details['exchange_rate'],
                 'receiver_currency' => $exchange_rate_details['exchange_currency_name'],
+                'transaction_type' => 'payout',
             ],
         ]);
 
@@ -143,6 +144,7 @@ class PayoutController extends Controller
                 'beneficiary_ref_id' => $transaction->beneficiary_ref_id,
                 'beneficiary_ref_type' => 'wallet',
                 'beneficiary_name' => $transaction->beneficiary_name,
+                'transaction_type' => 'payout',
             ],
         ]);
 
