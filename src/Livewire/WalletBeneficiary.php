@@ -97,7 +97,7 @@ class WalletBeneficiary extends Component
         }else{
             $oneTimePassword->update(['verified_at' => now()]);
 
-            return redirect()->route("dashboard.ledger-foundation.wallet-payout.create",['workspace_id' => $this->workspace->id])->with([
+            return redirect()->route("dashboard.wallet.payout.create",['workspace_id' => $this->workspace->id])->with([
                 'status' => 'success',
                 'message' => 'The beneficiary created successfully.',
             ]);

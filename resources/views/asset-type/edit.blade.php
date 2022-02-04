@@ -57,7 +57,10 @@
                                 <label for="logo" class="form-label sm:w-30"> Image </label>
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">
-                                    <img class="rounded-md proof-default" style="width:100px;" alt="" src="@isset($asset_type_list['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_type['image']) }}@endisset">
+                                    @isset($asset_type['image'])
+                                    <img class="rounded-md proof-default pt-2" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_type['image']) }}">
+                                    @endisset
+
                                     @error('image')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
@@ -77,7 +80,7 @@
                         </div>
 
                         <div class="text-right mt-5">
-                            <a href="{{ route('dashboard.ledger-foundation.asset-type.index') }}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
+                            <a href="{{ route('dashboard.wallet.asset-type.index') }}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
                             <button type="submit" class="btn btn-primary w-24">Update</button>
                         </div>
                     </form>

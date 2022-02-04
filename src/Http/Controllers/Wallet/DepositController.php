@@ -168,7 +168,7 @@ class DepositController extends Controller
             ]);
 
             $wallet = Wallet::find($depositRequest['wallet']);
-            $wallet->credit($wallet,$amount);
+            $wallet->credit($amount);
         }
 
         return response()->json(['status' => 'success']);
@@ -251,7 +251,7 @@ class DepositController extends Controller
             ]);
 
             $wallet = Wallet::find($depositRequest['wallet']);
-            $wallet->credit($wallet,$amount);
+            $wallet->credit($amount);
         }
         return response()->json(['status' => 'success']);
     }

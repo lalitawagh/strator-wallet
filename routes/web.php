@@ -48,6 +48,7 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'d
     Route::name('deposit-stripe-payment')->post('deposit-stripe-payment', [DepositController::class, 'storeStripeDepositPaymentDetails']);
     Route::name('deposit-final-detail')->get('deposit-final-detail', [DepositController::class, 'showFinalDepositDetail']);
     Route::name('deposit-money')->get('deposit-money', [DepositController::class, 'showDepositMoney']);
+    Route::name('payout-verify')->get('payout-verify', [PayoutController::class, 'verify']);
 
 });
 

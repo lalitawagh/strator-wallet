@@ -3,44 +3,13 @@
 @section('title', 'Wallet Payout List')
 
 @section('content')
-    <div class="grid grid-cols-12 gap-6 mb-3">
-        <div class="col-span-12">
-            <div class="box">
-                <div class="flex items-center p-3 border-b border-gray-200 dark:border-dark-5">
-                    <h2 class="font-medium text-base mr-auto">
-                        Wallet Payout List
-                    </h2>
-                    <div>
-                        <a href="{{ route('dashboard.wallet.payout.create') }}" class="btn btn-sm btn-primary shadow-md">Payout</a>
-                    </div>
-                </div>
-                <div class="p-5">
-                    <div class="overflow-x-auto">
-                        <table class="table">
-                            <thead>
-                                <tr class="bg-gray-200 dark:bg-dark-1">
-                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Date</th>
-                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Wallet</th>
-                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Description</th>
-                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
-                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Fee</th>
-                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Balance</th>
-                                    <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="border-b dark:border-dark-5">28 Aug 2021</td>
-                                    <td class="border-b dark:border-dark-5">Pay Coin</td>
-                                    <td class="border-b dark:border-dark-5">Send Pay Coin</td>
-                                    <td class="border-b dark:border-dark-5">Success</td>
-                                    <td class="border-b dark:border-dark-5">30</td>
-                                    <td class="border-b dark:border-dark-5">-20</td>
-                                    <td class="border-b whitespace-nowrap dark:border-dark-5">
-                                        <div class="dropdown">
-                                            <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                                <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
-                                            </button>
+    <div class="grid grid-cols-12  gap-3">
+        <div class="col-span-12 lg:col-span-12 xxl:col-span-12 mt-4">
+            <div class="grid grid-cols-12 gap-3">
+                <!-- BEGIN: -->
+                <div class="intro-y box col-span-12 lg:col-span-12 xxl:col-span-12 p-4">
+                <div id="1" class="tab-pane grid grid-cols-12 gap-3 pt-0" role="tabpanel" aria-labelledby="1-tab">
+                <div class="active col-span-12 mt-0 w-full" role="tabpanel" id="k-wallet" aria-labelledby="k-wallet-tab">
 
                     <div class="intro-y lg:overflow-visible mt-3 sm:mt-0">
 
@@ -109,7 +78,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a  href="{{ route('dashboard.ledger-foundation.wallet-payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary ml-2">Payout</a>
+                                <a  href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary ml-2">Payout</a>
                             </div>
                         </div>
                         <!-- BEGIN: HTML Table Data -->

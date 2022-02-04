@@ -33,7 +33,10 @@ class LedgerController extends Controller
     public function store(StoreLedgerRequest $request)
     {
         $data = $request->validated();
-        $data['image'] = $request->hasFile('image') ? $request->file('image')->store('walletImages', 'azure') : 'demo.jpg';
+        if($request->hasFile('image'))
+        {
+            $data['image'] = $request->file('image')->store('walletImages', 'azure');
+        }
 
         Ledger::create($data);
 
