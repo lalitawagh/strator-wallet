@@ -17,7 +17,7 @@ class WalletPayoutComponent extends Component
 
     public $user;
 
-    public $wallet;
+    public $selected_wallet;
 
     public $balance;
 
@@ -39,8 +39,9 @@ class WalletPayoutComponent extends Component
     public function getWalletBalance($value)
     {
         $wallet = Wallet::find($value);
-        $this->wallet = $value;
+        $this->selected_wallet = $value;
         $this->balance = $wallet?->balance;
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
     public function render()

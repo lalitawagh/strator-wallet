@@ -123,8 +123,9 @@ class PayoutController extends Controller
             ],
         ]);
 
+        $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
 
-        $user->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+        //$user->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
         // $transaction->generateOtp("sms");
 
         return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.payout-verify', now()->addMinutes(30),["id"=> $transaction->id]), 'sms');
