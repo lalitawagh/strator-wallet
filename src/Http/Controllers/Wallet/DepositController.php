@@ -49,7 +49,7 @@ class DepositController extends Controller
                     AllowedFilter::exact('workspace_id'),
                 ]);
 
-            $transactions = Transaction::where("meta->transaction_type", 'deposit')->latest()->paginate();
+            $transactions = $transactions->where("meta->transaction_type", 'deposit')->latest()->paginate();
 
             return view("ledger-foundation::wallet.deposit.index", compact('workspace', 'transactions'));
         }
