@@ -58,17 +58,20 @@ class DepositWalletComponent extends Component
             $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $ledger->asset_type);
             $exchange_currency =  collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
 
-            $this->base_currency = $base_currency['name'];
-            $this->exchange_currency = $exchange_currency['name'];
-            $this->exchange_rate = Currency::convert()->from($this->base_currency)->to($this->exchange_currency)->get();
-            $this->fee = $ledger->deposit_fee;
+            $this->base_currency = @$base_currency['name'];
+            $this->exchange_currency = @$exchange_currency['name'];
+            if(!is_null($this->base_currency) && !is_null($this->exchange_currency))
+            {
+                $this->exchange_rate = Currency::convert()->from($this->base_currency)->to($this->exchange_currency)->get();
+            }
+            $this->fee = $ledger?->deposit_fee;
         }else{
             $exchange_rate_details = ExchangeRate::where(['base_currency' => $wallet->ledger_id,'exchange_currency' => $value])->first();
             $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $ledger->asset_type);
             $exchange_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
 
-            $this->base_currency = ($ledger->asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL) ? 'Coin' : $base_currency['name'];
-            $this->exchange_currency = ($exchange_currency['asset_category'] == \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL) ? 'Coin' : $exchange_currency['name'];
+            $this->base_currency = ($ledger?->asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL) ? 'Coin' : $base_currency['name'];
+            $this->exchange_currency = (@$exchange_currency['asset_category'] == \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL) ? 'Coin' : $exchange_currency['name'];
             $this->exchange_rate =  $exchange_rate_details?->exchange_rate;
             $this->fee = $exchange_rate_details?->exchange_fee;
         }

@@ -79,7 +79,7 @@
                         <div class="flex items-center p-3 border-b border-gray-200 dark:border-dark-5" style="margin-top:-6px;">
                             @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
                             <div>
-                                <a href="{{ route('dashboard.ledger-foundation.wallet-payout.create') }}" class="btn btn-sm btn-primary shadow-md">Payout</a>
+                                <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md">Payout</a>
                             </div>
                             @endif
                         </div>
@@ -215,20 +215,6 @@
         </div>
     </div>
 </div>
-
-    <div id="WalletPayout-modal" class="modal modal-slide-over z-50" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header py-2">
-                    <h2 class="font-medium text-base mr-auto"> Payout</h2>
-                </div>
-
-
-
-
-            </div>
-        </div>
-    </div>
 
     <!-- BEGIN: Modal Content -->
     <div id="header-footer-modal-preview" class="modal" tabindex="-1" aria-hidden="true">

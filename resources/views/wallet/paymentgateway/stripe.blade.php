@@ -31,7 +31,7 @@
     </div>
 
     <div class="text-right mt-5 form-inline text-right mt-5 float-right">
-        <a href="{{ route('dashboard.ledger-foundation.wallet.deposit-detail',['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]) }}" class="btn btn-secondary w-20 inline-block mr-2">Previous</a>
+        <a href="{{ route('dashboard.wallet.deposit-overview',['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]) }}" class="btn btn-secondary w-20 inline-block mr-2">Previous</a>
         <button type="submit" class="btn btn-primary w-24">Submit</button>
     </div>
 </form>
@@ -124,16 +124,16 @@
                 // Submit the form
                 $.ajax({
                     type: 'post',
-                    url: "{{ route('dashboard.ledger-foundation.wallet.stripe-payment',['workspace_id' => $details['workspace_id']]) }}",
+                    url: "{{ route('dashboard.wallet.stripe-payment',['workspace_id' => $details['workspace_id']]) }}",
                     data: $('form').serialize(),
                     success: function(response) {
                         $.ajax({
                             type: 'post',
-                            url: "{{ route('dashboard.ledger-foundation.wallet.store-deposit-stripe-payment',['workspace_id' => $details['workspace_id']]) }}",
+                            url: "{{ route('dashboard.wallet.deposit-stripe-payment',['workspace_id' => $details['workspace_id']]) }}",
                             data: response,
                             success: function(data) {
                                 window.location.href =
-                                    "{{ route('dashboard.ledger-foundation.wallet.deposit-final',['workspace_id' => $details['workspace_id']]) }}";
+                                    "{{ route('dashboard.wallet.deposit-final-detail',['workspace_id' => $details['workspace_id']]) }}";
                             },
                             error: function(data) {
                                 $('#card-errors').html('Someting went wrong');

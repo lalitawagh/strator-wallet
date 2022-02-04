@@ -36,6 +36,8 @@ class WalletBeneficiary extends Component
 
     public $code;
 
+    public $contact;
+
     public function mount($workspace)
     {
         $this->workspace = $workspace;
@@ -74,6 +76,8 @@ class WalletBeneficiary extends Component
 
         /** @var \App\Models\User $user */
         $user = auth()->user();
+        $this->contact = $contact;
+
 
         $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
         //$user->generateOtp("sms");
@@ -88,7 +92,7 @@ class WalletBeneficiary extends Component
                 'code' => 'required',
             ]);
 
-        $oneTimePassword = $user->oneTimePasswords()->first();
+        $oneTimePassword = $this->contact->oneTimePasswords()->first();
 
         if ($oneTimePassword->code !== $data['code']) {
             $this->addError('code', 'The otp you entered did not match.');
@@ -97,7 +101,7 @@ class WalletBeneficiary extends Component
         }else{
             $oneTimePassword->update(['verified_at' => now()]);
 
-            return redirect()->route("dashboard.ledger-foundation.wallet-payout.create",['workspace_id' => $this->workspace->id])->with([
+            return redirect()->route("dashboard.wallet.payout.create",['workspace_id' => $this->workspace->id])->with([
                 'status' => 'success',
                 'message' => 'The beneficiary created successfully.',
             ]);

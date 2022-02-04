@@ -1,7 +1,7 @@
 <div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="wallet" class="form-label sm:w-40"> Wallet <span class="text-theme-6">*</span></label>
-        <div class="sm:w-5/6">
+        <div class="sm:w-5/6" wire:ignore>
             <select wire:change="changeBaseCurrency($event.target.value)" name="wallet" class="form-control">
                 <option value="">Select Wallet</option>
                 @foreach ($wallets as $wallet)
@@ -15,7 +15,7 @@
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="currency" class="form-label sm:w-40"> Currency <span class="text-theme-6">*</span></label>
-        <div class="sm:w-5/6">
+        <div class="sm:w-5/6" wire:ignore>
             <select wire:change="changeCurrency($event.target.value)" name="currency" id="currency" class="form-control">
                 <option value="">Select Currency</option>
                 @foreach ($currencies as $currency)
@@ -45,7 +45,7 @@
             <select class="mt-0 sm:mr-2 w-full  form-control mb-1" name="payment_method">
                 <option value="">Select Payment Method</option>
                 @foreach ($payment_methods as $payment_method)
-                    <option value="{{ $payment_method }}"> {{ trans('ledger-foundation::configuration.'.$payment_method) }} </option>
+                    <option value="{{ $payment_method }}" @if(old('payment_method') == $payment_method) selected @endif> {{ trans('ledger-foundation::configuration.'.$payment_method) }} </option>
                 @endforeach
             </select>
             @error('payment_method')

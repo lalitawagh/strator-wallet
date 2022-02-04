@@ -56,7 +56,7 @@ class ExchangeRateController extends Controller
 
         ExchangeRate::create($data);
 
-        return redirect()->route("dashboard.ledger-foundation.exchange-rate.index")->with([
+        return redirect()->route("dashboard.wallet.exchange-rate.index")->with([
             'status' => 'success',
             'message' => 'Exchange rate created successfully.',
         ]);
@@ -102,7 +102,7 @@ class ExchangeRateController extends Controller
 
         $exchange_rate->update($data);
 
-        return redirect()->route("dashboard.ledger-foundation.exchange-rate.index")->with([
+        return redirect()->route("dashboard.wallet.exchange-rate.index")->with([
             'status' => 'success',
             'message' => 'Ledger updated successfully.',
         ]);
@@ -115,7 +115,7 @@ class ExchangeRateController extends Controller
         $exchange_rate = ExchangeRate::findOrFail($id);
         $exchange_rate->delete();
 
-        return redirect()->route("dashboard.ledger-foundation.exchange-rate.index")->with([
+        return redirect()->route("dashboard.wallet.exchange-rate.index")->with([
             'status' => 'success',
             'message' => 'Exchange rate deleted successfully.',
         ]);

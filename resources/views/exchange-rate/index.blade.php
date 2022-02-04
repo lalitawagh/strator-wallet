@@ -14,7 +14,7 @@
                         <a href="" class="breadcrumb--active">Exchange Rate</a>
                     </div>
                     <div>
-                        <a href="{{ route('dashboard.ledger-foundation.exchange-rate.create') }}"
+                        <a href="{{ route('dashboard.wallet.exchange-rate.create') }}"
                             class="btn btn-sm btn-primary shadow-md">Create New</a>
                     </div>
                 </div>
@@ -55,10 +55,10 @@
 
                                             <div class="dropdown-menu w-48">
                                                 <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                    <a href="{{ route('dashboard.ledger-foundation.exchange-rate.edit', $exchange_rate->id) }}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                    <a href="{{ route('dashboard.wallet.exchange-rate.edit', $exchange_rate->id) }}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                         <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                     </a>
-                                                    <form action="{{ route('dashboard.ledger-foundation.exchange-rate.destroy', $exchange_rate->id) }}" method="POST">
+                                                    <form action="{{ route('dashboard.wallet.exchange-rate.destroy', $exchange_rate->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
 

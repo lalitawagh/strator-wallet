@@ -18,7 +18,7 @@
                     @if (Session::has('error'))
                     <span class="block text-theme-6">{{ Session::get('error') }}</span>
                     @endif
-                    <form action="{{ route('dashboard.ledger-foundation.exchange-rate.update',$exchange_rate->getKey()) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('dashboard.wallet.exchange-rate.update',$exchange_rate->getKey()) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
@@ -117,9 +117,9 @@
 
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="note" class="form-label sm:w-28"> Note </label>
+                                <label for="note" class="form-label sm:w-28"> Note <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <input type="text" class="form-control" name="note" value="{{ old('note',$exchange_rate->note) }}">
+                                    <input type="text" class="form-control" name="note" value="{{ old('note',$exchange_rate->note) }}" required>
 
                                     @error('note')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -139,7 +139,7 @@
                         </div>
 
                         <div class="text-right mt-5">
-                            <a href="{{ route('dashboard.ledger-foundation.exchange-rate.index') }}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
+                            <a href="{{ route('dashboard.wallet.exchange-rate.index') }}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
                             <button type="submit" class="btn btn-primary w-24">Update</button>
                         </div>
                     </form>
