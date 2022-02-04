@@ -2,7 +2,7 @@
     <div class="grid grid-cols-12 md:gap-10 mt-0">
         <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2">
             <label for="wallet" class="form-label sm:w-30"> Wallet <span class="text-theme-6">*</span></label>
-            <div class="sm:w-5/6">
+            <div class="sm:w-5/6" wire:ignore>
                 <select wire:change="getWalletBalance($event.target.value)" name="wallet" id="wallet" class="form-control"  data-search="true" required>
                     <option value="">Select Wallet</option>
                     @foreach ($wallets as $wallet)
@@ -16,7 +16,7 @@
         </div>
         <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2">
             <label for="balance" class="form-label sm:w-30"> Balance </label>
-            <div class="sm:w-5/6">
+            <div class="sm:w-5/6" >
                 <input wire:model="balance" id="balance" name="balance" type="text" class="form-control" placeholder="£ 1,320.00" readonly >
                 @error('balance')
                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -27,7 +27,7 @@
     <div class="grid grid-cols-12 md:gap-10 mt-0">
         <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2 relative">
             <label for="beneficiary" class="form-label sm:w-30"> Beneficiary <span class="text-theme-6">*</span></label>
-            <div class="sm:w-5/6">
+            <div class="sm:w-5/6" wire:ignore>
                 <select name="beneficiary" id="beneficiary" class="form-control"  data-search="true">
                     @foreach ($beneficiaries as $beneficiary)
                         <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
@@ -47,7 +47,7 @@
             <label for="phone" class="form-label sm:w-30"> Mobile </label>
             <div class="sm:w-5/6">
                 <div class="input-group flex flex-col sm:flex-row">
-                    <div id="input-group-phone" class="input-group-text flex form-inline"
+                    <div id="input-group-phone" wire:ignore class="input-group-text flex form-inline"
                         style="padding: 0 5px;">
 
                         <span id="countryWithPhoneFlagImg" style="display: flex;
