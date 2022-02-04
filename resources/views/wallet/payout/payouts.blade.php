@@ -24,6 +24,7 @@
                                 <label for="receiver_currency" class="form-label sm:w-30"> Receiver Currency <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <select name="receiver_currency" id="receiver_currency" class="form-control" data-search="true" required>
+                                        <option value="">Select Receiver Currency</option>
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}" @if(old('receiver_currency') == $ledger->getKey()) selected @endif>{{ $ledger->name }}</option>
                                         @endforeach
