@@ -42,11 +42,11 @@
                                 <tr>
                                     <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
                                     <td class="border-b dark:border-dark-5">{{ $exchange_rate->ledger?->name }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ $assetType['name'] }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$exchange_rate->frequency) }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ $exchange_rate->valid_date }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ $exchange_rate->exchange_rate }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ $exchange_rate->exchange_fee }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ @$assetType['name'] }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$exchange_rate?->frequency) }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ $exchange_rate?->valid_date }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ $exchange_rate?->exchange_rate }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ $exchange_rate?->exchange_fee }}</td>
                                     <td class="border-b dark:border-dark-5">
                                         <div class="dropdown">
                                             <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
@@ -55,10 +55,10 @@
 
                                             <div class="dropdown-menu w-48">
                                                 <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                    <a href="{{ route('dashboard.wallet.exchange-rate.edit', $exchange_rate->id) }}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                    <a href="{{ route('dashboard.wallet.exchange-rate.edit', $exchange_rate?->id) }}" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                         <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                     </a>
-                                                    <form action="{{ route('dashboard.wallet.exchange-rate.destroy', $exchange_rate->id) }}" method="POST">
+                                                    <form action="{{ route('dashboard.wallet.exchange-rate.destroy', $exchange_rate?->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
 
