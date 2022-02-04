@@ -123,7 +123,8 @@ class PayoutController extends Controller
             ],
         ]);
 
-        $user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
+        $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+
         //$user->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
         // $transaction->generateOtp("sms");
 
