@@ -25,20 +25,33 @@ class PayoutController extends Controller
 {
     public function index(Request $request)
     {
-        $this->authorize(PayoutPolicy::VIEW, Wallet::class);
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
 
-        if ($request->has('filter.workspace_id')) {
-            $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
+        if ($user->isSuperAdmin()) {
+
+            $transactions = Transaction::where("meta->transaction_type", 'payout')->latest()->paginate();
+            return view("ledger-foundation::wallet.payout.index", compact('transactions'));
+
+        } else {
+
+            $this->authorize(PayoutPolicy::VIEW, Wallet::class);
+
+            if ($request->has('filter.workspace_id')) {
+                $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
+            }
+
+            $transactions = QueryBuilder::for(Transaction::class)
+                ->allowedFilters([
+                    AllowedFilter::exact('workspace_id'),
+                ]);
+
+            $transactions = Transaction::where("meta->transaction_type", 'payout')->latest()->paginate();
+
+            return view("ledger-foundation::wallet.payout.index", compact('workspace', 'transactions'));
+
         }
 
-        $transactions = QueryBuilder::for(Transaction::class)
-            ->allowedFilters([
-                AllowedFilter::exact('workspace_id'),
-            ]);
-
-        $transactions = Transaction::where("meta->transaction_type", 'payout')->latest()->paginate();
-
-        return view("ledger-foundation::wallet.payout.index", compact('workspace', 'transactions'));
     }
 
     public function create(Request $request)
