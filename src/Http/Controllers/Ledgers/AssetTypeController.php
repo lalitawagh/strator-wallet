@@ -28,7 +28,7 @@ class AssetTypeController extends Controller
     public function store(StoreAssetTypeRequest $request)
     {
         $data = $request->validated();
-        $data['image'] = $request->hasFile('image') ? $request->file('image')->store('walletImages', 'azure') : 'demo.jpg';
+        $data['image'] = $request->hasFile('image') ?? $request->file('image')->store('walletImages', 'azure');
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
         $data['id'] = now()->format('dmYHis');
 
@@ -56,18 +56,23 @@ class AssetTypeController extends Controller
         $data = $request->validated();
         $data['id'] = $id;
 
+        $existing_image = '';
+        $settings = collect(Setting::getValue('asset_types'))->filter(function ($item) use ($id, &$existing_image) {
+            if ($item['id'] != $id) {
+                return true;
+            }
+
+            $existing_image = $item['image'];
+            return false;
+        });
+
+        $data['image'] = $existing_image;
         if($request->hasFile('image'))
         {
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
-        $data['status'] = $request->has('status') ? 'active' : 'inactive';
 
-        $settings = collect(Setting::getValue('asset_types'))->filter(function ($item) use ($id) {
-            if ($item['id'] != $id) {
-                return true;
-            }
-            return false;
-        });
+        $data['status'] = $request->has('status') ? 'active' : 'inactive';
 
         $settings->push($data);
 

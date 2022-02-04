@@ -127,7 +127,13 @@ class DepositController extends Controller
 
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
-        $amount =  $depositRequest['amount'] + $depositRequest['fee'];
+
+        $amount = $depositRequest['amount'];
+
+        if(session('exchange_rate'))
+        {
+            $amount = session('exchange_rate') * $depositRequest['amount'];
+        }
 
         if($data['status'] == 'COMPLETED')
         {
@@ -136,10 +142,10 @@ class DepositController extends Controller
                 'amount' => $amount,
                 'workspace_id' => $workspace->getKey(),
                 'type' => 'credit',
-                'payment_method' => 'wallet',
+                'payment_method' => 'paypal',
                 'note' => null,
-                'ref_id' => $data['paymentDetails'][0]['payments']['captures'][0]['id'],
-                'ref_type' => 'paypal',
+                'ref_id' => $depositRequest['wallet'],
+                'ref_type' => 'wallet',
                 'settled_amount' => $amount,
                 'settled_currency' => $depositRequest['currency'],
                 'settlement_date' => date('Y-m-d'),
@@ -157,15 +163,9 @@ class DepositController extends Controller
                     'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
+                    'transaction_type' => 'deposit',
                 ],
             ]);
-
-            $amount = $depositRequest['amount'];
-
-            if(session('exchange_rate'))
-            {
-                $amount = session('exchange_rate') * $depositRequest['amount'];
-            }
 
             $wallet = Wallet::find($depositRequest['wallet']);
             $wallet->credit($wallet,$amount);
@@ -204,23 +204,28 @@ class DepositController extends Controller
 
         if($response['data']['status'] == 'succeeded')
         {
-
             $user = Auth::user();
             $workspace = $user->workspaces()->first();
-            $amount = $depositRequest['amount'] + $depositRequest['fee'];
             $depositRequest['stripe_fee'] = $response['data']['transaction_fee']/100;
             $depositRequest['stripe_receipt_url'] = $response['data']['receipt_url'];
             session(['deposit_request' => $depositRequest]);
+
+            $amount = $depositRequest['amount'] - ($response['data']['transaction_fee']/100);
+
+            if(session('exchange_rate'))
+            {
+                $amount = ($depositRequest['amount'] - ($response['data']['transaction_fee']/100)) * session('exchange_rate');
+            }
 
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
                 'amount' => $amount,
                 'workspace_id' => $workspace->getKey(),
                 'type' => 'credit',
-                'payment_method' => 'wallet',
+                'payment_method' => 'stripe',
                 'note' => null,
-                'ref_id' =>  $response['data']['id'],
-                'ref_type' => 'stripe',
+                'ref_id' =>  $depositRequest['wallet'],
+                'ref_type' => 'wallet',
                 'settled_amount' => $amount,
                 'settled_currency' => $depositRequest['currency'],
                 'settlement_date' => date('Y-m-d'),
@@ -241,18 +246,12 @@ class DepositController extends Controller
                     'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
+                    'transaction_type' => 'deposit',
                 ],
             ]);
 
-            $totalAmount = $depositRequest['amount'] - ($response['data']['transaction_fee']/100);
-
-            if(session('exchange_rate'))
-            {
-                $totalAmount = ($depositRequest['amount'] - ($response['data']['transaction_fee']/100)) * session('exchange_rate');
-            }
-
             $wallet = Wallet::find($depositRequest['wallet']);
-            $wallet->credit($wallet,$totalAmount);
+            $wallet->credit($wallet,$amount);
         }
         return response()->json(['status' => 'success']);
     }

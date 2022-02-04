@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
-use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
+use Kanexy\LedgerFoundation\Livewire\WalletBeneficiary;
+use Kanexy\LedgerFoundation\Livewire\WalletPayoutComponent;
+use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
 use Kanexy\LedgerFoundation\Menu\WalletMenuItem;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
@@ -19,6 +21,7 @@ use Kanexy\LedgerFoundation\Policies\CommodityTypePolicy;
 use Kanexy\LedgerFoundation\Policies\DepositPolicy;
 use Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy;
 use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
+use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
 use Kanexy\LedgerFoundation\Wallet\MembershipServiceSelectionContent;
 use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
 use Livewire\Livewire;
@@ -41,7 +44,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         '2022_01_25_115840_add_column_in_ledgers_table',
         '2022_01_25_122500_create_exchange_rates_table',
         '2022_01_17_130105_create_wallets_table',
-        '2022_02_02_062027_change_ref_id_type_for_transaction'
+        '2022_02_02_062027_change_ref_id_type_for_transaction',
     ];
 
     private array $policies = [
@@ -49,6 +52,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Setting::class => AssetTypePolicy::class,
         Setting::class => AssetClassPolicy::class,
         Ledger::class => LedgerPolicy::class,
+        Wallet::class => PayoutPolicy::class,
         ExchangeRate::class => ExchangeRatePolicy::class,
         Wallet::class => DepositPolicy::class,
     ];
@@ -114,6 +118,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
 
         Livewire::component('deposit-wallet-component', DepositWalletComponent::class);
         Livewire::component('ledger-config-field-component', LedgerConfigFieldComponent::class);
-
+        Livewire::component('wallet-beneficiary', WalletBeneficiary::class);
+        Livewire::component('wallet-payout-component', WalletPayoutComponent::class);
     }
 }

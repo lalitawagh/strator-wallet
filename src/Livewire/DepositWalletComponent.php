@@ -45,6 +45,7 @@ class DepositWalletComponent extends Component
 
     public function changeCurrency($value)
     {
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
         $wallet = Wallet::whereId($this->wallet)->first();
         $ledger = Ledger::whereId($wallet?->ledger_id)->first();
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);

@@ -14,9 +14,9 @@
     </div>
     <input type="hidden" name="amount" id="amount" value="{{ $total }}">
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 required">
-        <label for="horizontal-form-3" class="form-label sm:w-24">Cardholder</label>
+        <label for="horizontal-form-3" class="form-label sm:w-24">Card Holder</label>
         <div class="sm:w-5/6">
-            <input id="name_on_card" type="text" name="name" class="form-control" placeholder="Jack">
+            <input id="name_on_card" type="text" name="name" class="form-control">
         </div>
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-5 card required">
@@ -25,9 +25,13 @@
             <div id="card-element" style="padding-top: 5px;"></div>
         </div>
     </div>
-    <div id="card-errors" role="alert"></div>
+    <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-5 card required">
+        <label for="horizontal-form-3" class="form-label sm:w-24"></label>
+        <div id="card-errors" class="sm:w-5/6" role="alert" style="color:red;"></div>
+    </div>
+
     <div class="text-right mt-5 form-inline text-right mt-5 float-right">
-        <a href="#" class="btn btn-secondary w-20 inline-block mr-2">Preview</a>
+        <a href="{{ route('dashboard.ledger-foundation.wallet.deposit-detail',['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]) }}" class="btn btn-secondary w-20 inline-block mr-2">Previous</a>
         <button type="submit" class="btn btn-primary w-24">Submit</button>
     </div>
 </form>
@@ -132,15 +136,13 @@
                                     "{{ route('dashboard.wallet.deposit-final-detail',['workspace_id' => $details['workspace_id']]) }}";
                             },
                             error: function(data) {
-                                console.log('An error occurred.');
-                                console.log(data);
+                                $('#card-errors').html('Someting went wrong');
                             },
                         });
 
                     },
                     error: function(data) {
-                        console.log('An error occurred.');
-                        console.log(data);
+                        $('#card-errors').html('Someting went wrong');
                     },
                 });
             }

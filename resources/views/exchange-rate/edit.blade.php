@@ -74,7 +74,7 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="valid_date" class="form-label sm:w-28">Valid Date</label>
+                                <label for="valid_date" class="form-label sm:w-28">Valid Date <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="valid_date" name="valid_date" type="date"
                                         class="form-control @error('valid_date') border-theme-6 @enderror"
@@ -93,7 +93,7 @@
                                 <div class="sm:w-5/6">
                                     <input id="exchange_fee" name="exchange_fee" type="text"
                                         class="form-control @error('exchange_fee') border-theme-6 @enderror"
-                                        value="{{ old('exchange_fee',$exchange_rate->exchange_fee) }}"   required>
+                                        value="{{ old('exchange_fee',$exchange_rate->exchange_fee) }}" onKeyPress="return isNumberKey(event);" required>
 
                                     @error('exchange_fee')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -106,7 +106,7 @@
                                 <div class="sm:w-5/6">
                                     <input id="exchange_rate" name="exchange_rate" type="text"
                                         class="form-control @error('exchange_rate') border-theme-6 @enderror"
-                                        value="{{ old('exchange_rate',$exchange_rate->exchange_rate) }}"   required>
+                                        value="{{ old('exchange_rate',$exchange_rate->exchange_rate) }}" onKeyPress="return isNumberKey(event);"  required>
 
                                     @error('exchange_rate')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -127,9 +127,9 @@
                                 </div>
                             </div>
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="is_hard_stop" class="form-label sm:w-28">Hard Stop</label>
+                                <label for="is_hard_stop" class="form-label sm:w-28">Hard Stop <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch" @if (old("is_hard_stop",$exchange_rate->is_hard_stop)  === 1) checked @endif>
+                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch" @if (old("is_hard_stop",$exchange_rate->is_hard_stop)  === 1) checked @endif required>
 
                                     @error('is_hard_stop')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -139,7 +139,7 @@
                         </div>
 
                         <div class="text-right mt-5">
-                            <a href="#" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
+                            <a href="{{ route('dashboard.ledger-foundation.exchange-rate.index') }}" class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
                             <button type="submit" class="btn btn-primary w-24">Update</button>
                         </div>
                     </form>
