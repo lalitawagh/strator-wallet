@@ -39,6 +39,7 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/ledger-foundatio
     Route::resource('wallet-transaction', TransactionController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('wallet-exchange', ExchangeController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('wallet-withdraw', WithdrawController::class)->only(['index', 'create', 'store', 'show']);
+    Route::name('wallet-payout-verify')->get('wallet-payout-verify', [PayoutController::class, 'verify']);
     Route::resource("exchange-rate",ExchangeRateController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::name('wallet.deposit-initial')->get('wallet-deposit-initial', [DepositController::class, 'create']);
     Route::name('wallet.store-deposit-initial')->post('wallet-deposit-initial', [DepositController::class, 'store']);
