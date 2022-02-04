@@ -172,7 +172,9 @@
                                                     <label class="form-check-label" for="checkbox-switch-1"></label>
                                                 </div>
                                             </td>
-                                            <td class="whitespace-nowrap text-left">{{ $transaction->urn }}</td>
+                                            <td class="whitespace-nowrap text-left">
+                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" style="color:#70297d !important;">{{ $transaction->urn }}</a>
+                                            </td>
                                             <td class="whitespace-nowrap text-left">{{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}</td>
                                             <td class="whitespace-nowrap text-left">
                                                 @php

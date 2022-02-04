@@ -151,9 +151,17 @@
                                     <label class="form-check-label" for="checkbox-switch-1"></label>
                                 </div>
                             </td>
-                            <td class="whitespace-nowrap text-left">{{ $transaction->urn }}</td>
+                            <td class="whitespace-nowrap text-left">
+                                <a href="javascript:void(0);" data-toggle="modal" data-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" style="color:#70297d !important;">{{ $transaction->urn }}</a>
+                            </td>
                             <td class="whitespace-nowrap text-left">{{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}</td>
-                            <td class="whitespace-nowrap text-left">{{ $wallet_name }}</td>
+                            <td class="whitespace-nowrap text-left">
+                                @php
+                                    $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first();
+                                    $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
+                                @endphp
+                                {{ $ledger?->name }}
+                            </td>
                             <td class="whitespace-nowrap text-left">@if ($transaction->type === 'debit') {{ @$transaction->meta['beneficiary_name'] }} @else {{ @$transaction->meta['sender_name'] }} @endif</td>
                             @if ($transaction->type === 'debit')
                                 <td class="whitespace-nowrap text-center text-theme-6">{{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($transaction->amount) }}</td>
