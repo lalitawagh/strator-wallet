@@ -46,7 +46,7 @@ class PayoutController extends Controller
                     AllowedFilter::exact('workspace_id'),
                 ]);
 
-            $transactions = Transaction::where("meta->transaction_type", 'payout')->latest()->paginate();
+            $transactions = $transactions->where("meta->transaction_type", 'payout')->latest()->paginate();
 
             return view("ledger-foundation::wallet.payout.index", compact('workspace', 'transactions'));
 
