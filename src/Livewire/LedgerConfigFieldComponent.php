@@ -9,7 +9,7 @@ class LedgerConfigFieldComponent extends Component
 {
     public $asset_types;
 
-    public string $asset_category;
+    public string $selected_asset_category;
 
     public function mount($asset_types)
     {
@@ -19,9 +19,9 @@ class LedgerConfigFieldComponent extends Component
 
     public function changeAssetCategory($value)
     {
-        $this->asset_category = $value;
+        $this->selected_asset_category = $value;
         $this->asset_types = collect(Setting::getValue('asset_types',[]))->where('asset_category', $value);
-
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
     public function render()

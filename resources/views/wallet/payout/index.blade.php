@@ -209,6 +209,7 @@
                             </table>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -222,146 +223,72 @@
                     <h2 class="font-medium text-base mr-auto"> Payout</h2>
                 </div>
 
-                <div class="modal-body">
-                    <form action="" method="">
-                        <div class="grid grid-cols-12 md:gap-0 mt-0">
-                            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Wallet <span
-                                        class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <select data-search="true" class="tail-select mt-0 sm:mr-2 w-full  form-control mb-1"
-                                        name="currency">
 
-                                        <option>Paypal</option>
-                                        <option>Stripe</option>
-                                        <option>Bank</option>
-                                    </select>
-                                    <span class="block text-theme-6 mt-2"></span>
-                                </div>
-                            </div>
-                            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Balance </label>
-                                <div class="sm:w-5/6">
-                                    <input id="" disabled type="text" class="form-control" value=""
-                                        placeholder="£ 1,320.00">
-                                    <span class="block text-theme-6 mt-2"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-12 md:gap-0 mt-0">
-                            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0 relative">
-                                <label for="" class="form-label sm:w-28"> Beneficiary <span
-                                        class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <select data-search="true" class="tail-select mt-0 sm:mr-2 w-full  form-control mb-1"
-                                        name="currency">
-                                        <option>Paypal</option>
-                                        <option>Stripe</option>
-                                        <option>Bank</option>
-                                    </select>
-                                    <span class="block text-theme-6 mt-2"></span>
-                                </div>
-                                <a data-toggle="modal" data-target="#walletbenificary-modal"
-                                    class="absolute top-0 right-0 plus"
-                                    style="cursor: pointer;right: -18px;top: 0;margin-top: 20px;">
-                                    <i data-feather="plus-circle" class="w-4 h-4 ml-4"></i>
-                                </a>
-                            </div>
-                            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Mobile </label>
-                                <div class="sm:w-5/6">
-                                    <input id="" type="text" class="form-control" value="">
-                                    <span class="block text-theme-6 mt-2"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-12 md:gap-0 mt-0">
-                            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Amount to Pay <span
-                                        class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <input id="" type="text" class="form-control" value="">
-                                    <span class="block text-theme-6 mt-2"></span>
-                                </div>
-                            </div>
-                            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Remaining </label>
-                                <div class="sm:w-5/6">
-                                    <input id="" disabled type="text" class="form-control" value=""
-                                        placeholder="£ 120.00">
-                                    <span class="block text-theme-6 mt-2"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-12 md:gap-0 mt-0">
-                            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0"
-                                style="align-items: center;">
-                                <label for="" class="form-label sm:w-28"> Note </label>
-                                <div class="sm:w-5/6">
-                                    <input id="" type="text" class="form-control" value="">
-                                    <span class="block text-theme-6 mt-2"></span>
-                                </div>
-                            </div>
-                            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Attachment </label>
-                                <div class="sm:w-5/6">
-                                    <input id="" name="" type="file" class="form-control w-full " placeholder="">
-                                    <span class="block text-theme-6 mt-2"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-12 md:gap-0 mt-0">
-                            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Reason </label>
-                                <div class="sm:w-5/6">
-                                    <input id="" type="text" class="form-control" value="">
-                                    <span class="block text-theme-6 mt-2"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="text-right mt-5">
-                        <a data-toggle="modal" data-target="#wsave-preview-modal" class="btn btn-primary w-24">Save</a>
-                    </div>
-                </div>
+
+
             </div>
         </div>
     </div>
 
     <!-- BEGIN: Modal Content -->
-    <div id="wsave-preview-modal" class="modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+    <div id="header-footer-modal-preview" class="modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
+                <!-- BEGIN: Modal Header -->
                 <div class="modal-header">
                     <h2 class="font-medium text-base mr-auto">
-                        Otp Verification
+                        Broadcast Message
                     </h2>
-                </div>
-                <div class="modal-body">
-                    <div class="grid grid-cols-12 md:gap-0 mt-0">
-                        <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                            <label for="" class="form-label sm:w-28"> Mobile No <span
-                                    class="text-theme-6">*</span></label>
-                            <div class="sm:w-5/6">
-                                <input id="" type="text" class="form-control" value="">
-                                <span class="block text-theme-6 mt-2"></span>
-                            </div>
-                        </div>
-                        <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                            <label for="" class="form-label sm:w-28"> Otp <span class="text-theme-6">*</span></label>
-                            <div class="sm:w-5/6">
-                                <input id="" type="text" class="form-control" value="">
-                                <span class="block text-theme-6 mt-2"></span>
-                                <div class="form-help">Please check OTP sent to your mobile number. It will expire in
-                                    10 minutes.</div>
+                    <button class="btn btn-outline-secondary hidden sm:flex"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Docs </button>
+                    <div class="dropdown sm:hidden">
+                        <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-600"></i> </a>
+                        <div class="dropdown-menu w-40">
+                            <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                                <a href="javascript:;" class="flex items-center p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Docs </a>
                             </div>
                         </div>
                     </div>
-                    <div class="px-5 pb-8 text-center mt-5">
-                        <button type="button" data-dismiss="modal" class="btn btn-link mr-2">Resend Otp</button>
-                        <button type="button" data-dismiss="modal" class="btn btn-primary w-24">Save</button>
+                </div>
+                <!-- END: Modal Header -->
+                <!-- BEGIN: Modal Body -->
+                <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
+                    <div class="col-span-12 sm:col-span-6">
+                        <label for="modal-form-1" class="form-label">From</label>
+                        <input id="modal-form-1" type="text" class="form-control" placeholder="example@gmail.com">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6">
+                        <label for="modal-form-2" class="form-label">To</label>
+                        <input id="modal-form-2" type="text" class="form-control" placeholder="example@gmail.com">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6">
+                        <label for="modal-form-3" class="form-label">Subject</label>
+                        <input id="modal-form-3" type="text" class="form-control" placeholder="Important Meeting">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6">
+                        <label for="modal-form-4" class="form-label">Has the Words</label>
+                        <input id="modal-form-4" type="text" class="form-control" placeholder="Job, Work, Documentation">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6">
+                        <label for="modal-form-5" class="form-label">Doesn't Have</label>
+                        <input id="modal-form-5" type="text" class="form-control" placeholder="Job, Work, Documentation">
+                    </div>
+                    <div class="col-span-12 sm:col-span-6">
+                        <label for="modal-form-6" class="form-label">Size</label>
+                        <select id="modal-form-6" class="form-select">
+                            <option>10</option>
+                            <option>25</option>
+                            <option>35</option>
+                            <option>50</option>
+                        </select>
                     </div>
                 </div>
+                <!-- END: Modal Body -->
+                <!-- BEGIN: Modal Footer -->
+                <div class="modal-footer text-right">
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                    <button type="button" class="btn btn-primary w-20">Save</button>
+                </div>
+                <!-- END: Modal Footer -->
             </div>
         </div>
     </div>
