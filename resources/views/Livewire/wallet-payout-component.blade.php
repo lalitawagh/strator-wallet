@@ -25,9 +25,9 @@
         </div>
     </div>
     <div class="grid grid-cols-12 md:gap-10 mt-0">
-        <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2 relative">
+        <div  wire:ignore class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2 relative">
             <label for="beneficiary" class="form-label sm:w-30"> Beneficiary <span class="text-theme-6">*</span></label>
-            <div class="sm:w-5/6" wire:ignore>
+            <div class="sm:w-5/6">
                 <select name="beneficiary" id="beneficiary" class="form-control"  data-search="true">
                     @foreach ($beneficiaries as $beneficiary)
                         <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
@@ -92,7 +92,7 @@
         <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2">
             <label for="amount" class="form-label sm:w-30"> Amount to Pay <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
-                <input wire:model="amount" id="amount" name="amount" type="text" class="form-control" required>
+                <input wire:model="amount" id="amount" name="amount" type="text" class="form-control" onKeyPress="return isNumberKey(event);" required>
                 @error('amount')
                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror

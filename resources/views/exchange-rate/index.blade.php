@@ -24,7 +24,7 @@
                             <thead>
                             <tr class="bg-gray-300 dark:bg-dark-1">
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
-                                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Base Currency</th>
+                                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Ledger</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Exchange Currency</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Frequency</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Valid Date</th>

@@ -61,7 +61,7 @@ class PayoutController extends Controller
         $defaultCountry = Country::find(Setting::getValue("default_country"));
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
         $wallets =  Wallet::forHolder($user)->get();
-        $beneficiaries = Contact::beneficiaries()->forWorkspace($workspace)->latest()->get();
+        $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($workspace)->latest()->get();
         $ledgers = Ledger::get();
 
         return view("ledger-foundation::wallet.payout.payouts",compact('countryWithFlags', 'defaultCountry', 'user', 'workspace', 'beneficiaries', 'ledgers', 'wallets'));
@@ -105,9 +105,13 @@ class PayoutController extends Controller
             'settled_currency' => $asset_type['name'],
             'settlement_date' => date('Y-m-d'),
             'settled_at' => now(),
+            'initiator_id' => optional($user)->getKey(),
+            'initiator_type' => optional($user)->getMorphClass(),
             'transaction_fee' => $fee ?? 0,
             'status' => 'pending',
+            'note' => $data['note'],
             'meta' => [
+                'reference' => $data['reference'],
                 'sender_ref_id' => $data['wallet'],
                 'sender_ref_type' => 'wallet',
                 'sender_name' => $user->getFullName(),
@@ -118,15 +122,11 @@ class PayoutController extends Controller
                 'sender_currency' => $exchange_rate_details['base_currency_name'],
                 'receiver_currency' => $exchange_rate_details['exchange_currency_name'],
                 'exchange_rate' => $exchange_rate_details['exchange_rate'],
-                'receiver_currency' => $exchange_rate_details['exchange_currency_name'],
                 'transaction_type' => 'payout',
             ],
         ]);
 
-        // $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
-        //$user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
-        $user->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
-        // $transaction->generateOtp("sms");
+        $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
 
         return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.payout-verify', now()->addMinutes(30),["id"=> $transaction->id]), 'sms');
     }
@@ -146,18 +146,23 @@ class PayoutController extends Controller
             'ref_id' => $transaction->meta['beneficiary_ref_id'],
             'ref_type' => 'wallet',
             'settled_amount' => $transaction->amount,
-            'settled_currency' => $transaction->settled_currency,
+            'settled_currency' => $transaction->meta['receiver_currency'],
             'settlement_date' => date('Y-m-d'),
             'settled_at' => now(),
             'status' => 'accepted',
+            'note' => $transaction->note,
             'meta' => [
-                'sender_ref_id' => $transaction->sender_ref_id,
+                'reference' => $transaction->meta['reference'],
+                'sender_ref_id' => $transaction->meta['sender_ref_id'],
                 'sender_ref_type' => 'wallet',
-                'sender_name' => $transaction->sender_name,
-                'beneficiary_id' => $transaction->beneficiary_id,
-                'beneficiary_ref_id' => $transaction->beneficiary_ref_id,
+                'sender_name' => $transaction->meta['sender_name'],
+                'beneficiary_id' => $transaction->meta['beneficiary_id'],
+                'beneficiary_ref_id' => $transaction->meta['beneficiary_ref_id'],
                 'beneficiary_ref_type' => 'wallet',
-                'beneficiary_name' => $transaction->beneficiary_name,
+                'beneficiary_name' => $transaction->meta['beneficiary_name'],
+                'sender_currency' => $transaction->meta['sender_currency'],
+                'receiver_currency' => $transaction->meta['receiver_currency'],
+                'exchange_rate' => $transaction->meta['exchange_rate'],
                 'transaction_type' => 'payout',
             ],
         ]);

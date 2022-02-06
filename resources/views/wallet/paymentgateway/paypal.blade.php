@@ -1,6 +1,7 @@
 <div id="paypal-button-container"></div>
 @php
-$total = @$details['fee'] + @$details['amount'];
+$subtotal = @$details['fee'] + @$details['amount'];
+$total = \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($subtotal, $details['currency'])->format(null, null, \NumberFormatter::DECIMAL);
 @endphp
 <script src="https://www.paypal.com/sdk/js?client-id={{ config('paypal.sandbox.client_id') }}"></script>
 @push('scripts')

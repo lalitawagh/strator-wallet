@@ -87,9 +87,17 @@ class DepositController extends Controller
             return back()->withError('Currency not exists');
         }
 
+        $data['amount'] = $data['amount'];
+
+        if(session('exchange_rate'))
+        {
+            $data['amount'] = session('exchange_rate') * $data['amount'];
+        }
+
         $data['fee'] = session('fee') ?? 0;
         $data['currency'] = $asset_type['name'];
         $data['workspace_id'] = $workspace->id;
+        $data['asset_category'] = $asset_type['asset_category'];
 
         session(['deposit_request' => $data]);
 
@@ -150,11 +158,6 @@ class DepositController extends Controller
 
         $amount = $depositRequest['amount'];
 
-        if(session('exchange_rate'))
-        {
-            $amount = session('exchange_rate') * $depositRequest['amount'];
-        }
-
         if($data['status'] == 'COMPLETED')
         {
             Transaction::create([
@@ -173,6 +176,7 @@ class DepositController extends Controller
                 'transaction_fee' => $depositRequest['fee'],
                 'status' => 'accepted',
                 'meta' => [
+                    'reference' => $depositRequest['description'],
                     'sender_ref_id' => $data['payer_id'],
                     'sender_name' => $data['payer']['name']['given_name'] . ' ' . $data['payer']['name']['surname'],
                     'sender_merchant_id' => $data['paymentDetails'][0]['payee']['merchant_id'],
@@ -232,11 +236,6 @@ class DepositController extends Controller
 
             $amount = $depositRequest['amount'] - ($response['data']['transaction_fee']/100);
 
-            if(session('exchange_rate'))
-            {
-                $amount = ($depositRequest['amount'] - ($response['data']['transaction_fee']/100)) * session('exchange_rate');
-            }
-
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
                 'amount' => $amount,
@@ -253,6 +252,7 @@ class DepositController extends Controller
                 'transaction_fee' => $depositRequest['fee'],
                 'status' => 'accepted',
                 'meta' => [
+                    'reference' => $depositRequest['description'],
                     'sender_payment_id' => $response['data']['id'],
                     'sender_name' => $response['data']['source']['name'],
                     'sender_card_id' => $response['data']['payment_method'],
