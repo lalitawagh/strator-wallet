@@ -12,8 +12,6 @@ class WalletTransactionDetailComponent extends Component
 
     public Wallet $wallet;
 
-    public string $transactionType;
-
     protected $listeners = [
         'showTransactionDetail',
     ];
@@ -22,7 +20,6 @@ class WalletTransactionDetailComponent extends Component
     {
         $this->transaction = $transaction;
         $this->wallet = Wallet::findOrFail($transaction->ref_id);
-        $this->transactionType = 'Wallet';
     }
 
     public function render()
