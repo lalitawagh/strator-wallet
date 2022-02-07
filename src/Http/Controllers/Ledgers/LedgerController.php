@@ -7,6 +7,7 @@ use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\StoreLedgerRequest;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
+use  Kanexy\LedgerFoundation\Jobs\WalletAttachedToUser;
 
 class LedgerController extends Controller
 {
@@ -38,7 +39,9 @@ class LedgerController extends Controller
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
 
-        Ledger::create($data);
+        $ledger = Ledger::create($data);
+        echo 'xxx';die;
+        dd(WalletAttachedToUser::dispatch($ledger));
 
         return redirect()->route("dashboard.wallet.ledger.index")->with([
             'status' => 'success',
