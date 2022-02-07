@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use Kanexy\LedgerFoundation\Enums\WalletStatus;
 use Kanexy\LedgerFoundation\Model\Wallet;
 
-class WalletAttachedToUser implements ShouldQueue
+class RegisterWalletForLedger implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     public $ledger;
@@ -34,10 +34,13 @@ class WalletAttachedToUser implements ShouldQueue
     public function handle()
     {
         $users = User::where('id','!=',1)->get();
+
         foreach($users as $user)
         {
+
             if($this->ledger->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $this->ledger->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET)
             {
+
                 $data = [
                     "name" => $user->getFullName(),
                     "urn" => Wallet::generateUrn(),
@@ -49,8 +52,8 @@ class WalletAttachedToUser implements ShouldQueue
                 ];
 
                 Wallet::create($data);
+
             }
         }
-
     }
 }
