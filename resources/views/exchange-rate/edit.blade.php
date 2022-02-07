@@ -26,7 +26,7 @@
                                 <label for="base_currency" class="form-label sm:w-28">Ledger <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
 
-                                        <select name="base_currency" id="base_currency" class="tail-select">
+                                        <select name="base_currency" id="base_currency" class="form-control" data-search="true">
                                             @foreach ($ledgers as $ledger)
                                                 <option value="{{ $ledger->getKey() }}" @if ($exchange_rate->base_currency == $ledger->getKey()) selected @endif>{{ $ledger->name }}</option>
                                             @endforeach
@@ -41,7 +41,7 @@
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_currency" class="form-label sm:w-28">Exchange Currency <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <select name="exchange_currency" id="exchange_currency" class="tail-select">
+                                    <select name="exchange_currency" id="exchange_currency" class="form-control" data-search="true">
                                         @foreach ($asset_types as $asset_type)
                                             <option value="{{ $asset_type['id'] }}" @if ($exchange_rate->exchange_currency == $asset_type['id']) selected @endif>{{ $asset_type['name'] }}</option>
                                         @endforeach

@@ -78,7 +78,7 @@
     <div id="walletbenificary-modal" class="modal modal-slide-over z-50" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                 @livewire('wallet-beneficiary',['workspace' => $workspace])
+                 @livewire('wallet-beneficiary',['workspace' => $workspace,'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry])
             </div>
         </div>
     </div>

@@ -2,14 +2,20 @@
     data-stripe-publishable-key="{{ config('services.stripe.stripe_key') }}" id="payment-form">
     @csrf
     @php
-        $total = @$details['fee'] + @$details['amount'];
+        $subtotal = @$details['fee'] + @$details['amount'];
+        $total = \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($subtotal, $details['currency'])->format(null, null, \NumberFormatter::DECIMAL);
     @endphp
     <div class="overlay"></div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 required">
         <label for="horizontal-form-3" class="form-label sm:w-24">Total Amount</label>
         <div class="sm:w-5/6">
             <div class="font-medium text-base">
-                {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($total, $details['currency']) }}</div>
+                @if($details['asset_category'] != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
+                {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($subtotal, $details['currency']) }}
+                @else
+                    Coin {{ $total }}
+                @endif
+            </div>
         </div>
     </div>
     <input type="hidden" name="amount" id="amount" value="{{ $total }}">

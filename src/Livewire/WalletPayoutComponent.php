@@ -50,7 +50,8 @@ class WalletPayoutComponent extends Component
 
         if($this->amount)
         {
-            $this->remaining_amount = $this->balance - $this->amount;
+            $remaining_amount = $this->balance - $this->amount;
+            $this->remaining_amount =  number_format((float)$remaining_amount, 2, '.', '');
         }
 
         return view('ledger-foundation::Livewire.wallet-payout-component');

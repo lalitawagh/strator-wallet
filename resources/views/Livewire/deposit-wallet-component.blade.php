@@ -30,7 +30,7 @@
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="amount" class="form-label sm:w-40"> Amount <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">
-            <input wire:model="amount" id="amount" type="text" class="form-control" name="amount">
+            <input wire:model="amount" id="amount" type="text" class="form-control" name="amount" onKeyPress="return isNumberKey(event);">
             @error('amount')
             <span class="block text-theme-6 mt-2">{{ $message }}</span>
             @enderror
@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
-        <label for="description" class="form-label sm:w-40"> Description <span class="text-theme-6">*</span></label>
+        <label for="description" class="form-label sm:w-40"> Reference <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">
             <input id="description" type="text" class="form-control" name="description">
             @error('description')
