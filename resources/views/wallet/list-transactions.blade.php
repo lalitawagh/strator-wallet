@@ -87,6 +87,10 @@
                 <tbody>
                     @isset($transactions)
                     @foreach ($transactions as $index => $transaction)
+                        @php
+                            $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first();
+                            $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
+                        @endphp
                         <tr class="intro-x">
                             <td>
                                 <div class="form-check mt-1 border-gray-400">
@@ -104,19 +108,27 @@
                                 <td class="whitespace-nowrap text-left">{{ ucfirst($transaction->payment_method) }}</td>
                             @else
                                 <td class="whitespace-nowrap text-left">
-                                    @php
-                                        $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first();
-                                        $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
-                                    @endphp
                                     {{ $ledger?->name }}
                                 </td>
                             @endif
                             @if ($transaction->type === 'debit')
-                                <td class="whitespace-nowrap text-center text-theme-6">{{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($transaction->amount) }}</td>
-                                <td class="whitespace-nowrap text-center">{{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount(0) }}</td>
+                                <td class="whitespace-nowrap text-center text-theme-6">
+                                    @if($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
+                                        {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
+                                    @else
+                                        {{$ledger?->symbol}}{{ $transaction->amount }}
+                                    @endif
+                                </td>
+                                <td class="whitespace-nowrap text-center">-</td>
                             @else
-                                <td class="whitespace-nowrap text-center">{{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount(0) }}</td>
-                                <td class="whitespace-nowrap text-center text-theme-9">{{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount($transaction->amount) }}</td>
+                                <td class="whitespace-nowrap text-center">-</td>
+                                <td class="whitespace-nowrap text-center text-theme-9">
+                                    @if($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
+                                        {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
+                                    @else
+                                        {{$ledger?->symbol}}{{ $transaction->amount }}
+                                    @endif
+                                </td>
                             @endif
                             <td class="whitespace-nowrap text-center">{{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount(0) }}</td>
                             <td class="whitespace-nowrap text-left">{{ ucfirst($transaction->status) }}</td>

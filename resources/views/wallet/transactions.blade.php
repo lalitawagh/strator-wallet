@@ -51,7 +51,16 @@
 
                                                 </div>
 
-                                                <div class="text-base text-gray-600 mt-1">{{ $wallet?->urn }}</div>
+                                                <div class="flex">
+                                                    <div class="text-base text-gray-600 mt-1">{{ $wallet?->urn }}</div>
+                                                    <div class="ml-5 mt-1">
+                                                        <div class="cursor-pointer">
+                                                            <div></div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
                                                 <div class="flex mt-3">
                                                     <span class="@if ($wallet->status == \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) text-theme-9 @else text-theme-6 @endif"> {{ trans('ledger-foundation::configuration.'.$wallet->status) }}</span>
                                                     <div class="ml-auto">
