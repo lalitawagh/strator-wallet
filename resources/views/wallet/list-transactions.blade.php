@@ -1,4 +1,4 @@
-<div class="intro-y mt-3 sm:mt-10">
+<div class="intro-y mt-3 sm:mt-5">
     <x-list-view-filters/>
     <div class="intro-y box p-3 mt-0">
         <div class=" overflow-x-auto overflow-y-hidden">

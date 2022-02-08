@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="p-5">
-                    @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
+                    @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber() && is_null($walletID))
                         <div class="nav nav-tabs flex-col sm:flex-row grid grid-cols-12 gap-6 mt-5" role="tablist">
                             @foreach ($wallets as $key =>  $wallet)
                                 @php
@@ -51,15 +51,7 @@
 
                                                 </div>
 
-                                                <div class="flex">
-                                                    <div class="text-base text-gray-600 mt-1">{{ $wallet?->urn }}</div>
-                                                    <div class="ml-5 mt-1">
-                                                        <div class="cursor-pointer">
-                                                            <div></div>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
+                                                <div class="text-base text-gray-600 mt-1">{{ $wallet?->urn }}</div>
 
                                                 <div class="flex mt-3">
                                                     <span class="@if ($wallet->status == \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) text-theme-9 @else text-theme-6 @endif"> {{ trans('ledger-foundation::configuration.'.$wallet->status) }}</span>
@@ -76,10 +68,14 @@
                                             </div>
                                         </div>
                                     </a>
+                                    <div class="flex">
+                                        <div class="ml-5 mt-1">
+                                            <a href="?filter[workspace_id]={{ $workspace->id }}&wallet_id={{ $wallet->getKey() }}" class="underline">Transactions</a>
+                                        </div>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
-
                         @livewire('wallet-transactions-list-component')
                     @else
                         @include('ledger-foundation::wallet.list-transactions')
