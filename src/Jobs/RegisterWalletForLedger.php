@@ -16,6 +16,7 @@ use Kanexy\LedgerFoundation\Model\Wallet;
 class RegisterWalletForLedger implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     public $ledger;
     /**
      * Create a new job instance.
@@ -38,7 +39,6 @@ class RegisterWalletForLedger implements ShouldQueue
 
         foreach($users as $user)
         {
-
             if($this->ledger->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $this->ledger->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET)
             {
 
@@ -53,7 +53,6 @@ class RegisterWalletForLedger implements ShouldQueue
                 ];
 
                 Wallet::create($data);
-
             }
         }
     }
