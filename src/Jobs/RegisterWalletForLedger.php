@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Auth;
 use Kanexy\LedgerFoundation\Enums\WalletStatus;
 use Kanexy\LedgerFoundation\Model\Wallet;
 
@@ -33,7 +34,7 @@ class RegisterWalletForLedger implements ShouldQueue
      */
     public function handle()
     {
-        $users = User::where('id','!=',1)->get();
+        $users = User::where('id','!=',Auth::user()->id)->get();
 
         foreach($users as $user)
         {
