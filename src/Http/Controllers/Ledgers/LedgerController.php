@@ -5,6 +5,7 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\StoreLedgerRequest;
+use Kanexy\LedgerFoundation\Jobs\RegisterWalletForLedger;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
 
@@ -38,7 +39,9 @@ class LedgerController extends Controller
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
 
-        Ledger::create($data);
+        $ledger = Ledger::create($data);
+
+        RegisterWalletForLedger::dispatch($ledger);
 
         return redirect()->route("dashboard.wallet.ledger.index")->with([
             'status' => 'success',
