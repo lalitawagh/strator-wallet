@@ -130,7 +130,7 @@
                                     @endif
                                 </td>
                             @endif
-                            <td class="whitespace-nowrap text-center">{{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount(0) }}</td>
+                            <td class="whitespace-nowrap text-center"> {{$ledger?->symbol}} {{ @$transaction->meta['balance'] }} </td>
                             <td class="whitespace-nowrap text-left">{{ ucfirst($transaction->status) }}</td>
                             <td class="whitespace-nowrap text-left">{{ @$transaction->meta['reference'] }}</td>
                             <td class="table-report__action">
