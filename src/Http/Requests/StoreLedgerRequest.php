@@ -26,7 +26,7 @@ class StoreLedgerRequest extends FormRequest
             'asset_category'     => 'required',
             'asset_class'        => 'required',
             'asset_type'         => 'required',
-            'commodity_category' => 'required',
+            'commodity_category' => 'required_if:asset_category,commodity',
             'image'              => 'nullable',
             'payout_fee'         => 'required',
             'deposit_fee'        => 'required',
