@@ -22,7 +22,7 @@
                     <option value="{{ $currency['id'] }}" @if (session('currency') == $currency['id']) selected @endif>{{ $currency['name'] }}</option>
                 @endforeach
             </select>
-            @error('currency')
+            @error('currencydata')
             <span class="block text-theme-6 mt-2">{{ $message }}</span>
             @enderror
         </div>
@@ -30,19 +30,20 @@
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="amount" class="form-label sm:w-40"> Amount <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">
-            <input wire:model="amount" id="amount" type="text" class="form-control" name="amount" onKeyPress="return isNumberKey(event);">
+            <input id="amount" type="text" class="form-control" name="amount" value="{{ old('amount') }}" required onKeyPress="return isNumberKey(event);">
             @error('amount')
             <span class="block text-theme-6 mt-2">{{ $message }}</span>
             @enderror
         </div>
     </div>
+    @if($this->exchange_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="payment_method" class="form-label sm:w-40"> Payment Method <span class="text-theme-6">*</span></label>
-        <div wire:ignore class="sm:w-5/6">
+        <div class="sm:w-5/6">
             @php
                 $payment_methods = \Kanexy\LedgerFoundation\Enums\PaymentMethod::toArray();
             @endphp
-            <select class="mt-0 sm:mr-2 w-full  form-control mb-1" name="payment_method">
+            <select class="form-control" name="payment_method" id="payment_method" required>
                 <option value="">Select Payment Method</option>
                 @foreach ($payment_methods as $payment_method)
                     <option value="{{ $payment_method }}" @if(old('payment_method') == $payment_method) selected @endif> {{ trans('ledger-foundation::configuration.'.$payment_method) }} </option>
@@ -53,10 +54,11 @@
             @enderror
         </div>
     </div>
+    @endif
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="description" class="form-label sm:w-40"> Reference <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">
-            <input id="description" type="text" class="form-control" name="description">
+            <input id="description" type="text" class="form-control" name="description" >
             @error('description')
             <span class="block text-theme-6 mt-2">{{ $message }}</span>
             @enderror
