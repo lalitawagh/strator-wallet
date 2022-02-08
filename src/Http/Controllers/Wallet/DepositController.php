@@ -92,7 +92,7 @@ class DepositController extends Controller
 
         $amount = $data['amount']  + session('fee');
 
-        if($exchange_wallet_details?->balance < $amount)
+        if($exchange_wallet_details?->balance < $amount && $asset_type['asset_category'] != \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
         {
             return back()->withError('Insufficient balance in this wallet account.');
         }
@@ -145,8 +145,8 @@ class DepositController extends Controller
         $countryWithFlags = Country::orderBy("name")->get();
         $defaultCountry = Country::find(Setting::getValue("default_country"));
         $user = Auth::user();
-        // $user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
-        $user->generateOtp("sms");
+        $user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
+        // $user->generateOtp("sms");
         if(is_null($details))
         {
             return redirect()->route('dashboard.wallet.deposit.create');
