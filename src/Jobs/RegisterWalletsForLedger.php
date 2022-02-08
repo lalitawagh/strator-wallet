@@ -9,11 +9,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Auth;
 use Kanexy\LedgerFoundation\Enums\WalletStatus;
 use Kanexy\LedgerFoundation\Model\Wallet;
 
-class RegisterWalletForLedger implements ShouldQueue
+class RegisterWalletsForLedger implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -35,13 +34,11 @@ class RegisterWalletForLedger implements ShouldQueue
      */
     public function handle()
     {
-        $users = User::where('id','!=',Auth::user()->id)->get();
+        $users = User::isSubscribers()->get();
 
-        foreach($users as $user)
-        {
-            if($this->ledger->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $this->ledger->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET)
-            {
+        if ($this->ledger->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $this->ledger->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET) {
 
+            foreach ($users as $user) {
                 $data = [
                     "name" => $user->getFullName(),
                     "urn" => Wallet::generateUrn(),
@@ -52,7 +49,14 @@ class RegisterWalletForLedger implements ShouldQueue
                     "status" => WalletStatus::ACTIVE,
                 ];
 
-                Wallet::create($data);
+                Wallet::updateOrCreate(
+                    [
+                        'ledger_id' => $this->ledger->getKey(),
+                        "holder_type" => $user->getMorphClass(),
+                        "holder_id" => $user->getKey()
+                    ],
+                    $data
+                );
             }
         }
     }
