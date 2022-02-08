@@ -63,11 +63,11 @@
 
                         <select id="countryWithPhone" name="country_code"
                             onchange="getFlagImg(this)" data-search="true"
-                            class="tail-select" style="width:30%">
+                            class="tail-select" style="width:30%" >
                             @foreach ($countryWithFlags as $country)
                                 <option data-source="{{ $country->flag }}"
                                     value="{{ $country->id }}" @if ($country->id == old('country_code', $defaultCountry->id)) selected @endif>
-                                    {{ $country->name }} ({{ $country->phone }})
+                                    @if ($country->id == old('country_code', $defaultCountry->id)) {{ $country->code }} ({{ $country->phone }}) @else {{ $country->name }} ({{ $country->phone }}) @endif
                                 </option>
                             @endforeach
                         </select>

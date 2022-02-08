@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
-        <label for="currency" class="form-label sm:w-40"> Currency <span class="text-theme-6">*</span></label>
+        <label for="currency" class="form-label sm:w-40">Paying Currency <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6" wire:ignore>
             <select wire:change="changeCurrency($event.target.value)" name="currency" id="currency" class="form-control">
                 <option value="">Select Currency</option>
