@@ -5,6 +5,7 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\LedgerFoundation\Model\Wallet;
+use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 
 class TransactionController extends Controller
 {
@@ -13,6 +14,8 @@ class TransactionController extends Controller
         $user = Auth::user();
         $wallets = Wallet::forHolder($user)->get();
 
-        return view("ledger-foundation::wallet.transactions", compact('wallets'));
+        $transactions = Transaction::where('ref_type','wallet')->latest()->paginate();
+
+        return view("ledger-foundation::wallet.transactions", compact('wallets', 'transactions'));
     }
 }

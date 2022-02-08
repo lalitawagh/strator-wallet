@@ -26,33 +26,23 @@ class DepositController extends Controller
 
     public function index(Request $request)
     {
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
+        $this->authorize(DepositPolicy::VIEW, Wallet::class);
 
-        if ($user->isSuperAdmin()) {
+        $workspace = null;
+        $transactionType = 'deposit';
 
-            $transactions = Transaction::where("meta->transaction_type", 'deposit')->latest()->paginate();
-            return view("ledger-foundation::wallet.deposit.index", compact('transactions'));
-
-        } else {
-
-            $this->authorize(DepositPolicy::VIEW, Wallet::class);
-
-            $workspace = null;
-
-            if ($request->has('filter.workspace_id')) {
-                $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
-            }
-
-            $transactions = QueryBuilder::for(Transaction::class)
-                ->allowedFilters([
-                    AllowedFilter::exact('workspace_id'),
-                ]);
-
-            $transactions = $transactions->where("meta->transaction_type", 'deposit')->latest()->paginate();
-
-            return view("ledger-foundation::wallet.deposit.index", compact('workspace', 'transactions'));
+        if ($request->has('filter.workspace_id')) {
+            $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
+
+        $transactions = QueryBuilder::for(Transaction::class)
+            ->allowedFilters([
+                AllowedFilter::exact('workspace_id'),
+            ]);
+
+        $transactions = $transactions->where("meta->transaction_type", $transactionType)->latest()->paginate();
+
+        return view("ledger-foundation::wallet.deposit.index", compact('workspace', 'transactions', 'transactionType'));
     }
 
     public function create(Request $request)
