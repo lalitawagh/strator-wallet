@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="p-5">
-                    @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
+                    @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber() && is_null($walletID))
                         <div class="nav nav-tabs flex-col sm:flex-row grid grid-cols-12 gap-6 mt-5" role="tablist">
                             @foreach ($wallets as $key =>  $wallet)
                                 @php
@@ -52,6 +52,7 @@
                                                 </div>
 
                                                 <div class="text-base text-gray-600 mt-1">{{ $wallet?->urn }}</div>
+
                                                 <div class="flex mt-3">
                                                     <span class="@if ($wallet->status == \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) text-theme-9 @else text-theme-6 @endif"> {{ trans('ledger-foundation::configuration.'.$wallet->status) }}</span>
                                                     <div class="ml-auto">
@@ -67,45 +68,32 @@
                                             </div>
                                         </div>
                                     </a>
+                                    <div class="flex">
+                                        <div class="ml-5 mt-1">
+                                            <a href="?filter[workspace_id]={{ $workspace->id }}&wallet_id={{ $wallet->getKey() }}" class="underline">Transactions</a>
+                                        </div>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
+                        @livewire('wallet-transactions-list-component')
+                    @else
+                        @include('ledger-foundation::wallet.list-transactions')
                     @endif
-
-                    @livewire('wallet-transactions-list-component')
-
-                    <div class="my-2">
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="transaction-detail-modal" class="modal modal-slide-over z-50" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header p-5">
-                    <h2 class="font-medium text-base mr-auto">Transaction Details</h2>
-                    <div class="edit-transaction cursor-pointer intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip" title="Edit"> <i data-feather="edit" class="w-3 h-3"></i> </div>
-                    <a class="save-transaction cursor-pointer hidden intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip" title="Save"> <i data-feather="save" class="w-3 h-3"></i> </a>
-                    <a class="close intro-x cursor-pointer w-8 h-8 flex items-center justify-center rounded-full bg-theme-6 text-white ml-2 tooltip" title="Close" data-dismiss="modal"> <i data-feather="x" class="w-3 h-3"></i> </a>
-                    <!--<a href="" class="intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-14 dark:bg-dark-5 dark:text-gray-300 text-theme-10 ml-2 tooltip" title="Share"> <i data-feather="share-2" class="w-3 h-3"></i> </a>
-                    <a href="" class="intro-x w-8 h-8 flex items-center justify-center rounded-full bg-theme-1 text-white ml-2 tooltip" title="Download PDF"> <i data-feather="share" class="w-3 h-3"></i> </a>-->
-                </div>
-
-                <div class="modal-body">
-                    @livewire('wallet-transaction-detail-component')
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('ledger-foundation::wallet.transaction-detail-modal')
 
 @endsection
-
-@push('scripts')
-<script>
-$(document).ready(function(){
-    Livewire.emit('transactionList', '{{ $first_wallet_id ?? null }}');
-});
-</script>
-@endpush
+@if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
+    @push('scripts')
+    <script>
+    $(document).ready(function(){
+        Livewire.emit('transactionList', '{{ $first_wallet_id ?? null }}');
+    });
+    </script>
+    @endpush
+@endif

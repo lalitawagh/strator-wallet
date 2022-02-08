@@ -34,7 +34,7 @@ class ExchangeRateController extends Controller
     {
         $data = $request->validated();
         $data['is_hard_stop'] = $request->has('is_hard_stop') ? '1' : '0';
-        $data['valid_date'] = date('Y-m-d', strtotime($data['valid_date']));
+        $data['valid_date'] = date('Y-m-d',strtotime($data['valid_date']));
 
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['exchange_currency']);
         $base_asset_category = Ledger::whereId($data['base_currency'])->first()->asset_category;
@@ -50,7 +50,7 @@ class ExchangeRateController extends Controller
             return back()->withError('Exchange currency not exists');
         }
 
-        if($base_asset_category != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL &&  $exchange_asset_category != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
+        if($base_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY &&  $exchange_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
         {
             return back()->withError('Select at least one virtual currency');
         }
@@ -78,7 +78,7 @@ class ExchangeRateController extends Controller
     {
         $exchange_rate = ExchangeRate::findOrFail($id);
         $data = $request->validated();
-        $data['valid_date'] = date('Y-m-d', strtotime($data['valid_date']));
+        $data['valid_date'] = date('Y-m-d',strtotime($data['valid_date']));
 
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['exchange_currency']);
         $base_asset_category = Ledger::whereId($data['base_currency'])->first()->asset_category;
@@ -94,7 +94,7 @@ class ExchangeRateController extends Controller
             return back()->withError('Exchange currency not exists');
         }
 
-        if($base_asset_category != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL && $exchange_asset_category != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
+        if($base_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY && $exchange_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
         {
             return back()->withError('Select at least one virtual currency');
         }
