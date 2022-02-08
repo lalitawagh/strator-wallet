@@ -26,7 +26,7 @@ class WalletMenuItem extends Item
         $user = Auth::user();
 
         $menus = [
-                new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index')),
+                new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
                 new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
                 new MenuItem('Request Payments', 'activity', url: route('dashboard.wallet.receive.index')),
                 new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
