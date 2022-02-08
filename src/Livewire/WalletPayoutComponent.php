@@ -46,7 +46,7 @@ class WalletPayoutComponent extends Component
 
     public function render()
     {
-        $this->remaining_amount = 0;
+        $this->remaining_amount =  number_format((float)0, 2, '.', '');;
 
         if($this->amount)
         {

@@ -132,7 +132,7 @@
                         <x-feathericon-user height="12"/>
 
                         <span>
-                            {{ $transaction->meta['sender_name'] }}
+                            {{ @$transaction->meta['sender_name'] }}
                         </span>
                     </div>
                 </div>

@@ -13,7 +13,7 @@
                 <div class="mr-auto">Deposit Amount </div>
                 <div class="font-medium">
                     @isset ($details)
-                        @if($details['asset_category'] != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
+                        @if($details['asset_category'] == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
                             {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($details['amount'], $details['currency']); }}
                         @else
                             Coin {{ $details['amount'] }}
@@ -25,7 +25,7 @@
                 <div class="mr-auto">Fee</div>
                 <div class="font-medium">
                     @isset ($details)
-                        @if($details['asset_category'] != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
+                        @if($details['asset_category'] == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
                             {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($details['fee'], $details['currency']); }}
                         @else
                             Coin {{ $details['fee'] }}
@@ -40,7 +40,7 @@
                 @endphp
                 <div class="font-medium text-base">
                     @isset ($details)
-                        @if($details['asset_category'] != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
+                        @if($details['asset_category'] == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
                             {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($total, $details['currency']); }}
                         @else
                             Coin {{ $total }}

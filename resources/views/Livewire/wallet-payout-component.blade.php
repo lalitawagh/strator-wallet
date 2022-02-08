@@ -17,7 +17,7 @@
         <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2">
             <label for="balance" class="form-label sm:w-30"> Balance </label>
             <div class="sm:w-5/6" >
-                <input wire:model="balance" id="balance" name="balance" type="text" class="form-control" placeholder="£ 1,320.00" readonly >
+                <input wire:model="balance" id="balance" name="balance" type="text" class="form-control"  readonly >
                 @error('balance')
                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror
@@ -72,7 +72,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <input id="phone" name="phone" value="{{ old('phone',$user?->phone) }}"
+                    <input id="phone" name="phone" value="{{ old('phone') }}"
                         type="number"
                         class="form-control @error('phone') border-theme-6 @enderror"
                         onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);">
