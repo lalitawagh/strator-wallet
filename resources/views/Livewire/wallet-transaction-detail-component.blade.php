@@ -18,8 +18,12 @@
             <div class="flex flex-col lg:flex-row px-1 sm:px-2 py-0 mb-2">
                 <div class="dark:text-theme-10">
                     <p class="text-xl font-medium @if ($transaction->type === 'debit') text-theme-6 @else text-theme-9 @endif">
-                        @if ($transaction->type === 'debit') {{ \Illuminate\Support\Str::upper($transaction->instructed_currency) }} @else {{ \Illuminate\Support\Str::upper($transaction->settled_currency) }} @endif {{ number_format((float)$transaction->amount, 2, '.', '') }}
-                        <span class="text-sm font-medium text-gray-700">@if ($transaction->type === 'debit') Paid Out @else Paid In @endif / {{ \Illuminate\Support\Str::title(implode(' ', explode('-', $transaction->status))) }}</span>
+                        @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit') {{ \Illuminate\Support\Str::upper($transaction?->meta['exchange_currency'] ?? null) }} @else {{ \Illuminate\Support\Str::upper($transaction->meta['receiver_currency'] ?? null) }} @endif {{ number_format((float)$transaction->amount, 2, '.', '') }}
+                        @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit')
+                            <span class="text-sm font-medium text-gray-700 md:ml-4">Deposit / {{ \Illuminate\Support\Str::title(implode(' ', explode('-', $transaction->status))) }}</span>
+                        @else
+                            <span class="text-sm font-medium text-gray-700 md:ml-4">@if ($transaction->type === 'debit') Paid Out @else Paid In @endif / {{ \Illuminate\Support\Str::title(implode(' ', explode('-', $transaction->status))) }}</span>
+                        @endif
                     </p>
                 </div>
             </div>
@@ -55,7 +59,7 @@
                         <x-feathericon-globe height="12"/>
 
                         <span>
-                            {{ $transactionType }}
+                            {{ ucfirst($transaction->payment_method) }}
                         </span>
                     </div>
 
@@ -70,14 +74,14 @@
             </div>
 
             <div class="mt-5 float-right">
-                <p class="text-sm tracking-wide font-medium uppercase">Receiving Currency</p>
+                <p class="text-sm tracking-wide font-medium uppercase">Receiver Currency</p>
 
                 <div class="flex flex-col lg:flex-row mt-3">
                     <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
                         <x-feathericon-user height="12"/>
 
                         <span>
-                            @if ($transaction->type === 'debit') {{ \Illuminate\Support\Str::upper($transaction->instructed_currency) }} @else {{ \Illuminate\Support\Str::upper($transaction->settled_currency) }} @endif
+                            @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit') {{ \Illuminate\Support\Str::upper($transaction?->meta['exchange_currency'] ?? null) }} @else {{ \Illuminate\Support\Str::upper($transaction->meta['receiver_currency'] ?? null) }} @endif
                         </span>
                     </div>
                 </div>
@@ -89,11 +93,9 @@
                 <div class="flex flex-col lg:flex-row mt-3">
                     <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
                         <x-feathericon-user height="12"/>
-                        @php
-                            $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
-                        @endphp
+
                         <span>
-                            {{ $ledger?->name }}
+                            @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit') {{ \Illuminate\Support\Str::upper($transaction->meta['base_currency'] ?? null) }} @else {{ \Illuminate\Support\Str::upper($transaction?->meta['sender_currency'] ?? null) }} @endif
                         </span>
                     </div>
                 </div>
@@ -130,7 +132,7 @@
                         <x-feathericon-user height="12"/>
 
                         <span>
-                            {{ $transaction->meta['sender_name'] }}
+                            {{ @$transaction->meta['sender_name'] }}
                         </span>
                     </div>
                 </div>

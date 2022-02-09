@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                <label for="phone" class="form-label sm:w-28"> Mobile </label>
+                <label for="phone" class="form-label sm:w-28"> Mobile <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6">
                     <div class="input-group flex flex-col sm:flex-row mb-2 mt-2">
                         <div id="input-group-phone" wire:ignore class="input-group-text flex form-inline"
@@ -132,7 +132,6 @@
             if (!state.id) {
                 return state.text;
             }
-
             var $state = $(
                 '<span ><img  src="' + state.element.getAttribute('data-source') + '" /> ' + state.text + '</span>'
             );
@@ -140,7 +139,6 @@
         }
 
         function getFlagImgWallet(the) {
-
             var img = $('option:selected', the).attr('data-source');
             $('#countryWithPhoneFlagImgWallet').html('<img src="' + img + '">');
         }

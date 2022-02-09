@@ -79,40 +79,8 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="exchange_type" class="form-label sm:w-30">Exchange Type <span class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    @php
-                                        $exchange_types = \Kanexy\LedgerFoundation\Enums\ExchangeType::toArray();
-                                    @endphp
-                                    <select name="exchange_type" id="exchange_type"  data-search="true" class="tail-select w-full @error('exchange_type') border-theme-6 @enderror">
-                                        @foreach ($exchange_types as $key => $exchange_type)
-                                            <option value="{{ $exchange_type }}">{{ trans('ledger-foundation::configuration.'.$exchange_type) }}</option>
-                                        @endforeach
-                                    </select>
 
-                                    @error('exchange_type')
-                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="exchange_rate" class="form-label sm:w-30">Exchange Rate <span class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <input id="exchange_rate" name="exchange_rate" type="text"
-                                        class="form-control @error('exchange_rate') border-theme-6 @enderror"
-                                        value="{{ old('exchange_rate') }}"  onKeyPress="if(this.value.length==11) return false;return isNumberKey(event);" required>
-
-                                    @error('exchange_rate')
-                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        @livewire('ledger-config-field-component', ['asset_types' => $asset_types])
+                        @livewire('ledger-config-field-component', ['asset_types' => $asset_types,'asset_categories' => \Kanexy\LedgerFoundation\Enums\AssetCategory::toArray() ,'commodity_types' => $commodity_types, 'ledger' => []])
 
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
@@ -161,17 +129,17 @@
                                     @enderror
                                 </div>
                             </div>
-
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="commodity_category" class="form-label sm:w-30"> Commodity <span class="text-theme-6">*</span></label>
+                                <label for="status" class="form-label sm:w-30"> Status</label>
                                 <div class="sm:w-5/6">
-                                    <select name="commodity_category" id="commodity_category" data-search="true" class="tail-select w-full @error('commodity_category') border-theme-6 @enderror">
-                                        @foreach ($commodity_types as $commodity_type)
-                                            <option value="{{ $commodity_type['id'] }}" @if (old('commodity_category') == $commodity_type['id']) selected @endif>{{ ucfirst($commodity_type['name']) }}</option>
-                                        @endforeach
+                                    <select name="status" id="status" data-search="true" class="tail-select w-full">
+                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW) checked @endif>{{ trans('ledger-foundation::configuration.new') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE) checked @endif>{{ trans('ledger-foundation::configuration.active') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::INACTIVE }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::INACTIVE) checked @endif>{{ trans('ledger-foundation::configuration.inactive') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::HOLD }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::HOLD) checked @endif>{{ trans('ledger-foundation::configuration.hold') }}</option>
+                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::SUSPENDED }}" @if (old("suspended")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::SUSPENDED) checked @endif>{{ trans('ledger-foundation::configuration.suspended') }}</option>
                                     </select>
-
-                                    @error('commodity_category')
+                                    @error('status')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -212,21 +180,6 @@
                                         value="{{ old('payout_fee') }}" onKeyPress="return isNumberKey(event);" required>
 
                                     @error('payout_fee')
-                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="status" class="form-label sm:w-30"> Status</label>
-                                <div class="sm:w-5/6">
-                                    <select name="status" id="status" data-search="true" class="tail-select w-full">
-                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW) checked @endif>{{ trans('ledger-foundation::configuration.new') }}</option>
-                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE) checked @endif>{{ trans('ledger-foundation::configuration.active') }}</option>
-                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::INACTIVE }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::INACTIVE) checked @endif>{{ trans('ledger-foundation::configuration.inactive') }}</option>
-                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::HOLD }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::HOLD) checked @endif>{{ trans('ledger-foundation::configuration.hold') }}</option>
-                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::SUSPENDED }}" @if (old("suspended")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::SUSPENDED) checked @endif>{{ trans('ledger-foundation::configuration.suspended') }}</option>
-                                    </select>
-                                    @error('status')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>

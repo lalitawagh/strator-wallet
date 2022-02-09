@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
+use Kanexy\LedgerFoundation\Livewire\DepositOtpVerificationComponent;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionDetailComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionsListComponent;
@@ -47,6 +48,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         '2022_01_25_122500_create_exchange_rates_table',
         '2022_01_17_130105_create_wallets_table',
         '2022_02_02_062027_change_ref_id_type_for_transaction',
+        '2022_02_08_111607_alter_column_nullable_in_ledger'
     ];
 
     private array $policies = [
@@ -119,6 +121,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         });
 
         Livewire::component('deposit-wallet-component', DepositWalletComponent::class);
+        Livewire::component('deposit-otp-verification-component', DepositOtpVerificationComponent::class);
         Livewire::component('ledger-config-field-component', LedgerConfigFieldComponent::class);
         Livewire::component('wallet-transactions-list-component', WalletTransactionsListComponent::class);
         Livewire::component('wallet-transaction-detail-component', WalletTransactionDetailComponent::class);
