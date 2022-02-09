@@ -28,6 +28,7 @@ class PayoutController extends Controller
         $this->authorize(PayoutPolicy::VIEW, Wallet::class);
 
         $workspace = null;
+        $transactionType = 'payout';
 
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
@@ -40,7 +41,7 @@ class PayoutController extends Controller
 
         $transactions = $transactions->where("meta->transaction_type", 'payout')->latest()->paginate();
 
-        return view("ledger-foundation::wallet.payout.index", compact('workspace', 'transactions'));
+        return view("ledger-foundation::wallet.payout.index", compact('workspace', 'transactions', 'transactionType'));
     }
 
     public function create(Request $request)
