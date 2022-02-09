@@ -112,11 +112,12 @@ class PayoutController extends Controller
                 'receiver_currency' => $exchange_rate_details['exchange_currency_name'],
                 'exchange_rate' => $exchange_rate_details['exchange_rate'],
                 'transaction_type' => 'payout',
+                'balance' => $beneficiary_wallet?->balance ?? ($beneficiary_wallet?->balance - $amount),
             ],
         ]);
 
         $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
-
+        //$transaction->generateOtp("sms");
         return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.payout-verify', now()->addMinutes(30),["id"=> $transaction->id]), 'sms');
     }
 
@@ -124,6 +125,8 @@ class PayoutController extends Controller
     {
         $transaction = Transaction::find($request->query('id'));
         $amount =  $transaction->amount;
+        $sender_wallet = Wallet::find($transaction->meta['sender_ref_id']);
+        $beneficiary_wallet = Wallet::find($transaction->meta['beneficiary_ref_id']);
 
         Transaction::create([
             'urn' => Transaction::generateUrn(),
@@ -153,16 +156,14 @@ class PayoutController extends Controller
                 'receiver_currency' => $transaction->meta['receiver_currency'],
                 'exchange_rate' => $transaction->meta['exchange_rate'],
                 'transaction_type' => 'payout',
+                'balance' => $beneficiary_wallet?->balance ?? ($beneficiary_wallet?->balance + $amount),
             ],
         ]);
 
         $transaction->status ='accepted';
         $transaction->update();
 
-        $sender_wallet = Wallet::find($transaction->meta['sender_ref_id']);
         $sender_wallet->debit($amount);
-
-        $beneficiary_wallet = Wallet::find($transaction->meta['beneficiary_ref_id']);
         $beneficiary_wallet->credit($amount);
 
         return redirect()->route("dashboard.wallet.payout.index", ['filter' => ['workspace_id' => $transaction->workspace_id]])->with([

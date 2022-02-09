@@ -102,7 +102,7 @@
                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" style="color:#70297d !important;">{{ $transaction->urn }}</a>
                             </td>
                             <td class="whitespace-nowrap text-left">{{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}</td>
-                            <td class="whitespace-nowrap text-left">{{ $transaction->meta['sender_name'] }}</td>
+                            <td class="whitespace-nowrap text-left">{{ @$transaction->meta['sender_name'] }}</td>
                             <td class="whitespace-nowrap text-left">{{ $transaction->meta['beneficiary_name'] }}</td>
                             @if(isset($transactionType) && $transactionType == 'deposit')
                                 <td class="whitespace-nowrap text-left">{{ ucfirst($transaction->payment_method) }}</td>
@@ -130,7 +130,7 @@
                                     @endif
                                 </td>
                             @endif
-                            <td class="whitespace-nowrap text-center">{{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmount(0) }}</td>
+                            <td class="whitespace-nowrap text-center"> {{$ledger?->symbol}} {{ @$transaction->meta['balance'] }} </td>
                             <td class="whitespace-nowrap text-left">{{ ucfirst($transaction->status) }}</td>
                             <td class="whitespace-nowrap text-left">{{ @$transaction->meta['reference'] }}</td>
                             <td class="table-report__action">
