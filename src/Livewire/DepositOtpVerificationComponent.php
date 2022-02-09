@@ -51,18 +51,15 @@ class DepositOtpVerificationComponent extends Component
 
                 return redirect()->route("dashboard.wallet.store-payment-details",['workspace_id' => session()->get('deposit_request.workspace_id')]);
             }
-
         }
     }
 
     public function resendOtp(OneTimePassword $oneTimePassword)
     {
-        if (Carbon::now()->gt($oneTimePassword->expires_at) && $oneTimePassword->verified_at == null) {
-
-            $oneTimePassword->update(['code' => rand(100000, 999999), 'expires_at' => now()->addMinutes(OneTimePassword::getExpiringDuration())]);
+        if ($this->user->hasActiveOneTimePassword("sms")) {
+            $oneTimePassword = $this->user->oneTimePasswords()->whereType("sms")->first();
         }
-        // dd($oneTimePassword->holder);
-        $oneTimePassword->holder->notify(new SmsOneTimePasswordNotification($oneTimePassword));
+        $this->user->notify(new SmsOneTimePasswordNotification($oneTimePassword));
         // $this->user->generateOtp("sms");
         $this->sent_resend_otp = true;
     }

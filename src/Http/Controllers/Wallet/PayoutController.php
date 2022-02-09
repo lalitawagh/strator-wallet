@@ -53,8 +53,9 @@ class PayoutController extends Controller
         $wallets =  Wallet::forHolder($user)->get();
         $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($workspace)->latest()->get();
         $ledgers = Ledger::get();
+        $asset_types = Setting::getValue('asset_types',[]);
 
-        return view("ledger-foundation::wallet.payout.payouts",compact('countryWithFlags', 'defaultCountry', 'user', 'workspace', 'beneficiaries', 'ledgers', 'wallets'));
+        return view("ledger-foundation::wallet.payout.payouts",compact('countryWithFlags', 'defaultCountry', 'user', 'workspace', 'beneficiaries', 'ledgers', 'wallets','asset_types'));
     }
 
     public function store(StorePayoutRequest $request)
@@ -62,17 +63,23 @@ class PayoutController extends Controller
         $data = $request->validated();
         $user = Auth::user();
         $sender_wallet = Wallet::with('ledger')->find($data['wallet']);
-        $receiver_wallet = Ledger::whereId($data['receiver_currency'])->first();
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetails($sender_wallet,$receiver_wallet);
+        $receiver_ledger = Ledger::whereAssetType($data['receiver_currency'])->first();
 
-        $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id',  $receiver_wallet->asset_type);
+        $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id',  $data['receiver_currency']);
         $beneficiary = Contact::find($data['beneficiary']);
-        $beneficiary_user = User::wherePhone($beneficiary->mobile)->first();
-        $beneficiary_wallet = Wallet::forHolder($beneficiary_user)->whereLedgerId($receiver_wallet->id)->first();
+        $beneficiary_user = User::wherePhone($beneficiary?->mobile)->first();
+        $beneficiary_wallet = NULL;
+        if(isset($beneficiary_user))
+        {
+            $beneficiary_wallet = Wallet::forHolder($beneficiary_user)->whereLedgerId($receiver_ledger->id)->first();
+        }
 
-        $amount = ($exchange_rate_details['exchange_rate']) ? $data['amount'] * $exchange_rate_details['exchange_rate'] : $data['amount'];
 
-        if($data['amount'] > $data['balance'])
+        $amount = (session('exchange_rate')) ? ($data['amount'] * session('exchange_rate')) : $data['amount'];
+        $transaction_amount = (session('fee')) ? ($amount + session('fee')) : $amount;
+
+
+        if($transaction_amount > $data['balance'])
         {
             return back()->withError("Insufficient balance in the account.");
         }
@@ -97,7 +104,7 @@ class PayoutController extends Controller
             'settled_at' => now(),
             'initiator_id' => optional($user)->getKey(),
             'initiator_type' => optional($user)->getMorphClass(),
-            'transaction_fee' => $fee ?? 0,
+            'transaction_fee' => session('fee') ?? session('fee'),
             'status' => 'pending',
             'note' => $data['note'],
             'meta' => [
@@ -109,11 +116,11 @@ class PayoutController extends Controller
                 'beneficiary_ref_id' => $beneficiary_wallet->id,
                 'beneficiary_ref_type' => 'wallet',
                 'beneficiary_name' => $beneficiary->getFullName(),
-                'sender_currency' => $exchange_rate_details['base_currency_name'],
-                'receiver_currency' => $exchange_rate_details['exchange_currency_name'],
-                'exchange_rate' => $exchange_rate_details['exchange_rate'],
+                'sender_currency' => session('base_currency') ? session('base_currency') : null,
+                'receiver_currency' => session('exchange_currency') ? session('exchange_currency') : null,
+                'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
                 'transaction_type' => 'payout',
-                'balance' => $beneficiary_wallet?->balance ?? ($beneficiary_wallet?->balance - $amount),
+                'balance' => $sender_wallet?->balance ? ($sender_wallet?->balance - ($amount + session('fee'))) : 0,
             ],
         ]);
 
@@ -126,13 +133,16 @@ class PayoutController extends Controller
     {
         $transaction = Transaction::find($request->query('id'));
         $amount =  $transaction->amount;
+        $debit_amount =  ($transaction->amount + $transaction->transaction_fee);
         $sender_wallet = Wallet::find($transaction->meta['sender_ref_id']);
         $beneficiary_wallet = Wallet::find($transaction->meta['beneficiary_ref_id']);
+        $beneficiary_user = User::find($beneficiary_wallet->holder_id);
+        $beneficiary_workspace = $beneficiary_user->workspaces()->first();
 
         Transaction::create([
             'urn' => Transaction::generateUrn(),
             'amount' => $transaction->amount,
-            'workspace_id' => $transaction->workspace_id,
+            'workspace_id' => $beneficiary_workspace->id,
             'type' => 'credit',
             'payment_method' => 'wallet',
             'note' => null,
@@ -142,6 +152,7 @@ class PayoutController extends Controller
             'settled_currency' => $transaction->meta['receiver_currency'],
             'settlement_date' => date('Y-m-d'),
             'settled_at' => now(),
+            'transaction_fee' => $transaction->fee,
             'status' => 'accepted',
             'note' => $transaction->note,
             'meta' => [
@@ -157,14 +168,14 @@ class PayoutController extends Controller
                 'receiver_currency' => $transaction->meta['receiver_currency'],
                 'exchange_rate' => $transaction->meta['exchange_rate'],
                 'transaction_type' => 'payout',
-                'balance' => $beneficiary_wallet?->balance ?? ($beneficiary_wallet?->balance + $amount),
+                'balance' => $beneficiary_wallet?->balance ? ($beneficiary_wallet?->balance + $amount) : 0,
             ],
         ]);
 
         $transaction->status ='accepted';
         $transaction->update();
 
-        $sender_wallet->debit($amount);
+        $sender_wallet->debit($debit_amount);
         $beneficiary_wallet->credit($amount);
 
         return redirect()->route("dashboard.wallet.payout.index", ['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
