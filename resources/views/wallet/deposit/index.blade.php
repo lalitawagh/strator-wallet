@@ -10,11 +10,6 @@
                 <h2 class="font-medium text-base mr-auto">
                     Deposits
                 </h2>
-                @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
-                <div>
-                    <a href="{{ route('dashboard.wallet.deposit.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md">Deposit</a>
-                </div>
-                @endif
             </div>
             <div class="p-5">
                 @include('ledger-foundation::wallet.list-transactions');

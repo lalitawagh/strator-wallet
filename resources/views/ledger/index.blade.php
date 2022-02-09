@@ -18,12 +18,8 @@
                     <a href="{{ route('dashboard.wallet.ledger.create') }}" class="btn btn-sm btn-primary shadow-md">Create New</a>
                 </div>
             </div>
-            <div>
-                <div id="1" class="tab-pane grid grid-cols-12 gap-3 pt-0 active" role="tabpanel" aria-labelledby="1-tab">
-                    <div class="active col-span-12 mt-0 w-full" role="tabpanel" id="k-wallet" aria-labelledby="k-wallet-tab">
-
                 <div class="p-5">
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto box">
                         <table class="table">
                             <thead>
                             <tr class="bg-gray-300 dark:bg-dark-1">
