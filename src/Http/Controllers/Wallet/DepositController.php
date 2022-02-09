@@ -2,6 +2,7 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Controllers\Controller;
@@ -69,7 +70,7 @@ class DepositController extends Controller
             'currency'          => 'required',
             'amount'            => 'required',
             'payment_method'    => 'nullable',
-            'description'       => 'required',
+            'reference'         => 'required',
         ]);
 
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['currency']);
@@ -113,13 +114,14 @@ class DepositController extends Controller
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $details = session('deposit_request');
+        $exchange_ledger = Ledger::whereAssetType($details['exchange_currency'])->first();
 
         if(is_null($details))
         {
             return redirect()->route('dashboard.wallet.deposit.create');
         }
 
-        return view("ledger-foundation::wallet.deposit.deposit-detail", compact('details'));
+        return view("ledger-foundation::wallet.deposit.deposit-detail", compact('details','exchange_ledger'));
     }
 
     public function storeDepositOverviewDetail()
@@ -187,6 +189,7 @@ class DepositController extends Controller
         $workspace = $user->workspaces()->first();
 
         $amount = $depositRequest['amount'];
+        $wallet = Wallet::find($depositRequest['wallet']);
 
         if($data['status'] == 'COMPLETED')
         {
@@ -206,7 +209,7 @@ class DepositController extends Controller
                 'transaction_fee' => $depositRequest['fee'],
                 'status' => 'accepted',
                 'meta' => [
-                    'reference' => $depositRequest['description'],
+                    'reference' => $depositRequest['reference'],
                     'sender_ref_id' => $data['payer_id'],
                     'sender_name' => $data['payer']['name']['given_name'] . ' ' . $data['payer']['name']['surname'],
                     'sender_merchant_id' => $data['paymentDetails'][0]['payee']['merchant_id'],
@@ -218,10 +221,10 @@ class DepositController extends Controller
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                     'transaction_type' => 'deposit',
+                    'balance' => ($wallet?->balance + $amount),
                 ],
             ]);
 
-            $wallet = Wallet::find($depositRequest['wallet']);
             $wallet->credit($amount);
         }
 
@@ -237,7 +240,7 @@ class DepositController extends Controller
                 "amount" => $request->input('amount') * 100,
                 "currency" => $depositRequest['currency'],
                 "source" => $request->input('stripeToken'),
-                "description" => $depositRequest['description'],
+                "description" => $depositRequest['reference'],
         ]);
 
         $feeDetails = $this->walletService->stripeBalanceTransactionHistoryDetails($data->balance_transaction);
@@ -265,6 +268,7 @@ class DepositController extends Controller
             session(['deposit_request' => $depositRequest]);
 
             $amount = $depositRequest['amount'] - ($response['data']['transaction_fee']/100);
+            $wallet = Wallet::find($depositRequest['wallet']);
 
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
@@ -282,7 +286,7 @@ class DepositController extends Controller
                 'transaction_fee' => $depositRequest['fee'],
                 'status' => 'accepted',
                 'meta' => [
-                    'reference' => $depositRequest['description'],
+                    'reference' => $depositRequest['reference'],
                     'sender_payment_id' => $response['data']['id'],
                     'sender_name' => $response['data']['source']['name'],
                     'sender_card_id' => $response['data']['payment_method'],
@@ -297,10 +301,10 @@ class DepositController extends Controller
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                     'transaction_type' => 'deposit',
+                    'balance' => ($wallet?->balance + $amount),
                 ],
             ]);
 
-            $wallet = Wallet::find($depositRequest['wallet']);
             $wallet->credit($amount);
         }
         return response()->json(['status' => 'success']);
@@ -313,12 +317,12 @@ class DepositController extends Controller
         $user = Auth::user();
         $depositRequest = session('deposit_request');
         $ledger = Ledger::whereAssetType($depositRequest['exchange_currency'])->first();
+        $wallet = Wallet::find($depositRequest['wallet']);
         $exchange_wallet_details = Wallet::forHolder($user)->whereLedgerId($ledger->getKey())->first();
-
-
-            $user = Auth::user();
-            $workspace = $user->workspaces()->first();
-            $amount = $depositRequest['amount'];
+        $workspace = $user->workspaces()->first();
+        $amount = $depositRequest['amount'];
+        $beneficiary_user = User::find($exchange_wallet_details->holder_id);
+        $beneficiary_workspace = $beneficiary_user->workspaces()->first();
 
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
@@ -336,7 +340,7 @@ class DepositController extends Controller
                 'transaction_fee' => $depositRequest['fee'],
                 'status' => 'accepted',
                 'meta' => [
-                    'reference' => $depositRequest['description'],
+                    'reference' => $depositRequest['reference'],
                     'sender_name' => $exchange_wallet_details->name,
                     'sender_wallet_urn' => $exchange_wallet_details->urn,
                     'beneficiary_id' => Auth::user()->id,
@@ -346,16 +350,16 @@ class DepositController extends Controller
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                     'transaction_type' => 'deposit',
+                    'balance' => ($wallet?->balance + $amount),
                 ],
             ]);
 
-            $wallet = Wallet::find($depositRequest['wallet']);
             $wallet->credit($amount);
 
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
                 'amount' => $amount,
-                'workspace_id' => $workspace->getKey(),
+                'workspace_id' => $beneficiary_workspace->getKey(),
                 'type' => 'debit',
                 'payment_method' => 'wallet',
                 'note' => null,
@@ -368,7 +372,7 @@ class DepositController extends Controller
                 'transaction_fee' => $depositRequest['fee'],
                 'status' => 'accepted',
                 'meta' => [
-                    'reference' => $depositRequest['description'],
+                    'reference' => $depositRequest['reference'],
                     'sender_name' => $exchange_wallet_details->name,
                     'sender_wallet_urn' => $exchange_wallet_details->urn,
                     'beneficiary_id' => Auth::user()->id,
@@ -378,6 +382,7 @@ class DepositController extends Controller
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                     'transaction_type' => 'deposit',
+                    'balance' => ($exchange_wallet_details?->balance - $amount),
                 ],
             ]);
 
@@ -391,7 +396,9 @@ class DepositController extends Controller
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $details = session('deposit_request');
-        return view("ledger-foundation::wallet.deposit.deposit-final",compact('details'));
+        $exchange_ledger = Ledger::whereAssetType($details['exchange_currency'])->first();
+
+        return view("ledger-foundation::wallet.deposit.deposit-final",compact('details', 'exchange_ledger'));
     }
 
     public function showDepositMoney()

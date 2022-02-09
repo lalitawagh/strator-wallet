@@ -29,6 +29,7 @@ class ExchangeRate extends Model
 
     public static function getExchangeRateDetails($sender_wallet,$receiver_wallet)
     {
+        dd($receiver_wallet);
         $sender_asset_category = $sender_wallet?->ledger->asset_category;
         $receiver_asset_category = $receiver_wallet->asset_category;
 

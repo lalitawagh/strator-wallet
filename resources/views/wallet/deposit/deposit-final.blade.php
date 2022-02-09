@@ -31,10 +31,10 @@
         @php
             $total = $details['amount'] + $details['fee'];
         @endphp
-        <div class="mt-3 font-medium text-base">Transaction Amount:  {{$details['currency']}} {{$total}} </div>
-        <div class="mt-3 font-medium text-base">Fee: {{$details['currency']}} {{$details['fee']}}</div>
+        <div class="mt-3 font-medium text-base">Transaction Amount:  {{ $exchange_ledger['symbol'] }} {{ $total }} </div>
+        <div class="mt-3 font-medium text-base">Fee: {{ $exchange_ledger['symbol'] }} {{ $details['fee'] }}</div>
 
-        <div class="mt-3 font-medium text-base">Deposit Amount: {{ $details['currency'] }} {{ $details['amount'] }} </div>
+        <div class="mt-3 font-medium text-base">Deposit Amount: {{ $exchange_ledger['symbol'] }} {{ $details['amount'] }} </div>
         @endisset
     </div>
     <div class="px-5 pb-8 text-center mt-3">

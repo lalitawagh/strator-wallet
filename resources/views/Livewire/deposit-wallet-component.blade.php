@@ -14,6 +14,15 @@
         </div>
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
+        <label for="amount" class="form-label sm:w-40"> Amount <span class="text-theme-6">*</span></label>
+        <div class="sm:w-5/6">
+            <input id="amount" type="text" class="form-control" name="amount" value="{{ old('amount') }}" required onKeyPress="return isNumberKey(event);">
+            @error('amount')
+            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
+    <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="currency" class="form-label sm:w-40">Paying Currency <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6" wire:ignore>
             <select wire:change="changeCurrency($event.target.value)" name="currency" id="currency" class="form-control">
@@ -27,15 +36,7 @@
             @enderror
         </div>
     </div>
-    <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
-        <label for="amount" class="form-label sm:w-40"> Amount <span class="text-theme-6">*</span></label>
-        <div class="sm:w-5/6">
-            <input id="amount" type="text" class="form-control" name="amount" value="{{ old('amount') }}" required onKeyPress="return isNumberKey(event);">
-            @error('amount')
-            <span class="block text-theme-6 mt-2">{{ $message }}</span>
-            @enderror
-        </div>
-    </div>
+
     @if($this->exchange_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="payment_method" class="form-label sm:w-40"> Payment Method <span class="text-theme-6">*</span></label>
@@ -56,10 +57,10 @@
     </div>
     @endif
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
-        <label for="description" class="form-label sm:w-40"> Reference <span class="text-theme-6">*</span></label>
+        <label for="reference" class="form-label sm:w-40"> Reference <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">
-            <input id="description" type="text" class="form-control" name="description" >
-            @error('description')
+            <input id="reference" type="text" class="form-control" name="reference" required>
+            @error('reference')
             <span class="block text-theme-6 mt-2">{{ $message }}</span>
             @enderror
         </div>
