@@ -71,7 +71,7 @@ class PayoutController extends Controller
         $beneficiary_wallet = NULL;
         if(isset($beneficiary_user))
         {
-            $beneficiary_wallet = Wallet::forHolder($beneficiary_user)->whereLedgerId($receiver_ledger->id)->first();
+            $beneficiary_wallet = Wallet::forHolder($beneficiary_user)->whereLedgerId($receiver_ledger?->id)->first();
         }
 
 
