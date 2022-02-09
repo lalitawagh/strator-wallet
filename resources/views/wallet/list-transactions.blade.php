@@ -151,3 +151,8 @@
         </div>
     </div>
 </div>
+@if(!is_array($transactions) && method_exists($transactions, 'links'))
+    <div class="my-2">
+        {{ $transactions->withQueryString()->links() }}
+    </div>
+@endif
