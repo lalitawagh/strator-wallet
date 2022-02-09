@@ -70,7 +70,7 @@ class DepositController extends Controller
             'currency'          => 'required',
             'amount'            => 'required',
             'payment_method'    => 'nullable',
-            'description'       => 'required',
+            'reference'         => 'required',
         ]);
 
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['currency']);
@@ -209,7 +209,7 @@ class DepositController extends Controller
                 'transaction_fee' => $depositRequest['fee'],
                 'status' => 'accepted',
                 'meta' => [
-                    'reference' => $depositRequest['description'],
+                    'reference' => $depositRequest['reference'],
                     'sender_ref_id' => $data['payer_id'],
                     'sender_name' => $data['payer']['name']['given_name'] . ' ' . $data['payer']['name']['surname'],
                     'sender_merchant_id' => $data['paymentDetails'][0]['payee']['merchant_id'],
@@ -240,7 +240,7 @@ class DepositController extends Controller
                 "amount" => $request->input('amount') * 100,
                 "currency" => $depositRequest['currency'],
                 "source" => $request->input('stripeToken'),
-                "description" => $depositRequest['description'],
+                "description" => $depositRequest['reference'],
         ]);
 
         $feeDetails = $this->walletService->stripeBalanceTransactionHistoryDetails($data->balance_transaction);
@@ -286,7 +286,7 @@ class DepositController extends Controller
                 'transaction_fee' => $depositRequest['fee'],
                 'status' => 'accepted',
                 'meta' => [
-                    'reference' => $depositRequest['description'],
+                    'reference' => $depositRequest['reference'],
                     'sender_payment_id' => $response['data']['id'],
                     'sender_name' => $response['data']['source']['name'],
                     'sender_card_id' => $response['data']['payment_method'],
@@ -340,7 +340,7 @@ class DepositController extends Controller
                 'transaction_fee' => $depositRequest['fee'],
                 'status' => 'accepted',
                 'meta' => [
-                    'reference' => $depositRequest['description'],
+                    'reference' => $depositRequest['reference'],
                     'sender_name' => $exchange_wallet_details->name,
                     'sender_wallet_urn' => $exchange_wallet_details->urn,
                     'beneficiary_id' => Auth::user()->id,
@@ -372,7 +372,7 @@ class DepositController extends Controller
                 'transaction_fee' => $depositRequest['fee'],
                 'status' => 'accepted',
                 'meta' => [
-                    'reference' => $depositRequest['description'],
+                    'reference' => $depositRequest['reference'],
                     'sender_name' => $exchange_wallet_details->name,
                     'sender_wallet_urn' => $exchange_wallet_details->urn,
                     'beneficiary_id' => Auth::user()->id,
