@@ -245,7 +245,7 @@ display: contents !important;
 @endpush
 
 @section('content')
-    <div class="sm:flex gap-3 mt-5">
+    <div class="sm:flex w-full gap-3 mt-5">
         <div class="flex lg:block flex-col-reverse configuration-nav configuration-layout-sidebar">
             <div class="intro-y box mt-5 lg:mt-0 configuration-nav configuration-layout-sidebar" x-data="toggleConfigurationSidebarMenu()">
                 <div class="relative flex items-center p-3">
