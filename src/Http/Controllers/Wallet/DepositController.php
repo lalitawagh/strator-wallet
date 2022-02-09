@@ -113,13 +113,14 @@ class DepositController extends Controller
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $details = session('deposit_request');
+        $exchange_ledger = Ledger::whereAssetType($details['exchange_currency'])->first();
 
         if(is_null($details))
         {
             return redirect()->route('dashboard.wallet.deposit.create');
         }
 
-        return view("ledger-foundation::wallet.deposit.deposit-detail", compact('details'));
+        return view("ledger-foundation::wallet.deposit.deposit-detail", compact('details','exchange_ledger'));
     }
 
     public function storeDepositOverviewDetail()
@@ -187,6 +188,7 @@ class DepositController extends Controller
         $workspace = $user->workspaces()->first();
 
         $amount = $depositRequest['amount'];
+        $wallet = Wallet::find($depositRequest['wallet']);
 
         if($data['status'] == 'COMPLETED')
         {
@@ -218,10 +220,10 @@ class DepositController extends Controller
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                     'transaction_type' => 'deposit',
+                    'balance' => ($wallet?->balance + $amount),
                 ],
             ]);
 
-            $wallet = Wallet::find($depositRequest['wallet']);
             $wallet->credit($amount);
         }
 
@@ -265,6 +267,7 @@ class DepositController extends Controller
             session(['deposit_request' => $depositRequest]);
 
             $amount = $depositRequest['amount'] - ($response['data']['transaction_fee']/100);
+            $wallet = Wallet::find($depositRequest['wallet']);
 
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
@@ -297,10 +300,10 @@ class DepositController extends Controller
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                     'transaction_type' => 'deposit',
+                    'balance' => ($wallet?->balance + $amount),
                 ],
             ]);
 
-            $wallet = Wallet::find($depositRequest['wallet']);
             $wallet->credit($amount);
         }
         return response()->json(['status' => 'success']);
@@ -313,12 +316,10 @@ class DepositController extends Controller
         $user = Auth::user();
         $depositRequest = session('deposit_request');
         $ledger = Ledger::whereAssetType($depositRequest['exchange_currency'])->first();
+        $wallet = Wallet::find($depositRequest['wallet']);
         $exchange_wallet_details = Wallet::forHolder($user)->whereLedgerId($ledger->getKey())->first();
-
-
-            $user = Auth::user();
-            $workspace = $user->workspaces()->first();
-            $amount = $depositRequest['amount'];
+        $workspace = $user->workspaces()->first();
+        $amount = $depositRequest['amount'];
 
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
@@ -346,10 +347,10 @@ class DepositController extends Controller
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                     'transaction_type' => 'deposit',
+                    'balance' => ($wallet?->balance + $amount),
                 ],
             ]);
 
-            $wallet = Wallet::find($depositRequest['wallet']);
             $wallet->credit($amount);
 
             Transaction::create([
@@ -378,6 +379,7 @@ class DepositController extends Controller
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                     'transaction_type' => 'deposit',
+                    'balance' => ($exchange_wallet_details?->balance - $amount),
                 ],
             ]);
 
@@ -391,7 +393,9 @@ class DepositController extends Controller
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $details = session('deposit_request');
-        return view("ledger-foundation::wallet.deposit.deposit-final",compact('details'));
+        $exchange_ledger = Ledger::whereAssetType($details['exchange_currency'])->first();
+
+        return view("ledger-foundation::wallet.deposit.deposit-final",compact('details', 'exchange_ledger'));
     }
 
     public function showDepositMoney()

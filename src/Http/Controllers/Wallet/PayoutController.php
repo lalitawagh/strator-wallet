@@ -52,8 +52,9 @@ class PayoutController extends Controller
         $wallets =  Wallet::forHolder($user)->get();
         $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($workspace)->latest()->get();
         $ledgers = Ledger::get();
+        $asset_types = Setting::getValue('asset_types',[]);
 
-        return view("ledger-foundation::wallet.payout.payouts",compact('countryWithFlags', 'defaultCountry', 'user', 'workspace', 'beneficiaries', 'ledgers', 'wallets'));
+        return view("ledger-foundation::wallet.payout.payouts",compact('countryWithFlags', 'defaultCountry', 'user', 'workspace', 'beneficiaries', 'ledgers', 'wallets','asset_types'));
     }
 
     public function store(StorePayoutRequest $request)

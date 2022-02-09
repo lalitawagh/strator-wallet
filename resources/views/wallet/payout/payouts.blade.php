@@ -18,53 +18,8 @@
                     <form action="{{ route('dashboard.wallet.payout.store',['workspace_id' => $workspace->getKey()]) }}" method="POST">
                         @csrf
                         <input type="hidden" name="workspace_id" value="{{ $workspace->getKey() }}">
-                        @livewire('wallet-payout-component',['wallets' => $wallets, 'beneficiaries' => $beneficiaries, 'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'user' => $user])
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-12 lg:col-span-6  sm:col-span-6 form-inline mt-2">
-                                <label for="receiver_currency" class="form-label sm:w-30"> Receiver Currency <span class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <select name="receiver_currency" id="receiver_currency" class="form-control" data-search="true" required>
-                                        <option value="">Select Receiver Currency</option>
-                                        @foreach ($ledgers as $ledger)
-                                            <option value="{{ $ledger->getKey() }}" @if(old('receiver_currency') == $ledger->getKey()) selected @endif>{{ $ledger->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('receiver_currency')
-                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6  form-inline mt-2">
-                                <label for="reference" class="form-label sm:w-30"> Reference <span class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <input id="reference" name="reference" type="text" class="form-control" value="{{ old('reference') }}" required>
-                                    @error('reference')
-                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-12 md:gap-10 mt-3">
-                            <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2"
-                                style="align-items: center;">
-                                <label for="note" class="form-label sm:w-30"> Note </label>
-                                <div class="sm:w-5/6">
-                                    <input id="note" name="note" type="text" class="form-control" value="{{ old('note') }}" >
-                                    @error('note')
-                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2">
-                                <label for="attachment" class="form-label sm:w-30"> Attachment </label>
-                                <div class="sm:w-5/6">
-                                    <input id="attachment" name="attachment" type="file" class="form-control w-full">
-                                    @error('attachment')
-                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
+                        @livewire('wallet-payout-component',['wallets' => $wallets, 'beneficiaries' => $beneficiaries, 'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'user' => $user,'ledgers' => $ledgers, 'asset_types' => $asset_types])
+
                         <div class="text-right mt-5">
                             <button class="btn btn-primary w-24" type="submit">Submit</button>
                         </div>

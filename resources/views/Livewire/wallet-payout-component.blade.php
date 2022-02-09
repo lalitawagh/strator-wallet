@@ -108,4 +108,73 @@
             </div>
         </div>
     </div>
+
+    <div class="grid grid-cols-12 md:gap-10 mt-0">
+        <div class="col-span-12 md:col-span-12 lg:col-span-6  sm:col-span-6 form-inline mt-2">
+            <label for="receiver_currency" class="form-label sm:w-30"> Receiver Currency <span class="text-theme-6">*</span></label>
+            <div class="sm:w-5/6">
+                <select name="receiver_currency" id="receiver_currency"  wire:change="changeCurrency($event.target.value)" class="form-control" data-search="true" required>
+                    <option value="">Select Receiver Currency</option>
+                    @foreach ($asset_types as $asset_type)
+                        <option value="{{ $asset_type['id'] }}" @if ($selected_currency == $asset_type['id']) selected @endif>{{ $asset_type['name'] }}</option>
+                    @endforeach
+                </select>
+                @error('receiver_currency')
+                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+        <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6  form-inline mt-2">
+            <label for="reference" class="form-label sm:w-30"> Reference <span class="text-theme-6">*</span></label>
+            <div class="sm:w-5/6">
+                <input id="reference" name="reference" type="text" class="form-control" value="{{ old('reference') }}" required>
+                @error('reference')
+                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 md:gap-10 mt-3">
+        <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2"
+            style="align-items: center;">
+            <label for="note" class="form-label sm:w-30"> Note </label>
+            <div class="sm:w-5/6">
+                <input id="note" name="note" type="text" class="form-control" value="{{ old('note') }}" >
+                @error('note')
+                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+        <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2">
+            <label for="attachment" class="form-label sm:w-30"> Attachment </label>
+            <div class="sm:w-5/6">
+                <input id="attachment" name="attachment" type="file" class="form-control w-full">
+                @error('attachment')
+                <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 md:gap-10 mt-3">
+        @if (isset($fee))
+            @php
+                $exchange_rate = $exchange_rate ?? number_format((float)$exchange_rate, 2, '.', '');
+                $total = $amount ? ($exchange_rate * $amount) - $fee : '';
+            @endphp
+            <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2">
+                <label for="exchange_fee" class="form-label sm:w-30"> </label>
+                <div class="sm:w-5/6">
+                    Ex Fees : {{ $fee }}, Ex Rate : @isset($exchange_rate)1 {{ $base_currency}} = {{ number_format((float)$exchange_rate, 2, '.', '') }} {{ $exchange_currency}}  @endisset
+                    @isset($amount)<p>Total : {{ $exchange_currency}} {{ $total }}</p> @endisset
+                </div>
+            </div>
+        @elseif (session('fee'))
+            {{-- <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2">
+                <label for="exchange_fee" class="form-label sm:w-30"> </label>
+                <div class="sm:w-5/6">
+                    Ex Fees : {{ session('fee') }} + Additional Fees , Ex Rate : 1 {{ session('base_currency') }} = {{ number_format((float)session('exchange_rate'), 2, '.', '') }} {{ session('exchange_currency') }}
+                </div>
+            </div> --}}
+        @endif
+    </div>
 </div>
