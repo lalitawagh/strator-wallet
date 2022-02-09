@@ -10,7 +10,7 @@
         <label for="horizontal-form-3" class="form-label sm:w-24">Total Amount</label>
         <div class="sm:w-5/6">
             <div class="font-medium text-base">
-                @if($details['asset_category'] != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
+                @if($details['asset_category'] == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
                 {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($subtotal, $details['currency']) }}
                 @else
                     Coin {{ $total }}

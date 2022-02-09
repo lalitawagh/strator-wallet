@@ -125,7 +125,7 @@
                                     @if($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
                                         {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
                                     @else
-                                        {{$ledger?->symbol}}{{ $transaction->amount }}
+                                        {{ $ledger?->symbol }}  {{ number_format((float)$transaction->amount, 2, '.', '') }}
                                     @endif
                                 </td>
                                 <td class="whitespace-nowrap text-center">-</td>
@@ -135,11 +135,11 @@
                                     @if($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
                                         {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
                                     @else
-                                        {{$ledger?->symbol}}{{ $transaction->amount }}
+                                        {{ $ledger?->symbol }} {{ number_format((float)$transaction->amount, 2, '.', '') }}
                                     @endif
                                 </td>
                             @endif
-                            <td class="whitespace-nowrap text-center"> {{$ledger?->symbol}} {{ @$transaction->meta['balance'] }} </td>
+                            <td class="whitespace-nowrap text-center"> {{ $ledger?->symbol }} {{ number_format((float)@$transaction->meta['balance'], 2, '.', '') }} </td>
                             <td class="whitespace-nowrap text-left">{{ ucfirst($transaction->status) }}</td>
                             <td class="whitespace-nowrap text-left">{{ @$transaction->meta['reference'] }}</td>
                             <td class="table-report__action">
