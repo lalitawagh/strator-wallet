@@ -54,6 +54,8 @@ class WalletPayoutComponent extends Component
         $this->asset_types = $asset_types;
         $this->balance = old('balance');
         $this->amount = old('amount');
+        $this->selected_wallet = old('wallet');
+        $this->selected_currency = old('receiver_currency');
     }
 
     public function getWalletBalance($value)
@@ -98,6 +100,7 @@ class WalletPayoutComponent extends Component
             $this->exchange_rate =  $exchange_rate_details?->exchange_rate;
             $this->fee = $exchange_rate_details?->exchange_fee;
         }
+        session(['fee' => $this->fee,'exchange_rate' => $this->exchange_rate,'exchange_currency' => $this->exchange_currency,'base_currency' => $this->base_currency,'wallet' => $this->selected_wallet,'currency' => $value]);
     }
 
     public function render()

@@ -44,7 +44,7 @@
             </a>
         </div>
         <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2">
-            <label for="phone" class="form-label sm:w-30"> Mobile </label>
+            <label for="phone" class="form-label sm:w-30"> Mobile <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
                 <div class="input-group flex flex-col sm:flex-row">
                     <div id="input-group-phone" wire:ignore class="input-group-text flex form-inline"
@@ -67,15 +67,15 @@
                             @foreach ($countryWithFlags as $country)
                                 <option data-source="{{ $country->flag }}"
                                     value="{{ $country->id }}" @if ($country->id == old('country_code', $defaultCountry->id)) selected @endif>
-                                    @if ($country->id == old('country_code', $defaultCountry->id)) {{ $country->code }} ({{ $country->phone }}) @else {{ $country->name }} ({{ $country->phone }}) @endif
+                                    {{ $country->name }} ({{ $country->phone }})
                                 </option>
                             @endforeach
                         </select>
                     </div>
-                    <input id="phone" name="phone" value="{{ old('phone') }}"
+                    <input id="phone" name="phone" value="{{ old('phone',$user->phone) }}"
                         type="number"
                         class="form-control @error('phone') border-theme-6 @enderror"
-                        onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);">
+                        onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);" required>
 
                 </div>
                 @error('country_code')
@@ -110,7 +110,7 @@
     </div>
 
     <div class="grid grid-cols-12 md:gap-10 mt-0">
-        <div class="col-span-12 md:col-span-12 lg:col-span-6  sm:col-span-6 form-inline mt-2">
+        <div wire:ignore class="col-span-12 md:col-span-12 lg:col-span-6  sm:col-span-6 form-inline mt-2">
             <label for="receiver_currency" class="form-label sm:w-30"> Receiver Currency <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
                 <select name="receiver_currency" id="receiver_currency"  wire:change="changeCurrency($event.target.value)" class="form-control" data-search="true" required>
@@ -159,22 +159,15 @@
         @if (isset($fee))
             @php
                 $exchange_rate = $exchange_rate ?? number_format((float)$exchange_rate, 2, '.', '');
-                $total = $amount ? ($exchange_rate * $amount) - $fee : '';
+                $total = $amount ? ($exchange_rate * $amount): '';
             @endphp
             <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2">
                 <label for="exchange_fee" class="form-label sm:w-30"> </label>
                 <div class="sm:w-5/6">
                     Ex Fees : {{ $fee }}, Ex Rate : @isset($exchange_rate)1 {{ $base_currency}} = {{ number_format((float)$exchange_rate, 2, '.', '') }} {{ $exchange_currency}}  @endisset
-                    @isset($amount)<p>Total : {{ $exchange_currency}} {{ $total }}</p> @endisset
+                    @isset($amount)<p>Total : {{ $total }} {{ $exchange_currency}} </p> @endisset
                 </div>
             </div>
-        @elseif (session('fee'))
-            {{-- <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2">
-                <label for="exchange_fee" class="form-label sm:w-30"> </label>
-                <div class="sm:w-5/6">
-                    Ex Fees : {{ session('fee') }} + Additional Fees , Ex Rate : 1 {{ session('base_currency') }} = {{ number_format((float)session('exchange_rate'), 2, '.', '') }} {{ session('exchange_currency') }}
-                </div>
-            </div> --}}
         @endif
     </div>
 </div>

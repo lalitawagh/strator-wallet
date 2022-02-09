@@ -2,6 +2,7 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Controllers\Controller;
@@ -320,6 +321,8 @@ class DepositController extends Controller
         $exchange_wallet_details = Wallet::forHolder($user)->whereLedgerId($ledger->getKey())->first();
         $workspace = $user->workspaces()->first();
         $amount = $depositRequest['amount'];
+        $beneficiary_user = User::find($exchange_wallet_details->holder_id);
+        $beneficiary_workspace = $beneficiary_user->workspaces()->first();
 
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
@@ -356,7 +359,7 @@ class DepositController extends Controller
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
                 'amount' => $amount,
-                'workspace_id' => $workspace->getKey(),
+                'workspace_id' => $beneficiary_workspace->getKey(),
                 'type' => 'debit',
                 'payment_method' => 'wallet',
                 'note' => null,
