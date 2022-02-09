@@ -71,7 +71,7 @@ class PayoutController extends Controller
         $beneficiary_wallet = NULL;
         if(isset($beneficiary_user))
         {
-            $beneficiary_wallet = Wallet::forHolder($beneficiary_user)->whereLedgerId($receiver_ledger->id)->first();
+            $beneficiary_wallet = Wallet::forHolder($beneficiary_user)->whereLedgerId($receiver_ledger?->id)->first();
         }
 
 
@@ -99,7 +99,7 @@ class PayoutController extends Controller
             'ref_id' => $data['wallet'],
             'ref_type' => 'wallet',
             'settled_amount' => $amount,
-            'settled_currency' => $asset_type['name'],
+            'settled_currency' => session('base_currency') ? session('base_currency') : null,
             'settlement_date' => date('Y-m-d'),
             'settled_at' => now(),
             'initiator_id' => optional($user)->getKey(),

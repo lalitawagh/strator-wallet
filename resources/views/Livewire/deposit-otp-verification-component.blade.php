@@ -2,7 +2,7 @@
     @if($sent_resend_otp == true)
         <h4 class="text-theme-9 mt-1">OTP Resend Success</h4>
     @else
-        <h3 class="text-theme-9">OTP sent on your registered mobile please enter that OTP for verification </h3>
+        <h3 class="text-theme-9">OTP is sent to your registered mobile number. Please enter.</h3>
     @endif
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="amount" class="form-label sm:w-40"> Mobile <span class="text-theme-6">*</span></label>
@@ -39,7 +39,7 @@
                     onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);" disabled>
 
             </div>
-            <a wire:click="resendOtp({{ $oneTimePassword }})"  class="block text-theme-1 mt-2" style="cursor: pointer;">Resend OTP </a>
+
         </div>
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
@@ -49,6 +49,7 @@
             @error('code')
             <span class="block text-theme-6 mt-2">{{ $message }}</span>
             @enderror
+            <a wire:click="resendOtp({{ $oneTimePassword }})"  class="block text-theme-1 mt-2" style="cursor: pointer;">Resend OTP </a>
         </div>
     </div>
     <div class="text-right mt-5">
