@@ -14,11 +14,15 @@
             </svg>
         </div>
     @else
+        @php
+            $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first();
+            $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
+        @endphp
         <div>
             <div class="flex flex-col lg:flex-row px-1 sm:px-2 py-0 mb-2">
                 <div class="dark:text-theme-10">
                     <p class="text-xl font-medium @if ($transaction->type === 'debit') text-theme-6 @else text-theme-9 @endif">
-                        @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit') {{ \Illuminate\Support\Str::upper($transaction?->meta['exchange_currency'] ?? null) }} @else {{ \Illuminate\Support\Str::upper($transaction->meta['receiver_currency'] ?? null) }} @endif {{ number_format((float)$transaction->amount, 2, '.', '') }}
+                        @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit') {{ \Illuminate\Support\Str::upper($ledger?->symbol ?? null) }} @else {{ \Illuminate\Support\Str::upper($ledger?->symbol ?? null) }} @endif {{ number_format((float)$transaction->amount, 2, '.', '') }}
                         @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit')
                             <span class="text-sm font-medium text-gray-700 md:ml-4">Deposit / {{ \Illuminate\Support\Str::title(implode(' ', explode('-', $transaction->status))) }}</span>
                         @else

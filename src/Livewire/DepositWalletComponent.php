@@ -39,7 +39,7 @@ class DepositWalletComponent extends Component
         if(!is_null(session('currency')))
         {
             $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $this->currency);
-            $this->exchange_asset_category = $asset_type['asset_category'];
+            $this->exchange_asset_category = @$asset_type['asset_category'];
         }
     }
 
@@ -61,8 +61,8 @@ class DepositWalletComponent extends Component
 
         if(@$base_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY &&  @$exchange_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
         {
-            $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $ledger->asset_type);
-            $exchange_currency =  collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
+            $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
+            $exchange_currency =  collect(Setting::getValue('asset_types',[]))->firstWhere('id', $ledger->asset_type);
 
             $this->base_currency = @$base_currency['name'];
             $this->exchange_currency = @$exchange_currency['name'];
@@ -74,8 +74,8 @@ class DepositWalletComponent extends Component
         }else{
 
             $exchange_rate_details = ExchangeRate::where(['base_currency' => $wallet->ledger_id,'exchange_currency' => $value])->first();
-            $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $ledger->asset_type);
-            $exchange_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
+            $base_currency =  collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
+            $exchange_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $ledger->asset_type);
 
             $this->base_currency = @$base_currency['name'];
             $this->exchange_currency = @$exchange_currency['name'];
@@ -83,7 +83,7 @@ class DepositWalletComponent extends Component
             $this->fee = $exchange_rate_details?->exchange_fee;
         }
 
-        session(['fee' => $this->fee,'exchange_rate' => $this->exchange_rate,'exchange_currency' => $this->exchange_currency,'base_currency' => $this->base_currency,'wallet' => $this->selected_wallet,'currency' => $value]);
+        session(['fee' => $this->fee,'exchange_rate' => $this->exchange_rate,'exchange_currency' => $this->exchange_currency,'base_currency' => $this->base_currency,'wallet' => $this->selected_wallet,'currency' => $value ,'base_asset_category' => $base_asset_category, 'exchange_asset_category' => $exchange_asset_category]);
     }
 
 

@@ -65,13 +65,24 @@ class DepositController extends Controller
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
-        $data = $request->validate([
-            'wallet'            => 'required',
-            'currency'          => 'required',
-            'amount'            => 'required',
-            'payment_method'    => 'nullable',
-            'reference'         => 'required',
-        ]);
+        if(session('base_asset_category') != \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY &&  session('exchange_asset_category') != \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
+        {
+            $data = $request->validate([
+                'wallet'            => 'required',
+                'currency'          => 'required',
+                'amount'            => 'required',
+                'reference'         => 'required',
+                'payment_method'    => 'nullable',
+            ]);
+        }else{
+            $data = $request->validate([
+                'wallet'            => 'required',
+                'currency'          => 'required',
+                'amount'            => 'required',
+                'reference'         => 'required',
+                'payment_method'    => 'required',
+            ]);
+        }
 
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['currency']);
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
@@ -382,7 +393,7 @@ class DepositController extends Controller
                     'base_currency' => session('base_currency') ? session('base_currency') : null,
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                     'transaction_type' => 'deposit',
-                    'balance' => ($exchange_wallet_details?->balance - $amount),
+                    'balance' => ($exchange_wallet_details?->balance - ($amount + $depositRequest['fee'])),
                 ],
             ]);
 
