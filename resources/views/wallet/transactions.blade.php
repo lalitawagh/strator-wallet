@@ -57,7 +57,7 @@
                                                                     <div class="flex">
                                                                         <div class="ml-auto">
                                                                             <div class="flex mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
-                                                                                <img alt="" class="" src="@isset($ledger?->image){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}@endisset">
+                                                                                <img alt="" class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" src="@isset($ledger?->image){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}@endisset">
                                                                             </div>
                                                                         </div>
                                                                     </div>
