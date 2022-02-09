@@ -17,8 +17,8 @@
                             class="btn btn-sm btn-primary shadow-md">Create New</a>
                     </div>
                 </div>
-                <div>
-                    <div class="overflow-x-auto">
+                <div class="p-5">
+                    <div class="overflow-x-auto box">
                         <table class="table">
                             <thead>
                                 <tr class="bg-gray-300 dark:bg-dark-1">

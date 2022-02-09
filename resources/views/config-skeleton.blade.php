@@ -119,6 +119,7 @@
 
 .configuration-nav .side-nav .side-menu__title {
     color: #333;
+    display:flex !important;
 }
 .configuration-nav .side-nav .side-menu.side-menu--active .side-menu__title,
 .configuration-nav .side-nav .side-menu.side-menu--active .side-menu__icon {
@@ -200,6 +201,9 @@
 /* .configuration-nav .side-nav, .configuration-nav .side-nav .side-menu__title {
     display: block;
 } */
+.configuration-nav.side-nav--simple .side-menu__sub-open {
+display: contents !important;
+}
 
 @media (max-width:767px) {
     .configarrow-toggle{
@@ -223,6 +227,9 @@
         background-color: transparent !important;
         padding-left: 30px;
     }
+    .configuration-nav.side-nav--simple .side-menu__sub-open {
+display: contents !important;
+}
     .breadcrumb{
         display: flex;
     }
