@@ -66,11 +66,11 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="symbol" class="form-label sm:w-30">Symbol</label>
+                                <label for="symbol" class="form-label sm:w-30">Symbol <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="symbol" name="symbol" type="symbol"
                                         class="form-control @error('symbol') border-theme-6 @enderror"
-                                        value="{{ old('symbol') }}">
+                                        value="{{ old('symbol') }}" required>
 
                                     @error('symbol')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>

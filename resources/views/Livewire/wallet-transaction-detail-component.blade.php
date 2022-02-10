@@ -82,7 +82,7 @@
 
                 <div class="flex flex-col lg:flex-row mt-3">
                     <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                        <x-feathericon-user height="12"/>
+                        <x-feathericon-pocket height="12"/>
 
                         <span>
                             @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit') {{ \Illuminate\Support\Str::upper($transaction?->meta['exchange_currency'] ?? null) }} @else {{ \Illuminate\Support\Str::upper($transaction->meta['receiver_currency'] ?? null) }} @endif
@@ -96,7 +96,7 @@
 
                 <div class="flex flex-col lg:flex-row mt-3">
                     <div class="truncate sm:whitespace-normal sm:w-4/5 w-auto flex items-center">
-                        <x-feathericon-user height="12"/>
+                        <x-feathericon-send height="12"/>
 
                         <span>
                             @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit') {{ \Illuminate\Support\Str::upper($transaction->meta['base_currency'] ?? null) }} @else {{ \Illuminate\Support\Str::upper($transaction?->meta['sender_currency'] ?? null) }} @endif
