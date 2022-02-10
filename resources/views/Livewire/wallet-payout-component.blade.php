@@ -159,7 +159,7 @@
         @if (isset($fee))
             @php
                 $exchange_rate = $exchange_rate ?? number_format((float)$exchange_rate, 2, '.', '');
-                $total = $amount ? ($exchange_rate * $amount): '';
+                $total = $amount ? (($amount - $fee) * $exchange_rate): '';
             @endphp
             <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2">
                 <label for="exchange_fee" class="form-label sm:w-30"> </label>

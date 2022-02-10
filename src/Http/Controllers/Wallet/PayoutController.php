@@ -13,7 +13,6 @@ use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\StorePayoutRequest;
-use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
@@ -51,7 +50,7 @@ class PayoutController extends Controller
         $defaultCountry = Country::find(Setting::getValue("default_country"));
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
         $wallets =  Wallet::forHolder($user)->get();
-        $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($workspace)->latest()->get();
+        $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wallet')->latest()->get();
         $ledgers = Ledger::get();
         $asset_types = Setting::getValue('asset_types',[]);
 
@@ -75,11 +74,10 @@ class PayoutController extends Controller
         }
 
 
-        $amount = (session('exchange_rate')) ? ($data['amount'] * session('exchange_rate')) : $data['amount'];
-        $transaction_amount = (session('fee')) ? ($amount + session('fee')) : $amount;
+        $amount = $data['amount'];
 
 
-        if($transaction_amount > $data['balance'])
+        if($amount > $data['balance'])
         {
             return back()->withError("Insufficient balance in the account.");
         }
@@ -104,7 +102,7 @@ class PayoutController extends Controller
             'settled_at' => now(),
             'initiator_id' => optional($user)->getKey(),
             'initiator_type' => optional($user)->getMorphClass(),
-            'transaction_fee' => session('fee') ?? session('fee'),
+            'transaction_fee' => session('fee') ? session('fee') : 0,
             'status' => 'pending',
             'note' => $data['note'],
             'meta' => [
@@ -120,7 +118,7 @@ class PayoutController extends Controller
                 'receiver_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                 'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
                 'transaction_type' => 'payout',
-                'balance' => $sender_wallet?->balance ? ($sender_wallet?->balance - ($amount + session('fee'))) : 0,
+                'balance' => $sender_wallet?->balance ? ($sender_wallet?->balance - ($amount)) : 0,
             ],
         ]);
 
@@ -132,8 +130,8 @@ class PayoutController extends Controller
     public function verify(Request $request)
     {
         $transaction = Transaction::find($request->query('id'));
-        $amount =  $transaction->amount;
-        $debit_amount =  ($transaction->amount + $transaction->transaction_fee);
+        $amount =  (($transaction->amount - $transaction->transaction_fee) * $transaction->meta['exchange_rate']);
+        $debit_amount =  $transaction->amount;
         $sender_wallet = Wallet::find($transaction->meta['sender_ref_id']);
         $beneficiary_wallet = Wallet::find($transaction->meta['beneficiary_ref_id']);
         $beneficiary_user = User::find($beneficiary_wallet->holder_id);
@@ -141,14 +139,14 @@ class PayoutController extends Controller
 
         Transaction::create([
             'urn' => Transaction::generateUrn(),
-            'amount' => $transaction->amount,
+            'amount' => $amount,
             'workspace_id' => $beneficiary_workspace->id,
             'type' => 'credit',
             'payment_method' => 'wallet',
             'note' => null,
             'ref_id' => $transaction->meta['beneficiary_ref_id'],
             'ref_type' => 'wallet',
-            'settled_amount' => $transaction->amount,
+            'settled_amount' => $amount,
             'settled_currency' => $transaction->meta['receiver_currency'],
             'settlement_date' => date('Y-m-d'),
             'settled_at' => now(),
