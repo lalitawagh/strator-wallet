@@ -75,7 +75,11 @@
                                                                         <span class="text-lg @if ($wallet->status == \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) text-theme-9 @else text-theme-6 @endif"> {{ trans('ledger-foundation::configuration.'.$wallet->status) }}</span>
                                                                         <div class="ml-auto">
                                                                             <div class="report-box__indicator bg-theme-6 cursor-pointer mt-1">
-                                                                                {{$ledger?->symbol}} {{ $wallet?->balance }}
+                                                                                @if($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
+                                                                                    {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($wallet?->balance, $ledger?->name) }}
+                                                                                @else
+                                                                                    {{$ledger?->symbol}} {{ $wallet?->balance }}
+                                                                                @endif
                                                                             </div>
                                                                         </div>
                                                                     </div>
