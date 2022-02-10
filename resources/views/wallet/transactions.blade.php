@@ -78,7 +78,7 @@
                                                                                 @if($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
                                                                                     {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($wallet?->balance, $ledger?->name) }}
                                                                                 @else
-                                                                                    {{$ledger?->symbol}}{{ $wallet?->balance }}
+                                                                                    {{$ledger?->symbol}} {{ $wallet?->balance }}
                                                                                 @endif
                                                                             </div>
                                                                         </div>
