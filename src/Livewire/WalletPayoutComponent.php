@@ -73,9 +73,9 @@ class WalletPayoutComponent extends Component
         $wallet = Wallet::whereId($this->selected_wallet)->first();
         $ledger = Ledger::whereId($wallet?->ledger_id)->first();
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
-        $this->exchange_asset_category = $asset_type['asset_category'];
+        $this->exchange_asset_category = @$asset_type['asset_category'];
         $base_asset_category = $ledger?->asset_category;
-        $exchange_asset_category = $asset_type['asset_category'];
+        $exchange_asset_category = @$asset_type['asset_category'];
 
         if($base_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY &&  $exchange_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
         {
@@ -91,12 +91,12 @@ class WalletPayoutComponent extends Component
             $this->fee = $ledger?->deposit_fee;
         }else{
 
-            $exchange_rate_details = ExchangeRate::where(['base_currency' => $wallet->ledger_id,'exchange_currency' => $value])->first();
-            $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $ledger->asset_type);
+            $exchange_rate_details = ExchangeRate::where(['base_currency' => $wallet?->ledger_id,'exchange_currency' => $value])->first();
+            $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $ledger?->asset_type);
             $exchange_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
 
-            $this->base_currency = $base_currency['name'];
-            $this->exchange_currency = $exchange_currency['name'];
+            $this->base_currency = @$base_currency['name'];
+            $this->exchange_currency = @$exchange_currency['name'];
             $this->exchange_rate =  $exchange_rate_details?->exchange_rate;
             $this->fee = $exchange_rate_details?->exchange_fee;
         }

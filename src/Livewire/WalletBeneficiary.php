@@ -70,19 +70,20 @@ class WalletBeneficiary extends Component
 
     public function createBeneficiary()
     {
+        $data = $this->validate([
+            'first_name' => ['required' ,new AlphaSpaces, 'string','max:40'],
+            'middle_name' => ['nullable',new AlphaSpaces, 'string','max:40'],
+            'last_name' => ['required',new AlphaSpaces, 'string','max:40'],
+            'email' => 'required|email',
+            'mobile' => ['required',new MobileNumber],
+            'notes' => 'nullable',
+            'nick_name' => 'nullable',
+        ]);
+
         if(is_null($this->membership_urn))
         {
             $this->addError('mobile', 'Membership not exists with this mobile number');
         }else{
-            $data = $this->validate([
-                'first_name' => ['required' ,new AlphaSpaces, 'string','max:40'],
-                'middle_name' => ['nullable',new AlphaSpaces, 'string','max:40'],
-                'last_name' => ['required',new AlphaSpaces, 'string','max:40'],
-                'email' => 'required|email',
-                'mobile' => ['required',new MobileNumber],
-                'notes' => 'nullable',
-                'nick_name' => 'nullable',
-            ]);
 
             $data['mobile'] = Helper::normalizePhone($data['mobile']);
             $data['workspace_id'] = $this->workspace->id;
