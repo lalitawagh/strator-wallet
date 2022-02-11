@@ -11,7 +11,7 @@ class AssetTypeController extends Controller
 {
     public function index()
     {
-        $this->authorize(AssetTypePolicy::VIEW, Setting::class);
+        // $this->authorize(AssetTypePolicy::VIEW, Setting::class);
 
         $asset_type_lists = Setting::getValue('asset_types',[]);
 
@@ -20,7 +20,7 @@ class AssetTypeController extends Controller
 
     public function create()
     {
-        $this->authorize(AssetTypePolicy::CREATE, Setting::class);
+        // $this->authorize(AssetTypePolicy::CREATE, Setting::class);
 
         return view("ledger-foundation::asset-type.create");
     }
@@ -47,7 +47,7 @@ class AssetTypeController extends Controller
 
     public function edit($id)
     {
-        $this->authorize(AssetTypePolicy::EDIT, Setting::class);
+        // $this->authorize(AssetTypePolicy::EDIT, Setting::class);
 
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $id);
 
@@ -91,7 +91,7 @@ class AssetTypeController extends Controller
 
     public function destroy($id)
     {
-        $this->authorize(AssetTypePolicy::DELETE, Setting::class);
+        // $this->authorize(AssetTypePolicy::DELETE, Setting::class);
 
         $settings = collect(Setting::getValue('asset_types', []))->filter(function ($item) use ($id) {
             if ($item['id'] != $id) {

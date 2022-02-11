@@ -52,9 +52,9 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
     ];
 
     private array $policies = [
-        Setting::class => CommodityTypePolicy::class,
-        Setting::class => AssetTypePolicy::class,
-        Setting::class => AssetClassPolicy::class,
+        // Setting::class => CommodityTypePolicy::class,
+        // Setting::class => AssetTypePolicy::class,
+        // Setting::class => AssetClassPolicy::class,
         Ledger::class => LedgerPolicy::class,
         Wallet::class => PayoutPolicy::class,
         ExchangeRate::class => ExchangeRatePolicy::class,
