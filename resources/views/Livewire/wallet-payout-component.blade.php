@@ -164,7 +164,7 @@
             <div class="col-span-12 md:col-span-12 lg:col-span-6 sm:col-span-6 form-inline mt-2">
                 <label for="exchange_fee" class="form-label sm:w-30"> </label>
                 <div class="sm:w-5/6">
-                    Ex Fees : {{  number_format((float)$fee, 2, '.', '') }}, Ex Rate : @isset($exchange_rate)1 {{ $base_currency}} = {{ number_format((float)$exchange_rate, 2, '.', '') }} {{ $exchange_currency}}  @endisset
+                    Ex Fees : {{  number_format((float)$fee, 2, '.', '') }}, Ex Rate : @isset($exchange_rate)1 {{ $exchange_currency}} = {{ number_format((float)$exchange_rate, 2, '.', '') }} {{ $base_currency}}  @endisset
                     @isset($amount)<p>Total : {{ number_format((float)$total, 2, '.', '') }} {{ $exchange_currency}} </p> @endisset
                 </div>
             </div>
