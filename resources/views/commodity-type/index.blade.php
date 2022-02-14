@@ -92,6 +92,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="my-2">
+                        {{ $commodity_type_lists->links() }}
+                    </div>
                 </div>
             </div>
         </div>

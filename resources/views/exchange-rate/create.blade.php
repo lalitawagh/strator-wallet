@@ -22,7 +22,7 @@
                         @csrf
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="base_currency" class="form-label sm:w-28">Ledger <span class="text-theme-6">*</span></label>
+                                <label for="base_currency" class="form-label sm:w-28">Exchange From <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
 
                                         <select name="base_currency" id="base_currency" class="form-control" data-search="true">
@@ -38,7 +38,7 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="exchange_currency" class="form-label sm:w-28">Exchange Currency <span class="text-theme-6">*</span></label>
+                                <label for="exchange_currency" class="form-label sm:w-28">Exchange To <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <select name="exchange_currency" id="exchange_currency" class="form-control" data-search="true">
                                         @foreach ($asset_types as $asset_type)
@@ -73,21 +73,6 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="valid_date" class="form-label sm:w-28">Valid Date <span class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <input id="valid_date" name="valid_date" class="form-control datepicker_flatpicker @error('valid_date') border-theme-6 @enderror"
-                                    placeholder="DD-MM-YYYY" value="{{ old('valid_date') }}" data-min-date="{{ \Carbon\Carbon::now()->subYear(0)->format('Y-m-d') }}"
-                                     data-single-mode="true" required>
-
-                                    @error('valid_date')
-                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_fee" class="form-label sm:w-28">Exchange Fee  <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="exchange_fee" name="exchange_fee" type="text"
@@ -99,7 +84,9 @@
                                     @enderror
                                 </div>
                             </div>
+                        </div>
 
+                        <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_rate" class="form-label sm:w-28">Exchange Rate <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
@@ -112,25 +99,39 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="note" class="form-label sm:w-28"> Note <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <input type="text" class="form-control" name="note" required>
+                                    <input type="text" class="form-control" name="note" value="{{ old('note') }}" required>
 
                                     @error('note')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="is_hard_stop" class="form-label sm:w-28">Hard Stop <span class="text-theme-6">*</span></label>
+                                <label for="is_hard_stop" class="form-label sm:w-28">Hard Stop </label>
                                 <div class="sm:w-5/6">
-                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch" @if (old("is_hard_stop")  === '1') checked @endif required>
+                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch" onclick="toggleHardStop(this)" @if(!is_null(old('is_hard_stop'))) checked @endif>
 
                                     @error('is_hard_stop')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2 @if(!is_null(old('is_hard_stop'))) @else valid_date hidden @endif">
+                                <label for="valid_date" class="form-label sm:w-28">Valid Date <span class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="valid_date" name="valid_date" class="form-control datepicker_flatpicker @error('valid_date') border-theme-6 @enderror"
+                                    placeholder="DD-MM-YYYY" value="{{ old('valid_date') }}" data-min-date="{{ \Carbon\Carbon::now()->subYear(0)->format('Y-m-d') }}"
+                                     data-single-mode="true">
+
+                                    @error('valid_date')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>

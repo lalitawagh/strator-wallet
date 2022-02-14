@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Http\Helper;
 use Kanexy\LedgerFoundation\Http\Requests\StoreAssetTypeRequest;
 use Kanexy\LedgerFoundation\Policies\AssetTypePolicy;
 
@@ -13,7 +14,7 @@ class AssetTypeController extends Controller
     {
         // $this->authorize(AssetTypePolicy::VIEW, Setting::class);
 
-        $asset_type_lists = Setting::getValue('asset_types',[]);
+        $asset_type_lists = Helper::paginate(collect(Setting::getValue('asset_types',[])));
 
         return view("ledger-foundation::asset-type.index", compact('asset_type_lists'));
     }

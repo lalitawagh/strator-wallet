@@ -205,6 +205,11 @@
 display: contents !important;
 }
 
+.valid_date_show
+{
+    display: flex;
+}
+
 @media (max-width:767px) {
     .configarrow-toggle{
         display: none;
@@ -381,6 +386,19 @@ display: contents !important;
                     $(".configuration-container").toggleClass("active");
                 }
             }
+        }
+
+        function toggleHardStop(the) {
+            var value = $(the).val();
+            if($(the).prop("checked"))
+            {
+                $(".valid_date").removeClass("hidden");
+                $(".valid_date").toggleClass("valid_date_show");
+            }else{
+                $(".valid_date").removeClass("valid_date_show");
+                $(".valid_date").toggleClass("hidden");
+            }
+
         }
     </script>
 @endpush

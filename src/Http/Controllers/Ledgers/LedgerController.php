@@ -15,7 +15,7 @@ class LedgerController extends Controller
     {
         $this->authorize(LedgerPolicy::VIEW, Ledger::class);
 
-        $ledgers = Ledger::paginate();
+        $ledgers = Ledger::paginate(7);
 
         return view("ledger-foundation::ledger.index", compact('ledgers'));
     }

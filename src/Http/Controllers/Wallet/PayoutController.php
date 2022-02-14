@@ -130,7 +130,7 @@ class PayoutController extends Controller
     public function verify(Request $request)
     {
         $transaction = Transaction::find($request->query('id'));
-        $amount =  (($transaction->amount - $transaction->transaction_fee) * $transaction->meta['exchange_rate']);
+        $amount =  ($transaction->meta['exchange_rate']) ? (($transaction->amount - $transaction->transaction_fee) * $transaction->meta['exchange_rate']) : ($transaction->amount - $transaction->transaction_fee);
         $debit_amount =  $transaction->amount;
         $sender_wallet = Wallet::find($transaction->meta['sender_ref_id']);
         $beneficiary_wallet = Wallet::find($transaction->meta['beneficiary_ref_id']);

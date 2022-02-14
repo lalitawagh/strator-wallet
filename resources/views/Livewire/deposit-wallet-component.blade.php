@@ -1,9 +1,9 @@
 <div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
-        <label for="wallet" class="form-label sm:w-40"> Wallet <span class="text-theme-6">*</span></label>
+        <label for="wallet" class="form-label sm:w-40"> Deposit To <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6" wire:ignore>
             <select wire:change="changeBaseCurrency($event.target.value)" name="wallet" class="form-control">
-                <option value="">Select Wallet</option>
+                <option value="">Select Deposit To</option>
                 @foreach ($wallets as $wallet)
                     <option value="{{ $wallet->getKey() }}" @if ($selected_wallet == $wallet->getKey()) selected @endif>{{ $wallet->ledger?->name }}</option>
                 @endforeach
@@ -23,15 +23,15 @@
         </div>
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
-        <label for="currency" class="form-label sm:w-40">Paying Currency <span class="text-theme-6">*</span></label>
+        <label for="currency" class="form-label sm:w-40">Deposit From <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6" wire:ignore>
             <select wire:change="changeCurrency($event.target.value)" name="currency" id="currency" class="form-control">
-                <option value="">Select Currency</option>
+                <option value="">Select Deposit From</option>
                 @foreach ($currencies as $currency)
                     <option value="{{ $currency['id'] }}" @if (session('currency') == $currency['id']) selected @endif>{{ $currency['name'] }}</option>
                 @endforeach
             </select>
-            @error('currencydata')
+            @error('currency')
             <span class="block text-theme-6 mt-2">{{ $message }}</span>
             @enderror
         </div>
