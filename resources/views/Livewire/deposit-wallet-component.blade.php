@@ -69,14 +69,14 @@
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="exchange_fee" class="form-label sm:w-40"> </label>
         <div class="sm:w-5/6">
-            Ex Fees : {{ $fee }} + Additional Fees , Ex Rate : @isset($exchange_rate)1 {{ $base_currency}} = {{ number_format((float)$exchange_rate, 2, '.', '') }} {{ $exchange_currency}}@endisset
+            Ex Fees : {{ $fee }} + Additional Fees , Ex Rate : @isset($exchange_rate)1 {{ $exchange_currency}} = {{ number_format((float)$exchange_rate, 2, '.', '') }} {{ $base_currency}}@endisset
         </div>
     </div>
     @elseif (session('fee'))
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="exchange_fee" class="form-label sm:w-40"> </label>
         <div class="sm:w-5/6">
-            Ex Fees : {{ session('fee') }} + Additional Fees , Ex Rate : 1 {{ session('base_currency') }} = {{ number_format((float)session('exchange_rate'), 2, '.', '') }} {{ session('exchange_currency') }}
+            Ex Fees : {{ session('fee') }} + Additional Fees , Ex Rate : 1 {{ session('exchange_currency') }} = {{ number_format((float)session('exchange_rate'), 2, '.', '') }} {{ session('base_currency') }}
         </div>
     </div>
     @endif
