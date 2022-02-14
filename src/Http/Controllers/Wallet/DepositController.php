@@ -5,10 +5,12 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Http\Requests\StoreDepositRequest;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\DepositPolicy;
@@ -61,32 +63,14 @@ class DepositController extends Controller
         return view("ledger-foundation::wallet.deposit.deposit-initial", compact('wallets', 'currencies', 'workspace'));
     }
 
-    public function store(Request $request)
+    public function store(StoreDepositRequest $request)
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
-        $data = $request->validate([
-            'wallet'            => 'required',
-            'currency'          => 'required',
-            'amount'            => 'required',
-            'reference'         => 'required',
-            'payment_method'    => 'nullable',
-        ]);
-
-        if(session('exchange_asset_category') == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
-        {
-            $request->validate([
-                'payment_method'    => 'required',
-            ]);
-        }
+        $data = $request->validated();
 
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['currency']);
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
-
-        if(is_null($asset_type))
-        {
-            return back()->withError('Currency not exists');
-        }
 
         $data['amount'] = $data['amount'];
 
@@ -332,7 +316,7 @@ class DepositController extends Controller
         $wallet = Wallet::find($depositRequest['wallet']);
         $exchange_wallet_details = Wallet::forHolder($user)->whereLedgerId($ledger->getKey())->first();
         $workspace = $user->workspaces()->first();
-        $credit_amount = ($depositRequest['amount'] * session('exchange_rate'));
+        $credit_amount = session('exchange_rate') ? ($depositRequest['amount'] * session('exchange_rate')) : $depositRequest['amount'];
         $debit_amount = ($depositRequest['amount'] + $depositRequest['fee']);
         $beneficiary_user = User::find($exchange_wallet_details->holder_id);
         $beneficiary_workspace = $beneficiary_user->workspaces()->first();

@@ -15,7 +15,7 @@ class ExchangeRateController extends Controller
     {
         $this->authorize(ExchangeRatePolicy::VIEW, ExchangeRate::class);
 
-        $exchange_rates = ExchangeRate::with('ledger')->paginate();
+        $exchange_rates = ExchangeRate::with('ledger')->paginate(7);
 
         return view("ledger-foundation::exchange-rate.index", compact('exchange_rates'));
     }
@@ -36,9 +36,10 @@ class ExchangeRateController extends Controller
         $data['is_hard_stop'] = $request->has('is_hard_stop') ? '1' : '0';
         $data['valid_date'] = date('Y-m-d',strtotime($data['valid_date']));
 
-        $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['exchange_currency']);
-        $base_asset_category = Ledger::whereId($data['base_currency'])->first()->asset_category;
-        $exchange_asset_category = $asset_type['asset_category'];
+        $exchange_asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['exchange_currency']);
+        $base_asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['base_currency']);
+        $base_asset_category = $base_asset_type['asset_category'];
+        $exchange_asset_category = $exchange_asset_type['asset_category'];
 
         if(is_null($base_asset_category))
         {
@@ -80,9 +81,10 @@ class ExchangeRateController extends Controller
         $data = $request->validated();
         $data['valid_date'] = date('Y-m-d',strtotime($data['valid_date']));
 
-        $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['exchange_currency']);
-        $base_asset_category = Ledger::whereId($data['base_currency'])->first()->asset_category;
-        $exchange_asset_category = $asset_type['asset_category'];
+        $exchange_asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['exchange_currency']);
+        $base_asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['base_currency']);
+        $base_asset_category = $base_asset_type['asset_category'];
+        $exchange_asset_category = $exchange_asset_type['asset_category'];
 
         if(is_null($base_asset_category))
         {
