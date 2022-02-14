@@ -27,6 +27,10 @@ class LedgerConfigFieldComponent extends Component
 
     public string $selected_asset_type;
 
+    public string $selected_commodity_type;
+
+    public string $logo;
+
     public function mount($asset_types,$asset_categories,$commodity_types,$ledger)
     {
         $this->asset_types = $asset_types;
@@ -37,6 +41,8 @@ class LedgerConfigFieldComponent extends Component
         $this->selected_asset_category =  $ledger ? $ledger->asset_category : '';
         $this->selected_asset_type =  $ledger ? $ledger->asset_type : '';
         $this->exchange_rate = $ledger ? $ledger->exchange_rate : '';
+        $this->logo = $ledger ? $ledger->image : '';
+        $this->selected_commodity_type = $ledger ? $ledger->commodity_category : '';
     }
 
     public function changeExchangeType($value)

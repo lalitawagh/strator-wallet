@@ -27,12 +27,12 @@ class ExchangeRate extends Model
         return $this->hasOne(Ledger::class,'id','base_currency');
     }
 
-    public static function getExchangeRateDetails($sender_wallet,$receiver_wallet,$value)
+    public static function getExchangeRateDetailsForPayout($sender_wallet,$receiver_wallet,$value)
     {
         $sender_asset_category = $sender_wallet?->ledger->asset_category;
         $receiver_asset_category = $receiver_wallet->asset_category;
 
-        if($sender_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY &&  $receiver_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
+        if(@$sender_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY &&  @$receiver_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
         {
             $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id',$receiver_wallet?->asset_type);
             $exchange_currency =  collect(Setting::getValue('asset_types',[]))->firstWhere('id',  @$value);
@@ -46,7 +46,7 @@ class ExchangeRate extends Model
             $fee = $receiver_wallet?->payout_fee;
         }else{
 
-            $exchange_rate_details = ExchangeRate::where(['base_currency' => $sender_wallet?->ledger->asset_type,'exchange_currency' => @$value])->first();
+            $exchange_rate_details = ExchangeRate::where(['base_currency' => $sender_wallet?->ledger_id,'exchange_currency' => @$value])->first();
             $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $receiver_wallet?->asset_type);
             $exchange_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', @$value);
 
@@ -69,11 +69,10 @@ class ExchangeRate extends Model
     public static function getExchangeRateDetailsForDeposit($sender_wallet,$receiver_wallet,$value)
     {
         $sender_asset_category = $sender_wallet?->ledger->asset_category;
-        $receiver_asset_category = $receiver_wallet->asset_category;
+        $receiver_asset_category = $receiver_wallet?->asset_category;
 
-        if($sender_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY &&  $receiver_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
+        if(@$sender_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY &&  @$receiver_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
         {
-            print_r($value);dd($sender_wallet?->ledger->asset_type);
             $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id',@$value);
             $exchange_currency =  collect(Setting::getValue('asset_types',[]))->firstWhere('id', $receiver_wallet?->asset_type);
 
@@ -85,7 +84,8 @@ class ExchangeRate extends Model
             }
             $fee = $receiver_wallet?->deposit_fee;
         }else{
-            $exchange_rate_details = ExchangeRate::where(['base_currency' => @$value,'exchange_currency' => $sender_wallet?->ledger->asset_type])->first();
+
+            $exchange_rate_details = ExchangeRate::where(['base_currency' => $sender_wallet?->ledger_id,'exchange_currency' => @$value])->first();
             $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', @$value);
             $exchange_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id',  $receiver_wallet?->asset_type);
 

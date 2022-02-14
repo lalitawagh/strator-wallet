@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Http\Helper;
 use Kanexy\LedgerFoundation\Http\Requests\StoreCommodityRequest;
 use Kanexy\LedgerFoundation\Policies\CommodityTypePolicy;
 
@@ -13,7 +14,7 @@ class CommodityTypeController extends Controller
     {
         // $this->authorize(CommodityTypePolicy::VIEW, Setting::class);
 
-        $commodity_type_lists = Setting::getValue('commodity_types',[]);
+        $commodity_type_lists = Helper::paginate(collect(Setting::getValue('commodity_types',[])));
 
         return view("ledger-foundation::commodity-type.index", compact('commodity_type_lists'));
     }

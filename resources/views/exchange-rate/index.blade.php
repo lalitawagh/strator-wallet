@@ -24,8 +24,8 @@
                             <thead>
                             <tr class="bg-gray-300 dark:bg-dark-1">
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
-                                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Ledger</th>
-                                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Exchange Currency</th>
+                                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Exchange From</th>
+                                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Exchange To</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Frequency</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Valid Date</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Exchange Rate</th>
@@ -37,12 +37,11 @@
                             <tbody>
                                 @foreach ($exchange_rates as $index => $exchange_rate)
                                 @php
-                                    $baseAssetType  = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types',[]))->firstWhere('id', $exchange_rate?->base_currency);
                                     $assetType  = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types',[]))->firstWhere('id', $exchange_rate?->exchange_currency);
                                 @endphp
                                 <tr>
                                     <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
-                                    <td class="border-b dark:border-dark-5">@isset($exchange_rate->ledger?->name){{ $exchange_rate->ledger?->name }} @else {{ @$baseAssetType['name'] }} @endif</td>
+                                    <td class="border-b dark:border-dark-5">@isset($exchange_rate->ledger?->name) {{ $exchange_rate->ledger?->name }} @endisset</td>
                                     <td class="border-b dark:border-dark-5">{{ @$assetType['name'] }}</td>
                                     <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$exchange_rate?->frequency) }}</td>
                                     <td class="border-b dark:border-dark-5">{{ $exchange_rate?->valid_date }}</td>

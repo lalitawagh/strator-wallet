@@ -3,7 +3,7 @@
     @csrf
     @php
         $subtotal = @$details['fee'] + @$details['amount'];
-        $total = \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($subtotal, $details['currency'])->format(null, null, \NumberFormatter::DECIMAL);
+        $total = \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($subtotal, $details['currency'])->formatByDecimal();
     @endphp
     <div class="overlay"></div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 required">

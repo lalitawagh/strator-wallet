@@ -21,7 +21,7 @@ class StoreLedgerRequest extends FormRequest
             'ledger_type'        => 'required',
             'symbol'             => 'nullable',
             'exchange_type'      => 'required',
-            'exchange_rate'      => 'required',
+            'exchange_rate'      => 'nullable',
             'exchange_from'      => 'required',
             'asset_category'     => 'required',
             'asset_class'        => 'required',
@@ -31,7 +31,7 @@ class StoreLedgerRequest extends FormRequest
             'payout_fee'         => 'required',
             'deposit_fee'        => 'required',
             'withdraw_fee'       => 'required',
-            'status'             => 'nullable',
+            'status'             => 'required',
         ];
     }
 }

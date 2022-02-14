@@ -84,6 +84,9 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="my-2">
+                        {{ $asset_type_lists->links() }}
+                    </div>
                 </div>
             </div>
         </div>

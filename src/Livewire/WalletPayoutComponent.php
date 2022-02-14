@@ -75,7 +75,7 @@ class WalletPayoutComponent extends Component
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
         $this->exchange_asset_category = @$asset_type['asset_category'];
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetails($sender_wallet,$exchange_wallet,$value);
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet,$exchange_wallet,$value);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
@@ -83,10 +83,10 @@ class WalletPayoutComponent extends Component
         $this->fee = @$exchange_rate_details['fee'];
 
         session([
-            'fee' => $exchange_rate_details['fee'],
-            'exchange_rate' => $exchange_rate_details['exchange_rate'],
-            'exchange_currency' => $exchange_rate_details['exchange_currency_name'],
-            'base_currency' => $exchange_rate_details['base_currency_name'],
+            'fee' => $this->fee,
+            'exchange_rate' => $this->exchange_rate,
+            'exchange_currency' => $this->exchange_currency,
+            'base_currency' => $this->base_currency,
             'wallet' => $this->selected_wallet,
             'currency' => $value
         ]);

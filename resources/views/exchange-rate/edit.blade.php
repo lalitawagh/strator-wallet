@@ -23,12 +23,12 @@
                         @method('PUT')
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="base_currency" class="form-label sm:w-28">Base Currency <span class="text-theme-6">*</span></label>
+                                <label for="base_currency" class="form-label sm:w-28">Exchange From <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
 
                                         <select name="base_currency" id="base_currency" class="form-control" data-search="true">
-                                            @foreach ($asset_types as $asset_type)
-                                                <option value="{{ $asset_type['id'] }}" @if ($exchange_rate->base_currency == $asset_type['id']) selected @endif >{{ $asset_type['name'] }}</option>
+                                            @foreach ($ledgers as $ledger)
+                                                <option value="{{ $ledger->getKey() }}" @if ($exchange_rate->base_currency == $ledger->getKey()) selected @endif>{{ $ledger->name }}</option>
                                             @endforeach
                                         </select>
 
@@ -39,7 +39,7 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="exchange_currency" class="form-label sm:w-28">Exchange Currency <span class="text-theme-6">*</span></label>
+                                <label for="exchange_currency" class="form-label sm:w-28">Exchange To  <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <select name="exchange_currency" id="exchange_currency" class="form-control" data-search="true">
                                         @foreach ($asset_types as $asset_type)
@@ -74,21 +74,6 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="valid_date" class="form-label sm:w-28">Valid Date <span class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <input id="valid_date" name="valid_date" type="date"
-                                        class="form-control @error('valid_date') border-theme-6 @enderror"
-                                        value="{{ old('valid_date',$exchange_rate->valid_date) }}">
-
-                                    @error('valid_date')
-                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_fee" class="form-label sm:w-28">Exchange Fee  <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="exchange_fee" name="exchange_fee" type="text"
@@ -100,7 +85,9 @@
                                     @enderror
                                 </div>
                             </div>
+                        </div>
 
+                        <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_rate" class="form-label sm:w-28">Exchange Rate <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
@@ -113,9 +100,6 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="note" class="form-label sm:w-28"> Note <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
@@ -126,12 +110,28 @@
                                     @enderror
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="is_hard_stop" class="form-label sm:w-28">Hard Stop <span class="text-theme-6">*</span></label>
+                                <label for="is_hard_stop" class="form-label sm:w-28">Hard Stop </label>
                                 <div class="sm:w-5/6">
-                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch" @if (old("is_hard_stop",$exchange_rate->is_hard_stop)  === 1) checked @endif required>
+                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch" onclick="toggleHardStop(this)" @if ($exchange_rate->is_hard_stop  === 1) checked  @elseif(!is_null(old('is_hard_stop'))) checked @endif>
 
                                     @error('is_hard_stop')
+                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2 @if(!is_null(old('is_hard_stop')))  @elseif($exchange_rate->is_hard_stop === 0) valid_date hidden @endif">
+                                <label for="valid_date" class="form-label sm:w-28">Valid Date <span class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input id="valid_date" name="valid_date" type="date"
+                                        class="form-control @error('valid_date') border-theme-6 @enderror"
+                                        value="{{ old('valid_date',$exchange_rate->valid_date) }}">
+
+                                    @error('valid_date')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>

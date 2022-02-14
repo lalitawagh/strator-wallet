@@ -5,7 +5,6 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
@@ -146,8 +145,6 @@ class DepositController extends Controller
     public function DepositOtpVerification(Request $request)
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
-
-
     }
 
     public function showDepositPayment(Request $request)
@@ -177,7 +174,7 @@ class DepositController extends Controller
         $amount = $depositRequest['amount'];
         if(session('exchange_rate'))
         {
-            $amount = ($depositRequest['amount'] * session('exchange_rate'));
+            $amount = ($depositRequest['amount'] / session('exchange_rate'));
         }
 
         $wallet = Wallet::find($depositRequest['wallet']);
@@ -261,7 +258,7 @@ class DepositController extends Controller
             $amount = ($depositRequest['amount'] - ($response['data']['transaction_fee']/100));
             if(session('exchange_rate'))
             {
-                $amount = ($depositRequest['amount'] - ($response['data']['transaction_fee']/100)) * session('exchange_rate');
+                $amount = ($depositRequest['amount'] - ($response['data']['transaction_fee']/100)) / session('exchange_rate');
             }
 
             $wallet = Wallet::find($depositRequest['wallet']);
@@ -316,7 +313,7 @@ class DepositController extends Controller
         $wallet = Wallet::find($depositRequest['wallet']);
         $exchange_wallet_details = Wallet::forHolder($user)->whereLedgerId($ledger->getKey())->first();
         $workspace = $user->workspaces()->first();
-        $credit_amount = session('exchange_rate') ? ($depositRequest['amount'] * session('exchange_rate')) : $depositRequest['amount'];
+        $credit_amount = session('exchange_rate') ? ($depositRequest['amount'] / session('exchange_rate')) : $depositRequest['amount'];
         $debit_amount = ($depositRequest['amount'] + $depositRequest['fee']);
         $beneficiary_user = User::find($exchange_wallet_details->holder_id);
         $beneficiary_workspace = $beneficiary_user->workspaces()->first();
