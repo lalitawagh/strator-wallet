@@ -15,7 +15,7 @@ class ExchangeRateController extends Controller
     {
         $this->authorize(ExchangeRatePolicy::VIEW, ExchangeRate::class);
 
-        $exchange_rates = ExchangeRate::with('ledger')->paginate();
+        $exchange_rates = ExchangeRate::with('ledger')->orderBy('id','desc')->paginate(7);
 
         return view("ledger-foundation::exchange-rate.index", compact('exchange_rates'));
     }
@@ -34,7 +34,7 @@ class ExchangeRateController extends Controller
     {
         $data = $request->validated();
         $data['is_hard_stop'] = $request->has('is_hard_stop') ? '1' : '0';
-        $data['valid_date'] = date('Y-m-d',strtotime($data['valid_date']));
+        $data['valid_date'] = $data['valid_date'] ? date('Y-m-d',strtotime($data['valid_date'])) : NULL;
 
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['exchange_currency']);
         $base_asset_category = Ledger::whereId($data['base_currency'])->first()->asset_category;
@@ -78,7 +78,7 @@ class ExchangeRateController extends Controller
     {
         $exchange_rate = ExchangeRate::findOrFail($id);
         $data = $request->validated();
-        $data['valid_date'] = date('Y-m-d',strtotime($data['valid_date']));
+        $data['valid_date'] = $data['valid_date'] ? date('Y-m-d',strtotime($data['valid_date'])) : NULL;
 
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $data['exchange_currency']);
         $base_asset_category = Ledger::whereId($data['base_currency'])->first()->asset_category;

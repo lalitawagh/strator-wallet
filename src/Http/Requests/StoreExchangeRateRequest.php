@@ -19,11 +19,21 @@ class StoreExchangeRateRequest extends FormRequest
             'base_currency'          =>    ['required'],
             'exchange_currency'      =>    ['required'],
             'frequency'              =>    ['required'],
-            'valid_date'             =>    ['required'],
-            'is_hard_stop'           =>    ['required'],
+            'valid_date'             =>    ['nullable'],
+            'is_hard_stop'           =>    ['nullable'],
             'exchange_fee'           =>    ['required'],
             'exchange_rate'          =>    ['required'],
             'note'                   =>    ['required'],
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if($this->has('is_hard_stop') && is_null($this->input('valid_date')))
+            {
+                $validator->errors()->add('valid_date', 'Valid Date field is required');
+            }
+        });
     }
 }

@@ -54,8 +54,9 @@
                                         $ledger_types = \Kanexy\LedgerFoundation\Enums\LedgerType::toArray();
                                     @endphp
                                     <select name="ledger_type" id="ledger_type" data-search="true" class="tail-select w-full @error('ledger_type') border-theme-6 @enderror">
+                                        <option value="">Select Ledger Type</option>
                                         @foreach ($ledger_types as $key => $ledger_type)
-                                            <option value="{{ $ledger_type }}">{{ trans('ledger-foundation::configuration.'.$ledger_type) }}</option>
+                                            <option value="{{ $ledger_type }}" @if(old('ledger_type') == $ledger_type) selected @endif>{{ trans('ledger-foundation::configuration.'.$ledger_type) }}</option>
                                         @endforeach
                                     </select>
 
@@ -90,6 +91,7 @@
                                         $exchange_from = \Kanexy\LedgerFoundation\Enums\ExchangeFrom::toArray();
                                     @endphp
                                     <select name="exchange_from" id="exchange_from" data-search="true" class="tail-select w-full @error('exchange_from') border-theme-6 @enderror">
+                                        <option value="">Select Exchange From</option>
                                         @foreach ($exchange_from as $key => $exchange_from_val)
                                             <option value="{{ $exchange_from_val }}" @if (old('exchange_from') == $exchange_from_val) selected @endif>{{ trans('ledger-foundation::configuration.'.$exchange_from_val) }}</option>
                                         @endforeach
@@ -101,24 +103,11 @@
                                 </div>
                             </div>
 
-
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="logo" class="form-label sm:w-30"> Logo </label>
-                                <div class="sm:w-5/6">
-                                    <input type="file" class="form-control" name="image">
-
-                                    @error('image')
-                                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="asset_class" class="form-label sm:w-30"> Asset Class <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <select name="asset_class" id="asset_class" data-search="true" class="tail-select w-full @error('asset_class') border-theme-6 @enderror">
+                                        <option value="">Select Asset Class</option>
                                         @foreach ($asset_classes as $asset_class)
                                             <option value="{{ $asset_class['id'] }}" @if (old('asset_class') == $asset_class['id']) selected @endif>{{ ucfirst($asset_class['name']) }}</option>
                                         @endforeach
@@ -129,10 +118,14 @@
                                     @enderror
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="status" class="form-label sm:w-30"> Status</label>
+                                <label for="status" class="form-label sm:w-30"> Status <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <select name="status" id="status" data-search="true" class="tail-select w-full">
+                                        <option value="">Select Status</option>
                                         <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW) checked @endif>{{ trans('ledger-foundation::configuration.new') }}</option>
                                         <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE) checked @endif>{{ trans('ledger-foundation::configuration.active') }}</option>
                                         <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::INACTIVE }}" @if (old("status")  === \Kanexy\LedgerFoundation\Enums\LedgerStatus::INACTIVE) checked @endif>{{ trans('ledger-foundation::configuration.inactive') }}</option>

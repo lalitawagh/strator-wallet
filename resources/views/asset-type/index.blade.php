@@ -37,7 +37,7 @@
                                 @endphp
                                 @foreach ($asset_type_lists as $index => $asset_type_list)
                                     <tr>
-                                        <td class="border-b dark:border-dark-5">{{ $i }}</td>
+                                        <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
                                         <td class="border-b dark:border-dark-5">{{ $asset_type_list['name'] }}</td>
                                         <td class="border-b dark:border-dark-5">
                                             {{ ucwords(strtolower(str_replace('_', ' ', $asset_type_list['asset_category']))) }}
@@ -83,6 +83,9 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div class="my-2">
+                        {{ $asset_type_lists->links() }}
                     </div>
                 </div>
             </div>

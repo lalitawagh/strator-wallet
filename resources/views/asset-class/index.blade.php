@@ -34,7 +34,7 @@
                             @endphp
                             @foreach ($asset_class_lists as $index => $asset_class_list)
                                 <tr>
-                                    <td class="border-b dark:border-dark-5">{{ $i }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
                                     <td class="border-b dark:border-dark-5">{{ $asset_class_list['name'] }}</td>
                                     <td class="border-b dark:border-dark-5">
                                         @isset($asset_class_list['image'])
@@ -78,7 +78,10 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+                <div class="my-2">
+                    {{ $asset_class_lists->links() }}
+                </div>
+             </div>
         </div>
     </div>
 </div>

@@ -42,7 +42,7 @@
                                     $assetClass = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_classes',[]))->firstWhere('id', $ledger->asset_class);
                                 @endphp
                                 <tr>
-                                    <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ $ledgers->firstItem() + $index }}</td>
                                     <td class="border-b dark:border-dark-5">{{ $ledger->name }}</td>
                                     <td class="border-b dark:border-dark-5">
                                         @isset($ledger->image)

@@ -47,7 +47,7 @@
                                 @endphp
                                 @foreach ($commodity_type_lists as $index => $commodity_type_list)
                                     <tr>
-                                        <td class="border-b dark:border-dark-5">{{ $i }}</td>
+                                        <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
                                         <td class="border-b dark:border-dark-5">{{ $commodity_type_list['name'] }}</td>
                                         <td class="border-b dark:border-dark-5">
                                             @isset($commodity_type_list['image'])
@@ -91,6 +91,9 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div class="my-2">
+                        {{ $commodity_type_lists->links() }}
                     </div>
                 </div>
             </div>
