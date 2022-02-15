@@ -176,6 +176,8 @@ class PayoutController extends Controller
         $sender_wallet->debit($debit_amount);
         $beneficiary_wallet->credit($amount);
 
+        session()->forget(['fee', 'exchange_rate', 'exchange_currency', 'base_currency', 'wallet', 'currency']);
+
         return redirect()->route("dashboard.wallet.payout.index", ['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
             'message' => 'Processing the payment. It may take a while.',
             'status' => 'success',
