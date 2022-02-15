@@ -24,8 +24,8 @@
             <label for="logo" class="form-label sm:w-30"> Logo </label>
             <div class="sm:w-5/6">
                 <input type="file" class="form-control" name="image">
-                @isset($logo)
-                <img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($logo) }}">
+                @isset($ledger?->image)
+                <img class="rounded-md proof-default" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger?->image) }}">
                 @endisset
 
                 @error('image')
@@ -77,7 +77,7 @@
                     <select name="commodity_category" id="commodity_category" data-search="true" class="tail-select w-full @error('commodity_category') border-theme-6 @enderror">
                         <option value="">Select Commodity Category</option>
                         @foreach ($commodity_types as $commodity_type)
-                            <option value="{{ $commodity_type['id'] }}" @if (old('commodity_category',$selected_commodity_type) == $commodity_type['id']) selected @endif>{{ ucfirst($commodity_type['name']) }}</option>
+                            <option value="{{ $commodity_type['id'] }}" @if (old('commodity_category',$ledger?->commodity_category) == $commodity_type['id']) selected @endif>{{ ucfirst($commodity_type['name']) }}</option>
                         @endforeach
                     </select>
 
