@@ -83,12 +83,12 @@ class WalletPayoutComponent extends Component
         $this->fee = @$exchange_rate_details['fee'];
 
         session([
-            'fee' => $this->fee,
-            'exchange_rate' => $this->exchange_rate,
-            'exchange_currency' => $this->exchange_currency,
-            'base_currency' => $this->base_currency,
-            'wallet' => $this->selected_wallet,
-            'currency' => $value
+            'payout_fee' => $this->fee,
+            'payout_exchange_rate' => $this->exchange_rate,
+            'payout_exchange_currency' => $this->exchange_currency,
+            'payout_base_currency' => $this->base_currency,
+            'payout_wallet' => $this->selected_wallet,
+            'payout_currency' => $value
         ]);
     }
 
