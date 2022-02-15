@@ -97,12 +97,12 @@ class PayoutController extends Controller
             'ref_id' => $data['wallet'],
             'ref_type' => 'wallet',
             'settled_amount' => $amount,
-            'settled_currency' => session('base_currency') ? session('base_currency') : null,
+            'settled_currency' => session('payout_base_currency') ? session('payout_base_currency') : null,
             'settlement_date' => date('Y-m-d'),
             'settled_at' => now(),
             'initiator_id' => optional($user)->getKey(),
             'initiator_type' => optional($user)->getMorphClass(),
-            'transaction_fee' => session('fee') ? session('fee') : 0,
+            'transaction_fee' => session('payout_fee') ? session('payout_fee') : 0,
             'status' => 'pending',
             'note' => $data['note'],
             'meta' => [
@@ -114,9 +114,9 @@ class PayoutController extends Controller
                 'beneficiary_ref_id' => $beneficiary_wallet->id,
                 'beneficiary_ref_type' => 'wallet',
                 'beneficiary_name' => $beneficiary->getFullName(),
-                'sender_currency' => session('base_currency') ? session('base_currency') : null,
-                'receiver_currency' => session('exchange_currency') ? session('exchange_currency') : null,
-                'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
+                'sender_currency' => session('payout_base_currency') ? session('payout_base_currency') : null,
+                'receiver_currency' => session('payout_exchange_currency') ? session('payout_exchange_currency') : null,
+                'exchange_rate' => session('payout_exchange_rate') ? session('payout_exchange_rate') : null,
                 'transaction_type' => 'payout',
                 'balance' => $sender_wallet?->balance ? ($sender_wallet?->balance - ($amount)) : 0,
             ],
@@ -176,7 +176,7 @@ class PayoutController extends Controller
         $sender_wallet->debit($debit_amount);
         $beneficiary_wallet->credit($amount);
 
-        session()->forget(['fee', 'exchange_rate', 'exchange_currency', 'base_currency', 'wallet', 'currency']);
+        session()->forget(['payout_fee', 'payout_exchange_rate', 'payout_exchange_currency', 'payout_base_currency', 'payout_wallet', 'payout_currency']);
 
         return redirect()->route("dashboard.wallet.payout.index", ['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
             'message' => 'Processing the payment. It may take a while.',

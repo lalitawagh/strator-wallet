@@ -310,47 +310,12 @@ class DepositController extends Controller
         $user = Auth::user();
         $depositRequest = session('deposit_request');
         $ledger = Ledger::whereAssetType($depositRequest['exchange_currency'])->first();
-        $wallet = Wallet::find($depositRequest['wallet']);
         $exchange_wallet_details = Wallet::forHolder($user)->whereLedgerId($ledger->getKey())->first();
         $workspace = $user->workspaces()->first();
         $credit_amount = session('exchange_rate') ? ($depositRequest['amount'] / session('exchange_rate')) : $depositRequest['amount'];
         $debit_amount = ($depositRequest['amount'] + $depositRequest['fee']);
         $beneficiary_user = User::find($exchange_wallet_details->holder_id);
         $beneficiary_workspace = $beneficiary_user->workspaces()->first();
-
-
-
-            Transaction::create([
-                'urn' => Transaction::generateUrn(),
-                'amount' => $credit_amount,
-                'workspace_id' => $workspace->getKey(),
-                'type' => 'credit',
-                'payment_method' => 'wallet',
-                'note' => null,
-                'ref_id' =>  $depositRequest['wallet'],
-                'ref_type' => 'wallet',
-                'settled_amount' => $credit_amount,
-                'settled_currency' => $depositRequest['currency'],
-                'settlement_date' => date('Y-m-d'),
-                'settled_at' => now(),
-                'transaction_fee' => $depositRequest['fee'],
-                'status' => 'accepted',
-                'meta' => [
-                    'reference' => $depositRequest['reference'],
-                    'sender_name' => $exchange_wallet_details->name,
-                    'sender_wallet_urn' => $exchange_wallet_details->urn,
-                    'beneficiary_id' => Auth::user()->id,
-                    'beneficiary_ref_id' => $depositRequest['wallet'],
-                    'beneficiary_name' => Auth::user()->getFullName(),
-                    'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
-                    'base_currency' => session('base_currency') ? session('base_currency') : null,
-                    'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
-                    'transaction_type' => 'deposit',
-                    'balance' => ($wallet?->balance + $credit_amount),
-                ],
-            ]);
-
-            $wallet->credit($credit_amount);
 
             Transaction::create([
                 'urn' => Transaction::generateUrn(),
@@ -383,6 +348,40 @@ class DepositController extends Controller
             ]);
 
             $exchange_wallet_details->debit($debit_amount);
+
+            $wallet = Wallet::find($depositRequest['wallet']);
+
+            Transaction::create([
+                'urn' => Transaction::generateUrn(),
+                'amount' => $credit_amount,
+                'workspace_id' => $workspace->getKey(),
+                'type' => 'credit',
+                'payment_method' => 'wallet',
+                'note' => null,
+                'ref_id' =>  $depositRequest['wallet'],
+                'ref_type' => 'wallet',
+                'settled_amount' => $credit_amount,
+                'settled_currency' => $depositRequest['currency'],
+                'settlement_date' => date('Y-m-d'),
+                'settled_at' => now(),
+                'transaction_fee' => $depositRequest['fee'],
+                'status' => 'accepted',
+                'meta' => [
+                    'reference' => $depositRequest['reference'],
+                    'sender_name' => $exchange_wallet_details->name,
+                    'sender_wallet_urn' => $exchange_wallet_details->urn,
+                    'beneficiary_id' => Auth::user()->id,
+                    'beneficiary_ref_id' => $depositRequest['wallet'],
+                    'beneficiary_name' => Auth::user()->getFullName(),
+                    'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
+                    'base_currency' => session('base_currency') ? session('base_currency') : null,
+                    'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
+                    'transaction_type' => 'deposit',
+                    'balance' => ($wallet?->balance + $credit_amount),
+                ],
+            ]);
+
+            $wallet->credit($credit_amount);
 
         return redirect()->route('dashboard.wallet.deposit-final-detail',['filter' => ['workspace_id' => $workspace->getKey()]]);
     }
