@@ -39,7 +39,7 @@ class RegisterWalletsForLedger implements ShouldQueue
         if ($this->ledger->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $this->ledger->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET) {
 
             foreach ($users as $user) {
-                $wallet = Wallet::where( ['ledger_id' => $this->ledger->getKey(),"holder_type" => $user->getMorphClass(),"holder_id" => $user->getKey()])->first();
+                $wallet = Wallet::where(['ledger_id' => $this->ledger->getKey(),"holder_type" => $user->getMorphClass(),"holder_id" => $user->getKey()])->first();
 
                 if(!is_null($wallet))
                 {
