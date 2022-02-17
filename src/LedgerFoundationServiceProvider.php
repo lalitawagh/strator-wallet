@@ -5,6 +5,8 @@ namespace Kanexy\LedgerFoundation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Kanexy\Cms\Enums\RegistrationStep;
+use Kanexy\Cms\Helper;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\LedgerFoundation\Livewire\DepositOtpVerificationComponent;
@@ -115,7 +117,8 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
 
         /** Create wallet account by default from banking flow **/
         PartnerFoundation::setRedirectRouteAfterBanking(function () {
-            return route("customer.signup.wallet.create");
+            $nextRoute = (new Helper())->getNextRoute(RegistrationStep::BANKING);
+            redirect($nextRoute->getUrl());
         });
 
         Livewire::component('deposit-wallet-component', DepositWalletComponent::class);
