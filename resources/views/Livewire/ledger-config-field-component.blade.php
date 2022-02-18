@@ -77,7 +77,7 @@
                     <select name="commodity_category" id="commodity_category" data-search="true" class="tail-select w-full @error('commodity_category') border-theme-6 @enderror">
                         <option value="">Select Commodity Category</option>
                         @foreach ($commodity_types as $commodity_type)
-                            <option value="{{ $commodity_type['id'] }}" @if (old('commodity_category',$ledger?->commodity_category) == $commodity_type['id']) selected @endif>{{ ucfirst($commodity_type['name']) }}</option>
+                            <option value="{{ $commodity_type['id'] }}" @if (old('commodity_category', @$ledger?->commodity_category) == $commodity_type['id']) selected @endif>{{ ucfirst($commodity_type['name']) }}</option>
                         @endforeach
                     </select>
 
