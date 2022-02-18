@@ -3,7 +3,7 @@
 @section("title", "Exchange Rate")
 
 @section("config-content")
-    <div class="configuration-container">
+    <div class="configuration-container  w-screen">
         <div class="grid grid-cols-12 gap-6">
             <div class="intro-y box col-span-12 xxl:col-span-12">
                 <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
