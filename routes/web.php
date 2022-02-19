@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Kanexy\Cms\Middleware\ValidateRegistrationCompletedMiddleware;
 use Kanexy\LedgerFoundation\Http\Controllers\LedgerFoundationController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetClassController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetTypeController;
@@ -55,6 +56,6 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'d
 
 });
 
-Route::group(['middleware' =>['web','auth'],'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {
+Route::group(['middleware' =>['web','auth',ValidateRegistrationCompletedMiddleware::class],'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {
     Route::resource('wallet', WalletController::class)->only(['index', 'create', 'store', 'show']);
 });
