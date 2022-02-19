@@ -5,6 +5,9 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Enums\RegistrationStep;
+use Kanexy\Cms\Enums\Status;
+use Kanexy\Cms\Helper;
+use Kanexy\Cms\Models\UserLog;
 use Kanexy\LedgerFoundation\Enums\WalletStatus;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
@@ -39,16 +42,22 @@ class WalletController extends Controller
 
         if($user->is_banking_user == 1)
         {
-            $user->registrationStep(RegistrationStep::BANKING_SELECTED);
+            UserLog::registrationStep(RegistrationStep::BANKING);
 
-            return redirect()->route("customer.signup.address.index");
+            $nextRoute = (new Helper())->getNextRoute(RegistrationStep::BANKING);
+
+            return redirect($nextRoute->getUrl());
         }
 
         $membership->status = MembershipStatus::ACTIVE;
         $membership->update();
 
-        $user->registrationStep(RegistrationStep::DASHBOARD);
+        UserLog::registrationStep(RegistrationStep::DASHBOARD);
 
+        if(empty($user->registration_step))
+        {
+            $user->registrationStep(Status::COMPLETED);
+        }
         return redirect()->route("dashboard.index");
     }
 }
