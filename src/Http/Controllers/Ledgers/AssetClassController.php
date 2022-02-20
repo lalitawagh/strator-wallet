@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Http\Helper;
 use Kanexy\LedgerFoundation\Http\Requests\StoreAssetClassRequest;
 use Kanexy\LedgerFoundation\Policies\AssetClassPolicy;
 
@@ -11,16 +12,15 @@ class AssetClassController extends Controller
 {
     public function index()
     {
-        $this->authorize(AssetClassPolicy::VIEW, Setting::class);
-
-        $asset_class_lists = Setting::getValue('asset_classes',[]);
+        // $this->authorize(AssetClassPolicy::VIEW, Setting::class);
+        $asset_class_lists = Helper::paginate(collect(Setting::getValue('asset_classes',[])));
 
         return view("ledger-foundation::asset-class.index", compact('asset_class_lists'));
     }
 
     public function create()
     {
-        $this->authorize(AssetClassPolicy::CREATE, Setting::class);
+        // $this->authorize(AssetClassPolicy::CREATE, Setting::class);
 
         return view("ledger-foundation::asset-class.create");
     }
@@ -47,7 +47,7 @@ class AssetClassController extends Controller
 
     public function edit($id)
     {
-        $this->authorize(AssetClassPolicy::EDIT, Setting::class);
+        // $this->authorize(AssetClassPolicy::EDIT, Setting::class);
 
         $asset_class = collect(Setting::getValue('asset_classes',[]))->firstWhere('id', $id);
 
@@ -90,7 +90,7 @@ class AssetClassController extends Controller
 
     public function destroy($id)
     {
-        $this->authorize(AssetClassPolicy::DELETE, Setting::class);
+        // $this->authorize(AssetClassPolicy::DELETE, Setting::class);
 
         $settings = collect(Setting::getValue('asset_classes', []))->filter(function ($item) use ($id) {
             if ($item['id'] != $id) {

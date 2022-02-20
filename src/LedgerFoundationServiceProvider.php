@@ -48,13 +48,11 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         '2022_01_25_122500_create_exchange_rates_table',
         '2022_01_17_130105_create_wallets_table',
         '2022_02_02_062027_change_ref_id_type_for_transaction',
-        '2022_02_08_111607_alter_column_nullable_in_ledger'
+        '2022_02_08_111607_alter_column_nullable_in_ledger',
+        '2022_02_14_123946_alter_table_column_exchange_rate'
     ];
 
     private array $policies = [
-        Setting::class => CommodityTypePolicy::class,
-        Setting::class => AssetTypePolicy::class,
-        Setting::class => AssetClassPolicy::class,
         Ledger::class => LedgerPolicy::class,
         Wallet::class => PayoutPolicy::class,
         ExchangeRate::class => ExchangeRatePolicy::class,

@@ -33,10 +33,10 @@ class LedgerConfigFieldComponent extends Component
         $this->asset_categories = $asset_categories;
         $this->commodity_types = $commodity_types;
         $this->ledger = $ledger;
-        $this->selected_exchange_type =  $ledger ? $ledger->exchange_type : '';
-        $this->selected_asset_category =  $ledger ? $ledger->asset_category : '';
-        $this->selected_asset_type =  $ledger ? $ledger->asset_type : '';
-        $this->exchange_rate = $ledger ? $ledger->exchange_rate : '';
+        $this->selected_exchange_type =  $ledger ? $ledger?->exchange_type : '';
+        $this->selected_asset_category =  $ledger ? $ledger?->asset_category : '';
+        $this->selected_asset_type =  $ledger ? $ledger?->asset_type : '';
+        $this->exchange_rate = $ledger ? $ledger?->exchange_rate : '';
     }
 
     public function changeExchangeType($value)
