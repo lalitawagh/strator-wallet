@@ -3,7 +3,7 @@
 @section("title", "Create Asset Class")
 
 @section("config-content")
-    <div class="configuration-container">
+    <div class="configuration-container w-screen">
         <div class="grid grid-cols-12 gap-6">
             <!-- BEGIN: Daily Sales -->
             <div class="intro-y box col-span-12 xxl:col-span-12">
@@ -18,9 +18,9 @@
                 <div class="p-5">
                     <form action="{{ route('dashboard.wallet.asset-class.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="name" class="form-label sm:w-28">Name <span class="text-theme-6">*</span></label>
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
+                                <label for="name" class="form-label sm:w-30">Name <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="name" name="name" type="text"
                                         class="form-control @error('name') border-theme-6 @enderror"
@@ -32,8 +32,8 @@
                                 </div>
                             </div>
 
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="logo" class="form-label sm:w-28"> Image </label>
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
+                                <label for="logo" class="form-label sm:w-30"> Image </label>
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">
 
@@ -44,9 +44,9 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="status" class="form-label sm:w-28"> Status </label>
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
+                                <label for="status" class="form-label sm:w-30"> Status </label>
                                 <div class="sm:w-5/6">
                                     <input id="status" name="status" type="checkbox" class="form-check-switch"  @if (old("status")  === \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) checked @endif>
 

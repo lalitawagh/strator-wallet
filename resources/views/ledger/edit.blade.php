@@ -3,7 +3,7 @@
 @section("title", "Edit Ledger")
 
 @section("config-content")
-    <div class="configuration-container">
+    <div class="configuration-container w-screen">
         <div class="grid grid-cols-12 gap-6">
             <!-- BEGIN: Daily Sales -->
             <div class="intro-y box col-span-12 xxl:col-span-12">
@@ -19,8 +19,8 @@
                     <form action="{{ route('dashboard.wallet.ledger.update',$ledger->getKey()) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="name" class="form-label sm:w-30">Ledger Name <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="name" name="name" type="text"
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="code" class="form-label sm:w-30">Code <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="code" name="code" type="text"
@@ -47,8 +47,8 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="ledger_type" class="form-label sm:w-30">Ledger Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     @php
@@ -67,7 +67,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="symbol" class="form-label sm:w-30">Symbol <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="symbol" name="symbol" type="symbol"
@@ -84,8 +84,8 @@
 
                         @livewire('ledger-config-field-component', ['asset_types' => $asset_types,'asset_categories' => \Kanexy\LedgerFoundation\Enums\AssetCategory::toArray() ,'commodity_types' => $commodity_types, 'ledger' => $ledger])
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="exchange_from" class="form-label sm:w-30">Exchange From  <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     @php
@@ -104,7 +104,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="asset_class" class="form-label sm:w-30"> Asset Class <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <select name="asset_class" id="asset_class" data-search="true" class="tail-select w-full @error('asset_class') border-theme-6 @enderror">
@@ -121,8 +121,8 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-30"> Status <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <select name="status" id="status" data-search="true" class="tail-select w-full">
@@ -139,8 +139,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="deposit_fee" class="form-label sm:w-30">Deposit Fee <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="deposit_fee" name="deposit_fee" type="text"
@@ -152,7 +152,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="withdraw_fee" class="form-label sm:w-30">Withdraw Fee <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="withdraw_fee" name="withdraw_fee" type="text"
@@ -165,8 +165,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="payout_fee" class="form-label sm:w-30">Payout Fee <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="payout_fee" name="payout_fee" type="text"

@@ -1,15 +1,15 @@
-<div class="intro-y mt-3 sm:mt-5">
-    <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
+<div class="intro-y mt-0 sm:mt-0">
+    <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5 pb-2">
         <x-list-view-filters/>
         @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSubscriber())
             @if ($transactionType == 'deposit')
             <a href="{{ route('dashboard.wallet.deposit.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 -mt-3 -mb-1">Deposit</a>
             @elseif ($transactionType == 'payout')
-                <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 -mt-3 -mb-1">Payout</a>
+            <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 -mt-3 -mb-1">Payout</a>
             @endif
         @endif
     </div>
-    <div class="intro-y box p-3 mt-0">
+    <div class="intro-y sm:py-3 sm:mt-2">
         <div class=" overflow-x-auto overflow-y-hidden">
             <table id="tableID" class="shroting display table table-report mt-2" style="width:100%">
                 <thead class="short-wrp">
