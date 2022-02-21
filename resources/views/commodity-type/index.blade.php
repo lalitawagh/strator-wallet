@@ -3,7 +3,7 @@
 @section('title', 'Commodity Type')
 
 @section('config-content')
-    <div class="configuration-container">
+    <div class="configuration-container w-screen">
         <div class="grid grid-cols-12 gap-6">
             <!-- BEGIN: Daily Sales -->
             <div class="intro-y box col-span-12 xxl:col-span-12">
