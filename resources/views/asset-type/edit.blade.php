@@ -39,7 +39,7 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="name" class="form-label sm:w-28">Name <span class="text-theme-6">*</span></label>
+                                <label for="name" class="form-label sm:w-30">Name <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="name" name="name" type="text"
                                         class="form-control @error('name') border-theme-6 @enderror"
@@ -68,7 +68,7 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="status" class="form-label sm:w-28"> Active</label>
+                                <label for="status" class="form-label sm:w-30"> Active</label>
                                 <div class="sm:w-5/6">
                                     <input id="status" name="status" type="checkbox" class="form-check-switch" @if (old("status",$asset_type['status'])  === \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) checked @endif>
 
