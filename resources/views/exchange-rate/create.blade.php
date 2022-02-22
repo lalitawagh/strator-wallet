@@ -20,8 +20,8 @@
                     @endif
                     <form action="{{ route('dashboard.wallet.exchange-rate.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="grid grid-cols-12 md:gap-3 mt-0">
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="base_currency" class="form-label sm:w-30">Exchange From <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
 
@@ -37,7 +37,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_currency" class="form-label sm:w-30">Exchange To <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <select name="exchange_currency" id="exchange_currency" class="form-control" data-search="true">
@@ -53,8 +53,8 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-3 mt-0">
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="frequency" class="form-label sm:w-30">Frequency <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     @php
@@ -72,7 +72,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_fee" class="form-label sm:w-30">Exchange Fee  <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="exchange_fee" name="exchange_fee" type="text"
@@ -86,8 +86,8 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-3 mt-0">
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_rate" class="form-label sm:w-30">Exchange Rate <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="exchange_rate" name="exchange_rate" type="text"
@@ -100,7 +100,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="note" class="form-label sm:w-30"> Note <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input type="text" class="form-control" name="note" value="{{ old('note') }}" required>
@@ -112,8 +112,8 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-3 mt-0">
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="is_hard_stop" class="form-label sm:w-30">Hard Stop </label>
                                 <div class="sm:w-5/6">
                                     <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch" onclick="toggleHardStop(this)" @if(!is_null(old('is_hard_stop'))) checked @endif>
@@ -124,7 +124,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2 @if(!is_null(old('is_hard_stop'))) @else valid_date hidden @endif">
+                            <div class="col-span-12 md:col-span-6 form-inline mt-2 @if(!is_null(old('is_hard_stop'))) @else valid_date hidden @endif">
                                 <label for="valid_date" class="form-label sm:w-30">Valid Date <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="valid_date" name="valid_date" class="form-control datepicker_flatpicker @error('valid_date') border-theme-6 @enderror"
