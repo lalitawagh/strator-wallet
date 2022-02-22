@@ -9,6 +9,7 @@ use Kanexy\Cms\Enums\RegistrationStep;
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
+use Kanexy\LedgerFoundation\Contracts\LedgerConfiguration;
 use Kanexy\LedgerFoundation\Livewire\DepositOtpVerificationComponent;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionDetailComponent;
@@ -59,6 +60,9 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Wallet::class => PayoutPolicy::class,
         ExchangeRate::class => ExchangeRatePolicy::class,
         Wallet::class => DepositPolicy::class,
+        LedgerConfiguration::class => AssetClassPolicy::class,
+        LedgerConfiguration::class => AssetTypePolicy::class,
+        LedgerConfiguration::class => CommodityTypePolicy::class
     ];
 
     public function registerDefaultPolicies()

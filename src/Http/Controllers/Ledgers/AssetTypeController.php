@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Contracts\LedgerConfiguration;
 use Kanexy\LedgerFoundation\Http\Helper;
 use Kanexy\LedgerFoundation\Http\Requests\StoreAssetTypeRequest;
 use Kanexy\LedgerFoundation\Policies\AssetTypePolicy;
@@ -12,7 +13,7 @@ class AssetTypeController extends Controller
 {
     public function index()
     {
-        // $this->authorize(AssetTypePolicy::VIEW, Setting::class);
+        $this->authorize(AssetTypePolicy::VIEW, LedgerConfiguration::class);
 
         $asset_type_lists = Helper::paginate(collect(Setting::getValue('asset_types',[])));
 
@@ -21,7 +22,7 @@ class AssetTypeController extends Controller
 
     public function create()
     {
-        // $this->authorize(AssetTypePolicy::CREATE, Setting::class);
+        $this->authorize(AssetTypePolicy::CREATE, LedgerConfiguration::class);
 
         return view("ledger-foundation::asset-type.create");
     }
@@ -48,7 +49,7 @@ class AssetTypeController extends Controller
 
     public function edit($id)
     {
-        // $this->authorize(AssetTypePolicy::EDIT, Setting::class);
+        $this->authorize(AssetTypePolicy::EDIT, LedgerConfiguration::class);
 
         $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $id);
 
@@ -92,7 +93,7 @@ class AssetTypeController extends Controller
 
     public function destroy($id)
     {
-        // $this->authorize(AssetTypePolicy::DELETE, Setting::class);
+        $this->authorize(AssetTypePolicy::DELETE, LedgerConfiguration::class);
 
         $settings = collect(Setting::getValue('asset_types', []))->filter(function ($item) use ($id) {
             if ($item['id'] != $id) {
