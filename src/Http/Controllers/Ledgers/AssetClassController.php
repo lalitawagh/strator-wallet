@@ -5,7 +5,7 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 use App\Models\User;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
-use Kanexy\LedgerFoundation\Contracts\LedgerConfiguration;
+use Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration;
 use Kanexy\LedgerFoundation\Http\Helper;
 use Kanexy\LedgerFoundation\Http\Requests\StoreAssetClassRequest;
 use Kanexy\LedgerFoundation\Policies\AssetClassPolicy;
@@ -14,7 +14,7 @@ class AssetClassController extends Controller
 {
     public function index()
     {
-        $this->authorize(AssetClassPolicy::VIEW, LedgerConfiguration::class);
+        $this->authorize(AssetClassPolicy::VIEW, AssetClassConfiguration::class);
         $asset_class_lists = Helper::paginate(collect(Setting::getValue('asset_classes',[])));
 
         return view("ledger-foundation::asset-class.index", compact('asset_class_lists'));
@@ -22,7 +22,7 @@ class AssetClassController extends Controller
 
     public function create()
     {
-        $this->authorize(AssetClassPolicy::CREATE, LedgerConfiguration::class);
+        $this->authorize(AssetClassPolicy::CREATE, AssetClassConfiguration::class);
 
         return view("ledger-foundation::asset-class.create");
     }
@@ -49,7 +49,7 @@ class AssetClassController extends Controller
 
     public function edit($id)
     {
-        $this->authorize(AssetClassPolicy::EDIT, LedgerConfiguration::class);
+        $this->authorize(AssetClassPolicy::EDIT, AssetClassConfiguration::class);
 
         $asset_class = collect(Setting::getValue('asset_classes',[]))->firstWhere('id', $id);
 
@@ -92,7 +92,7 @@ class AssetClassController extends Controller
 
     public function destroy($id)
     {
-        $this->authorize(AssetClassPolicy::DELETE, LedgerConfiguration::class);
+        $this->authorize(AssetClassPolicy::DELETE, AssetClassConfiguration::class);
 
         $settings = collect(Setting::getValue('asset_classes', []))->filter(function ($item) use ($id) {
             if ($item['id'] != $id) {

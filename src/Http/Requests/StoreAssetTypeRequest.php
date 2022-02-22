@@ -3,14 +3,14 @@
 namespace Kanexy\LedgerFoundation\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Kanexy\LedgerFoundation\Contracts\LedgerConfiguration;
+use Kanexy\LedgerFoundation\Contracts\AssetTypeConfiguration;
 use Kanexy\LedgerFoundation\Policies\AssetTypePolicy;
 
 class StoreAssetTypeRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can(AssetTypePolicy::CREATE, LedgerConfiguration::class);
+        return $this->user()->can(AssetTypePolicy::CREATE, AssetTypeConfiguration::class);
     }
 
     public function rules()

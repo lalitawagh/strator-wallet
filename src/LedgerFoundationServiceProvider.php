@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Enums\RegistrationStep;
 use Kanexy\Cms\Helper;
-use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
-use Kanexy\LedgerFoundation\Contracts\LedgerConfiguration;
+use Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration;
+use Kanexy\LedgerFoundation\Contracts\AssetTypeConfiguration;
+use Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration;
+use Kanexy\LedgerFoundation\Contracts\Payout;
 use Kanexy\LedgerFoundation\Livewire\DepositOtpVerificationComponent;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionDetailComponent;
@@ -57,13 +59,14 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
 
     private array $policies = [
         Ledger::class => LedgerPolicy::class,
-        Wallet::class => PayoutPolicy::class,
+        Payout::class => PayoutPolicy::class,
         ExchangeRate::class => ExchangeRatePolicy::class,
         Wallet::class => DepositPolicy::class,
-        LedgerConfiguration::class => AssetClassPolicy::class,
-        LedgerConfiguration::class => AssetTypePolicy::class,
-        LedgerConfiguration::class => CommodityTypePolicy::class
+        AssetClassConfiguration::class => AssetClassPolicy::class,
+        AssetTypeConfiguration::class => AssetTypePolicy::class,
+        CommodityTypeConfiguration::class => CommodityTypePolicy::class
     ];
+
 
     public function registerDefaultPolicies()
     {
