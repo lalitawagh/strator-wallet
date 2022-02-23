@@ -116,8 +116,8 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         },3000);
 
         /** Create wallet account by default from banking flow **/
-        PartnerFoundation::setRedirectRouteAfterBanking(function () {
-            $nextRoute = (new Helper())->getNextRoute(RegistrationStep::BANKING);
+        PartnerFoundation::setRedirectRouteAfterBanking(function (User $user) {
+            $nextRoute = $user->getNextRegistrationRoute();
             redirect($nextRoute->getUrl());
         });
 
