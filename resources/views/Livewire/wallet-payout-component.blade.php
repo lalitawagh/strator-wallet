@@ -2,11 +2,11 @@
 <style>
     .plus {
     right: -18px;
-    top: 62%;
+    top: 50%;
     transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
-    margin-top: 5px;
+    margin-top: 0px;
     position: absolute;
 }
 </style>
