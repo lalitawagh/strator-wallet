@@ -14,19 +14,20 @@ class WalletController extends Controller
 {
     public function create()
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
         $ledgers = Ledger::get();
         $workspace = $user->workspaces()->first();
         $membership = $workspace->memberships()->first();
 
-        collect($ledgers)->map(function ($ledger) use($user) {
+        collect($ledgers)->each(function ($item) use($user) {
 
-            if($ledger->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $ledger->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET)
+            if($item->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $item->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET)
             {
                 $data = [
                     "name" => $user->getFullName(),
                     "urn" => Wallet::generateUrn(),
-                    "ledger_id" => $ledger->getKey(),
+                    "ledger_id" => $item->getKey(),
                     "holder_type" => $user->getMorphClass(),
                     "holder_id" => $user->getKey(),
                     "balance" => 0,
@@ -39,15 +40,15 @@ class WalletController extends Controller
 
         if($user->is_banking_user == 1)
         {
-            $user->registrationStep(RegistrationStep::BANKING_SELECTED);
+            $user->logRegistrationStep(RegistrationStep::BANKING);
 
-            return redirect()->route("customer.signup.address.index");
+            $nextRoute = $user->getNextRegistrationRoute();
+
+            return redirect($nextRoute->getUrl());
         }
 
         $membership->status = MembershipStatus::ACTIVE;
         $membership->update();
-
-        $user->registrationStep(RegistrationStep::DASHBOARD);
 
         return redirect()->route("dashboard.index");
     }

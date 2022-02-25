@@ -5,6 +5,8 @@ namespace Kanexy\LedgerFoundation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Kanexy\Cms\Enums\RegistrationStep;
+use Kanexy\Cms\Helper;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\LedgerFoundation\Livewire\DepositOtpVerificationComponent;
@@ -104,6 +106,16 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletMenuItem());
         \Kanexy\Cms\Facades\MembershipServiceSelection::addItem(new MembershipServiceSelectionContent());
 
+        \Kanexy\Cms\Facades\Cms::setRegistrationFlow(function (User $user) {
+            if($user->is_banking_user != true)
+            {
+                $type = 'wallet_flow';
+                return $type;
+            }
+            return false;
+        },2000);
+
+
         \Kanexy\Cms\Facades\Cms::setRedirectRouteAfterRegistrationVerification(function (Request $request,User $user) {
             if($user->is_banking_user != true)
             {
@@ -114,9 +126,12 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         },3000);
 
         /** Create wallet account by default from banking flow **/
-        PartnerFoundation::setRedirectRouteAfterBanking(function () {
-            return route("customer.signup.wallet.create");
+        PartnerFoundation::setRedirectRouteAfterBanking(function (User $user) {
+            $nextRoute = $user->getNextRegistrationRoute();
+            redirect($nextRoute->getUrl());
         });
+
+
 
         Livewire::component('deposit-wallet-component', DepositWalletComponent::class);
         Livewire::component('deposit-otp-verification-component', DepositOtpVerificationComponent::class);
