@@ -61,7 +61,7 @@ class PayoutPolicy
 
     }
 
-    public function SHOW(User $user)
+    public function show(User $user)
     {
         if ($user->hasPermissionTo(Permission::PAYOUT_SHOW)) {
             return true;
