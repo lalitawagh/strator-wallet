@@ -8,9 +8,9 @@
             @elseif ($transactionType == 'payout')
             <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 ml-2 mt-1">Payout</a>
 
-            <a href="{{ route('dashboard.wallet.deposit.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 ml-2">Deposit</a>
+            {{-- <a href="{{ route('dashboard.wallet.deposit.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 ml-2">Deposit</a>
             @elseif ($transactionType == 'payout')
-            <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 ml-2">Payout</a>
+            <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 ml-2">Payout</a> --}}
 
             @endif
         @endif
