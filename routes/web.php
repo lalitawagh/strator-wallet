@@ -56,6 +56,6 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'d
 
 });
 
-Route::group(['middleware' =>['web','auth',ValidateRegistrationCompletedMiddleware::class],'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {
+Route::group(['middleware' =>['web','auth'],'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {
     Route::resource('wallet', WalletController::class)->only(['index', 'create', 'store', 'show']);
 });
