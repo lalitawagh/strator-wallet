@@ -30,7 +30,7 @@ class ExchangeRate extends Model
     public static function getExchangeRateDetailsForPayout($sender_wallet,$receiver_wallet,$value)
     {
         $sender_asset_category = $sender_wallet?->ledger->asset_category;
-        $receiver_asset_category = $receiver_wallet->asset_category;
+        $receiver_asset_category = $receiver_wallet?->asset_category;
 
         if(@$sender_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY &&  @$receiver_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
         {
