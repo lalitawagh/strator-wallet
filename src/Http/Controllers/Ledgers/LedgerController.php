@@ -40,8 +40,8 @@ class LedgerController extends Controller
         }
 
         $ledger = Ledger::create($data);
-        echo 'xxx';die;
-        dd(WalletAttachedToUser::dispatch($ledger));
+
+        WalletAttachedToUser::dispatch($ledger);
 
         return redirect()->route("dashboard.wallet.ledger.index")->with([
             'status' => 'success',
