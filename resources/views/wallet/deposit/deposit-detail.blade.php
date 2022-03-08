@@ -6,17 +6,17 @@
         <input type="hidden" name="workspace_id" value="{{ @$details['workspace_id'] }}">
         <div class="px-5 sm:px-5 mt-0 pt-0">
             <div class="flex flex-col pb-5">
-                <span class="font-medium text-base">Deposit Money via <strong>{{ @$details['payment_method'] }}</strong></span>
+                <span class="font-medium text-base">Deposit Money via <strong>@isset($details['payment_method']){{ @$details['payment_method'] }} @else  {{ @$details['currency'] }} @endisset</strong></span>
             </div>
 
             <div class="flex">
                 <div class="mr-auto">Deposit Amount </div>
                 <div class="font-medium">
                     @isset ($details)
-                        @if($details['asset_category'] != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
+                        @if($details['asset_category'] == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
                             {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($details['amount'], $details['currency']); }}
                         @else
-                            Coin {{ $details['amount'] }}
+                        {{ @$exchange_ledger['symbol'] }} {{ $details['amount'] }}
                         @endif
                     @endisset
                 </div>
@@ -25,10 +25,10 @@
                 <div class="mr-auto">Fee</div>
                 <div class="font-medium">
                     @isset ($details)
-                        @if($details['asset_category'] != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
+                        @if($details['asset_category'] == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
                             {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($details['fee'], $details['currency']); }}
                         @else
-                            Coin {{ $details['fee'] }}
+                        {{ @$exchange_ledger['symbol'] }} {{ $details['fee'] }}
                         @endif
                     @endisset
                 </div>
@@ -40,10 +40,10 @@
                 @endphp
                 <div class="font-medium text-base">
                     @isset ($details)
-                        @if($details['asset_category'] != \Kanexy\LedgerFoundation\Enums\AssetCategory::VIRTUAL)
+                        @if($details['asset_category'] == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
                             {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($total, $details['currency']); }}
                         @else
-                            Coin {{ $total }}
+                        {{ @$exchange_ledger['symbol'] }} {{ $total }}
                         @endif
                     @endisset
                 </div>

@@ -3,13 +3,13 @@
 @section("title", "Ledger")
 
 @section("config-content")
-<div class="configuration-container">
+<div class="configuration-container w-screen">
     <div class="grid grid-cols-12 gap-6">
         <!-- BEGIN: Daily Sales -->
         <div class="intro-y box col-span-12 xxl:col-span-12">
-            <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+            <div class="sm:flex items-center px-5 py-2 border-b border-gray-200 dark:border-dark-5">
 
-                <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+                <div class="breadcrumb mr-auto hidden sm:flex">
                     <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     <a href="" class="breadcrumb--active">Ledger</a>
@@ -18,12 +18,8 @@
                     <a href="{{ route('dashboard.wallet.ledger.create') }}" class="btn btn-sm btn-primary shadow-md">Create New</a>
                 </div>
             </div>
-            <div>
-                <div id="1" class="tab-pane grid grid-cols-12 gap-3 pt-0 active" role="tabpanel" aria-labelledby="1-tab">
-                    <div class="active col-span-12 mt-0 w-full" role="tabpanel" id="k-wallet" aria-labelledby="k-wallet-tab">
-
                 <div class="p-5">
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto box">
                         <table class="table">
                             <thead>
                             <tr class="bg-gray-300 dark:bg-dark-1">
@@ -46,7 +42,7 @@
                                     $assetClass = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_classes',[]))->firstWhere('id', $ledger->asset_class);
                                 @endphp
                                 <tr>
-                                    <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ $ledgers->firstItem() + $index }}</td>
                                     <td class="border-b dark:border-dark-5">{{ $ledger->name }}</td>
                                     <td class="border-b dark:border-dark-5">
                                         @isset($ledger->image)

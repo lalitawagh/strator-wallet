@@ -71,36 +71,43 @@ class WalletBeneficiary extends Component
     public function createBeneficiary()
     {
         $data = $this->validate([
-                'first_name' => ['required' ,new AlphaSpaces, 'string','max:40'],
-                'middle_name' => ['nullable',new AlphaSpaces, 'string','max:40'],
-                'last_name' => ['required',new AlphaSpaces, 'string','max:40'],
-                'email' => 'required|email',
-                'mobile' => ['required',new MobileNumber],
-                'notes' => 'nullable',
-                'nick_name' => 'nullable',
-            ]);
+            'first_name' => ['required' ,new AlphaSpaces, 'string','max:40'],
+            'middle_name' => ['nullable',new AlphaSpaces, 'string','max:40'],
+            'last_name' => ['required',new AlphaSpaces, 'string','max:40'],
+            'email' => 'required|email',
+            'mobile' => ['required',new MobileNumber],
+            'notes' => 'nullable',
+            'nick_name' => 'nullable',
+        ]);
 
-        $data['mobile'] = Helper::normalizePhone($data['mobile']);
-        $data['workspace_id'] = $this->workspace->id;
-        $data['ref_type'] = 'wallet';
-        $data['classification'] = $this->classification;
-        $data['status'] = 'active';
+        if(is_null($this->membership_urn))
+        {
+            $this->addError('mobile', 'Membership not exists with this mobile number');
+        }else{
 
-        /** @var Contact $contact */
-        $contact = Contact::create($data);
+            $data['mobile'] = Helper::normalizePhone($data['mobile']);
+            $data['workspace_id'] = $this->workspace->id;
+            $data['ref_type'] = 'wallet';
+            $data['classification'] = $this->classification;
+            $data['status'] = 'active';
 
-        event(new ContactCreated($contact));
+            /** @var Contact $contact */
+            $contact = Contact::create($data);
 
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
-        $this->contact = $contact;
+            event(new ContactCreated($contact));
 
-        $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+            /** @var \App\Models\User $user */
+            $user = auth()->user();
+            $this->contact = $contact;
 
-        $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
-        //$user->generateOtp("sms");
+            $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+            // $contact->generateOtp("sms");
+            $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
+            //$user->generateOtp("sms");
 
-        $this->beneficiary_created = true;
+            $this->beneficiary_created = true;
+        }
+
     }
 
     public function resendOtp(OneTimePassword $oneTimePassword)

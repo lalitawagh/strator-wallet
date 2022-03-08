@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Kanexy\Cms\Middleware\ValidateRegistrationCompletedMiddleware;
 use Kanexy\LedgerFoundation\Http\Controllers\LedgerFoundationController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetClassController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetTypeController;
@@ -42,6 +43,9 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'d
     Route::resource("exchange-rate",ExchangeRateController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::name('deposit-overview')->get('deposit-overview', [DepositController::class, 'showDepositOverview']);
     Route::name('store-deposit-overview-detail')->post('store-deposit-overview-detail', [DepositController::class, 'storeDepositOverviewDetail']);
+    Route::name('deposit-otp-confirmation')->get('deposit-otp-confirmation', [DepositController::class, 'showDepositOtpConfirmation']);
+
+    Route::name('store-payment-details')->get('store-payment-details', [DepositController::class, 'storePaymentDetails']);
     Route::name('deposit-payment')->get('deposit-payment', [DepositController::class, 'showDepositPayment']);
     Route::name('paypal-payment')->post('paypal-payment', [DepositController::class, 'paypalPayment']);
     Route::name('stripe-payment')->post('stripe-payment', [DepositController::class, 'stripePayment']);

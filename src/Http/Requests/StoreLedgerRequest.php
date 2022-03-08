@@ -21,17 +21,17 @@ class StoreLedgerRequest extends FormRequest
             'ledger_type'        => 'required',
             'symbol'             => 'nullable',
             'exchange_type'      => 'required',
-            'exchange_rate'      => 'required',
+            'exchange_rate'      => 'nullable',
             'exchange_from'      => 'required',
             'asset_category'     => 'required',
             'asset_class'        => 'required',
             'asset_type'         => 'required',
-            'commodity_category' => 'required',
+            'commodity_category' => 'required_if:asset_category,commodity',
             'image'              => 'nullable',
             'payout_fee'         => 'required',
             'deposit_fee'        => 'required',
             'withdraw_fee'       => 'required',
-            'status'             => 'nullable',
+            'status'             => 'required',
         ];
     }
 }

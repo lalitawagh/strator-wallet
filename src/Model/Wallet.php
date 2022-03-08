@@ -20,6 +20,11 @@ class Wallet extends Model
         'status',
     ];
 
+    public function holder()
+    {
+        return $this->morphTo();
+    }
+
     public function scopeForHolder($query, Model $model)
     {
         return $query->where(['holder_id' => $model->getKey(), 'holder_type' => $model->getMorphClass()]);

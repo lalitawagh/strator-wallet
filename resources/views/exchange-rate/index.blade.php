@@ -3,12 +3,12 @@
 @section("title", "Exchange Rate")
 
 @section("config-content")
-    <div class="configuration-container">
+    <div class="configuration-container w-screen">
         <div class="grid grid-cols-12 gap-6">
             <div class="intro-y box col-span-12 xxl:col-span-12">
-                <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                <div class="sm:flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
-                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+                    <div class="breadcrumb mr-auto hidden sm:flex">
                         <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         <a href="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         <a href="" class="breadcrumb--active">Exchange Rate</a>
@@ -18,14 +18,14 @@
                             class="btn btn-sm btn-primary shadow-md">Create New</a>
                     </div>
                 </div>
-                <div>
-                    <div class="overflow-x-auto">
+                <div class="p-5">
+                    <div class="overflow-x-auto box">
                         <table class="table">
                             <thead>
                             <tr class="bg-gray-300 dark:bg-dark-1">
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">#</th>
-                                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Ledger</th>
-                                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Exchange Currency</th>
+                                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Exchange From</th>
+                                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Exchange To</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Frequency</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Valid Date</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Exchange Rate</th>
@@ -40,8 +40,8 @@
                                     $assetType  = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types',[]))->firstWhere('id', $exchange_rate?->exchange_currency);
                                 @endphp
                                 <tr>
-                                    <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ $exchange_rate->ledger?->name }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ $exchange_rates->firstItem() + $index }}</td>
+                                    <td class="border-b dark:border-dark-5">@isset($exchange_rate->ledger?->name) {{ $exchange_rate->ledger?->name }} @endisset</td>
                                     <td class="border-b dark:border-dark-5">{{ @$assetType['name'] }}</td>
                                     <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.'.$exchange_rate?->frequency) }}</td>
                                     <td class="border-b dark:border-dark-5">{{ $exchange_rate?->valid_date }}</td>
@@ -74,6 +74,9 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div class="my-2">
+                        {{ $exchange_rates->links() }}
                     </div>
                 </div>
             </div>

@@ -12,9 +12,10 @@ use Illuminate\Queue\SerializesModels;
 use Kanexy\LedgerFoundation\Enums\WalletStatus;
 use Kanexy\LedgerFoundation\Model\Wallet;
 
-class WalletAttachedToUser implements ShouldQueue
+class RegisterWalletsForLedger implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     public $ledger;
     /**
      * Create a new job instance.
@@ -33,24 +34,38 @@ class WalletAttachedToUser implements ShouldQueue
      */
     public function handle()
     {
-        $users = User::where('id','!=',1)->get();
-        foreach($users as $user)
-        {
-            if($this->ledger->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $this->ledger->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET)
-            {
+        $users = User::isSubscribers()->get();
+
+        if ($this->ledger->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $this->ledger->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET) {
+
+            foreach ($users as $user) {
+                $wallet = Wallet::where(['ledger_id' => $this->ledger->getKey(),"holder_type" => $user->getMorphClass(),"holder_id" => $user->getKey()])->first();
+
+                if(!is_null($wallet))
+                {
+                    $urn = $wallet->urn;
+                }else{
+                    $urn = Wallet::generateUrn();
+                }
+
                 $data = [
                     "name" => $user->getFullName(),
-                    "urn" => Wallet::generateUrn(),
+                    "urn" => $urn,
                     "ledger_id" => $this->ledger->getKey(),
                     "holder_type" => $user->getMorphClass(),
                     "holder_id" => $user->getKey(),
-                    "balance" => 0,
                     "status" => WalletStatus::ACTIVE,
                 ];
 
-                Wallet::create($data);
+                Wallet::updateOrCreate(
+                    [
+                        'ledger_id' => $this->ledger->getKey(),
+                        "holder_type" => $user->getMorphClass(),
+                        "holder_id" => $user->getKey()
+                    ],
+                    $data
+                );
             }
         }
-
     }
 }

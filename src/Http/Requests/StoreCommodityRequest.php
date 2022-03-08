@@ -3,14 +3,14 @@
 namespace Kanexy\LedgerFoundation\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration;
 use Kanexy\LedgerFoundation\Policies\CommodityTypePolicy;
 
 class StoreCommodityRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can(CommodityTypePolicy::CREATE, Setting::class);
+        return $this->user()->can(CommodityTypePolicy::CREATE, CommodityTypeConfiguration::class);
     }
 
     public function rules()

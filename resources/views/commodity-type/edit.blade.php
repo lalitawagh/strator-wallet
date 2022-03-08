@@ -3,7 +3,7 @@
 @section("title", "Edit Commodity Type")
 
 @section("config-content")
-    <div class="configuration-container">
+    <div class="configuration-container w-screen">
         <div class="grid grid-cols-12 gap-6">
             <!-- BEGIN: Daily Sales -->
             <div class="intro-y box col-span-12 xxl:col-span-12">
@@ -21,7 +21,7 @@
                         @method('PUT')
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="name" class="form-label sm:w-28">Name <span class="text-theme-6">*</span></label>
+                                <label for="name" class="form-label sm:w-30">Name <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="name" name="name" type="text"
                                         class="form-control @error('name') border-theme-6 @enderror"
@@ -34,7 +34,7 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="logo" class="form-label sm:w-28"> Image </label>
+                                <label for="logo" class="form-label sm:w-30"> Image </label>
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">
                                     <img class="rounded-md proof-default" style="width:100px;" alt="" src="@isset($commodity_type['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($commodity_type['image']) }}@endisset">
@@ -47,7 +47,7 @@
 
                         <div class="grid grid-cols-12 md:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                                <label for="status" class="form-label sm:w-28"> Status</label>
+                                <label for="status" class="form-label sm:w-30"> Status</label>
                                 <div class="sm:w-5/6">
                                     <input id="status" name="status" type="checkbox" class="form-check-switch" @if (old("status",$commodity_type['status'])  === \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) checked @endif>
 

@@ -18,14 +18,9 @@ class WalletTransactionsListComponent extends Component
 
     public function transactionList($walletID)
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
-
-        if ($user->isSubscriber()) {
-            $transactions = Transaction::where("ref_id", $walletID)->latest()->take(15)->get();
-        } else {
-            $transactions = Transaction::where('ref_type','wallet')->latest()->get();
-        }
+        $workspace = $user->workspaces()->first();
+        $transactions = Transaction::where("ref_id", $walletID)->where("workspace_id", $workspace->id)->latest()->take(15)->get();
 
         if(!empty($transactions)){
             $this->transactions = $transactions;
@@ -34,6 +29,6 @@ class WalletTransactionsListComponent extends Component
 
     public function render()
     {
-       return view('ledger-foundation::Livewire.wallet-transactions-list-component');
+       return view('ledger-foundation::wallet.list-transactions');
     }
 }

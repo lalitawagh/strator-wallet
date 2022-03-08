@@ -3,11 +3,11 @@
 @section('title', 'Asset Type')
 
 @section("config-content")
-    <div class="configuration-container">
+    <div class="configuration-container w-screen">
         <div class="grid grid-cols-12 gap-6">
             <div class="intro-y box col-span-12 xxl:col-span-12">
-                <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
-                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+                <div class="sm:flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                    <div class="breadcrumb mr-auto hidden sm:flex">
                         <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         <a href="" class="breadcrumb--active">Asset Type</a>
@@ -17,8 +17,8 @@
                             class="btn btn-sm btn-primary shadow-md">Create New</a>
                     </div>
                 </div>
-                <div>
-                    <div class="overflow-x-auto">
+                <div class="p-5">
+                    <div class="overflow-x-auto box">
                         <table class="table">
                             <thead>
                                 <tr class="bg-gray-300 dark:bg-dark-1">
@@ -37,7 +37,7 @@
                                 @endphp
                                 @foreach ($asset_type_lists as $index => $asset_type_list)
                                     <tr>
-                                        <td class="border-b dark:border-dark-5">{{ $i }}</td>
+                                        <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
                                         <td class="border-b dark:border-dark-5">{{ $asset_type_list['name'] }}</td>
                                         <td class="border-b dark:border-dark-5">
                                             {{ ucwords(strtolower(str_replace('_', ' ', $asset_type_list['asset_category']))) }}
@@ -83,6 +83,9 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+                    <div class="my-2">
+                        {{ $asset_type_lists->links() }}
                     </div>
                 </div>
             </div>

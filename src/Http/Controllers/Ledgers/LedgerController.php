@@ -5,9 +5,9 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\StoreLedgerRequest;
+use Kanexy\LedgerFoundation\Jobs\RegisterWalletsForLedger;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
-use  Kanexy\LedgerFoundation\Jobs\WalletAttachedToUser;
 
 class LedgerController extends Controller
 {
@@ -15,7 +15,7 @@ class LedgerController extends Controller
     {
         $this->authorize(LedgerPolicy::VIEW, Ledger::class);
 
-        $ledgers = Ledger::paginate();
+        $ledgers = Ledger::paginate(7);
 
         return view("ledger-foundation::ledger.index", compact('ledgers'));
     }
@@ -41,7 +41,7 @@ class LedgerController extends Controller
 
         $ledger = Ledger::create($data);
 
-        WalletAttachedToUser::dispatch($ledger);
+        RegisterWalletsForLedger::dispatch($ledger);
 
         return redirect()->route("dashboard.wallet.ledger.index")->with([
             'status' => 'success',
@@ -71,6 +71,8 @@ class LedgerController extends Controller
         }
 
         $ledger->update($data);
+
+        RegisterWalletsForLedger::dispatch($ledger);
 
         return redirect()->route("dashboard.wallet.ledger.index")->with([
             'status' => 'success',
