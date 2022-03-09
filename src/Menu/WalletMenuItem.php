@@ -9,7 +9,7 @@ use Kanexy\PartnerFoundation\Core\Helper;
 
 class WalletMenuItem extends Item
 {
-    public int $priority = 1501;
+    public int $priority = 10001;
 
     protected string $label = 'Wallet';
 
