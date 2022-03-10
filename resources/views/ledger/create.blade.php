@@ -120,7 +120,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-30"> Status <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
@@ -138,7 +138,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="deposit_fee" class="form-label sm:w-30">Deposit Fee <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
@@ -164,7 +164,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="payout_fee" class="form-label sm:w-30">Payout Fee <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
