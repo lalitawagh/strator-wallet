@@ -61,7 +61,7 @@ class DepositPolicy
 
     }
 
-    public function SHOW(User $user)
+    public function show(User $user)
     {
         if ($user->hasPermissionTo(Permission::DEPOSIT_SHOW)) {
             return true;

@@ -3,7 +3,7 @@
 @push('styles')
     <style>
         .configuration-nav {
-            width: 270px;
+            width: 405px;
             overflow-x: hidden;
             padding-right: 1.25rem;
             padding-bottom: 4rem;
@@ -85,23 +85,23 @@
         }
 
         .configuration-container {
-            width: calc(100% - 305px);
+            /* width: calc(100% - 305px);
             position: absolute;
-            padding-left: 250px;
+            padding-left: 250px; */
         }
 
         .configuration-container.active {
-            width: calc(100% - 305px);
+            /* width: calc(100% - 305px);
             position: absolute;
-            padding-left: 80px;
+            padding-left: 80px; */
         }
 
 
         /* New */
         .configuration-nav {
-    width: 235px;
+    /* width: 235px; */
     overflow-x: hidden;
-    padding-right: 1.25rem;
+    padding-right: 0;
     padding-bottom: 4rem;
     padding-top: 0;
 }
@@ -188,7 +188,7 @@
 .configuration-container {
     /* width: calc(100% - 305px);
     position: absolute;
-    padding-left: 270px; */
+    padding-left: 405px; */
 }
 .configuration-container.active {
     /* width: calc(100% - 305px);
@@ -250,11 +250,11 @@ display: contents !important;
 @endpush
 
 @section('content')
-    <div class="sm:flex w-full gap-3 mt-5">
+    <div class="md:flex w-full gap-3 mt-0">
         <div class="flex lg:block flex-col-reverse configuration-nav configuration-layout-sidebar">
-            <div class="intro-y box mt-5 lg:mt-0 configuration-nav configuration-layout-sidebar" x-data="toggleConfigurationSidebarMenu()">
+            <div class="intro-y box mt-0 lg:mt-0" x-data="toggleConfigurationSidebarMenu()">
                 <div class="relative flex items-center p-3">
-                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+                    <div class="breadcrumb mr-auto hidden sm:flex">
                         <a href="">Wallets</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">

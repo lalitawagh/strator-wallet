@@ -8,24 +8,24 @@
         <div class="grid grid-cols-12 md:gap-0 mt-0">
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="" class="form-label sm:w-30"> Name <span class="text-theme-6">*</span></label>
-                <div class="sm:w-2/6 pr-2">
+                <div class="sm:w-2/6 pr-2 mb-2">
                     <input id="" type="text" class="form-control" placeholder="First Name" wire:model="first_name">
                     @error('first_name')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="sm:w-2/6 pr-2">
+                <div class="sm:w-2/6 pr-2 mb-2">
                     <input id="" type="text" class="form-control" placeholder="Middle Name" wire:model="middle_name">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
-                <div class="sm:w-2/6 pr-2">
+                <div class="sm:w-2/6 pr-2 mb-2">
                     <input id="" type="text" class="form-control" placeholder="Last Name" wire:model="last_name">
                     @error('last_name')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                     @enderror
                 </div>
             </div>
-            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0 mb-2">
                 <label for="" class="form-label sm:w-28"> Email <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6">
                     <input id="" type="text" class="form-control" wire:model="email">

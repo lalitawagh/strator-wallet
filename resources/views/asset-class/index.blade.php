@@ -1,13 +1,28 @@
+@push('styles')
+<style>
+@media (max-width: 580px) {
+    .asset-create {
+        display: flex;
+    }
+}
+@media (max-width: 579px) {
+    .asset-create {
+        display: block;
+        margin-top: 10px;
+    }
+}
+</style>
+@endpush
 @extends("ledger-foundation::config-skeleton")
 
 @section('title', 'Asset Class')
 
 @section("config-content")
-<div class="configuration-container">
+<div class="configuration-container w-screen">
     <div class="grid grid-cols-12 gap-6">
         <div class="intro-y box col-span-12 xxl:col-span-12">
-            <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
-                <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+            <div class="asset-create sm:flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                <div class="breadcrumb mr-auto hidden sm:flex">
                     <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     <a href="" class="breadcrumb--active">Asset Class</a>
