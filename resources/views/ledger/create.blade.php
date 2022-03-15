@@ -187,7 +187,6 @@
                 </div>
             </div>
             <!-- END: Daily Sales -->
-
         </div>
     </div>
 @endsection
