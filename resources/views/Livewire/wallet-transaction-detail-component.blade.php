@@ -238,6 +238,8 @@
 
     $(".edit-transaction").click(function(){
         $(this).addClass('hidden');
+        $("#attachment").val('');
+        $("#note").val('');
         $(".edit-transaction-content").removeClass('hidden');
         $(".edit-transaction-content").addClass('flex');
         $(".save-transaction").removeClass('hidden');

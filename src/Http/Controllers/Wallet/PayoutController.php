@@ -12,6 +12,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Contracts\Payout;
 use Kanexy\LedgerFoundation\Http\Requests\StorePayoutRequest;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
@@ -24,7 +25,7 @@ class PayoutController extends Controller
 {
     public function index(Request $request)
     {
-        $this->authorize(PayoutPolicy::VIEW, Wallet::class);
+        $this->authorize(PayoutPolicy::VIEW, Payout::class);
 
         $workspace = null;
         $transactionType = 'payout';

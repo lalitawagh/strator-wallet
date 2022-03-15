@@ -3,7 +3,7 @@
 @section("title", "Edit Asset Type")
 
 @section("config-content")
-    <div class="configuration-container">
+    <div class="configuration-container w-screen">
         <div class="grid grid-cols-12 gap-6">
             <!-- BEGIN: Daily Sales -->
             <div class="intro-y box col-span-12 xxl:col-span-12">
@@ -19,8 +19,8 @@
                     <form action="{{ route('dashboard.wallet.asset-type.update',$asset_type['id']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="asset_category" class="form-label sm:w-30">Asset Category <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     @php
@@ -52,8 +52,8 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="logo" class="form-label sm:w-30"> Image </label>
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">

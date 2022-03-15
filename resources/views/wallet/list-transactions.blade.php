@@ -1,4 +1,4 @@
-<div class="intro-y mt-3">
+<div class="intro-y mt-0">
     <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
         <x-list-view-filters/>
         @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSubscriber())
