@@ -11,7 +11,7 @@
                         Payout
                     </h2>
                 </div>
-                <div class="p-3">
+                <div class="p-5">
                     @if (Session::has('error'))
                     <span class="block text-theme-6">{{ Session::get('error') }}</span>
                     @endif
