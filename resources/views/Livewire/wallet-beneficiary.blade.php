@@ -1,15 +1,16 @@
 <div>
+
+    <div class="flex flex-col sm:flex-row items-center p-4 border-b border-slate-200/60 dark:border-darkmode-400">
+        <h2 class="font-medium text-base mr-auto">Beneficiary</h2>
+            <div class="form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0">
+                @isset($membership_urn) {{ @$membership_urn }} - {{ @$membership_name }} @endisset
+            </div>
+        </div>
+
     {{-- <div class="modal-header py-2">
         <h2 class="font-medium text-base mr-auto">Beneficiary</h2>
         <h4 class="font-medium text-base">@isset($membership_urn) {{ @$membership_urn }} - {{ @$membership_name }} @endisset</h4>
     </div> --}}
-
-    <div class="flex flex-col sm:flex-row items-center p-4 border-b border-slate-200/60 dark:border-darkmode-400">
-        <h2 class="font-medium text-base mr-auto">Beneficiary</h2>
-        <div class="form-check form-switch w-full sm:w-auto sm:ml-auto sm:mt-3 sm:mt-0">
-            @isset($membership_urn) {{ @$membership_urn }} - {{ @$membership_name }} @endisset
-        </div>
-    </div>
 
     <div class="modal-body">
         <div class="grid grid-cols-12 md:gap-0 mt-0">
