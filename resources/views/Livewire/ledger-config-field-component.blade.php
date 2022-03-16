@@ -1,6 +1,6 @@
 <div>
 
-    <div class="grid grid-cols-12 md:gap-10 mt-0">
+    <div class="grid grid-cols-12 md:gap-3 mt-0">
         <div class="col-span-12 md:col-span-6 form-inline mt-2">
             <label for="exchange_type" class="form-label sm:w-30">Exchange Type <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
@@ -34,7 +34,7 @@
             </div>
         </div>
     </div>
-    <div class="grid grid-cols-12 md:gap-10 mt-0">
+    <div class="grid grid-cols-12 md:gap-3 mt-0">
         <div class="col-span-12 md:col-span-6 form-inline mt-2">
             <label for="asset_category" class="form-label sm:w-30">Asset Category <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
@@ -70,7 +70,7 @@
     </div>
 
     @if (old('asset_category') == \Kanexy\LedgerFoundation\Enums\AssetCategory::COMMODITY || $selected_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::COMMODITY)
-        <div class="grid grid-cols-12 md:gap-10 mt-0">
+        <div class="grid grid-cols-12 md:gap-3 mt-0">
             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                 <label for="commodity_category" class="form-label sm:w-30"> Commodity Category <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6">
