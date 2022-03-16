@@ -20,7 +20,7 @@
                     @endif
                     <form action="{{ route('dashboard.wallet.exchange-rate.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="base_currency" class="form-label sm:w-30">Exchange From <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
@@ -53,7 +53,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="frequency" class="form-label sm:w-30">Frequency <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
@@ -86,7 +86,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="exchange_rate" class="form-label sm:w-30">Exchange Rate <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
@@ -112,7 +112,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
                             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                                 <label for="is_hard_stop" class="form-label sm:w-30">Hard Stop </label>
                                 <div class="sm:w-5/6">
