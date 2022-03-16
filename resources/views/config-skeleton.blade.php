@@ -205,10 +205,10 @@
 display: contents !important;
 }
 
-.valid_date_show
+/* .valid_date_show
 {
     display: flex;
-}
+} */
 
 @media (max-width:767px) {
     .configarrow-toggle{
