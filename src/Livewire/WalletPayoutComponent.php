@@ -2,7 +2,6 @@
 
 namespace Kanexy\LedgerFoundation\Livewire;
 
-use AmrShawky\LaravelCurrency\Facade\Currency;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
@@ -43,7 +42,7 @@ class WalletPayoutComponent extends Component
 
     public $selected_currency;
 
-    public function mount($wallets,$beneficiaries,$countryWithFlags,$defaultCountry,$user,$ledgers,$asset_types)
+    public function mount($wallets, $beneficiaries, $countryWithFlags, $defaultCountry, $user, $ledgers, $asset_types)
     {
         $this->wallets = $wallets;
         $this->beneficiaries = $beneficiaries;
@@ -72,10 +71,10 @@ class WalletPayoutComponent extends Component
         $this->selected_currency = $value;
         $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
         $exchange_wallet = Ledger::whereId($sender_wallet?->ledger_id)->first();
-        $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
+        $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $value);
         $this->exchange_asset_category = @$asset_type['asset_category'];
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet,$exchange_wallet,$value);
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet, $exchange_wallet, $value);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
@@ -96,8 +95,7 @@ class WalletPayoutComponent extends Component
     {
         $this->remaining_amount =  number_format((float)0, 2, '.', '');;
 
-        if($this->amount)
-        {
+        if ($this->amount) {
             $remaining_amount = $this->balance - $this->amount;
             $this->remaining_amount =  number_format((float)$remaining_amount, 2, '.', '');
         }

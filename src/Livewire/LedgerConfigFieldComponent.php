@@ -27,7 +27,7 @@ class LedgerConfigFieldComponent extends Component
 
     public string $selected_asset_type;
 
-    public function mount($asset_types,$asset_categories,$commodity_types,$ledger)
+    public function mount($asset_types, $asset_categories, $commodity_types, $ledger)
     {
         $this->asset_types = $asset_types;
         $this->asset_categories = $asset_categories;
@@ -45,18 +45,13 @@ class LedgerConfigFieldComponent extends Component
         $asset_categories = AssetCategory::toArray();
         $data = [];
 
-        foreach($asset_categories as $asset_category)
-        {
-            if($value == ExchangeType::FIAT)
-            {
-                if($asset_category == AssetCategory::FIAT_CURRENCY)
-                {
+        foreach ($asset_categories as $asset_category) {
+            if ($value == ExchangeType::FIAT) {
+                if ($asset_category == AssetCategory::FIAT_CURRENCY) {
                     $data[] = $asset_category;
                 }
-
-            }else {
-                if($asset_category != AssetCategory::FIAT_CURRENCY)
-                {
+            } else {
+                if ($asset_category != AssetCategory::FIAT_CURRENCY) {
                     $data[] = $asset_category;
                 }
             }
@@ -68,7 +63,7 @@ class LedgerConfigFieldComponent extends Component
     public function changeAssetCategory($value)
     {
         $this->selected_asset_category = $value;
-        $this->asset_types = collect(Setting::getValue('asset_types',[]))->where('asset_category', $value);
+        $this->asset_types = collect(Setting::getValue('asset_types', []))->where('asset_category', $value);
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
@@ -80,6 +75,6 @@ class LedgerConfigFieldComponent extends Component
 
     public function render()
     {
-       return view('ledger-foundation::Livewire.ledger-config-field-component');
+        return view('ledger-foundation::Livewire.ledger-config-field-component');
     }
 }

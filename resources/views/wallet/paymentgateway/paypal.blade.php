@@ -30,7 +30,7 @@ $total = \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($sub
 
                     if (details.status == 'COMPLETED') {
                         return fetch(
-                                "{{ route('dashboard.wallet.paypal-payment',['workspace_id' => $details['workspace_id']]) }}", {
+                                "{{ route('dashboard.wallet.paypal-payment', ['workspace_id' => $details['workspace_id']]) }}", {
                                     method: 'post',
                                     headers: {
                                         'content-type': 'application/json',
@@ -52,23 +52,24 @@ $total = \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($sub
                             .then(function(response) {
                                 // redirect to the completed page if paid
                                 window.location.href =
-                                    "{{ route('dashboard.wallet.deposit-final-detail',['workspace_id' => $details['workspace_id']]) }}";
+                                    "{{ route('dashboard.wallet.deposit-final-detail', ['workspace_id' => $details['workspace_id']]) }}";
 
                             })
                             .catch(function(error) {
                                 // redirect to failed page if internal error occurs
                                 window.location.href =
-                                    "{{ route('dashboard.wallet.deposit.index',['workspace_id' => $details['workspace_id']]) }}";
+                                    "{{ route('dashboard.wallet.deposit.index', ['workspace_id' => $details['workspace_id']]) }}";
                             });
                     } else {
                         window.location.href =
-                            "{{ route('dashboard.wallet.deposit.index',['workspace_id' => $details['workspace_id']]) }}";
+                            "{{ route('dashboard.wallet.deposit.index', ['workspace_id' => $details['workspace_id']]) }}";
                     }
                 });
             },
 
             onCancel: function(data) {
-                window.location.href = "{{ route('dashboard.wallet.deposit.index',['workspace_id' => $details['workspace_id']]) }}";
+                window.location.href =
+                    "{{ route('dashboard.wallet.deposit.index', ['workspace_id' => $details['workspace_id']]) }}";
             },
 
         }).render('#paypal-button-container');

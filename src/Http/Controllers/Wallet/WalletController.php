@@ -20,10 +20,9 @@ class WalletController extends Controller
         $workspace = $user->workspaces()->first();
         $membership = $workspace->memberships()->first();
 
-        collect($ledgers)->each(function ($item) use($user) {
+        collect($ledgers)->each(function ($item) use ($user) {
 
-            if($item->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $item->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET)
-            {
+            if ($item->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $item->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET) {
                 $data = [
                     "name" => $user->getFullName(),
                     "urn" => Wallet::generateUrn(),
@@ -38,8 +37,7 @@ class WalletController extends Controller
             }
         });
 
-        if($user->is_banking_user == 1)
-        {
+        if ($user->is_banking_user == 1) {
             $user->logRegistrationStep(RegistrationStep::BANKING);
 
             $nextRoute = $user->getNextRegistrationRoute();

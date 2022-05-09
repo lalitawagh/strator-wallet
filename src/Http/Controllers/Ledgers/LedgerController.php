@@ -24,18 +24,17 @@ class LedgerController extends Controller
     {
         $this->authorize(LedgerPolicy::CREATE, Ledger::class);
 
-        $asset_types = Setting::getValue('asset_types',[]);
-        $asset_classes = Setting::getValue('asset_classes',[]);
-        $commodity_types = Setting::getValue('commodity_types',[]);
+        $asset_types = Setting::getValue('asset_types', []);
+        $asset_classes = Setting::getValue('asset_classes', []);
+        $commodity_types = Setting::getValue('commodity_types', []);
 
-        return view("ledger-foundation::ledger.create", compact('asset_types','asset_classes','commodity_types'));
+        return view("ledger-foundation::ledger.create", compact('asset_types', 'asset_classes', 'commodity_types'));
     }
 
     public function store(StoreLedgerRequest $request)
     {
         $data = $request->validated();
-        if($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
 
@@ -54,19 +53,18 @@ class LedgerController extends Controller
         $this->authorize(LedgerPolicy::EDIT, Ledger::class);
 
         $ledger = Ledger::findOrFail($id);
-        $asset_types = Setting::getValue('asset_types',[]);
-        $asset_classes = Setting::getValue('asset_classes',[]);
-        $commodity_types = Setting::getValue('commodity_types',[]);
+        $asset_types = Setting::getValue('asset_types', []);
+        $asset_classes = Setting::getValue('asset_classes', []);
+        $commodity_types = Setting::getValue('commodity_types', []);
 
-        return view("ledger-foundation::ledger.edit", compact('ledger','asset_types','asset_classes','commodity_types'));
+        return view("ledger-foundation::ledger.edit", compact('ledger', 'asset_types', 'asset_classes', 'commodity_types'));
     }
 
     public function update(StoreLedgerRequest $request, $id)
     {
         $ledger = Ledger::findOrFail($id);
         $data = $request->validated();
-        if($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
 

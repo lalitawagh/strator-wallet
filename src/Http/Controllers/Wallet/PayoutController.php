@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Kanexy\Cms\Controllers\Controller;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
@@ -20,6 +18,8 @@ use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PayoutController extends Controller
 {
@@ -53,9 +53,9 @@ class PayoutController extends Controller
         $wallets =  Wallet::forHolder($user)->get();
         $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wallet')->latest()->get();
         $ledgers = Ledger::get();
-        $asset_types = Setting::getValue('asset_types',[]);
+        $asset_types = Setting::getValue('asset_types', []);
 
-        return view("ledger-foundation::wallet.payout.payouts",compact('countryWithFlags', 'defaultCountry', 'user', 'workspace', 'beneficiaries', 'ledgers', 'wallets','asset_types'));
+        return view("ledger-foundation::wallet.payout.payouts", compact('countryWithFlags', 'defaultCountry', 'user', 'workspace', 'beneficiaries', 'ledgers', 'wallets', 'asset_types'));
     }
 
     public function store(StorePayoutRequest $request)
@@ -65,12 +65,11 @@ class PayoutController extends Controller
         $sender_wallet = Wallet::with('ledger')->find($data['wallet']);
         $receiver_ledger = Ledger::whereAssetType($data['receiver_currency'])->first();
 
-        $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id',  $data['receiver_currency']);
+        $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id',  $data['receiver_currency']);
         $beneficiary = Contact::find($data['beneficiary']);
         $beneficiary_user = User::wherePhone($beneficiary?->mobile)->first();
         $beneficiary_wallet = NULL;
-        if(isset($beneficiary_user))
-        {
+        if (isset($beneficiary_user)) {
             $beneficiary_wallet = Wallet::forHolder($beneficiary_user)->whereLedgerId($receiver_ledger?->id)->first();
         }
 
@@ -78,13 +77,11 @@ class PayoutController extends Controller
         $amount = $data['amount'];
 
 
-        if($amount > $data['balance'])
-        {
+        if ($amount > $data['balance']) {
             return back()->withError("Insufficient balance in the account.");
         }
 
-        if(is_null($beneficiary_wallet))
-        {
+        if (is_null($beneficiary_wallet)) {
             return back()->withError("The beneficiary doesn't have this wallet account");
         }
 
@@ -125,7 +122,7 @@ class PayoutController extends Controller
 
         $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
         //$transaction->generateOtp("sms");
-        return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.payout-verify', now()->addMinutes(30),["id"=> $transaction->id]), 'sms');
+        return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.payout-verify', now()->addMinutes(30), ["id" => $transaction->id]), 'sms');
     }
 
     public function verify(Request $request)
@@ -171,7 +168,7 @@ class PayoutController extends Controller
             ],
         ]);
 
-        $transaction->status ='accepted';
+        $transaction->status = 'accepted';
         $transaction->update();
 
         $sender_wallet->debit($debit_amount);

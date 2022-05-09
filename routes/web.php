@@ -1,6 +1,5 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use Kanexy\Cms\Middleware\ValidateRegistrationCompletedMiddleware;
 use Kanexy\LedgerFoundation\Http\Controllers\LedgerFoundationController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetClassController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetTypeController;

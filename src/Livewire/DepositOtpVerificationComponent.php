@@ -20,7 +20,7 @@ class DepositOtpVerificationComponent extends Component
 
     public $oneTimePassword;
 
-    public function mount($countryWithFlags,$defaultCountry,$user)
+    public function mount($countryWithFlags, $defaultCountry, $user)
     {
         $this->countryWithFlags = $countryWithFlags;
         $this->defaultCountry = $defaultCountry;
@@ -39,15 +39,14 @@ class DepositOtpVerificationComponent extends Component
             $this->addError('code', 'The otp you entered did not match.');
         } else if (now()->greaterThan($oneTimePassword->expires_at)) {
             $this->addError('code', 'The otp you entered has expired.');
-        }else{
+        } else {
             $oneTimePassword->update(['verified_at' => now()]);
 
-            if(!is_null(session()->get('deposit_request.payment_method')))
-            {
-                return redirect()->route("dashboard.wallet.deposit-payment",['workspace_id' => session()->get('deposit_request.workspace_id')]);
-            }else{
+            if (!is_null(session()->get('deposit_request.payment_method'))) {
+                return redirect()->route("dashboard.wallet.deposit-payment", ['workspace_id' => session()->get('deposit_request.workspace_id')]);
+            } else {
 
-                return redirect()->route("dashboard.wallet.store-payment-details",['workspace_id' => session()->get('deposit_request.workspace_id')]);
+                return redirect()->route("dashboard.wallet.store-payment-details", ['workspace_id' => session()->get('deposit_request.workspace_id')]);
             }
         }
     }
@@ -64,6 +63,6 @@ class DepositOtpVerificationComponent extends Component
 
     public function render()
     {
-       return view('ledger-foundation::Livewire.deposit-otp-verification-component');
+        return view('ledger-foundation::Livewire.deposit-otp-verification-component');
     }
 }
