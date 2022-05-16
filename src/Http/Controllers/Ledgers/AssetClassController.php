@@ -2,7 +2,6 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
-use App\Models\User;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration;
@@ -15,7 +14,7 @@ class AssetClassController extends Controller
     public function index()
     {
         $this->authorize(AssetClassPolicy::VIEW, AssetClassConfiguration::class);
-        $asset_class_lists = Helper::paginate(collect(Setting::getValue('asset_classes',[])));
+        $asset_class_lists = Helper::paginate(collect(Setting::getValue('asset_classes', [])));
 
         return view("ledger-foundation::asset-class.index", compact('asset_class_lists'));
     }
@@ -30,14 +29,13 @@ class AssetClassController extends Controller
     public function store(StoreAssetClassRequest $request)
     {
         $data = $request->validated();
-        if($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
         $data['id'] = now()->format('dmYHis');
 
-        $settings = collect(Setting::getValue('asset_classes',[]))->push($data);
+        $settings = collect(Setting::getValue('asset_classes', []))->push($data);
 
         Setting::updateOrCreate(['key' => 'asset_classes'], ['value' => $settings]);
 
@@ -51,12 +49,12 @@ class AssetClassController extends Controller
     {
         $this->authorize(AssetClassPolicy::EDIT, AssetClassConfiguration::class);
 
-        $asset_class = collect(Setting::getValue('asset_classes',[]))->firstWhere('id', $id);
+        $asset_class = collect(Setting::getValue('asset_classes', []))->firstWhere('id', $id);
 
         return view("ledger-foundation::asset-class.edit", compact('asset_class'));
     }
 
-    public function update(StoreAssetClassRequest $request,$id)
+    public function update(StoreAssetClassRequest $request, $id)
     {
         $data = $request->validated();
         $data['id'] = $id;
@@ -73,8 +71,7 @@ class AssetClassController extends Controller
 
         $data['image'] = $existing_image;
 
-        if($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
 
@@ -108,5 +105,4 @@ class AssetClassController extends Controller
             'message' => 'Asset Class deleted successfully.',
         ]);
     }
-
 }
