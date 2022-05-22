@@ -5,20 +5,18 @@ namespace Kanexy\LedgerFoundation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Kanexy\Cms\Enums\RegistrationStep;
-use Kanexy\Cms\Helper;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration;
 use Kanexy\LedgerFoundation\Contracts\AssetTypeConfiguration;
 use Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration;
 use Kanexy\LedgerFoundation\Contracts\Payout;
 use Kanexy\LedgerFoundation\Livewire\DepositOtpVerificationComponent;
+use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
-use Kanexy\LedgerFoundation\Livewire\WalletTransactionDetailComponent;
-use Kanexy\LedgerFoundation\Livewire\WalletTransactionsListComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletBeneficiary;
 use Kanexy\LedgerFoundation\Livewire\WalletPayoutComponent;
-use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
+use Kanexy\LedgerFoundation\Livewire\WalletTransactionDetailComponent;
+use Kanexy\LedgerFoundation\Livewire\WalletTransactionsListComponent;
 use Kanexy\LedgerFoundation\Menu\WalletMenuItem;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
@@ -89,7 +87,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
          *
          * More info: https://github.com/spatie/laravel-package-tools
          */
-         $package
+        $package
             ->name('ledger-foundation')
             ->hasViews()
             ->hasRoute('web')
@@ -114,23 +112,21 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         \Kanexy\Cms\Facades\MembershipServiceSelection::addItem(new MembershipServiceSelectionContent());
 
         \Kanexy\Cms\Facades\Cms::setRegistrationFlow(function (User $user) {
-            if($user->is_banking_user != true)
-            {
+            if ($user->is_banking_user != true) {
                 $type = 'wallet_flow';
                 return $type;
             }
             return false;
-        },2000);
+        }, 2000);
 
 
-        \Kanexy\Cms\Facades\Cms::setRedirectRouteAfterRegistrationVerification(function (Request $request,User $user) {
-            if($user->is_banking_user != true)
-            {
+        \Kanexy\Cms\Facades\Cms::setRedirectRouteAfterRegistrationVerification(function (Request $request, User $user) {
+            if ($user->is_banking_user != true) {
                 return route("customer.signup.wallet.create");
             }
 
             return false;
-        },3000);
+        }, 3000);
 
         /** Create wallet account by default from banking flow **/
         PartnerFoundation::setRedirectRouteAfterBanking(function (User $user) {

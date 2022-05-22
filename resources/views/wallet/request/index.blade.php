@@ -183,184 +183,124 @@
                                                                     </th>
 
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        <span class="flex short-icon">Transaction ID
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                            </svg>
-                                                                        </span>
+                                                                        Transaction ID
+
+                                                                    <span class="flex short-icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                        </svg>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                        </svg>
+                                                                    </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        <span class="flex short-icon">Date & Time
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                            </svg>
-                                                                        </span>
+                                                                        Date & Time
+
+                                                                    <span class="flex short-icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                        </svg>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                        </svg>
+                                                                    </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        <span class="flex short-icon">Sender Name
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                            </svg>
-                                                                        </span>
+                                                                        Sender Name
+
+                                                                    <span class="flex short-icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                        </svg>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                        </svg>
+                                                                    </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        <span class="flex short-icon">Receiver Name
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                            </svg>
-                                                                        </span>
+                                                                        Receiver Name
+
+                                                                    <span class="flex short-icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                        </svg>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                        </svg>
+                                                                    </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        <span class="flex short-icon">Wallet
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                            </svg>
-                                                                        </span>
+                                                                        Wallet
+
+                                                                    <span class="flex short-icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                        </svg>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                        </svg>
+                                                                    </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        <span class="flex short-icon">Debit
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                            </svg>
-                                                                        </span>
+                                                                        Debit
+
+                                                                    <span class="flex short-icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                        </svg>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                        </svg>
+                                                                    </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        <span class="flex short-icon">Credit
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                            </svg>
-                                                                        </span>
+                                                                        Credit
+
+                                                                    <span class="flex short-icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                        </svg>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                        </svg>
+                                                                    </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        <span class="flex short-icon">Balance
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                            </svg>
-                                                                        </span>
+                                                                        Balance
+
+                                                                    <span class="flex short-icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                        </svg>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                        </svg>
+                                                                    </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        <span class="flex short-icon">Status
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                            </svg>
-                                                                        </span>
+                                                                        Status
+
+                                                                    <span class="flex short-icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                        </svg>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                        </svg>
+                                                                    </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
-                                                                        <span class="flex short-icon">Reference
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                            </svg>
-                                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                class="h-4 w-4" fill="#c1c4c9"
-                                                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                                                <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round" stroke-width="2"
-                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                            </svg>
-                                                                        </span>
+                                                                        Reference
+
+                                                                    <span class="flex short-icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                        </svg>
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                        </svg>
+                                                                    </span>
                                                                     </th>
 
 

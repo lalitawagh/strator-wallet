@@ -27,16 +27,16 @@ class TransactionController extends Controller
         }
 
         $transactions = QueryBuilder::for(Transaction::class)
-                        ->allowedFilters([
-                            AllowedFilter::exact('workspace_id'),
-                        ]);
+            ->allowedFilters([
+                AllowedFilter::exact('workspace_id'),
+            ]);
 
         if ($request->has('wallet_id')) {
             $walletID = $request->input('wallet_id');
             $transactions = $transactions->where("ref_id", $walletID);
         }
 
-        $transactions = $transactions->where('ref_type','wallet')->latest()->paginate();
+        $transactions = $transactions->where('ref_type', 'wallet')->latest()->paginate();
 
         return view("ledger-foundation::wallet.transactions", compact('workspace', 'wallets', 'transactions', 'walletID'));
     }
