@@ -30,8 +30,7 @@ class StoreExchangeRateRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            if($this->has('is_hard_stop') && is_null($this->input('valid_date')))
-            {
+            if ($this->has('is_hard_stop') && is_null($this->input('valid_date'))) {
                 $validator->errors()->add('valid_date', 'Valid Date field is required');
             }
         });

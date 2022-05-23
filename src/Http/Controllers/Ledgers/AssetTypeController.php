@@ -15,7 +15,7 @@ class AssetTypeController extends Controller
     {
         $this->authorize(AssetTypePolicy::VIEW, AssetTypeConfiguration::class);
 
-        $asset_type_lists = Helper::paginate(collect(Setting::getValue('asset_types',[])));
+        $asset_type_lists = Helper::paginate(collect(Setting::getValue('asset_types', [])));
 
         return view("ledger-foundation::asset-type.index", compact('asset_type_lists'));
     }
@@ -30,14 +30,13 @@ class AssetTypeController extends Controller
     public function store(StoreAssetTypeRequest $request)
     {
         $data = $request->validated();
-        if($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
         $data['id'] = now()->format('dmYHis');
 
-        $settings = collect(Setting::getValue('asset_types',[]))->push($data);
+        $settings = collect(Setting::getValue('asset_types', []))->push($data);
 
         Setting::updateOrCreate(['key' => 'asset_types'], ['value' => $settings]);
 
@@ -51,12 +50,12 @@ class AssetTypeController extends Controller
     {
         $this->authorize(AssetTypePolicy::EDIT, AssetTypeConfiguration::class);
 
-        $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $id);
+        $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $id);
 
         return view("ledger-foundation::asset-type.edit", compact('asset_type'));
     }
 
-    public function update(StoreAssetTypeRequest $request,$id)
+    public function update(StoreAssetTypeRequest $request, $id)
     {
         $data = $request->validated();
         $data['id'] = $id;
@@ -73,8 +72,7 @@ class AssetTypeController extends Controller
 
         $data['image'] = $existing_image;
 
-        if($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
 
