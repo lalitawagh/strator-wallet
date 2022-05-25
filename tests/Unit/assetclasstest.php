@@ -4,11 +4,11 @@ namespace Kanexy\LedgerFoundation\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Kanexy\Cms\CmsServiceProvider;
-use Kanexy\LedgerFoundation\PartnerFoundationServiceProvider;
+use Kanexy\LedgerFoundation\LedgerFoundationServiceProvider;
 use Livewire\LivewireServiceProvider;
-use Orchestra\Testbench\TestCase as Orchestra;
+use Orchestra\Testbench\TestCase as Asset;
 
-class TestCase extends Orchestra
+class TestCase extends Asset
 {
   public function index()
     {
@@ -55,7 +55,7 @@ class TestCase extends Orchestra
     {
         $request->validate([
             'name' => 'required',
-            'detail' => 'required',
+            'email' => 'required',
         ]);
     
         $product->update($request->all());
@@ -64,12 +64,6 @@ class TestCase extends Orchestra
                         ->with('success','Product updated successfully');
     }
     
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Product $product)
     {
         $product->delete();
