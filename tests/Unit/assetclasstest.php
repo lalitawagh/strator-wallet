@@ -4,7 +4,7 @@ namespace Kanexy\LedgerFoundation\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Kanexy\Cms\CmsServiceProvider;
-use Kanexy\PartnerFoundation\PartnerFoundationServiceProvider;
+use Kanexy\LedgerFoundation\PartnerFoundationServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
@@ -15,7 +15,8 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Kanexy\\PartnerFoundation\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'Kanexy\\
+            LedgerFoundation\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
