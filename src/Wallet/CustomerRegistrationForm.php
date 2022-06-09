@@ -12,7 +12,7 @@ class CustomerRegistrationForm extends Item
 {
     public function validationRules(): array
     {
-        $country = Setting::getValue("wallet_default_country");
+        $country = Setting::getValue("wallet_default_country") ?? NULL;
 
         return [
             'country_id' => ['required_if:'.$country.',!=,UK', 'exists:countries,id'],
@@ -36,7 +36,12 @@ class CustomerRegistrationForm extends Item
         $nationalities = Nationality::pluck("nationality", "alpha_2_code");
         $countries = Country::orderBy("name")->pluck("name", "id");
         $countryWithFlags = Country::orderBy("name")->get();
-        $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
+        $defaultCountry= NULL;
+        if(!is_null(Setting::getValue("wallet_default_country")))
+        {
+            $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
+        }
+
         $user = NULL;
         return view("ledger-foundation::registration.customer-registration", compact("titles", "countries", "defaultCountry", "countryWithFlags", "isBankingUser", "nationalities", "user"));
     }
