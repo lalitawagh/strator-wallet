@@ -12,7 +12,8 @@ class CustomerRegistrationForm extends Item
 {
     public function validationRules(): array
     {
-        $country = Setting::getValue("wallet_default_country") ?? NULL;
+        // $country = Setting::getValue("wallet_default_country") ?? NULL;
+        $country = 'IN';
 
         return [
             'country_id' => ['required_if:'.$country.',!=,UK', 'exists:countries,id'],
