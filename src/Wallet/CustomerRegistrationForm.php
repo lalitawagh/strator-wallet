@@ -12,9 +12,10 @@ class CustomerRegistrationForm extends Item
 {
     public function validationRules(): array
     {
+        $country = NULL;
         if(!is_null(Setting::getValue("wallet_default_country")))
         {
-            $country =  Setting::getValue("wallet_default_country");
+            $country =  @Setting::getValue("wallet_default_country");
         }
 
         return [
