@@ -5,6 +5,7 @@ namespace Kanexy\LedgerFoundation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Kanexy\Cms\Menu\MenuItem;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration;
 use Kanexy\LedgerFoundation\Contracts\AssetTypeConfiguration;
@@ -28,6 +29,9 @@ use Kanexy\LedgerFoundation\Policies\DepositPolicy;
 use Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy;
 use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
 use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
+use Kanexy\LedgerFoundation\Setting\GeneralSettingForm;
+use Kanexy\LedgerFoundation\Step\WalletRegistrationStep;
+use Kanexy\LedgerFoundation\Wallet\CustomerRegistrationForm;
 use Kanexy\LedgerFoundation\Wallet\MembershipServiceSelectionContent;
 use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
 use Livewire\Livewire;
@@ -109,7 +113,11 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         $this->registerDefaultPolicies();
 
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletMenuItem());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new MenuItem('Dashboard', 'home', route('dashboard.wallet.wallet-dashboard'), 100));
         \Kanexy\Cms\Facades\MembershipServiceSelection::addItem(new MembershipServiceSelectionContent());
+        \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralSettingForm::class);
+        \Kanexy\Cms\Facades\CustomerRegistration::addItem(CustomerRegistrationForm::class);
+        \Kanexy\Cms\Facades\RegistrationStep::addItem(new WalletRegistrationStep());
 
         \Kanexy\Cms\Facades\Cms::setRegistrationFlow(function (User $user) {
             if ($user->is_banking_user != true) {
