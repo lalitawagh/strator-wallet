@@ -127,7 +127,8 @@ class DepositController extends Controller
 
         $details = session('deposit_request');
         $countryWithFlags = Country::orderBy("name")->get();
-        $defaultCountry = Country::find(Setting::getValue("default_country"));
+        $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
+       
         $user = Auth::user();
         $user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
         // $user->generateOtp("sms");

@@ -329,6 +329,13 @@ display: contents !important;
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('dashboard.wallet.master-account.index') }}"
+                            class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.master-account.index' || Route::current()->getName() == 'dashboard.wallet.master-account.create' || Route::current()->getName() == 'dashboard.wallet.master-account.edit') side-menu--active @endif">
+                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__title"> Master Account </div>
+                        </a>
+                    </li>
+                    <li>
                         <a href="#" class="side-menu">
                             <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                             <div class="side-menu__title"> Notifications </div>
