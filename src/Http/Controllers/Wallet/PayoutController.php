@@ -48,7 +48,7 @@ class PayoutController extends Controller
     {
         $user = Auth::user();
         $countryWithFlags = Country::orderBy("name")->get();
-        $defaultCountry = Country::find(Setting::getValue("default_country"));
+        $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
         $wallets =  Wallet::forHolder($user)->get();
         $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wallet')->latest()->get();

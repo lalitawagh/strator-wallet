@@ -6,6 +6,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetTypeController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\CommodityTypeController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\ExchangeRateController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\LedgerController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\DashboardController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\DepositController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\DisputeController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\ExchangeController;
@@ -14,6 +15,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\ReceiveController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\TransactionController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WalletController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\MasterAccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +29,8 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
 */
 
 Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'dashboard.wallet.'],function()  {
-    Route::get('/', [LedgerFoundationController::class,'index']);
+    Route::name('wallet-dashboard')->get('/', [DashboardController::class,'index']);
+    Route::resource("master-account",MasterAccountController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource("asset-class",AssetClassController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('asset-type', AssetTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('commodity-type', CommodityTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
