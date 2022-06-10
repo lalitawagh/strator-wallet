@@ -58,8 +58,9 @@ class DepositController extends Controller
         $wallets = Wallet::forHolder($user)->with('ledger')->get();
         $currencies = Setting::getValue('asset_types', []);
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
+        $walletDefaultCountry = Country::find(Setting::getValue('wallet_default_country'));
 
-        return view("ledger-foundation::wallet.deposit.deposit-initial", compact('wallets', 'currencies', 'workspace'));
+        return view("ledger-foundation::wallet.deposit.deposit-initial", compact('wallets', 'currencies', 'workspace', 'walletDefaultCountry'));
     }
 
     public function store(StoreDepositRequest $request)

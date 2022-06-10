@@ -2,6 +2,7 @@
 
 namespace Kanexy\LedgerFoundation\Livewire;
 
+use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
@@ -73,8 +74,9 @@ class WalletPayoutComponent extends Component
         $exchange_wallet = Ledger::whereId($sender_wallet?->ledger_id)->first();
         $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $value);
         $this->exchange_asset_category = @$asset_type['asset_category'];
+        $walletDefaultCountry = Country::find(Setting::getValue('wallet_default_country'));
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet, $exchange_wallet, $value);
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet, $exchange_wallet, $value, $walletDefaultCountry);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];

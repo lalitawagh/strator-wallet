@@ -10,6 +10,7 @@ use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration;
 use Kanexy\LedgerFoundation\Contracts\AssetTypeConfiguration;
 use Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration;
+use Kanexy\LedgerFoundation\Contracts\MasterAccount;
 use Kanexy\LedgerFoundation\Contracts\Payout;
 use Kanexy\LedgerFoundation\Livewire\DepositOtpVerificationComponent;
 use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
@@ -28,6 +29,7 @@ use Kanexy\LedgerFoundation\Policies\CommodityTypePolicy;
 use Kanexy\LedgerFoundation\Policies\DepositPolicy;
 use Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy;
 use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
+use Kanexy\LedgerFoundation\Policies\MasterAccountPolicy;
 use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
 use Kanexy\LedgerFoundation\Setting\GeneralSettingForm;
 use Kanexy\LedgerFoundation\Step\WalletRegistrationStep;
@@ -66,7 +68,8 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Wallet::class => DepositPolicy::class,
         AssetClassConfiguration::class => AssetClassPolicy::class,
         AssetTypeConfiguration::class => AssetTypePolicy::class,
-        CommodityTypeConfiguration::class => CommodityTypePolicy::class
+        CommodityTypeConfiguration::class => CommodityTypePolicy::class,
+        MasterAccount::class => MasterAccountPolicy::class
     ];
 
 

@@ -41,7 +41,7 @@
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Account Holder Name</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Account Number</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Sort Code / IFSC Code</th>
-                                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Account Branchtry</th>
+                                <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Account Branch</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Status</th>
                                 <th class="border-b-2 dark:border-dark-5 whitespace-nowrap">Action</th>
                             </tr>
@@ -53,16 +53,16 @@
                             @foreach ($master_accounts as $index => $master_account)
                                 <tr>
                                     <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
-                                    <td class="border-b dark:border-dark-5">{{ $master_account['country'] }}</td>
+                                    <td class="border-b dark:border-dark-5">{{ \Kanexy\Cms\I18N\Models\Country::find($master_account['country'])?->name }}</td>
                                     <td class="border-b dark:border-dark-5">{{ $master_account['account_holder_name'] }}
                                     </td>
                                     <td class="border-b dark:border-dark-5">{{ $master_account['account_number'] }}
                                     </td>
-                                    <td class="border-b dark:border-dark-5">{{ $master_account['sort_code'] }}
+                                    <td class="border-b dark:border-dark-5">{{ @$master_account['sort_code'] }} {{ @$master_account['ifsc_code'] }}
                                     </td>
                                     <td class="border-b dark:border-dark-5">{{ $master_account['account_branch'] }}
                                     </td>
-                                    <td class="border-b dark:border-dark-5">{{ $master_account['status'] }}
+                                    <td class="border-b dark:border-dark-5">{{ trans('ledger-foundation::configuration.' .$master_account['status']) }}
                                     </td>
                                    
                                     <td class="border-b dark:border-dark-5">

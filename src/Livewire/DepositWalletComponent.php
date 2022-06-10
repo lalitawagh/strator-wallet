@@ -28,10 +28,13 @@ class DepositWalletComponent extends Component
 
     public $exchange_asset_category;
 
-    public function mount($wallets, $currencies)
+    public $walletDefaultCountry;
+
+    public function mount($wallets, $currencies, $walletDefaultCountry)
     {
         $this->wallets = $wallets;
         $this->currencies = $currencies;
+        $this->walletDefaultCountry = $walletDefaultCountry;
         $this->selected_wallet = session('wallet');
         $this->currency = session('currency');
         if (!is_null(session('currency'))) {
