@@ -15,6 +15,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\ReceiveController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\TransactionController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WalletController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\MasterAccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
 
 Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'dashboard.wallet.'],function()  {
     Route::name('wallet-dashboard')->get('/', [DashboardController::class,'index']);
+    Route::resource("master-account",MasterAccountController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource("asset-class",AssetClassController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('asset-type', AssetTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('commodity-type', CommodityTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
