@@ -55,7 +55,7 @@
                                 @endforeach
                             </span>
 
-                            <select id="countryWithPhone" name="country_code" onchange="getFlagImgWallet(this)"
+                            <select id="countryWithPhone" wire:change="changeCountryCode($event.target.value)" name="country_code" onchange="getFlagImgWallet(this)"
                                 data-search="true" class="tail-select" style="width:30%">
                                 @foreach ($countryWithFlags as $country)
                                     <option data-source="{{ $country->flag }}" value="{{ $country->id }}"

@@ -7,6 +7,7 @@ use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
+use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Livewire\Component;
 
 class WalletPayoutComponent extends Component
@@ -43,6 +44,10 @@ class WalletPayoutComponent extends Component
 
     public $selected_currency;
 
+    public $phone;
+
+    public $country_code;
+
     public function mount($wallets, $beneficiaries, $countryWithFlags, $defaultCountry, $user, $ledgers, $asset_types)
     {
         $this->wallets = $wallets;
@@ -66,17 +71,24 @@ class WalletPayoutComponent extends Component
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
+    public function changeBeneficiary($value)
+    {
+        $beneficiary = Contact::find($value);
+        $this->phone = $beneficiary?->mobile;
+        $this->country_code = $beneficiary?->meta['country_code'] ?? '231';
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
+    }
+
     public function changeCurrency($value)
     {
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
         $this->selected_currency = $value;
         $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
-        $exchange_wallet = Ledger::whereId($sender_wallet?->ledger_id)->first();
-        $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $value);
-        $this->exchange_asset_category = @$asset_type['asset_category'];
+        $exchange_wallet = Wallet::whereId($value)->first();
+
         $walletDefaultCountry = Country::find(Setting::getValue('wallet_default_country'));
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet, $exchange_wallet, $value, $walletDefaultCountry);
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet,$exchange_wallet,$walletDefaultCountry);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
@@ -86,8 +98,8 @@ class WalletPayoutComponent extends Component
         session([
             'payout_fee' => $this->fee,
             'payout_exchange_rate' => $this->exchange_rate,
-            'payout_exchange_currency' => $this->exchange_currency,
-            'payout_base_currency' => $this->base_currency,
+            'payout_exchange_currency' => $this->base_currency,
+            'payout_base_currency' => $this->exchange_currency,
             'payout_wallet' => $this->selected_wallet,
             'payout_currency' => $value
         ]);

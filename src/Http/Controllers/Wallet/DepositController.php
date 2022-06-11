@@ -5,6 +5,7 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
@@ -15,6 +16,7 @@ use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\DepositPolicy;
 use Kanexy\LedgerFoundation\Services\WalletService;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Kanexy\PartnerFoundation\Core\Models\Log;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -129,7 +131,7 @@ class DepositController extends Controller
         $details = session('deposit_request');
         $countryWithFlags = Country::orderBy("name")->get();
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
-       
+
         $user = Auth::user();
         $user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
         // $user->generateOtp("sms");
@@ -176,7 +178,7 @@ class DepositController extends Controller
         $wallet = Wallet::find($depositRequest['wallet']);
 
         if ($data['status'] == 'COMPLETED') {
-            Transaction::create([
+            $transaction = Transaction::create([
                 'urn' => Transaction::generateUrn(),
                 'amount' => $amount,
                 'workspace_id' => $workspace->getKey(),
@@ -207,6 +209,30 @@ class DepositController extends Controller
                     'balance' => ($wallet?->balance + $amount),
                 ],
             ]);
+
+            $meta = [
+                'amount' => $amount,
+                'base_currency' => session('base_currency'),
+                'exchange_currency' => session('exchange_currency'),
+                'workspace_id' => $workspace->getKey(),
+                'type' => 'credit',
+                'payment_method' => 'stripe',
+                'ref_id' =>  $depositRequest['wallet'],
+                'ref_type' => 'wallet',
+                'settled_amount' => $amount,
+                'settled_currency' => $depositRequest['currency'],
+                'settlement_date' => date('Y-m-d'),
+                'transaction_fee' => $depositRequest['fee'],
+                'status' => 'accepted',
+            ];
+
+            $log = new Log();
+            $log->id = Str::uuid();
+            $log->text = 'transaction';
+            $log->user_id = auth()->user()->id;
+            $log->meta = $meta;
+            $log->target()->associate($transaction);
+            $log->save();
 
             $wallet->credit($amount);
         }
@@ -255,7 +281,7 @@ class DepositController extends Controller
 
             $wallet = Wallet::find($depositRequest['wallet']);
 
-            Transaction::create([
+            $transaction = Transaction::create([
                 'urn' => Transaction::generateUrn(),
                 'amount' => $amount,
                 'workspace_id' => $workspace->getKey(),
@@ -289,6 +315,30 @@ class DepositController extends Controller
                     'balance' => ($wallet?->balance + $amount),
                 ],
             ]);
+
+            $meta = [
+                'amount' => $amount,
+                'base_currency' => session('base_currency'),
+                'exchange_currency' => session('exchange_currency'),
+                'workspace_id' => $workspace->getKey(),
+                'type' => 'credit',
+                'payment_method' => 'stripe',
+                'ref_id' =>  $depositRequest['wallet'],
+                'ref_type' => 'wallet',
+                'settled_amount' => $amount,
+                'settled_currency' => $depositRequest['currency'],
+                'settlement_date' => date('Y-m-d'),
+                'transaction_fee' => $depositRequest['fee'],
+                'status' => 'accepted',
+            ];
+
+            $log = new Log();
+            $log->id = Str::uuid();
+            $log->text = 'transaction';
+            $log->user_id = auth()->user()->id;
+            $log->meta = $meta;
+            $log->target()->associate($transaction);
+            $log->save();
 
             $wallet->credit($amount);
         }

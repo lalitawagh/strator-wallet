@@ -51,6 +51,8 @@ class WalletBeneficiary extends Component
 
     public $sent_resend_otp;
 
+    public $country_code;
+
     public function mount($workspace, $countryWithFlags, $defaultCountry)
     {
         $this->workspace = $workspace;
@@ -68,6 +70,11 @@ class WalletBeneficiary extends Component
         $this->membership_name = $membership?->name;
     }
 
+    public function changeCountryCode($value)
+    {
+        $this->country_code = $value;
+    }
+
     public function createBeneficiary()
     {
         $data = $this->validate([
@@ -78,6 +85,7 @@ class WalletBeneficiary extends Component
             'mobile' => ['required', new MobileNumber],
             'notes' => 'nullable',
             'nick_name' => 'nullable',
+            'country_code' => 'nullable',
         ]);
 
         if (is_null($this->membership_urn)) {
@@ -89,6 +97,7 @@ class WalletBeneficiary extends Component
             $data['ref_type'] = 'wallet';
             $data['classification'] = $this->classification;
             $data['status'] = 'active';
+            $data['meta'] = [ 'country_code' => $data['country_code']];
 
             /** @var Contact $contact */
             $contact = Contact::create($data);
