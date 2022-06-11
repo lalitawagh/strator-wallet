@@ -29,6 +29,11 @@ class Permission
     public const EXCHANGE_RATE_EDIT   = 'ledger-foundation::exchange_rate.edit';
     public const EXCHANGE_RATE_DELETE = 'ledger-foundation::exchange_rate.delete';
 
+    public const MASTER_ACCOUNT_VIEW   = 'ledger-foundation::master_account.view';
+    public const MASTER_ACCOUNT_CREATE = 'ledger-foundation::master_account.create';
+    public const MASTER_ACCOUNT_EDIT   = 'ledger-foundation::master_account.edit';
+    public const MASTER_ACCOUNT_DELETE = 'ledger-foundation::master_account.delete';
+
     public const DEPOSIT_VIEW   = 'ledger-foundation::wallet_deposit.view';
     public const DEPOSIT_CREATE = 'ledger-foundation::wallet_deposit.create';
     public const DEPOSIT_SHOW   = 'ledger-foundation::wallet_deposit.show';
