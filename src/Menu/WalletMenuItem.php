@@ -28,12 +28,12 @@ class WalletMenuItem extends Item
         $menus = [
                 new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
                 new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
-                new MenuItem('Request Payments', 'activity', url: route('dashboard.wallet.receive.index')),
+                // new MenuItem('Request Payments', 'activity', url: route('dashboard.wallet.receive.index')),
                 new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
                 new MenuItem('Withdraw', 'activity',url: route('dashboard.wallet.withdraw.index')),
-                new MenuItem('Exchange', 'activity',url: route('dashboard.wallet.exchange.index')),
-                new MenuItem('Transfers', 'activity'),
-                new MenuItem('Disputes', 'activity',url: route('dashboard.wallet.dispute.index')),
+                // new MenuItem('Exchange', 'activity',url: route('dashboard.wallet.exchange.index')),
+                // new MenuItem('Transfers', 'activity'),
+                // new MenuItem('Disputes', 'activity',url: route('dashboard.wallet.dispute.index')),
             ];
 
         if ($user->isSuperAdmin()) {
