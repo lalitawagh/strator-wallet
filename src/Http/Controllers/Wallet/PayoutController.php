@@ -16,6 +16,7 @@ use Kanexy\LedgerFoundation\Http\Requests\StorePayoutRequest;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
+use Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Core\Models\Log;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
@@ -234,6 +235,23 @@ class PayoutController extends Controller
         return redirect()->route("dashboard.wallet.payout.index", ['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
             'message' => 'Processing the payment. It may take a while.',
             'status' => 'success',
+        ]);
+    }
+
+    public function transferAccepted(Request $request)
+    {
+        $transaction = Transaction::find($request->id);
+        $metaDetails = [
+            'transfer_status' =>  TransactionStatus::ACCEPTED,
+        ];
+
+        $meta = array_merge($transaction->meta,$metaDetails);
+        $transaction->meta = $meta;
+        $transaction->update();
+
+        return redirect()->route('dashboard.wallet.payout.index')->with([
+            'status' => 'success',
+            'message' => 'The payout request accepted successfully.',
         ]);
     }
 }

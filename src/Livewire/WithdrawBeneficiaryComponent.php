@@ -9,11 +9,17 @@ use Kanexy\Cms\Models\OneTimePassword;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\MobileNumber;
+use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\PartnerFoundation\Banking\Enums\BankEnum;
+use Kanexy\PartnerFoundation\Banking\Models\Account;
+use Kanexy\PartnerFoundation\Core\Dtos\CreateBeneficiaryDto;
+use Kanexy\PartnerFoundation\Core\Services\WrappexService;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
+use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Livewire\Component;
 
-class WalletBeneficiary extends Component
+class WithdrawBeneficiaryComponent extends Component
 {
     public $mobile;
 
@@ -31,8 +37,6 @@ class WalletBeneficiary extends Component
 
     public $email;
 
-    public $nick_name;
-
     public $notes;
 
     public $classification = ['beneficiary'];
@@ -49,9 +53,22 @@ class WalletBeneficiary extends Component
 
     public $oneTimePassword;
 
+    public $account_number;
+
+    public $account_name;
+
+    public $sort_code;
+
     public $sent_resend_otp;
 
     public $country_code;
+
+    // private WrappexService $service;
+
+    // public function __construct(WrappexService $service)
+    // {
+    //     $this->service = $service;
+    // }
 
     public function mount($workspace, $countryWithFlags, $defaultCountry)
     {
@@ -81,40 +98,62 @@ class WalletBeneficiary extends Component
             'first_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
             'middle_name' => ['nullable', new AlphaSpaces, 'string', 'max:40'],
             'last_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
-            'email' => 'required|email',
-            'mobile' => ['required', new MobileNumber],
+            'email' => 'nullable|email',
+            'mobile' => ['nullable'],
             'notes' => 'nullable',
-            'nick_name' => 'nullable',
             'country_code' => 'nullable',
+            'account_number' => 'required',
+            'account_name' => 'required',
+            'sort_code' => 'required',
         ]);
 
-        if (is_null($this->membership_urn)) {
-            $this->addError('mobile', 'Membership not exists with this mobile number');
-        } else {
+        $data['classification'] = $this->classification;
 
-            $data['mobile'] = Helper::normalizePhone($data['mobile']);
-            $data['workspace_id'] = $this->workspace->id;
-            $data['ref_type'] = 'wallet';
-            $data['classification'] = $this->classification;
-            $data['status'] = 'active';
-            $data['meta'] = [ 'country_code' => $data['country_code']];
+        $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', 231);
+        $account = Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
+        $workspace = Workspace::findOrFail($account->holder_id);
 
-            /** @var Contact $contact */
-            $contact = Contact::create($data);
+        $info['first_name'] = $data['first_name'];
+        $info['middle_name'] = $data['middle_name'];
+        $info['last_name'] = $data['last_name'];
+        $info['email'] = $data['email'];
+        $info['display_name'] = implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]);
+        $info['meta'] = [
+            'bank_account_number' => $data['account_number'],
+            'bank_code' => $data['sort_code'],
+            'bank_code_type' => BankEnum::SORTCODE,
+            'beneficiary_type' => 'withdraw',
+            'bank_account_name' => $data['account_name'],
+        ];
+        $info['classification'] = $this->classification;
+        $data['meta'] = $info['meta'];
 
-            event(new ContactCreated($contact));
 
-            /** @var \App\Models\User $user */
-            $user = auth()->user();
-            $this->contact = $contact;
+        $service = new WrappexService;
+        $beneficiaryRefId = $service->createBeneficiary(
+            new CreateBeneficiaryDto($workspace->ref_id, $info)
+        );
 
-            $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
-            // $contact->generateOtp("sms");
-            $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
-            //$user->generateOtp("sms");
+        $data['workspace_id'] = $workspace->id;
+        $data['ref_id']       = $beneficiaryRefId;
+        $data['ref_type']     = 'wrappex';
 
-            $this->beneficiary_created = true;
-        }
+        /** @var Contact $contact */
+        $contact = Contact::create($data);
+
+        event(new ContactCreated($contact));
+
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+        $this->contact = $contact;
+        //$user->notify(new EmailOneTimePasswordNotification($contact->generateOtp("email")));
+        $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+        // $contact->generateOtp("sms");
+        $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
+        //$user->generateOtp("sms");
+
+        $this->beneficiary_created = true;
+
     }
 
     public function resendOtp(OneTimePassword $oneTimePassword)
@@ -144,7 +183,7 @@ class WalletBeneficiary extends Component
         } else {
             $oneTimePassword->update(['verified_at' => now()]);
 
-            return redirect()->route("dashboard.wallet.payout.create", ['workspace_id' => $this->workspace->id])->with([
+            return redirect()->route("dashboard.wallet.withdraw.create", ['workspace_id' => $this->workspace->id])->with([
                 'status' => 'success',
                 'message' => 'The beneficiary created successfully.',
             ]);
@@ -153,6 +192,6 @@ class WalletBeneficiary extends Component
 
     public function render()
     {
-        return view('ledger-foundation::Livewire.wallet-beneficiary');
+        return view('ledger-foundation::Livewire.withdraw-beneficiary');
     }
 }
