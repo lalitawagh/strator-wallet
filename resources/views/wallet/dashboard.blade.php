@@ -1,4 +1,4 @@
-@extends('concepts::layouts.master')
+@extends('ledger-foundation::layouts.master')
 
 @push('styles')
 <link rel="stylesheet" href="{{ asset('dist/css/wallet.css') }}" />
