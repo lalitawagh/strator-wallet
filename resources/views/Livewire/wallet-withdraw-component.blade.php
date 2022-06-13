@@ -2,7 +2,7 @@
     <div class="grid grid-cols-12 md:gap-10 mt-0">
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
             <label for="wallet" class="form-label sm:w-30"> Withdraw From <span class="text-theme-6">*</span></label>
-            <div class="sm:w-5/6" wire:ignore>
+            <div class="sm:w-5/6 tillselect-marging" wire:ignore>
                 <select wire:change="getWalletBalance($event.target.value)" name="sender_wallet_account_id" id="wallet"
                     class="form-control" data-search="true" required>
                     <option value="">Select Withdraw From</option>
@@ -31,7 +31,7 @@
         <div wire:ignore class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2 relative">
             <label for="beneficiary" class="form-label sm:w-30"> Beneficiary <span
                     class="text-theme-6">*</span></label>
-            <div class="sm:w-5/6">
+            <div class="sm:w-5/6 tillselect-marging">
                 <select wire:change="changeBeneficiary($event.target.value)" name="beneficiary_id" id="beneficiary_id" class="form-control" data-search="true">
                     <option value="">Select Beneficiary</option>
                     @foreach ($beneficiaries as $beneficiary)

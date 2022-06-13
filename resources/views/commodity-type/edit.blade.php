@@ -7,9 +7,9 @@
         <div class="grid grid-cols-12 gap-6">
             <!-- BEGIN: Daily Sales -->
             <div class="intro-y box col-span-12 xxl:col-span-12">
-                <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                <div class="flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
-                    <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
+                    <div class="breadcrumb mr-auto hidden sm:flex">
                         <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
                         <a href="" class="breadcrumb--active"> Edit Commodity Type</a>
@@ -19,8 +19,8 @@
                     <form action="{{ route('dashboard.wallet.commodity-type.update',$commodity_type['id']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 lg:gap-10 mt-0">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="name" class="form-label sm:w-30">Name <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="name" name="name" type="text"
@@ -33,7 +33,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="logo" class="form-label sm:w-30"> Image </label>
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">
@@ -45,8 +45,8 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
-                            <div class="col-span-12 md:col-span-6 form-inline mt-2">
+                        <div class="grid grid-cols-12 lg:gap-10 mt-0">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-30"> Status</label>
                                 <div class="sm:w-5/6">
                                     <input id="status" name="status" type="checkbox" class="form-check-switch" @if (old("status",$commodity_type['status'])  === \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) checked @endif>

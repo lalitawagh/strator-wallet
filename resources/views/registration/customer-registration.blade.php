@@ -2,7 +2,7 @@
 <div class="form-inline mb-2">
     <label for="phone" class="form-label sm:w-24">Mobile Number <span
             class="text-theme-6">*</span></label>
-    <div class="sm:w-3/5 m-number 1">
+    <div class="sm:w-3/5 tillselect-marging">
         <div class="input-group flex flex-col sm:flex-row">
             <div id="input-group-phone" class="input-group-text flex form-inline"
                 style="padding: 0 5px;">
@@ -79,7 +79,7 @@
 <div class="form-inline mb-2">
     <label for="nationality" class="form-label sm:w-24">Nationality <span
             class="text-theme-6">*</span></label>
-    <div class="sm:w-3/5">
+    <div class="sm:w-3/5 tillselect-marging">
         <select id="nationality" name="nationality" data-search="true"
             class="tail-select w-full @error('nationality') border-theme-6 @enderror">
             @foreach ($nationalities as $key => $nationality)
@@ -97,7 +97,7 @@
     <label for="country_id" class="form-label sm:w-24">Residence <span
             class="text-theme-6">*</span></label>
 
-    <div class="sm:w-3/5">
+    <div class="sm:w-3/5 tillselect-marging">
         <select id="country_id" name="country_id" data-search="true"
             class="tail-select w-full @error('country_id') border-theme-6 @enderror">
             @foreach ($countries as $key => $value)
