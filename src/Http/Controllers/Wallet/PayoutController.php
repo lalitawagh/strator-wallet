@@ -67,7 +67,7 @@ class PayoutController extends Controller
         $user = Auth::user();
         $sender_wallet = Wallet::with('ledger')->find($data['wallet']);
 
-        $receiver_ledger = Wallet::find($data['receiver_currency'])->first();
+        $receiver_ledger = Wallet::find($data['receiver_currency']);
 
         $beneficiary = Contact::find($data['beneficiary']);
         $beneficiary_user = User::wherePhone($beneficiary?->mobile)->first();
@@ -76,9 +76,7 @@ class PayoutController extends Controller
             $beneficiary_wallet = Wallet::forHolder($beneficiary_user)->whereLedgerId($receiver_ledger?->ledger_id)->first();
         }
 
-
         $amount = $data['amount'];
-
 
         if ($amount > $data['balance']) {
             return back()->withError("Insufficient balance in the account.");
