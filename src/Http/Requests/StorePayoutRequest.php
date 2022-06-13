@@ -3,14 +3,14 @@
 namespace Kanexy\LedgerFoundation\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Kanexy\LedgerFoundation\Model\Wallet;
+use Kanexy\LedgerFoundation\Contracts\Payout;
 use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
 
 class StorePayoutRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can(PayoutPolicy::CREATE, Wallet::class);
+        return $this->user()->can(PayoutPolicy::CREATE, Payout::class);
     }
 
     public function rules()
@@ -20,7 +20,7 @@ class StorePayoutRequest extends FormRequest
             'balance'           => 'required',
             'beneficiary'       => 'required',
             'country_code'      => 'required',
-            'phone'             => 'required',
+            'phone'             => 'nullable',
             'amount'            => 'required',
             'remaining_amount'  => 'required',
             'receiver_currency' => 'required',

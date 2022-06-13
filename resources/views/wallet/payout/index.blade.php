@@ -11,7 +11,7 @@
                     Payouts
                 </h2>
             </div>
-            <div class="p-5">
+            <div class="p-3">
                 @include('ledger-foundation::wallet.list-transactions');
             </div>
         </div>

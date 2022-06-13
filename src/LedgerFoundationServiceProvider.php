@@ -5,15 +5,23 @@ namespace Kanexy\LedgerFoundation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\Cms\Menu\MenuItem;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
+use Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration;
+use Kanexy\LedgerFoundation\Contracts\AssetTypeConfiguration;
+use Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration;
+use Kanexy\LedgerFoundation\Contracts\MasterAccount;
+use Kanexy\LedgerFoundation\Contracts\Payout;
 use Kanexy\LedgerFoundation\Livewire\DepositOtpVerificationComponent;
+use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
-use Kanexy\LedgerFoundation\Livewire\WalletTransactionDetailComponent;
-use Kanexy\LedgerFoundation\Livewire\WalletTransactionsListComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletBeneficiary;
 use Kanexy\LedgerFoundation\Livewire\WalletPayoutComponent;
-use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
+use Kanexy\LedgerFoundation\Livewire\WalletTransactionDetailComponent;
+use Kanexy\LedgerFoundation\Livewire\WalletTransactionsListComponent;
+use Kanexy\LedgerFoundation\Livewire\WalletWithdrawComponent;
+use Kanexy\LedgerFoundation\Livewire\WithdrawBeneficiaryComponent;
+use Kanexy\LedgerFoundation\Menu\WalletDashboardMenuItem;
 use Kanexy\LedgerFoundation\Menu\WalletMenuItem;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
@@ -24,7 +32,11 @@ use Kanexy\LedgerFoundation\Policies\CommodityTypePolicy;
 use Kanexy\LedgerFoundation\Policies\DepositPolicy;
 use Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy;
 use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
+use Kanexy\LedgerFoundation\Policies\MasterAccountPolicy;
 use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
+use Kanexy\LedgerFoundation\Setting\GeneralSettingForm;
+use Kanexy\LedgerFoundation\Step\WalletRegistrationStep;
+use Kanexy\LedgerFoundation\Wallet\CustomerRegistrationForm;
 use Kanexy\LedgerFoundation\Wallet\MembershipServiceSelectionContent;
 use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
 use Livewire\Livewire;
@@ -54,10 +66,15 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
 
     private array $policies = [
         Ledger::class => LedgerPolicy::class,
-        Wallet::class => PayoutPolicy::class,
+        Payout::class => PayoutPolicy::class,
         ExchangeRate::class => ExchangeRatePolicy::class,
         Wallet::class => DepositPolicy::class,
+        AssetClassConfiguration::class => AssetClassPolicy::class,
+        AssetTypeConfiguration::class => AssetTypePolicy::class,
+        CommodityTypeConfiguration::class => CommodityTypePolicy::class,
+        MasterAccount::class => MasterAccountPolicy::class
     ];
+
 
     public function registerDefaultPolicies()
     {
@@ -80,7 +97,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
          *
          * More info: https://github.com/spatie/laravel-package-tools
          */
-         $package
+        $package
             ->name('ledger-foundation')
             ->hasViews()
             ->hasRoute('web')
@@ -102,21 +119,39 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         $this->registerDefaultPolicies();
 
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletMenuItem());
+        \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletDashboardMenuItem());
         \Kanexy\Cms\Facades\MembershipServiceSelection::addItem(new MembershipServiceSelectionContent());
+        \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralSettingForm::class);
+        \Kanexy\Cms\Facades\CustomerRegistration::addItem(CustomerRegistrationForm::class);
+        \Kanexy\Cms\Facades\RegistrationStep::addItem(new WalletRegistrationStep());
 
-        \Kanexy\Cms\Facades\Cms::setRedirectRouteAfterRegistrationVerification(function (Request $request,User $user) {
-            if($user->is_banking_user != true)
-            {
+        \Kanexy\Cms\Facades\Cms::setRegistrationFlow(function (User $user) {
+            if ($user->is_banking_user != true) {
+                $type = 'wallet_flow';
+                return $type;
+            }
+            return false;
+        }, 2000);
+
+
+        \Kanexy\Cms\Facades\Cms::setRedirectRouteAfterRegistrationVerification(function (Request $request, User $user) {
+            if ($user->is_banking_user != true) {
                 return route("customer.signup.wallet.create");
             }
 
             return false;
-        },3000);
+        }, 3000);
 
         /** Create wallet account by default from banking flow **/
-        PartnerFoundation::setRedirectRouteAfterBanking(function () {
+        PartnerFoundation::setRedirectRouteAfterBanking(function (User $user) {
             return route("customer.signup.wallet.create");
         });
+
+        PartnerFoundation::setRedirectRouteAfterKyc(function (User $user) {
+            return route("dashboard.wallet.wallet-dashboard");
+        });
+
+
 
         Livewire::component('deposit-wallet-component', DepositWalletComponent::class);
         Livewire::component('deposit-otp-verification-component', DepositOtpVerificationComponent::class);
@@ -126,5 +161,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
 
         Livewire::component('wallet-beneficiary', WalletBeneficiary::class);
         Livewire::component('wallet-payout-component', WalletPayoutComponent::class);
+        Livewire::component('wallet-withdraw-component', WalletWithdrawComponent::class);
+        Livewire::component('withdraw-beneficiary', WithdrawBeneficiaryComponent::class);
     }
 }

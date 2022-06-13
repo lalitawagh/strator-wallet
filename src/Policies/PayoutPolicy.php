@@ -4,7 +4,7 @@ namespace Kanexy\LedgerFoundation\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Kanexy\LedgerFoundation\Http\Enums\Permission;
+use Kanexy\LedgerFoundation\Enums\Permission;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 
 class PayoutPolicy
@@ -61,7 +61,7 @@ class PayoutPolicy
 
     }
 
-    public function SHOW(User $user)
+    public function show(User $user)
     {
         if ($user->hasPermissionTo(Permission::PAYOUT_SHOW)) {
             return true;

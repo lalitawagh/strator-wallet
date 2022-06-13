@@ -205,10 +205,10 @@
 display: contents !important;
 }
 
-.valid_date_show
+/* .valid_date_show
 {
     display: flex;
-}
+} */
 
 @media (max-width:767px) {
     .configarrow-toggle{
@@ -326,6 +326,13 @@ display: contents !important;
                             class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.exchange-rate.index' || Route::current()->getName() == 'dashboard.wallet.exchange-rate.create' || Route::current()->getName() == 'dashboard.wallet.exchange-rate.edit') side-menu--active @endif">
                             <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                             <div class="side-menu__title"> Exchange Rate </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('dashboard.wallet.master-account.index') }}"
+                            class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.master-account.index' || Route::current()->getName() == 'dashboard.wallet.master-account.create' || Route::current()->getName() == 'dashboard.wallet.master-account.edit') side-menu--active @endif">
+                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__title"> Master Account </div>
                         </a>
                     </li>
                     <li>

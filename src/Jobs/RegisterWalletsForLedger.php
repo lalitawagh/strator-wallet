@@ -4,7 +4,6 @@ namespace Kanexy\LedgerFoundation\Jobs;
 
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -39,12 +38,11 @@ class RegisterWalletsForLedger implements ShouldQueue
         if ($this->ledger->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $this->ledger->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET) {
 
             foreach ($users as $user) {
-                $wallet = Wallet::where(['ledger_id' => $this->ledger->getKey(),"holder_type" => $user->getMorphClass(),"holder_id" => $user->getKey()])->first();
+                $wallet = Wallet::where(['ledger_id' => $this->ledger->getKey(), "holder_type" => $user->getMorphClass(), "holder_id" => $user->getKey()])->first();
 
-                if(!is_null($wallet))
-                {
+                if (!is_null($wallet)) {
                     $urn = $wallet->urn;
-                }else{
+                } else {
                     $urn = Wallet::generateUrn();
                 }
 

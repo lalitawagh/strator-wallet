@@ -51,7 +51,9 @@ class WalletBeneficiary extends Component
 
     public $sent_resend_otp;
 
-    public function mount($workspace,$countryWithFlags,$defaultCountry)
+    public $country_code;
+
+    public function mount($workspace, $countryWithFlags, $defaultCountry)
     {
         $this->workspace = $workspace;
         $this->countryWithFlags = $countryWithFlags;
@@ -68,28 +70,34 @@ class WalletBeneficiary extends Component
         $this->membership_name = $membership?->name;
     }
 
+    public function changeCountryCode($value)
+    {
+        $this->country_code = $value;
+    }
+
     public function createBeneficiary()
     {
         $data = $this->validate([
-            'first_name' => ['required' ,new AlphaSpaces, 'string','max:40'],
-            'middle_name' => ['nullable',new AlphaSpaces, 'string','max:40'],
-            'last_name' => ['required',new AlphaSpaces, 'string','max:40'],
+            'first_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
+            'middle_name' => ['nullable', new AlphaSpaces, 'string', 'max:40'],
+            'last_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
             'email' => 'required|email',
-            'mobile' => ['required',new MobileNumber],
+            'mobile' => ['required', new MobileNumber],
             'notes' => 'nullable',
             'nick_name' => 'nullable',
+            'country_code' => 'nullable',
         ]);
 
-        if(is_null($this->membership_urn))
-        {
+        if (is_null($this->membership_urn)) {
             $this->addError('mobile', 'Membership not exists with this mobile number');
-        }else{
+        } else {
 
             $data['mobile'] = Helper::normalizePhone($data['mobile']);
             $data['workspace_id'] = $this->workspace->id;
             $data['ref_type'] = 'wallet';
             $data['classification'] = $this->classification;
             $data['status'] = 'active';
+            $data['meta'] = [ 'country_code' => $data['country_code']];
 
             /** @var Contact $contact */
             $contact = Contact::create($data);
@@ -107,7 +115,6 @@ class WalletBeneficiary extends Component
 
             $this->beneficiary_created = true;
         }
-
     }
 
     public function resendOtp(OneTimePassword $oneTimePassword)
@@ -125,8 +132,8 @@ class WalletBeneficiary extends Component
     {
         $user = auth()->user();
         $data = $this->validate([
-                'code' => 'required',
-            ]);
+            'code' => 'required',
+        ]);
 
         $oneTimePassword = $this->contact->oneTimePasswords()->first();
 
@@ -134,10 +141,10 @@ class WalletBeneficiary extends Component
             $this->addError('code', 'The otp you entered did not match.');
         } else if (now()->greaterThan($oneTimePassword->expires_at)) {
             $this->addError('code', 'The otp you entered has expired.');
-        }else{
+        } else {
             $oneTimePassword->update(['verified_at' => now()]);
 
-            return redirect()->route("dashboard.wallet.payout.create",['workspace_id' => $this->workspace->id])->with([
+            return redirect()->route("dashboard.wallet.payout.create", ['workspace_id' => $this->workspace->id])->with([
                 'status' => 'success',
                 'message' => 'The beneficiary created successfully.',
             ]);
@@ -146,6 +153,6 @@ class WalletBeneficiary extends Component
 
     public function render()
     {
-       return view('ledger-foundation::Livewire.wallet-beneficiary');
+        return view('ledger-foundation::Livewire.wallet-beneficiary');
     }
 }

@@ -2,8 +2,6 @@
 
 namespace Kanexy\LedgerFoundation\Livewire;
 
-use AmrShawky\LaravelCurrency\Facade\Currency;
-use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
@@ -30,15 +28,17 @@ class DepositWalletComponent extends Component
 
     public $exchange_asset_category;
 
-    public function mount($wallets,$currencies)
+    public $walletDefaultCountry;
+
+    public function mount($wallets, $currencies, $walletDefaultCountry)
     {
         $this->wallets = $wallets;
         $this->currencies = $currencies;
+        $this->walletDefaultCountry = $walletDefaultCountry;
         $this->selected_wallet = session('wallet');
         $this->currency = session('currency');
-        if(!is_null(session('currency')))
-        {
-            $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $this->currency);
+        if (!is_null(session('currency'))) {
+            $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $this->currency);
             $this->exchange_asset_category = @$asset_type['asset_category'];
         }
     }
@@ -54,12 +54,12 @@ class DepositWalletComponent extends Component
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
         $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
         $exchange_wallet = Ledger::whereId($sender_wallet?->ledger_id)->first();
-        $asset_type = collect(Setting::getValue('asset_types',[]))->firstWhere('id', $value);
+        $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $value);
         $this->exchange_asset_category = @$asset_type['asset_category'];
         $base_asset_category = $exchange_wallet?->asset_category;
         $exchange_asset_category = @$asset_type['asset_category'];
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForDeposit($sender_wallet,$exchange_wallet,$value);
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForDeposit($sender_wallet, $exchange_wallet, $value);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
@@ -72,7 +72,7 @@ class DepositWalletComponent extends Component
             'exchange_currency' => $this->exchange_currency,
             'base_currency' => $this->base_currency,
             'wallet' => $this->selected_wallet,
-            'currency' => $value ,
+            'currency' => $value,
             'base_asset_category' => $base_asset_category,
             'exchange_asset_category' => $exchange_asset_category
         ]);
@@ -80,6 +80,6 @@ class DepositWalletComponent extends Component
 
     public function render()
     {
-       return view('ledger-foundation::Livewire.deposit-wallet-component');
+        return view('ledger-foundation::Livewire.deposit-wallet-component');
     }
 }

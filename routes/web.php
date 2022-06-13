@@ -6,6 +6,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetTypeController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\CommodityTypeController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\ExchangeRateController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\LedgerController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\DashboardController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\DepositController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\DisputeController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\ExchangeController;
@@ -14,6 +15,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\ReceiveController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\TransactionController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WalletController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\MasterAccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +29,8 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
 */
 
 Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'dashboard.wallet.'],function()  {
-    Route::get('/', [LedgerFoundationController::class,'index']);
+    Route::name('wallet-dashboard')->get('/', [DashboardController::class,'index']);
+    Route::resource("master-account",MasterAccountController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource("asset-class",AssetClassController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('asset-type', AssetTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('commodity-type', CommodityTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
@@ -38,7 +41,7 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'d
     Route::resource('deposit', DepositController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('transaction', TransactionController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('exchange', ExchangeController::class)->only(['index', 'create', 'store', 'show']);
-    Route::resource('withdraw', WithdrawController::class)->only(['index', 'create', 'store', 'show']);
+    Route::resource('withdraw', WithdrawController::class)->only(['index', 'create', 'store']);
     Route::resource("exchange-rate",ExchangeRateController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::name('deposit-overview')->get('deposit-overview', [DepositController::class, 'showDepositOverview']);
     Route::name('store-deposit-overview-detail')->post('store-deposit-overview-detail', [DepositController::class, 'storeDepositOverviewDetail']);
@@ -52,6 +55,9 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'d
     Route::name('deposit-final-detail')->get('deposit-final-detail', [DepositController::class, 'showFinalDepositDetail']);
     Route::name('deposit-money')->get('deposit-money', [DepositController::class, 'showDepositMoney']);
     Route::name('payout-verify')->get('payout-verify', [PayoutController::class, 'verify']);
+    Route::get('withdraw/verify',[WithdrawController::class,'verify'])->name("withdraw.verify");
+    Route::get('wallet-payout-accepted/{id}',[PayoutController::class,'transferAccepted'])->name("wallet-payout.transferAccepted");
+   
 
 });
 

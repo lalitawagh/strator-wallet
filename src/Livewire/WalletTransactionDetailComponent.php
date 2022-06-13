@@ -24,6 +24,6 @@ class WalletTransactionDetailComponent extends Component
 
     public function render()
     {
-       return view('ledger-foundation::Livewire.wallet-transaction-detail-component');
+        return view('ledger-foundation::Livewire.wallet-transaction-detail-component');
     }
 }
