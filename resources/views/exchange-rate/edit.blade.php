@@ -58,10 +58,8 @@
                                 <div class="sm:w-5/6">
                                     <select name="exchange_currency" id="exchange_currency" class="form-control"
                                         data-search="true">
-                                        @foreach ($asset_types as $asset_type)
-                                            <option value="{{ $asset_type['id'] }}"
-                                                @if ($exchange_rate->exchange_currency == $asset_type['id']) selected @endif>
-                                                {{ $asset_type['name'] }}</option>
+                                        @foreach ($ledgers as $ledger)
+                                            <option value="{{ $ledger->getKey() }}">{{ $ledger->name }}</option>
                                         @endforeach
                                     </select>
 

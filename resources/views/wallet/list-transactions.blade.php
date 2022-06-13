@@ -121,6 +121,21 @@
                                 </svg>
                             </span>
                         </th>
+                        @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
+                            @if ($transactionType == 'payout')
+                            <th class="whitespace-nowrap text-left">
+                                Receive Status
+                                <span class="flex short-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                    </svg>
+                                </span>
+                            </th>
+                            @endif
+                        @endif
                         <th class="whitespace-nowrap text-left">
                             Reference
                             <span class="flex short-icon">
@@ -183,6 +198,11 @@
                             @endif
                             <td class="whitespace-nowrap text-center"> {{ $ledger?->symbol }} {{ number_format((float)@$transaction->meta['balance'], 2, '.', '') }} </td>
                             <td class="whitespace-nowrap text-left">{{ ucfirst($transaction->status) }}</td>
+                            @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
+                                @if ($transactionType == 'payout')
+                                <td class="whitespace-nowrap text-left">{{ ucfirst(@$transaction?->meta['transfer_status']) }}</td>
+                                @endif
+                            @endif
                             <td class="whitespace-nowrap text-left">{{ @$transaction->meta['reference'] }}</td>
                             <td class="table-report__action">
                                 <div class="absolute top-0 mt-2 dropdown">
@@ -190,9 +210,19 @@
                                     <div class="dropdown-menu w-40">
                                         <div class="dropdown-menu__content box p-2">
                                             <a href="javascript:void(0);" data-toggle="modal" data-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <x-feathericon-eye class="w-4 h-4 mr-1" /> Show </a>
+                                            @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
+                                                @if ($transactionType == 'payout' && !is_null(@$transaction?->meta['transfer_status']))
+                                                <a href="{{ route('dashboard.wallet.wallet-payout.transferAccepted', $transaction->getKey()) }}"
+                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                    <x-feathericon-check
+                                                        class="w-4 h-4 mr-1" />
+                                                    Accepted
+                                                </a>
+                                                @endif
+                                            @endif
                                         </div>
                                     </div>
-                                </div>
+                                </div>       
                             </td>
                         </tr>
                     @endforeach

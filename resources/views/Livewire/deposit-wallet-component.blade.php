@@ -1,12 +1,17 @@
 <div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
-        <label for="wallet" class="form-label sm:w-40"> Deposit To <span class="text-theme-6">*</span></label>
+      <label for="wallet" class="form-label sm:w-40"> Deposit To <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6" wire:ignore>
             <select wire:change="changeBaseCurrency($event.target.value)" name="wallet" class="form-control">
                 <option value="">Select Deposit To</option>
                 @foreach ($wallets as $wallet)
+                    @if($walletDefaultCountry->code != 'UK' && $walletDefaultCountry->currency == collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types', []))->firstWhere('id', $wallet->ledger?->asset_type)['name'])
                     <option value="{{ $wallet->getKey() }}" @if ($selected_wallet == $wallet->getKey()) selected @endif>
                         {{ $wallet->ledger?->name }}</option>
+                    @elseif($walletDefaultCountry->code == 'UK')
+                    <option value="{{ $wallet->getKey() }}" @if ($selected_wallet == $wallet->getKey()) selected @endif>
+                        {{ $wallet->ledger?->name }}</option>
+                    @endif
                 @endforeach
             </select>
             @error('wallet')
@@ -31,8 +36,13 @@
                 class="form-control">
                 <option value="">Select Deposit From</option>
                 @foreach ($currencies as $currency)
-                    <option value="{{ $currency['id'] }}" @if (session('currency') == $currency['id']) selected @endif>
+                    @if($walletDefaultCountry->code != 'UK' && $walletDefaultCountry->currency == $currency['name'])
+                        <option value="{{ $currency['id'] }}" @if (session('currency') == $currency['id']) selected @endif>
+                            {{ $currency['name'] }}</option>
+                    @elseif($walletDefaultCountry->code == 'UK')
+                        <option value="{{ $currency['id'] }}" @if (session('currency') == $currency['id']) selected @endif>
                         {{ $currency['name'] }}</option>
+                    @endif
                 @endforeach
             </select>
             @error('currency')
@@ -72,6 +82,7 @@
         </div>
     </div>
     @if (isset($fee))
+
         <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
             <label for="exchange_fee" class="form-label sm:w-40"> </label>
             <div class="sm:w-5/6">
@@ -82,6 +93,7 @@
             </div>
         </div>
     @elseif (session('fee'))
+
         <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
             <label for="exchange_fee" class="form-label sm:w-40"> </label>
             <div class="sm:w-5/6">

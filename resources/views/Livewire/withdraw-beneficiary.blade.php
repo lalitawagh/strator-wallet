@@ -10,7 +10,7 @@
     <div class="modal-body">
         <div class="grid grid-cols-12 md:gap-0 mt-0">
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                <label for="" class="form-label sm:w-30"> Name <span class="text-theme-6">*</span></label>
+                <label for="" class="form-label sm:w-40"> Name <span class="text-theme-6">*</span></label>
                 <div class="sm:w-2/6 pr-2 mb-2">
                     <input id="" type="text" class="form-control" placeholder="First Name" wire:model="first_name">
                     @error('first_name')
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0 mb-2">
-                <label for="" class="form-label sm:w-28"> Email <span class="text-theme-6">*</span></label>
+                <label for="" class="form-label sm:w-32"> Email </label>
                 <div class="sm:w-5/6">
                     <input id="" type="text" class="form-control" wire:model="email">
                     @error('email')
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                <label for="phone" class="form-label sm:w-28"> Mobile <span class="text-theme-6">*</span></label>
+                <label for="phone" class="form-label sm:w-32"> Mobile </label>
                 <div class="sm:w-5/6">
                     <div class="input-group flex flex-col sm:flex-row mb-2 mt-2">
                         <div id="input-group-phone" wire:ignore class="input-group-text flex form-inline"
@@ -81,16 +81,30 @@
                 </div>
             </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                <label for="" class="form-label sm:w-28"> Notes </label>
+                <label for="" class="form-label sm:w-32"> Account Name <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" wire:model="notes">
+                    <input id="" type="text" class="form-control" wire:model="account_name">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                <label for="" class="form-label sm:w-28"> Nick Name </label>
+                <label for="" class="form-label sm:w-32"> Account Number <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" wire:model="nick_name">
+                    <input id="" type="text" class="form-control" wire:model="account_number">
+                    <span class="block text-theme-6 mt-2"></span>
+                </div>
+            </div>
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
+                <label for="" class="form-label sm:w-32"> Sort Code <span class="text-theme-6">*</span></label>
+                <div class="sm:w-5/6">
+                    <input id="" type="text" class="form-control" wire:model="sort_code">
+                    <span class="block text-theme-6 mt-2"></span>
+                </div>
+            </div>
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
+                <label for="" class="form-label sm:w-32"> Notes </label>
+                <div class="sm:w-5/6">
+                    <input id="" type="text" class="form-control" wire:model="notes">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>
@@ -106,7 +120,7 @@
             @endif
             <div class="grid grid-cols-12 md:gap-0 mt-5">
                 <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                    <label for="" class="form-label sm:w-28"> Enter OTP <span class="text-theme-6">*</span></label>
+                    <label for="" class="form-label sm:w-32"> Enter OTP <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="" type="text" class="form-control" placeholder="Enter OTP" wire:model="code">
                         @error('code')

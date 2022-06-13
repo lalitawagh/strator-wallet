@@ -25,6 +25,14 @@ class StoreDepositRequest extends FormRequest
         ];
     }
 
+    public function attributes()
+    {
+        return [
+            'wallet' => 'Deposit To',
+            'currency' => 'Deposit From',
+        ];
+    }
+
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {

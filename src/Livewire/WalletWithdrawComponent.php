@@ -10,7 +10,7 @@ use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Livewire\Component;
 
-class WalletPayoutComponent extends Component
+class WalletWithdrawComponent extends Component
 {
     public $wallets;
 
@@ -114,6 +114,6 @@ class WalletPayoutComponent extends Component
             $this->remaining_amount =  number_format((float)$remaining_amount, 2, '.', '');
         }
 
-        return view('ledger-foundation::Livewire.wallet-payout-component');
+        return view('ledger-foundation::Livewire.wallet-withdraw-component');
     }
 }
