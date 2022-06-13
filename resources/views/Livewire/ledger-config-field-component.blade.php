@@ -37,7 +37,7 @@
     <div class="grid grid-cols-12 md:gap-10 mt-0">
         <div class="col-span-12 md:col-span-6 form-inline mt-2">
             <label for="asset_category" class="form-label sm:w-30">Asset Category <span class="text-theme-6">*</span></label>
-            <div class="sm:w-5/6">
+            <div class="sm:w-5/6 tillselect-marging">
 
                 <select name="asset_category" wire:change="changeAssetCategory($event.target.value)" id="asset_category" class="w-full @error('asset_category') border-theme-6 @enderror form-control">
                     <option value="">Select Asset Category</option>
@@ -54,7 +54,7 @@
 
         <div class="col-span-12 md:col-span-6 form-inline mt-2">
             <label for="asset_type" class="form-label sm:w-30"> Asset Type <span class="text-theme-6">*</span></label>
-            <div class="sm:w-5/6">
+            <div class="sm:w-5/6 tillselect-marging">
                <select name="asset_type" id="asset_type" wire:change="changeAssetType($event.target.value)" class="w-full  @error('asset_type') border-theme-6 @enderror form-control">
                     <option value="">Select Asset Type</option>
                     @foreach ($asset_types as $asset_type)
@@ -73,7 +73,7 @@
         <div class="grid grid-cols-12 md:gap-10 mt-0">
             <div class="col-span-12 md:col-span-6 form-inline mt-2">
                 <label for="commodity_category" class="form-label sm:w-30"> Commodity Category <span class="text-theme-6">*</span></label>
-                <div class="sm:w-5/6">
+                <div class="sm:w-5/6 tillselect-marging">
                     <select name="commodity_category" id="commodity_category" data-search="true" class="tail-select w-full @error('commodity_category') border-theme-6 @enderror">
                         <option value="">Select Commodity Category</option>
                         @foreach ($commodity_types as $commodity_type)

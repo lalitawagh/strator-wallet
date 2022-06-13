@@ -1,7 +1,7 @@
 <div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="wallet" class="form-label sm:w-40"> Deposit To <span class="text-theme-6">*</span></label>
-        <div class="sm:w-5/6" wire:ignore>
+        <div class="sm:w-5/6 tillselect-marging" wire:ignore>
             <select wire:change="changeBaseCurrency($event.target.value)" name="wallet" class="form-control">
                 <option value="">Select Deposit To</option>
                 @foreach ($wallets as $wallet)
@@ -24,7 +24,7 @@
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="currency" class="form-label sm:w-40">Deposit From <span class="text-theme-6">*</span></label>
-        <div class="sm:w-5/6" wire:ignore>
+        <div class="sm:w-5/6 tillselect-marging" wire:ignore>
             <select wire:change="changeCurrency($event.target.value)" name="currency" id="currency" class="form-control">
                 <option value="">Select Deposit From</option>
                 @foreach ($currencies as $currency)
@@ -40,7 +40,7 @@
     @if($this->exchange_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="payment_method" class="form-label sm:w-40"> Payment Method <span class="text-theme-6">*</span></label>
-        <div class="sm:w-5/6">
+        <div class="sm:w-5/6 tillselect-marging">
             @php
                 $payment_methods = \Kanexy\LedgerFoundation\Enums\PaymentMethod::toArray();
             @endphp
