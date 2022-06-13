@@ -3,6 +3,7 @@
 namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Kanexy\Cms\Controllers\Controller;
+use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\StoreExchangeRateRequest;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
@@ -36,9 +37,8 @@ class ExchangeRateController extends Controller
         $data['is_hard_stop'] = $request->has('is_hard_stop') ? '1' : '0';
         $data['valid_date'] = $data['valid_date'] ? date('Y-m-d', strtotime($data['valid_date'])) : NULL;
 
-        $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $data['exchange_currency']);
         $base_asset_category = Ledger::whereId($data['base_currency'])->first()->asset_category;
-        $exchange_asset_category = $asset_type['asset_category'];
+        $exchange_asset_category = Ledger::whereId($data['exchange_currency'])->first()->asset_category;
 
         if (is_null($base_asset_category)) {
             return back()->withError('Base currency not exists');
@@ -46,10 +46,6 @@ class ExchangeRateController extends Controller
 
         if (is_null($exchange_asset_category)) {
             return back()->withError('Exchange currency not exists');
-        }
-
-        if ($base_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY &&  $exchange_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY) {
-            return back()->withError('Select at least one virtual currency');
         }
 
         ExchangeRate::create($data);
@@ -77,9 +73,8 @@ class ExchangeRateController extends Controller
         $data = $request->validated();
         $data['valid_date'] = $data['valid_date'] ? date('Y-m-d', strtotime($data['valid_date'])) : NULL;
 
-        $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $data['exchange_currency']);
         $base_asset_category = Ledger::whereId($data['base_currency'])->first()->asset_category;
-        $exchange_asset_category = $asset_type['asset_category'];
+        $exchange_asset_category = Ledger::whereId($data['exchange_currency'])->first()->asset_category;
 
         if (is_null($base_asset_category)) {
             return back()->withError('Base currency not exists');
@@ -87,10 +82,6 @@ class ExchangeRateController extends Controller
 
         if (is_null($exchange_asset_category)) {
             return back()->withError('Exchange currency not exists');
-        }
-
-        if ($base_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY && $exchange_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY) {
-            return back()->withError('Select at least one virtual currency');
         }
 
         $data['is_hard_stop'] = $request->has('is_hard_stop') ? '1' : '0';

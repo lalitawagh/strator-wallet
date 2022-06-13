@@ -41,7 +41,7 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'d
     Route::resource('deposit', DepositController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('transaction', TransactionController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('exchange', ExchangeController::class)->only(['index', 'create', 'store', 'show']);
-    Route::resource('withdraw', WithdrawController::class)->only(['index', 'create', 'store', 'show']);
+    Route::resource('withdraw', WithdrawController::class)->only(['index', 'create', 'store']);
     Route::resource("exchange-rate",ExchangeRateController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::name('deposit-overview')->get('deposit-overview', [DepositController::class, 'showDepositOverview']);
     Route::name('store-deposit-overview-detail')->post('store-deposit-overview-detail', [DepositController::class, 'storeDepositOverviewDetail']);
@@ -55,6 +55,9 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'d
     Route::name('deposit-final-detail')->get('deposit-final-detail', [DepositController::class, 'showFinalDepositDetail']);
     Route::name('deposit-money')->get('deposit-money', [DepositController::class, 'showDepositMoney']);
     Route::name('payout-verify')->get('payout-verify', [PayoutController::class, 'verify']);
+    Route::get('withdraw/verify',[WithdrawController::class,'verify'])->name("withdraw.verify");
+    Route::get('wallet-payout-accepted/{id}',[PayoutController::class,'transferAccepted'])->name("wallet-payout.transferAccepted");
+   
 
 });
 

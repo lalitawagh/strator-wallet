@@ -16,8 +16,13 @@
             </svg>
         </div>
     @else
+        @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'wallet-withdraw')
+            @php $refId =  $transaction->meta['sender_wallet_account_id'] @endphp
+        @else
+            @php $refId =  $transaction->ref_id @endphp
+        @endif
         @php
-            $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first();
+            $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($refId)->first();
             $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
         @endphp
         <div>
@@ -141,18 +146,25 @@
                             {{ $transaction->meta['beneficiary_name'] }}
                         </span>
                     </div>
-                    @isset($transaction->meta['beneficiary_bank_account_number'])
-                        <div class="sm:whitespace-normal flex items-center sm:w-2/6 md:ml-0">
-                            <x-feathericon-globe height="12" />
 
-                            <span class="font-medium">
-                                {{ $transaction->meta['beneficiary_bank_code'] }} /
-                                {{ $transaction->meta['beneficiary_bank_account_number'] }}
-                            </span>
-                        </div>
+                </div>
+                <div class="flex flex-col lg:flex-row mt-3">
+                    @isset($transaction->meta['beneficiary_bank_account_number'])
+                    <div class="sm:whitespace-normal flex items-center sm:w-full md:ml-0">
+                        <x-feathericon-globe height="12" />
+
+                        <span class="font-medium">
+                            {{ $transaction->meta['beneficiary_bank_code'] }} /
+                            {{ $transaction->meta['beneficiary_bank_account_number'] }}
+                        </span>
+                    </div>
                     @endisset
                 </div>
+
             </div>
+
+
+
 
             <div class="mt-5">
                 <p class="text-sm tracking-wide font-medium uppercase">Sender Account</p>
@@ -162,7 +174,12 @@
                         <x-feathericon-user height="12" />
 
                         <span>
-                            {{ @$transaction->meta['sender_name'] }}
+                            @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'wallet-withdraw')
+                                {{ $wallet->name }}
+                            @else
+                                {{ @$transaction->meta['sender_name'] }}
+                            @endif
+
                         </span>
                     </div>
                 </div>

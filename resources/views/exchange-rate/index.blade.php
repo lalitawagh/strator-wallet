@@ -45,7 +45,7 @@
                             <tbody>
                                 @foreach ($exchange_rates as $index => $exchange_rate)
                                     @php
-                                        $assetType = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types', []))->firstWhere('id', $exchange_rate?->exchange_currency);
+                                        $exchangeCurrency = \Kanexy\LedgerFoundation\Model\Ledger::whereId($exchange_rate->exchange_currency)->first();
                                     @endphp
                                     <tr>
                                         <td class="border-b dark:border-dark-5">
@@ -55,7 +55,7 @@
                                                 {{ $exchange_rate->ledger?->name }}
                                             @endisset
                                         </td>
-                                        <td class="border-b dark:border-dark-5">{{ @$assetType['name'] }}</td>
+                                        <td class="border-b dark:border-dark-5">{{ $exchangeCurrency?->name }}</td>
                                         <td class="border-b dark:border-dark-5">
                                             {{ trans('ledger-foundation::configuration.' . $exchange_rate?->frequency) }}
                                         </td>
