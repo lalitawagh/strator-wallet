@@ -1,5 +1,5 @@
 <div>
-    <div class="grid grid-cols-12 md:gap-10 mt-0">
+    <div class="grid grid-cols-12 lg:gap-10 mt-0">
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
             <label for="wallet" class="form-label sm:w-30"> Withdraw From <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging" wire:ignore>
@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="grid grid-cols-12 md:gap-10 mt-0">
+    <div class="grid grid-cols-12 lg:gap-10 mt-0">
         <div wire:ignore class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2 relative">
             <label for="beneficiary" class="form-label sm:w-30"> Beneficiary <span
                     class="text-theme-6">*</span></label>
@@ -58,7 +58,7 @@
         </div>
 
     </div>
-    <div class="grid grid-cols-12 md:gap-10 mt-0">
+    <div class="grid grid-cols-12 lg:gap-10 mt-0">
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
             <label for="amount" class="form-label sm:w-30"> Amount to Pay <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-12 md:gap-10 mt-3">
+    <div class="grid grid-cols-12 lg:gap-10 mt-0">
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2"
             style="align-items: center;">
             <label for="note" class="form-label sm:w-30"> Note </label>

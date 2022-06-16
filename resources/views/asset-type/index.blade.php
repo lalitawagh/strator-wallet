@@ -85,13 +85,19 @@
 
                             <tbody>
                                 @php
-                                    $i = 1;
+                                    $i = 0;
                                 @endphp
                                 @foreach ($asset_type_lists as $index => $asset_type_list)
                                     <tr>
+<<<<<<< HEAD
                                         <td class="whitespace-nowrap text-left">{{ $index + 1 }}</td>
                                         <td class="whitespace-nowrap text-left">{{ $asset_type_list['name'] }}</td>
                                         <td class="whitespace-nowrap text-left">
+=======
+                                        <td class="border-b dark:border-dark-5">{{ $asset_type_lists->firstItem() + $i }}</td>
+                                        <td class="border-b dark:border-dark-5">{{ $asset_type_list['name'] }}</td>
+                                        <td class="border-b dark:border-dark-5">
+>>>>>>> fa19cd8bf8687741ef2396a909c7c2f036a56880
                                             {{ ucwords(strtolower(str_replace('_', ' ', $asset_type_list['asset_category']))) }}
                                         </td>
                                         <td class="whitespace-nowrap text-left">

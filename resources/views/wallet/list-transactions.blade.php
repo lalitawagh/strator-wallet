@@ -11,9 +11,9 @@
             @endif
         </div>
     </div>
-    <div class="intro-y box p-3 mt-0">
+    <div class="intro-y box p-0 mt-0">
         <div class=" overflow-x-auto overflow-y-hidden">
-            <table id="tableID" class="shroting display table table-report mt-2" style="width:100%">
+            <table id="tableID" class="shroting display table table-report mt-0">
                 <thead class="short-wrp">
                     <tr>
                         <th>

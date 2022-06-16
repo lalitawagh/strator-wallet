@@ -85,7 +85,7 @@
                         </thead>
                         <tbody>
                             @php
-                                $i = 1;
+                                $i = 0;
                             @endphp
                             @foreach ($asset_class_lists as $index => $asset_class_list)
                                 <tr>

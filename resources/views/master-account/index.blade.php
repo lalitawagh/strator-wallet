@@ -27,11 +27,15 @@
                     <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     <a href="" class="breadcrumb--active">Master Accounts</a>
                 </div>
-                <div>
-                    <a href="{{ route('dashboard.wallet.master-account.create') }}" class="btn btn-sm btn-primary shadow-md">Create New</a>
-                </div>
+
             </div>
-            <div class="p-3">
+            <div class="px-5 py-3">
+                <div class="intro-y mt-0">
+                    <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                        <x-list-view-filters/>
+                        <a href="{{ route('dashboard.wallet.master-account.create') }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Create New</a>
+                    </div>
+                </div>
                 <div class="intro-y p-0 mt-0 overflow-x-auto overflow-y-hidden">
                     <table  id="tableID" class="shroting display table table-report -mt-2">
                         <thead class="short-wrp">

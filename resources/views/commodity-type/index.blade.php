@@ -82,11 +82,11 @@
 
                             <tbody>
                                 @php
-                                    $i = 1;
+                                    $i = 0;
                                 @endphp
                                 @foreach ($commodity_type_lists as $index => $commodity_type_list)
                                     <tr>
-                                        <td class="whitespace-nowrap text-left">{{ $index + 1 }}</td>
+                                        <td class="whitespace-nowrap text-left">{{ $commodity_type_lists->firstItem() + $i }}</td>
                                         <td class="whitespace-nowrap text-left">{{ $commodity_type_list['name'] }}</td>
                                         <td class="whitespace-nowrap text-left">
                                             @isset($commodity_type_list['image'])
