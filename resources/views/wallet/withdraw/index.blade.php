@@ -12,7 +12,7 @@
                     </h2>
                 </div>
 
-                <div class="p-5">
+                <div class="px-5 py-3">
                     <div class="grid grid-cols-12  gap-3">
                         <div class="col-span-12 lg:col-span-12 xxl:col-span-12 mt-0">
                             <div class="grid grid-cols-12 gap-3">
@@ -76,7 +76,7 @@
 
                                                     </div>
 
-                                                    <div class="flex sm:flex mt-5 sm:mt-0 mb-2" style="margin-top:-6px;">
+                                                    <div class="flex sm:flex mt-5 sm:mt-0 mb-2">
 
                                                         <div class="dropdown sm:w-auto mr-2">
                                                             <button
@@ -162,9 +162,9 @@
                                                     @endif
                                                 </div>
                                                 <!-- BEGIN: HTML Table Data -->
-                                                <div class="intro-y box p-3 mt-0">
+                                                <div class="intro-y box p-0 mt-0">
                                                     <div class=" overflow-x-auto overflow-y-hidden">
-                                                        <table id="tableID" class="shroting display table table-report mt-2" style="width:100%">
+                                                        <table id="tableID" class="shroting display table table-report mt-0">
                                                             <thead class="short-wrp">
                                                                 <tr>
                                                                     <th>
@@ -341,6 +341,14 @@
                                                                                 <div class="dropdown-menu w-40">
                                                                                     <div class="dropdown-menu__content box p-2">
                                                                                         <a href="javascript:void(0);" data-toggle="modal" data-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <x-feathericon-eye class="w-4 h-4 mr-1" /> Show </a>
+                                                                                        @if($transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
+                                                                                        <a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => 'Withdraw']) }}"
+                                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                            <x-feathericon-check
+                                                                                                class="w-4 h-4 mr-1" />
+                                                                                            Accepted
+                                                                                        </a>
+                                                                                        @endif
                                                                                     </div>
                                                                                 </div>
                                                                             </div>

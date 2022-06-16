@@ -20,7 +20,7 @@ class WalletTransactionsListComponent extends Component
     {
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
-        $transactions = Transaction::where("ref_id", $walletID)->where("workspace_id", $workspace->id)->latest()->take(15)->get();
+        $transactions = Transaction::where("ref_id", $walletID)->where("workspace_id", $workspace->id)->orWhere('meta->sender_wallet_account_id',$walletID)->latest()->take(15)->get();
 
         if (!empty($transactions)) {
             $this->transactions = $transactions;

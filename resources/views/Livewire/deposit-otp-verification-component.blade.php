@@ -6,7 +6,7 @@
     @endif
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="amount" class="form-label sm:w-40"> Mobile <span class="text-theme-6">*</span></label>
-        <div class="sm:w-5/6">
+        <div class="sm:w-5/6 tillselect-marging">
             <div class="input-group flex flex-col sm:flex-row">
                 <div id="input-group-phone" wire:ignore class="input-group-text flex form-inline"
                     style="padding: 0 5px;">
@@ -16,7 +16,7 @@
                                 align-items: center;
                                 align-self: center;margin-right:10px;">
                         @foreach ($countryWithFlags as $country)
-                            @if ($country->id == old('country_code', $defaultCountry->id))
+                            @if ($country->id == old('country_code', $user->country_id))
                                 <img src="{{ $country->flag }}">
                             @endif
                         @endforeach
@@ -26,7 +26,7 @@
                         class="tail-select" style="width:30%">
                         @foreach ($countryWithFlags as $country)
                             <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
-                                @if ($country->id == old('country_code', $defaultCountry->id)) selected @endif>
+                                @if ($country->id == old('country_code', $user->country_id)) selected @endif>
                                 {{ $country->name }} ({{ $country->phone }})
                             </option>
                         @endforeach

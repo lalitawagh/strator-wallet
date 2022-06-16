@@ -9,8 +9,6 @@ use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\DepositPolicy;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class TransactionController extends Controller
 {
@@ -18,6 +16,7 @@ class TransactionController extends Controller
     {
         $this->authorize(DepositPolicy::VIEW, Wallet::class);
 
+        $transactionType = 'all';
         $user = Auth::user();
         $wallets = Wallet::forHolder($user)->get();
         $walletID = $workspace = null;
@@ -26,18 +25,8 @@ class TransactionController extends Controller
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
 
-        $transactions = QueryBuilder::for(Transaction::class)
-            ->allowedFilters([
-                AllowedFilter::exact('workspace_id'),
-            ]);
+        $transactions = Transaction::orWhere('ref_type', 'wallet')->orWhere('meta->transaction_type','withdraw')->latest()->paginate();
 
-        if ($request->has('wallet_id')) {
-            $walletID = $request->input('wallet_id');
-            $transactions = $transactions->where("ref_id", $walletID);
-        }
-
-        $transactions = $transactions->where('ref_type', 'wallet')->latest()->paginate();
-
-        return view("ledger-foundation::wallet.transactions", compact('workspace', 'wallets', 'transactions', 'walletID'));
+        return view("ledger-foundation::wallet.transactions", compact('workspace', 'wallets', 'transactions', 'walletID', 'transactionType'));
     }
 }

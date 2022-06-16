@@ -1,7 +1,7 @@
 <div>
 
     <div class="grid grid-cols-12 md:gap-3 mt-0">
-        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+        <div class="col-span-12 md:col-span-8 lg:col-span-8 form-inline mt-2">
             <label for="exchange_type" class="form-label sm:w-30">Exchange Type <span
                     class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+        <div class="col-span-12 md:col-span-8 lg:col-span-8 form-inline mt-2">
             <label for="logo" class="form-label sm:w-30"> Logo </label>
             <div class="sm:w-5/6">
                 <input type="file" class="form-control" name="image">
@@ -39,10 +39,9 @@
         </div>
     </div>
     <div class="grid grid-cols-12 md:gap-3 mt-0">
-        <div class="col-span-12 md:col-span-6 form-inline mt-2">
-            <label for="asset_category" class="form-label sm:w-30">Asset Category <span
-                    class="text-theme-6">*</span></label>
-            <div class="sm:w-5/6">
+        <div class="col-span-12 md:col-span-8 lg:col-span-8 form-inline mt-2">
+            <label for="asset_category" class="form-label sm:w-30">Asset Category <span class="text-theme-6">*</span></label>
+            <div class="sm:w-5/6 tillselect-marging">
 
                 <select name="asset_category" wire:change="changeAssetCategory($event.target.value)" id="asset_category"
                     class="w-full @error('asset_category') border-theme-6 @enderror form-control">
@@ -59,11 +58,10 @@
             </div>
         </div>
 
-        <div class="col-span-12 md:col-span-6 form-inline mt-2">
+        <div class="col-span-12 md:col-span-8 lg:col-span-8 form-inline mt-2">
             <label for="asset_type" class="form-label sm:w-30"> Asset Type <span class="text-theme-6">*</span></label>
-            <div class="sm:w-5/6">
-                <select name="asset_type" id="asset_type" wire:change="changeAssetType($event.target.value)"
-                    class="w-full  @error('asset_type') border-theme-6 @enderror form-control">
+            <div class="sm:w-5/6 tillselect-marging">
+               <select name="asset_type" id="asset_type" wire:change="changeAssetType($event.target.value)" class="w-full  @error('asset_type') border-theme-6 @enderror form-control">
                     <option value="">Select Asset Type</option>
                     @foreach ($asset_types as $asset_type)
                         <option value="{{ $asset_type['id'] }}" @if (old('asset_type') == $asset_type['id'] || $selected_asset_type == $asset_type['id']) selected @endif>
@@ -80,12 +78,10 @@
 
     @if (old('asset_category') == \Kanexy\LedgerFoundation\Enums\AssetCategory::COMMODITY || $selected_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::COMMODITY)
         <div class="grid grid-cols-12 md:gap-3 mt-0">
-            <div class="col-span-12 md:col-span-6 form-inline mt-2">
-                <label for="commodity_category" class="form-label sm:w-30"> Commodity Category <span
-                        class="text-theme-6">*</span></label>
-                <div class="sm:w-5/6">
-                    <select name="commodity_category" id="commodity_category" data-search="true"
-                        class="tail-select w-full @error('commodity_category') border-theme-6 @enderror">
+            <div class="col-span-12 md:col-span-8 lg:col-span-8 form-inline mt-2">
+                <label for="commodity_category" class="form-label sm:w-30"> Commodity Category <span class="text-theme-6">*</span></label>
+                <div class="sm:w-5/6 tillselect-marging">
+                    <select name="commodity_category" id="commodity_category" data-search="true" class="tail-select w-full @error('commodity_category') border-theme-6 @enderror">
                         <option value="">Select Commodity Category</option>
                         @foreach ($commodity_types as $commodity_type)
                             <option value="{{ $commodity_type['id'] }}"

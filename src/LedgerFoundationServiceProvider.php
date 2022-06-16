@@ -5,6 +5,7 @@ namespace Kanexy\LedgerFoundation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Kanexy\Cms\Facades\Cms;
 use Kanexy\Cms\Menu\MenuItem;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration;
@@ -149,6 +150,13 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
 
         PartnerFoundation::setRedirectRouteAfterKyc(function (User $user) {
             return route("dashboard.wallet.wallet-dashboard");
+        });
+
+        Cms::setRedirectRouteAfterLogin(function (User $user) {
+            if(!$user->is_banking_user)
+            {
+                return route("dashboard.wallet.wallet-dashboard");
+            }
         });
 
 

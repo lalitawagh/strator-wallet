@@ -1,7 +1,7 @@
 <div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
-      <label for="wallet" class="form-label sm:w-40"> Deposit To <span class="text-theme-6">*</span></label>
-        <div class="sm:w-5/6" wire:ignore>
+        <label for="wallet" class="form-label sm:w-40"> Deposit To <span class="text-theme-6">*</span></label>
+        <div class="sm:w-5/6 tillselect-marging" wire:ignore>
             <select wire:change="changeBaseCurrency($event.target.value)" name="wallet" class="form-control">
                 <option value="">Select Deposit To</option>
                 @foreach ($wallets as $wallet)
@@ -31,9 +31,8 @@
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="currency" class="form-label sm:w-40">Deposit From <span class="text-theme-6">*</span></label>
-        <div class="sm:w-5/6" wire:ignore>
-            <select wire:change="changeCurrency($event.target.value)" name="currency" id="currency"
-                class="form-control">
+        <div class="sm:w-5/6 tillselect-marging" wire:ignore>
+            <select wire:change="changeCurrency($event.target.value)" name="currency" id="currency" class="form-control">
                 <option value="">Select Deposit From</option>
                 @foreach ($currencies as $currency)
                     @if($walletDefaultCountry->code != 'UK' && $walletDefaultCountry->currency == $currency['name'])
@@ -51,25 +50,22 @@
         </div>
     </div>
 
-    @if ($this->exchange_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
-        <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
-            <label for="payment_method" class="form-label sm:w-40"> Payment Method <span
-                    class="text-theme-6">*</span></label>
-            <div class="sm:w-5/6">
-                @php
-                    $payment_methods = \Kanexy\LedgerFoundation\Enums\PaymentMethod::toArray();
-                @endphp
-                <select class="form-control" name="payment_method" id="payment_method" required>
-                    <option value="">Select Payment Method</option>
-                    @foreach ($payment_methods as $payment_method)
-                        <option value="{{ $payment_method }}" @if (old('payment_method') == $payment_method) selected @endif>
-                            {{ trans('ledger-foundation::configuration.' . $payment_method) }} </option>
-                    @endforeach
-                </select>
-                @error('payment_method')
-                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                @enderror
-            </div>
+    @if($this->exchange_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
+    <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
+        <label for="payment_method" class="form-label sm:w-40"> Payment Method <span class="text-theme-6">*</span></label>
+        <div class="sm:w-5/6 tillselect-marging">
+            @php
+                $payment_methods = \Kanexy\LedgerFoundation\Enums\PaymentMethod::toArray();
+            @endphp
+            <select class="form-control" name="payment_method" id="payment_method" required>
+                <option value="">Select Payment Method</option>
+                @foreach ($payment_methods as $payment_method)
+                    <option value="{{ $payment_method }}" @if(old('payment_method') == $payment_method) selected @endif> {{ trans('ledger-foundation::configuration.'.$payment_method) }} </option>
+                @endforeach
+            </select>
+            @error('payment_method')
+            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+            @enderror
         </div>
     @endif
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
