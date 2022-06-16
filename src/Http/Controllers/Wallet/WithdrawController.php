@@ -12,6 +12,7 @@ use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Requests\WithdrawRequest;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
+use Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus;
 use Kanexy\PartnerFoundation\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Banking\Services\PayoutService;
@@ -41,25 +42,24 @@ class WithdrawController extends Controller
         }
 
         $transactions = Transaction::where(["meta->transaction_type" => $transactionType])->latest()->paginate();
-       
+
         if($user->isSubscriber())
         {
             $transactions = Transaction::where(["meta->transaction_type" => $transactionType,'initiator_id' => $user->id])->latest()->paginate();
         }
-        
+
 
         return view("ledger-foundation::wallet.withdraw.index", compact('workspace', 'transactions', 'user'));
     }
 
     public function create(Request $request)
     {
-
         $user = Auth::user();
         $countryWithFlags = Country::orderBy("name")->get();
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
         $wallets =  Wallet::forHolder($user)->get();
-        $beneficiaries = Contact::beneficiaries()->whereRefType('wrappex')->where(['meta->beneficiary_type' => 'withdraw'])->latest()->get();
+        $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wrappex')->where(['meta->beneficiary_type' => 'withdraw'])->latest()->get();
         $ledgers = Ledger::get();
         $asset_types = Setting::getValue('asset_types', []);
 
@@ -73,7 +73,7 @@ class WithdrawController extends Controller
         $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $wallet->ledger->asset_type);
 
         /** @var Account $sender */
-        $sender = Account::whereAccountNumber($ukMasterAccount['account_number'])->first();;
+        $sender = Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
 
         /** @var Contact $beneficiary */
         $beneficiary = Contact::findOrFail($request->input('beneficiary_id'));
@@ -82,7 +82,7 @@ class WithdrawController extends Controller
         $transaction = $this->payoutService->initialize($sender, $beneficiary, $request->validated());
         $metaDetails = [
             'sender_wallet_account_id' => $request->input('sender_wallet_account_id'),
-            'transaction_type' => 'wallet-withdraw',
+            'transaction_type' => 'withdraw',
             'sender_currency' => $asset_type['name'] ? $asset_type['name'] : null,
             'receiver_currency' => 'GBP',
         ];
@@ -96,13 +96,13 @@ class WithdrawController extends Controller
         return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.withdraw.verify', now()->addMinutes(30), ["id" => $transaction->id]), 'sms');
     }
 
-    function verify(Request $request)
+    public function verify(Request $request)
     {
         $transaction = Transaction::find($request->query('id'));
         $wallet = Wallet::findOrFail($transaction->meta['sender_wallet_account_id']);
         $balance = ($wallet->balance - $transaction->amount);
         try {
-            $this->payoutService->process($transaction);
+
             $wallet->balance = $balance;
             $wallet->update();
         } catch (\Exception $exception) {
@@ -120,5 +120,27 @@ class WithdrawController extends Controller
             'message' => 'Processing the payment. It may take a while.',
             'status' => 'success',
         ]);
+    }
+
+    public function withdrawAccepted(Request $request)
+    {
+        $transaction = Transaction::find($request->id);
+        $this->payoutService->process($transaction);
+
+        if($request->type == 'all')
+        {
+            return redirect()->route('dashboard.wallet.transaction.index')->with([
+                'status' => 'success',
+                'message' => 'The withdraw request transaction processing the payment.It may take a while.',
+            ]);
+        }else
+        {
+            return redirect()->route('dashboard.wallet.withdraw.index')->with([
+                'status' => 'success',
+                'message' => 'The withdraw request transaction processing the payment.It may take a while.',
+            ]);
+        }
+
+
     }
 }

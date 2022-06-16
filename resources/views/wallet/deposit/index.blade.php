@@ -14,7 +14,7 @@
                 <div class="p-3">
                     @include(
                         'ledger-foundation::wallet.list-transactions'
-                    );
+                    )
                 </div>
             </div>
         </div>

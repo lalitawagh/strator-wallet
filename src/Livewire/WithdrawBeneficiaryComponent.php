@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation\Livewire;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\Models\OneTimePassword;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
@@ -63,13 +64,6 @@ class WithdrawBeneficiaryComponent extends Component
 
     public $country_code;
 
-    // private WrappexService $service;
-
-    // public function __construct(WrappexService $service)
-    // {
-    //     $this->service = $service;
-    // }
-
     public function mount($workspace, $countryWithFlags, $defaultCountry)
     {
         $this->workspace = $workspace;
@@ -94,65 +88,76 @@ class WithdrawBeneficiaryComponent extends Component
 
     public function createBeneficiary()
     {
+        $user = Auth::user();
+
         $data = $this->validate([
             'first_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
             'middle_name' => ['nullable', new AlphaSpaces, 'string', 'max:40'],
             'last_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
             'email' => 'nullable|email',
-            'mobile' => ['nullable'],
+            'mobile' => ['nullable', new MobileNumber],
             'notes' => 'nullable',
             'country_code' => 'nullable',
-            'account_number' => 'required',
+            'account_number' => 'required|digits:8',
             'account_name' => 'required',
-            'sort_code' => 'required',
+            'sort_code' => 'required|digits:6',
         ]);
 
         $data['classification'] = $this->classification;
 
-        $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', 231);
-        $account = Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
-        $workspace = Workspace::findOrFail($account->holder_id);
+        $user = Auth::user();
 
-        $info['first_name'] = $data['first_name'];
-        $info['middle_name'] = $data['middle_name'];
-        $info['last_name'] = $data['last_name'];
-        $info['email'] = $data['email'];
-        $info['display_name'] = implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]);
-        $info['meta'] = [
-            'bank_account_number' => $data['account_number'],
-            'bank_code' => $data['sort_code'],
-            'bank_code_type' => BankEnum::SORTCODE,
-            'beneficiary_type' => 'withdraw',
-            'bank_account_name' => $data['account_name'],
-        ];
-        $info['classification'] = $this->classification;
-        $data['meta'] = $info['meta'];
+        $exitsBeneficiary = Contact::beneficiaries()->verified()->forWorkspace($user->workspaces()->first())->whereRefType('wrappex')->where(['meta->beneficiary_type' => 'withdraw'])->first();
+
+        if (isset($exitsBeneficiary)) {
+            $this->addError('beneficiary', 'You can create only one beneficiary');
+        } else {
+
+            $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', 231);
+            $account = Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
+            $workspace = Workspace::findOrFail($account->holder_id);
+
+            $info['first_name'] = $data['first_name'];
+            $info['middle_name'] = $data['middle_name'];
+            $info['last_name'] = $data['last_name'];
+            $info['email'] = $data['email'];
+            $info['display_name'] = implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]);
+            $info['meta'] = [
+                'bank_account_number' => $data['account_number'],
+                'bank_code' => $data['sort_code'],
+                'bank_code_type' => BankEnum::SORTCODE,
+                'beneficiary_type' => 'withdraw',
+                'bank_account_name' => $data['account_name'],
+            ];
+            $info['classification'] = $this->classification;
+            $data['meta'] = $info['meta'];
 
 
-        $service = new WrappexService;
-        $beneficiaryRefId = $service->createBeneficiary(
-            new CreateBeneficiaryDto($workspace->ref_id, $info)
-        );
+            $service = new WrappexService;
+            $beneficiaryRefId = $service->createBeneficiary(
+                new CreateBeneficiaryDto($workspace->ref_id, $info)
+            );
 
-        $data['workspace_id'] = $workspace->id;
-        $data['ref_id']       = $beneficiaryRefId;
-        $data['ref_type']     = 'wrappex';
+            $data['workspace_id'] = $user->workspaces()->first()?->id;
+            $data['ref_id']       = $beneficiaryRefId;
+            $data['ref_type']     = 'wrappex';
 
-        /** @var Contact $contact */
-        $contact = Contact::create($data);
+            /** @var Contact $contact */
+            $contact = Contact::create($data);
 
-        event(new ContactCreated($contact));
+            event(new ContactCreated($contact));
 
-        /** @var \App\Models\User $user */
-        $user = auth()->user();
-        $this->contact = $contact;
-        //$user->notify(new EmailOneTimePasswordNotification($contact->generateOtp("email")));
-        $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
-        // $contact->generateOtp("sms");
-        $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
-        //$user->generateOtp("sms");
+            /** @var \App\Models\User $user */
+            $user = auth()->user();
+            $this->contact = $contact;
 
-        $this->beneficiary_created = true;
+            $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+            // $contact->generateOtp("sms");
+            $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
+            //$user->generateOtp("sms");
+
+            $this->beneficiary_created = true;
+        }
 
     }
 
