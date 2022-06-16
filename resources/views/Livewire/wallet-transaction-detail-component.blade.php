@@ -174,7 +174,7 @@
                         <x-feathericon-user height="12" />
 
                         <span>
-                            @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'wallet-withdraw')
+                            @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'wallet-withdraw' ||  $transaction->meta['transaction_type'] == 'withdraw')
                                 {{ $wallet->name }}
                             @else
                                 {{ @$transaction->meta['sender_name'] }}

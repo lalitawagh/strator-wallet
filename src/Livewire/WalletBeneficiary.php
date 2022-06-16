@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation\Livewire;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\Models\OneTimePassword;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
@@ -53,11 +54,14 @@ class WalletBeneficiary extends Component
 
     public $country_code;
 
+    public $user;
+
     public function mount($workspace, $countryWithFlags, $defaultCountry)
     {
         $this->workspace = $workspace;
         $this->countryWithFlags = $countryWithFlags;
         $this->defaultCountry = $defaultCountry;
+        $this->user = Auth::user();
     }
 
     public function getMembershipDetails()
@@ -108,7 +112,7 @@ class WalletBeneficiary extends Component
             $user = auth()->user();
             $this->contact = $contact;
 
-            $user->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+            $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
             // $contact->generateOtp("sms");
             $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
             //$user->generateOtp("sms");

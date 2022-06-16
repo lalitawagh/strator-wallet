@@ -1,13 +1,14 @@
-<div class="intro-y mt-0">
-    <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
-        <x-list-view-filters/>
-        @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSubscriber())
-            @if ($transactionType == 'deposit')
+<div>
+    <div class="intro-y mt-0">
+        <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
+            <x-list-view-filters/>
+            @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSubscriber())
+                @if ($transactionType == 'deposit')
 
-            <a href="{{ route('dashboard.wallet.deposit.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Deposit</a>
-            @elseif ($transactionType == 'payout')
-            <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Payout</a>
-            @endif
+                <a href="{{ route('dashboard.wallet.deposit.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Deposit</a>
+                @elseif ($transactionType == 'payout')
+                <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Payout</a>
+                @endif
             @endif
         </div>
     </div>
@@ -77,6 +78,7 @@
                                 </svg>
                             </span>
                         </th>
+
                         <th class="whitespace-nowrap text-left">
                             Debit
                             <span class="flex short-icon">
@@ -111,7 +113,16 @@
                             </span>
                         </th>
                         <th class="whitespace-nowrap text-left">
-                            Status
+                            @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
+                                @if ($transactionType == 'payout' || $transactionType == 'all')
+                                    User Status
+                                @else
+                                    Status
+                                @endif
+                            @else
+                                Status
+                            @endif
+
                             <span class="flex short-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
@@ -122,9 +133,24 @@
                             </span>
                         </th>
                         @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
-                            @if ($transactionType == 'payout')
+                            @if ($transactionType == 'payout' || $transactionType == 'all')
                             <th class="whitespace-nowrap text-left">
-                                Receive Status
+                                Admin Status
+                                <span class="flex short-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                    </svg>
+                                </span>
+                            </th>
+                            @endif
+                        @endif
+                        @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
+                            @if ($transactionType == 'all')
+                            <th class="whitespace-nowrap text-left">
+                                Type
                                 <span class="flex short-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
@@ -153,9 +179,13 @@
                 <tbody>
                     @isset($transactions)
                     @foreach ($transactions as $index => $transaction)
+                        @if(isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit' || $transaction->meta['transaction_type'] == 'payout')
+                            @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
+                        @else
+                            @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->meta['sender_wallet_account_id'])->first(); @endphp
+                        @endif
                         @php
-                            $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first();
-                            $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
+                            $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet?->ledger_id)->first();
                         @endphp
                         <tr class="intro-x">
                             <td>
@@ -168,7 +198,13 @@
                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" style="color:#70297d !important;">{{ $transaction->urn }}</a>
                             </td>
                             <td class="whitespace-nowrap text-left">{{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}</td>
-                            <td class="whitespace-nowrap text-left">{{ @$transaction->meta['sender_name'] }}</td>
+                            <td class="whitespace-nowrap text-left">
+                                @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'wallet-withdraw' ||  $transaction->meta['transaction_type'] == 'withdraw')
+                                    {{ $wallet->name }}
+                                @else
+                                    {{ @$transaction->meta['sender_name'] }}
+                                @endif
+                            </td>
                             <td class="whitespace-nowrap text-left">{{ $transaction->meta['beneficiary_name'] }}</td>
                             @if(isset($transactionType) && $transactionType == 'deposit')
                                 <td class="whitespace-nowrap text-left">{{ ucfirst($transaction->payment_method) }}</td>
@@ -199,8 +235,13 @@
                             <td class="whitespace-nowrap text-center"> {{ $ledger?->symbol }} {{ number_format((float)@$transaction->meta['balance'], 2, '.', '') }} </td>
                             <td class="whitespace-nowrap text-left">{{ ucfirst($transaction->status) }}</td>
                             @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
-                                @if ($transactionType == 'payout')
-                                <td class="whitespace-nowrap text-left">{{ ucfirst(@$transaction?->meta['transfer_status']) }}</td>
+                                @if ($transactionType == 'payout' || $transactionType == 'all')
+                                    <td class="whitespace-nowrap text-left">{{ ucfirst(@$transaction?->meta['transfer_status']) }}</td>
+                                @endif
+                            @endif
+                            @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
+                                @if ($transactionType == 'all')
+                                <td class="whitespace-nowrap text-left">{{ ucfirst(@$transaction->meta['transaction_type']) }}</td>
                                 @endif
                             @endif
                             <td class="whitespace-nowrap text-left">{{ @$transaction->meta['reference'] }}</td>
@@ -211,13 +252,22 @@
                                         <div class="dropdown-menu__content box p-2">
                                             <a href="javascript:void(0);" data-toggle="modal" data-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <x-feathericon-eye class="w-4 h-4 mr-1" /> Show </a>
                                             @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
-                                                @if ($transactionType == 'payout' && !is_null(@$transaction?->meta['transfer_status']))
-                                                <a href="{{ route('dashboard.wallet.wallet-payout.transferAccepted', $transaction->getKey()) }}"
+                                                @if ($transactionType != 'deposit' && !is_null(@$transaction?->meta['transfer_status']) && $transaction?->meta['transfer_status'] == 'pending')
+                                                <a href="{{ route('dashboard.wallet.wallet-payout.transferAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
                                                     class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
                                                     <x-feathericon-check
                                                         class="w-4 h-4 mr-1" />
                                                     Accepted
                                                 </a>
+                                                @endif
+
+                                                @if($transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
+                                                    <a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
+                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                        <x-feathericon-check
+                                                            class="w-4 h-4 mr-1" />
+                                                        Accepted
+                                                    </a>
                                                 @endif
                                             @endif
                                         </div>
@@ -237,3 +287,4 @@
         </div>
     @endif
 </div>
+

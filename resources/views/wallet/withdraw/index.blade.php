@@ -341,6 +341,14 @@
                                                                                 <div class="dropdown-menu w-40">
                                                                                     <div class="dropdown-menu__content box p-2">
                                                                                         <a href="javascript:void(0);" data-toggle="modal" data-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <x-feathericon-eye class="w-4 h-4 mr-1" /> Show </a>
+                                                                                        @if($transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
+                                                                                        <a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => 'Withdraw']) }}"
+                                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                            <x-feathericon-check
+                                                                                                class="w-4 h-4 mr-1" />
+                                                                                            Accepted
+                                                                                        </a>
+                                                                                        @endif
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
