@@ -14,6 +14,7 @@ class AssetClassController extends Controller
     public function index()
     {
         $this->authorize(AssetClassPolicy::VIEW, AssetClassConfiguration::class);
+
         $asset_class_lists = Helper::paginate(collect(Setting::getValue('asset_classes', [])));
 
         return view("ledger-foundation::asset-class.index", compact('asset_class_lists'));
@@ -59,25 +60,20 @@ class AssetClassController extends Controller
         $data = $request->validated();
         $data['id'] = $id;
 
-        $existing_image = '';
-        $settings = collect(Setting::getValue('asset_classes'))->filter(function ($item) use ($id, &$existing_image) {
-            if ($item['id'] != $id) {
-                return true;
-            }
-
-            $existing_image = @$item['image'];
-            return false;
-        });
-
-        $data['image'] = $existing_image;
-
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('walletImages', 'azure');
         }
 
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
 
-        $settings->push($data);
+        $settings = collect(Setting::getValue('asset_classes'))->map(function ($item) use ($id, $data) {
+            if ($item['id'] == $id) {
+                $data['image'] = $data['image'] ?? @$item['image'];
+                return $data;
+            }
+
+            return $item;
+        });
 
         Setting::updateOrCreate(['key' => 'asset_classes'], ['value' => $settings]);
 

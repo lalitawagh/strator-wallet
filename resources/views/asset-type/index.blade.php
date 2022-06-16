@@ -33,11 +33,11 @@
 
                             <tbody>
                                 @php
-                                    $i = 1;
+                                    $i = 0;
                                 @endphp
                                 @foreach ($asset_type_lists as $index => $asset_type_list)
                                     <tr>
-                                        <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
+                                        <td class="border-b dark:border-dark-5">{{ $asset_type_lists->firstItem() + $i }}</td>
                                         <td class="border-b dark:border-dark-5">{{ $asset_type_list['name'] }}</td>
                                         <td class="border-b dark:border-dark-5">
                                             {{ ucwords(strtolower(str_replace('_', ' ', $asset_type_list['asset_category']))) }}

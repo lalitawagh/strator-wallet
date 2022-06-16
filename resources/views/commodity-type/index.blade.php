@@ -43,11 +43,11 @@
 
                             <tbody>
                                 @php
-                                    $i = 1;
+                                    $i = 0;
                                 @endphp
                                 @foreach ($commodity_type_lists as $index => $commodity_type_list)
                                     <tr>
-                                        <td class="border-b dark:border-dark-5">{{ $index + 1 }}</td>
+                                        <td class="border-b dark:border-dark-5">{{ $commodity_type_lists->firstItem() + $i }}</td>
                                         <td class="border-b dark:border-dark-5">{{ $commodity_type_list['name'] }}</td>
                                         <td class="border-b dark:border-dark-5">
                                             @isset($commodity_type_list['image'])

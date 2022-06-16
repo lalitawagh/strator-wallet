@@ -55,24 +55,26 @@
                                                             <div class="report-box zoom-in">
                                                                 <div class="box p-5">
                                                                     <div class="flex">
+                                                                        <span class="text-lg font-medium truncate mr-5font-bold leading-8 mt-0 align-self item-center">{{ $ledger?->name }}</span>
                                                                         <div class="ml-auto">
                                                                             <div class="flex mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
                                                                                 <img alt="" class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" src="@isset($ledger?->image){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}@endisset">
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="flex mt-3">
-                                                                        <span class="text-2xl font-bold leading-8 mt-0">{{ $ledger?->name }}</span>
-                                                                        <div class="ml-auto">
-                                                                            <div class="report-box__indicator bg-theme-1 cursor-pointer mt-5">
-                                                                                <span class="px-3" onclick="window.location.href+='?filter[workspace_id]={{ $workspace->id }}&wallet_id={{ $wallet->getKey() }}'">Transactions</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                    {{-- <div class="flex mt-3">
+
+
+                                                                    </div> --}}
                                                                     <div class="text-base text-gray-600 mt-1">{{ $wallet?->urn }}</span>
                                                                     </div>
                                                                     <div class="flex mt-3">
                                                                         <span class="text-lg @if ($wallet->status == \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) text-theme-9 @else text-theme-6 @endif"> {{ trans('ledger-foundation::configuration.'.$wallet->status) }}</span>
+                                                                        <div class="ml-auto">
+                                                                            <div class="report-box__indicator bg-theme-1 cursor-pointer mt-1">
+                                                                                <span class="px-3" onclick="window.location.href+='?filter[workspace_id]={{ $workspace->id }}&wallet_id={{ $wallet->getKey() }}'">Transactions</span>
+                                                                            </div>
+                                                                        </div>
                                                                         <div class="ml-auto">
                                                                             <div class="report-box__indicator bg-theme-6 cursor-pointer mt-1">
                                                                                 @if($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
