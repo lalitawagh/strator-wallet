@@ -56,8 +56,9 @@ Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'d
     Route::name('deposit-money')->get('deposit-money', [DepositController::class, 'showDepositMoney']);
     Route::name('payout-verify')->get('payout-verify', [PayoutController::class, 'verify']);
     Route::get('withdraw/verify',[WithdrawController::class,'verify'])->name("withdraw.verify");
-    Route::get('wallet-payout-accepted/{id}',[PayoutController::class,'transferAccepted'])->name("wallet-payout.transferAccepted");
-   
+    Route::get('wallet-payout-accepted/{id}/{type}',[PayoutController::class,'transferAccepted'])->name("wallet-payout.transferAccepted");
+    Route::get('wallet-withdraw-accepted/{id}/{type}',[WithdrawController::class,'withdrawAccepted'])->name("withdrawAccepted");
+
 
 });
 

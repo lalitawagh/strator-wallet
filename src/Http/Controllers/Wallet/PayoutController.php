@@ -18,6 +18,7 @@ use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
 use Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Kanexy\PartnerFoundation\Core\Helper;
 use Kanexy\PartnerFoundation\Core\Models\Log;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
@@ -147,7 +148,7 @@ class PayoutController extends Controller
         $log->target()->associate($transaction);
         $log->save();
 
-        $user->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+        $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
         //$transaction->generateOtp("sms");
         return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.payout-verify', now()->addMinutes(30), ["id" => $transaction->id]), 'sms');
     }
@@ -239,17 +240,28 @@ class PayoutController extends Controller
     public function transferAccepted(Request $request)
     {
         $transaction = Transaction::find($request->id);
+
         $metaDetails = [
             'transfer_status' =>  TransactionStatus::ACCEPTED,
         ];
 
-        $meta = array_merge($transaction->meta,$metaDetails);
-        $transaction->meta = $meta;
+        $metaInfo = $transaction?->meta ? array_merge($transaction?->meta,$metaDetails) : $metaDetails;
+
+        $transaction->meta = $metaInfo;
         $transaction->update();
 
-        return redirect()->route('dashboard.wallet.payout.index')->with([
-            'status' => 'success',
-            'message' => 'The payout request accepted successfully.',
-        ]);
+        if($request->type == 'all')
+        {
+            return redirect()->route('dashboard.wallet.transaction.index')->with([
+                'status' => 'success',
+                'message' => 'The payout request accepted successfully.',
+            ]);
+        }else
+        {
+            return redirect()->route('dashboard.wallet.payout.index')->with([
+                'status' => 'success',
+                'message' => 'The payout request accepted successfully.',
+            ]);
+        }
     }
 }
