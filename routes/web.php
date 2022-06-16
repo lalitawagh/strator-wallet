@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use Kanexy\Cms\Middleware\VerificationStepMiddleware;
 use Kanexy\LedgerFoundation\Http\Controllers\LedgerFoundationController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetClassController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetTypeController;
@@ -28,7 +29,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\MasterAccountController;
 |
 */
 
-Route::group(['middleware'=>['web','auth'],'prefix'=>'dashboard/wallet','as'=>'dashboard.wallet.'],function()  {
+Route::group(['middleware'=>['web','auth',VerificationStepMiddleware::class],'prefix'=>'dashboard/wallet','as'=>'dashboard.wallet.'],function()  {
     Route::name('wallet-dashboard')->get('/', [DashboardController::class,'index']);
     Route::resource("master-account",MasterAccountController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource("asset-class",AssetClassController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);

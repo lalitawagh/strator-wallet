@@ -30,7 +30,7 @@
         <div  wire:ignore class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2 relative">
             <label for="beneficiary" class="form-label sm:w-30"> Beneficiary <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging">
-                <select name="beneficiary" id="beneficiary" class="form-control"  data-search="true">
+                <select wire:change="changeBeneficiary($event.target.value)" name="beneficiary" id="beneficiary" class="form-control"  data-search="true">
                     @foreach ($beneficiaries as $beneficiary)
                         <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
                     @endforeach

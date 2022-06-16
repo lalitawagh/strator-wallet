@@ -207,6 +207,7 @@ class DepositController extends Controller
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                     'transaction_type' => 'deposit',
                     'balance' => ($wallet?->balance + $amount),
+                    'account' => 'wallet',
                 ],
             ]);
 
@@ -313,6 +314,7 @@ class DepositController extends Controller
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                     'transaction_type' => 'deposit',
                     'balance' => ($wallet?->balance + $amount),
+                    'account' => 'wallet',
                 ],
             ]);
 

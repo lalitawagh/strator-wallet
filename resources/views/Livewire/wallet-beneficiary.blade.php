@@ -28,15 +28,6 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 mb-2 sm:mb-0 sm:mt-0">
-                <label for="" class="form-label sm:w-28"> Email <span class="text-theme-6">*</span></label>
-                <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" wire:model="email">
-                    @error('email')
-                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="phone" class="form-label sm:w-28"> Mobile <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6 tillselect-marging">
@@ -80,7 +71,16 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 mb-2 sm:mb-0 sm:mt-0">
+                <label for="" class="form-label sm:w-28"> Email </label>
+                <div class="sm:w-5/6">
+                    <input id="" type="text" class="form-control" wire:model="email">
+                    @error('email')
+                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
                 <label for="" class="form-label sm:w-28"> Notes </label>
                 <div class="sm:w-5/6">
                     <input id="" type="text" class="form-control" wire:model="notes">

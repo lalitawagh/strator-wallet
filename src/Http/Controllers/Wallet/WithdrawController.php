@@ -35,7 +35,7 @@ class WithdrawController extends Controller
         /** @var $user App\Model\User */
         $user = Auth::user();
         $workspace = null;
-        $transactionType = 'wallet-withdraw';
+        $transactionType = 'withdraw';
 
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
@@ -68,6 +68,8 @@ class WithdrawController extends Controller
 
     public function store(WithdrawRequest $request)
     {
+        $user = Auth::user();
+        $workspace = $user->workspaces()->first();
         $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', 231);
         $wallet = Wallet::find($request->input('sender_wallet_account_id'));
         $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $wallet->ledger->asset_type);
@@ -85,9 +87,11 @@ class WithdrawController extends Controller
             'transaction_type' => 'withdraw',
             'sender_currency' => $asset_type['name'] ? $asset_type['name'] : null,
             'receiver_currency' => 'GBP',
+            'account' => 'wallet',
         ];
 
         $meta = array_merge($transaction->meta,$metaDetails);
+        $transaction->workspace_id = $workspace->id;
         $transaction->meta = $meta;
         $transaction->update();
 

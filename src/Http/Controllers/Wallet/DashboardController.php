@@ -16,7 +16,7 @@ class DashboardController extends Controller
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
 
-        $transactions = Transaction::where("workspace_id", $workspace->id)->where('payment_method','wallet')->orWhere('meta->transaction_type','withdraw')->latest()->take(5)->get();
+        $transactions = Transaction::where("workspace_id", $workspace->id)->where('meta->account','wallet')->latest()->take(5)->get();
 
         $selectedYear = 2022;
 
@@ -27,8 +27,8 @@ class DashboardController extends Controller
 
          if ($user->isSubscriber() && !$user->is_banking_user) {
              $currentWorkspaceId = Helper::activeWorkspaceId();
-             $creditTransactionGraphData = Transaction::whereWorkspaceId($currentWorkspaceId)->whereType(TransactionType::CREDIT)->whereYear("created_at", $selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('status', '!=', TransactionStatus::PENDING)->where('ref_type', 'wallet')->orWhere('meta->transaction_type','withdraw')->get();
-             $debitTransactionGraphData = Transaction::whereWorkspaceId($currentWorkspaceId)->whereType(TransactionType::DEBIT)->whereYear("created_at", $selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('status', '!=', TransactionStatus::PENDING)->where('ref_type', 'wallet')->orWhere('meta->transaction_type','withdraw')->get();
+             $creditTransactionGraphData = Transaction::whereWorkspaceId($currentWorkspaceId)->whereType(TransactionType::CREDIT)->whereYear("created_at", $selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('status', '!=', TransactionStatus::PENDING)->orWhere('meta->account','wallet')->get();
+             $debitTransactionGraphData = Transaction::whereWorkspaceId($currentWorkspaceId)->whereType(TransactionType::DEBIT)->whereYear("created_at", $selectedYear)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('status', '!=', TransactionStatus::PENDING)->orWhere('meta->account','wallet')->get();
          }
 
          $creditTransactionGraphData = collect($months)->map(function ($month) use ($creditTransactionGraphData) {
@@ -55,6 +55,6 @@ class DashboardController extends Controller
 
          $debitTransactionGraphData = $debitTransactionGraphData;
 
-        return view("ledger-foundation::wallet.dashboard", compact('transactions','creditTransactionGraphData','debitTransactionGraphData'));
+        return view("ledger-foundation::wallet.dashboard", compact('transactions','creditTransactionGraphData', 'debitTransactionGraphData', 'workspace'));
     }
 }
