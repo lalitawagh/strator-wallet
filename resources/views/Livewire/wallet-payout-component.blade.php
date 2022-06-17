@@ -60,7 +60,7 @@
                                         <img src="{{ $country->flag }}">
                                     @endif
                                 @else
-                                    @if ($country->id == old('country_code', $defaultCountry->id))
+                                    @if ($country->id == old('country_code', $user->country_id))
                                         <img src="{{ $country->flag }}">
                                     @endif
                                 @endisset
@@ -68,10 +68,10 @@
                         </span>
 
                         <select id="countryWithPhone" name="country_code" onchange="getFlagImg(this)" data-search="true"
-                            class="tail-select" style="width:30%">
+                            class="tail-select" style="width:30%" wire:change="getCountry($event.target.value)">
                             @foreach ($countryWithFlags as $country)
                                 <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
-                                    @if ($country->id == $country_code) selected @elseif ($country->id == old('country_code', $defaultCountry->id)) selected @else  @endif>
+                                    @if ($country->id == $country_code) selected @elseif ($country->id == old('country_code', $user->country_id)) selected @else  @endif>
                                     {{ $country->name }} ({{ $country->phone }})
                                 </option>
                             @endforeach

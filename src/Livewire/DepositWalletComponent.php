@@ -2,6 +2,7 @@
 
 namespace Kanexy\LedgerFoundation\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
@@ -30,6 +31,8 @@ class DepositWalletComponent extends Component
 
     public $walletDefaultCountry;
 
+    public $user;
+
     public function mount($wallets, $currencies, $walletDefaultCountry)
     {
         $this->wallets = $wallets;
@@ -41,6 +44,7 @@ class DepositWalletComponent extends Component
             $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $this->currency);
             $this->exchange_asset_category = @$asset_type['asset_category'];
         }
+        $this->user = Auth::user();
     }
 
     public function changeBaseCurrency($base_currency)

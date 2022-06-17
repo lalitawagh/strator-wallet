@@ -65,6 +65,13 @@ class WalletBeneficiary extends Component
         $this->country_code = $this->user->country_id;
     }
 
+    
+    public function getCountry($value)
+    {
+        $this->country_code = $value;
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
+    }
+
     public function getMembershipDetails()
     {
         $mobile = Helper::normalizePhone($this->mobile);

@@ -38,8 +38,10 @@ class WalletController extends Controller
             }
         });
 
-        $workspace->status = WorkspaceStatus::ACTIVE;
-        $workspace->update();
+        if (!$user->is_banking_user) {
+            $workspace->status = WorkspaceStatus::ACTIVE;
+            $workspace->update();
+        }
 
         if ($user->is_banking_user == 1) {
             $user->logRegistrationStep(RegistrationStep::BANKING);
