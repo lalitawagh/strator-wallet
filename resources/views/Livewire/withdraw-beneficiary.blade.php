@@ -55,7 +55,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 mb-2 sm:mb-0 sm:mt-0">
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
                 <label for="" class="form-label sm:w-32"> Email </label>
                 <div class="sm:w-5/6">
                     <input id="" type="text" class="form-control" wire:model="email">
