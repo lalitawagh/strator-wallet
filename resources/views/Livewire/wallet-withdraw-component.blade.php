@@ -32,8 +32,7 @@
             <label for="beneficiary" class="form-label sm:w-30"> Beneficiary <span
                     class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
-                <select wire:change="changeBeneficiary($event.target.value)" name="beneficiary_id" id="beneficiary_id" class="form-control" data-search="true">
-                    <option value="">Select Beneficiary</option>
+                <select name="beneficiary_id" id="beneficiary_id" class="form-control" data-search="true">
                     @foreach ($beneficiaries as $beneficiary)
                         <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
                     @endforeach

@@ -71,14 +71,6 @@ class WalletWithdrawComponent extends Component
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
-    public function changeBeneficiary($value)
-    {
-        $beneficiary = Contact::find($value);
-        $this->phone = $beneficiary?->mobile;
-        $this->country_code = $beneficiary?->meta['country_code'] ?? '231';
-        $this->dispatchBrowserEvent('UpdateLivewireSelect');
-    }
-
     public function changeCurrency($value)
     {
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
