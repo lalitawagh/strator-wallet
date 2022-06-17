@@ -65,6 +65,12 @@ class WalletPayoutComponent extends Component
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
+    public function changeAmount($value)
+    {
+        $this->amount = $value;
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
+    }
+
     public function getWalletBalance($value)
     {
         $wallet = Wallet::find($value);

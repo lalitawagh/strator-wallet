@@ -68,8 +68,9 @@
             <span class="block text-theme-6 mt-2">{{ $message }}</span>
             @enderror
         </div>
-    @endif
     </div>
+    @endif
+
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="reference" class="form-label sm:w-40"> Reference <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">

@@ -96,7 +96,7 @@
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
             <label for="amount" class="form-label sm:w-30"> Amount to Pay <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
-                <input wire:model="amount" id="amount" name="amount" type="text" class="form-control"
+                <input wire:change="changeAmount($event.target.value)" id="amount" name="amount" type="text" class="form-control"
                     onKeyPress="return isNumberKey(event);" required>
                 @error('amount')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
