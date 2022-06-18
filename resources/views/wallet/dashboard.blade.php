@@ -10,30 +10,8 @@
 
             <div class="grid grid-cols-12 gap-3">
                 <div class="col-span-12 md:col-span-8 lg:col-span-8 mt-3">
-                    <div class="hidden" id="updateCredit">{{ @$creditTransactionGraphData }}</div>
-                    <div class="hidden" id="updateDebit">{{ @$debitTransactionGraphData }}</div>
                     <div class="intro-y shadow-lg p-3 rounded-2xl bg-white p-5  h-full">
-                        <div class="flex flex-col xl:flex-row xl:items-center">
-                            <div class="flex">
-                                <h2 class="text-lg font-medium truncate mr-5">
-                                    Transactions
-                                </h2>
-                            </div>
-                            <div class="dropdown xl:ml-auto mt-5 xl:mt-0">
-                                <div class="sm:ml-auto mt-3 sm:mt-0 relative text-gray-700 dark:text-gray-300">
-                                    <i data-feather="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>
-                                    <input type="text" class="form-control sm:w-56 box pl-10" value="2022" disabled>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-12 gap-3">
-                            <div class="col-span-12 md:col-span-12 lg:col-span-10 mt-3">
-                                <div class="report-chart">
-                                    <canvas id="chartLine" height="150" class="mt-6"></canvas>
-                                </div>
-                            </div>
-
-                        </div>
+                        @livewire('wallet-transaction-graph', ['wallets' => $wallets])
                     </div>
                 </div>
 
@@ -59,9 +37,9 @@
                                     <div class="ml-4 mr-auto">
                                         <div class="font-medium">
                                             @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'wallet-withdraw' ||  $transaction->meta['transaction_type'] == 'withdraw')
-                                            {{ $wallet->name }}
+                                             {{ @$transaction->meta['beneficiary_name']  }}
                                             @else
-                                                {{ @$transaction->meta['sender_name'] }}
+                                                @if($transaction->type === 'debit') {{ @$transaction->meta['beneficiary_name'] }} @else {{ @$transaction->meta['sender_name'] }} @endif
                                             @endif
                                         </div>
                                         <div class="text-xs mt-0.5">{{ date('d M Y',strtotime($transaction->created_at))}}</div>
@@ -88,39 +66,46 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chart line -->
     <script>
-        const labels = [
-                'January',
-                'February',
-                'March',
-                'April',
+        window.addEventListener('UpdateWalletTransactionChart', event => {
+            transactionChart();
+        });
+
+        function transactionChart(){
+            const labels = [
+                'Jan',
+                'Feb',
+                'Mar',
+                'Apr',
                 'May',
-                'June',
-                'July',
-                'August',
-                'September',
-                'October',
-                'November',
-                'December'
+                'Jun',
+                'Jul',
+                'Aug',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec'
             ];
 
-            var creditChartTransaction = document.getElementById("updateCredit").innerHTML;
-            var debitChartTransaction = document.getElementById("updateDebit").innerHTML;
+            var creditChartTransaction = document.getElementById("updateWalletCredit").innerHTML;
+            var debitChartTransaction = document.getElementById("updateWalletDebit").innerHTML;
 
             const data = {
                 labels: labels,
                 datasets: [{
                     label: 'PAID IN',
                     fill: false,
-                    borderColor: '#002366', // Add custom color border (Line)
+                    borderColor: '#4bc0c0', // Add custom color border (Line)
                     data: JSON.parse(creditChartTransaction),
                 },
                 {
                     label: 'PAID OUT',
                     fill: false,
-                    borderColor: '#4baef1', // Add custom color border (Line)
+                    borderColor: '#ffcd56', // Add custom color border (Line)
                     data: JSON.parse(debitChartTransaction),
+                    borderDash: [5, 5],
                 }]
             };
 
@@ -158,7 +143,10 @@
                 report_line_chart_data,
                 configLineChart
             );
+        }
 
-
+        $(function() {
+            transactionChart();
+        });
     </script>
 @endpush
