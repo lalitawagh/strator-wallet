@@ -19,9 +19,9 @@ class WalletTransactionDetailComponent extends Component
     public function showTransactionDetail(Transaction $transaction)
     {
         $this->transaction = $transaction;
-        if(!is_null($transaction->ref_id))
+        if(!is_null($transaction->ref_id) && $transaction->ref_type == 'wallet')
         {
-            $this->wallet = Wallet::findOrFail($transaction->ref_id);
+            $this->wallet = Wallet::find($transaction->ref_id);
         }
     }
 

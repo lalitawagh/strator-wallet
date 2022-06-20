@@ -37,7 +37,7 @@
                         <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
                     @endforeach
                 </select>
-                @error('beneficiary')
+                @error('beneficiary_id')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror
             </div>
