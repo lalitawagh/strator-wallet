@@ -28,6 +28,33 @@
                     @enderror
                 </div>
             </div>
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
+                <label for="" class="form-label sm:w-32"> Account Name <span class="text-theme-6">*</span></label>
+                <div class="sm:w-5/6">
+                    <input id="" type="text" class="form-control" wire:model="account_name">
+                    @error('account_name')
+                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
+                <label for="" class="form-label sm:w-32"> Account Number <span class="text-theme-6">*</span></label>
+                <div class="sm:w-5/6">
+                    <input id="" type="text" class="form-control" wire:model="account_number">
+                    @error('account_number')
+                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
+                <label for="" class="form-label sm:w-32"> Sort Code <span class="text-theme-6">*</span></label>
+                <div class="sm:w-5/6">
+                    <input id="" type="text" class="form-control" wire:model="sort_code">
+                    @error('sort_code')
+                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 mb-2 sm:mb-0 sm:mt-0">
                 <label for="" class="form-label sm:w-32"> Email </label>
                 <div class="sm:w-5/6">
@@ -37,10 +64,15 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
                 <label for="phone" class="form-label sm:w-32"> Mobile </label>
+<<<<<<< HEAD
                 <div class="sm:w-5/6  tillselect-marging">
                     <div class="input-group flex flex-col sm:flex-row mb-2 mt-2">
+=======
+                <div class="sm:w-5/6">
+                    <div class="input-group flex flex-col sm:flex-row mt-2">
+>>>>>>> 90c3bef5558d8db2cae2519e3d1405bddd26fdb3
                         <div id="input-group-phone" wire:ignore class="input-group-text flex form-inline"
                             style="padding: 0 5px;">
 
@@ -80,28 +112,8 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                <label for="" class="form-label sm:w-32"> Account Name <span class="text-theme-6">*</span></label>
-                <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" wire:model="account_name">
-                    <span class="block text-theme-6 mt-2"></span>
-                </div>
-            </div>
-            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                <label for="" class="form-label sm:w-32"> Account Number <span class="text-theme-6">*</span></label>
-                <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" wire:model="account_number">
-                    <span class="block text-theme-6 mt-2"></span>
-                </div>
-            </div>
-            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                <label for="" class="form-label sm:w-32"> Sort Code <span class="text-theme-6">*</span></label>
-                <div class="sm:w-5/6">
-                    <input id="" type="text" class="form-control" wire:model="sort_code">
-                    <span class="block text-theme-6 mt-2"></span>
-                </div>
-            </div>
-            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
+
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
                 <label for="" class="form-label sm:w-32"> Notes </label>
                 <div class="sm:w-5/6">
                     <input id="" type="text" class="form-control" wire:model="notes">
@@ -109,6 +121,9 @@
                 </div>
             </div>
         </div>
+        @error('beneficiary')
+            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+        @enderror
         <div class="text-right mt-5">
             <button type="button" wire:click="createBeneficiary" class="btn btn-primary w-24"
                 @if (isset($beneficiary_created) && isset($membership_urn)) disabled @endif>Send OTP</button>

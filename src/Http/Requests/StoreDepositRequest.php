@@ -19,7 +19,7 @@ class StoreDepositRequest extends FormRequest
         return [
             'wallet'            => 'required',
             'currency'          => 'required',
-            'amount'            => 'required',
+            'amount'            => ['required', 'numeric', 'min:50'],
             'reference'         => 'required',
             'payment_method'    => 'nullable',
         ];
@@ -30,6 +30,13 @@ class StoreDepositRequest extends FormRequest
         return [
             'wallet' => 'Deposit To',
             'currency' => 'Deposit From',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'amount.min' => 'The smallest amount you can send is 50 INR.',
         ];
     }
 
