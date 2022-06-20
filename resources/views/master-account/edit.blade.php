@@ -34,7 +34,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-span-12 md:col-span-8 lg:col-span-8 form-inline mt-2">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-60"> Status <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
                                      <select name="status" id="status" data-search="true" class="tail-select w-full">

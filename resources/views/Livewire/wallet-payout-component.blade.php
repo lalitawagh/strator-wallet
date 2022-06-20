@@ -32,8 +32,7 @@
             <label for="beneficiary" class="form-label sm:w-30"> Beneficiary <span
                     class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging">
-                <select wire:change="changeBeneficiary($event.target.value)" name="beneficiary" id="beneficiary" class="form-control" data-search="true">
-                    <option value="">Select Beneficiary</option>
+                <select wire:change="changeBeneficiary($event.target.value)" name="beneficiary" id="beneficiary" class="form-control"  data-search="true">
                     @foreach ($beneficiaries as $beneficiary)
                         <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
                     @endforeach
@@ -63,7 +62,7 @@
                                         <img src="{{ $country->flag }}">
                                     @endif
                                 @else
-                                    @if ($country->id == old('country_code', $defaultCountry->id))
+                                    @if ($country->id == old('country_code', $user->country_id))
                                         <img src="{{ $country->flag }}">
                                     @endif
                                 @endisset
@@ -71,10 +70,10 @@
                         </span>
 
                         <select id="countryWithPhone" name="country_code" onchange="getFlagImg(this)" data-search="true"
-                            class="tail-select" style="width:30%">
+                            class="tail-select" style="width:30%" wire:change="getCountry($event.target.value)">
                             @foreach ($countryWithFlags as $country)
                                 <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
-                                    @if ($country->id == $country_code) selected @elseif ($country->id == old('country_code', $defaultCountry->id)) selected @else  @endif>
+                                    @if ($country->id == $country_code) selected @elseif ($country->id == old('country_code', $user->country_id)) selected @else  @endif>
                                     {{ $country->name }} ({{ $country->phone }})
                                 </option>
                             @endforeach
@@ -99,7 +98,7 @@
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
             <label for="amount" class="form-label sm:w-30"> Amount to Pay <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
-                <input wire:model="amount" id="amount" name="amount" type="text" class="form-control"
+                <input wire:change="changeAmount($event.target.value)" id="amount" name="amount" type="text" class="form-control"
                     onKeyPress="return isNumberKey(event);" required>
                 @error('amount')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>

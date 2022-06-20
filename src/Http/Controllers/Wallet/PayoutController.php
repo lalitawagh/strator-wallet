@@ -119,7 +119,8 @@ class PayoutController extends Controller
                 'exchange_rate' => session('payout_exchange_rate') ? session('payout_exchange_rate') : null,
                 'transaction_type' => 'payout',
                 'balance' => $sender_wallet?->balance ? ($sender_wallet?->balance - ($amount)) : 0,
-                'transfer_status' => 'pending'
+                'transfer_status' => 'pending',
+                'account' => 'wallet',
             ],
         ]);
 
@@ -193,7 +194,8 @@ class PayoutController extends Controller
                 'exchange_rate' => $transaction->meta['exchange_rate'],
                 'transaction_type' => 'payout',
                 'balance' => $beneficiary_wallet?->balance ? ($beneficiary_wallet?->balance + $amount) : 0,
-                'transfer_status' => $transaction->meta['transfer_status']
+                'transfer_status' => $transaction->meta['transfer_status'],
+                'account' => 'wallet',
             ],
         ]);
 

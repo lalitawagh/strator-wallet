@@ -37,8 +37,7 @@
                 class="form-control">
                 <option value="">Select Deposit From</option>
                 @foreach ($currencies as $currency)
-                @php $assetType = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types', []))->firstWhere('id', $wallet->ledger?->asset_type);@endphp
-                @if($walletDefaultCountry->code != 'UK' && isset($assetType) && $walletDefaultCountry->currency == $assetType['name'])
+                @if($walletDefaultCountry->code != 'UK' && $walletDefaultCountry->currency == $currency['name'])
                         <option value="{{ $currency['id'] }}" @if (session('currency') == $currency['id']) selected @endif>
                             {{ $currency['name'] }}</option>
                     @elseif($walletDefaultCountry->code == 'UK')
@@ -73,8 +72,10 @@
                 @enderror
             </div>
         </div>
+    </div>
     @endif
-    <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
+
+    <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="reference" class="form-label sm:w-40"> Reference <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">
             <input id="reference" type="text" class="form-control" name="reference" required>

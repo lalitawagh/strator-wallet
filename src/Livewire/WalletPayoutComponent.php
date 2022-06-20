@@ -61,16 +61,47 @@ class WalletPayoutComponent extends Component
         $this->amount = old('amount');
         $this->selected_wallet = old('wallet');
         $this->selected_currency = old('receiver_currency');
+        $this->phone = $beneficiaries->first()?->mobile;
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
+
+    public function changeAmount($value)
+    {
+        $this->amount = $value;
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
+    }
+
 
     public function getWalletBalance($value)
     {
         $wallet = Wallet::find($value);
         $this->selected_wallet = $value;
         $this->balance = $wallet?->balance;
+
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
+        $this->selected_wallet = $value;
+        $sender_wallet = Wallet::whereId($value)->first();
+        $exchange_wallet = Wallet::whereId($this->selected_currency)->first();
+
+        $walletDefaultCountry = Country::find(Setting::getValue('wallet_default_country'));
+
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet,$exchange_wallet,$walletDefaultCountry);
+
+        $this->base_currency = @$exchange_rate_details['base_currency_name'];
+        $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
+        $this->exchange_rate =  @$exchange_rate_details['exchange_rate'];
+        $this->fee = @$exchange_rate_details['fee'];
+
+        session([
+            'payout_fee' => $this->fee,
+            'payout_exchange_rate' => $this->exchange_rate,
+            'payout_exchange_currency' => $this->base_currency,
+            'payout_base_currency' => $this->exchange_currency,
+            'payout_wallet' => $this->selected_wallet,
+            'payout_currency' => $value
+        ]);
     }
+    
 
     public function changeBeneficiary($value)
     {

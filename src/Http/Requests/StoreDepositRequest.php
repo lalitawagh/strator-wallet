@@ -19,7 +19,7 @@ class StoreDepositRequest extends FormRequest
         return [
             'wallet'            => 'required',
             'currency'          => 'required',
-            'amount'            => ['required', 'numeric', 'min:50'],
+            'amount'            => ['required', 'numeric'],
             'reference'         => 'required',
             'payment_method'    => 'nullable',
         ];
@@ -30,13 +30,6 @@ class StoreDepositRequest extends FormRequest
         return [
             'wallet' => 'Deposit To',
             'currency' => 'Deposit From',
-        ];
-    }
-
-    public function messages()
-    {
-        return [
-            'amount.min' => 'The smallest amount you can send is 50 INR.',
         ];
     }
 
@@ -54,6 +47,12 @@ class StoreDepositRequest extends FormRequest
             $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $this->input('currency'));
             if (is_null($asset_type)) {
                 $validator->errors()->add('currency', 'Currency not exists');
+            }
+
+            if ($asset_type['name'] == 'INR') {
+                if ($this->input('amount') < 50) {
+                    $validator->errors()->add('amount', 'The smallest amount you can send is 50 INR.');
+                }
             }
         });
     }

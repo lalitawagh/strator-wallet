@@ -40,8 +40,7 @@
     </div>
     <div class="grid grid-cols-12 md:gap-3 mt-0">
         <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
-            <label for="asset_category" class="form-label sm:w-30">Asset Category <span
-                    class="text-theme-6">*</span></label>
+            <label for="asset_category" class="form-label sm:w-30">Asset Category <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging">
 
                 <select name="asset_category" wire:change="changeAssetCategory($event.target.value)" id="asset_category"
@@ -81,8 +80,7 @@
     @if (old('asset_category') == \Kanexy\LedgerFoundation\Enums\AssetCategory::COMMODITY || $selected_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::COMMODITY)
         <div class="grid grid-cols-12 md:gap-3 mt-0">
             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
-                <label for="commodity_category" class="form-label sm:w-30"> Commodity Category <span
-                        class="text-theme-6">*</span></label>
+                <label for="commodity_category" class="form-label sm:w-30"> Commodity Category <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6 tillselect-marging">
                     <select name="commodity_category" id="commodity_category" data-search="true"
                         class="tail-select w-full @error('commodity_category') border-theme-6 @enderror">

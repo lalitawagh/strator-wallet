@@ -62,6 +62,14 @@ class WalletBeneficiary extends Component
         $this->countryWithFlags = $countryWithFlags;
         $this->defaultCountry = $defaultCountry;
         $this->user = Auth::user();
+        $this->country_code = $this->user->country_id;
+    }
+
+    
+    public function getCountry($value)
+    {
+        $this->country_code = $value;
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
     public function getMembershipDetails()
@@ -85,7 +93,7 @@ class WalletBeneficiary extends Component
             'first_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
             'middle_name' => ['nullable', new AlphaSpaces, 'string', 'max:40'],
             'last_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
-            'email' => 'required|email',
+            'email' => 'nullable|email',
             'mobile' => ['required', new MobileNumber],
             'notes' => 'nullable',
             'nick_name' => 'nullable',
