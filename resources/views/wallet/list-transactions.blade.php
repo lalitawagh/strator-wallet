@@ -207,7 +207,7 @@
                             </td>
                             <td class="whitespace-nowrap text-left">{{ $transaction->meta['beneficiary_name'] }}</td>
                             @if(isset($transactionType) && $transactionType == 'deposit')
-                                <td class="whitespace-nowrap text-left">{{ ucfirst($transaction->payment_method) }}</td>
+                                <td class="whitespace-nowrap text-left">  {{ trans('ledger-foundation::configuration.'.$transaction->payment_method)  }}</td>
                             @else
                                 <td class="whitespace-nowrap text-left">
                                     {{ $ledger?->name }}
@@ -254,16 +254,33 @@
                                             @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
                                                 @if ($transactionType != 'deposit' && !is_null(@$transaction?->meta['transfer_status']) && $transaction?->meta['transfer_status'] == 'pending')
                                                 <a href="{{ route('dashboard.wallet.wallet-payout.transferAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
-                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
                                                     <x-feathericon-check
                                                         class="w-4 h-4 mr-1" />
                                                     Accepted
                                                 </a>
                                                 @endif
 
+                                                @if ($transactionType != 'payout' && !is_null(@$transaction?->status) && $transaction?->status != 'accepted')
+                                                <a href="{{ route('dashboard.wallet.wallet-deposit.transferAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
+                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
+                                                    <x-feathericon-check
+                                                        class="w-4 h-4 mr-1" />
+                                                    Accepted
+                                                </a>
+                                                @endif
+                                                @if ($transactionType != 'payout' && !is_null(@$transaction?->status) && $transaction?->status != 'pending'  && $transaction?->status != 'accepted')
+                                                <a href="{{ route('dashboard.wallet.wallet-deposit.transferPending', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
+                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                    <x-feathericon-alert-circle
+                                                        class="w-4 h-4 mr-1" />
+                                                    Pending
+                                                </a>
+                                                @endif
+
                                                 @if($transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
                                                     <a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
-                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
                                                         <x-feathericon-check
                                                             class="w-4 h-4 mr-1" />
                                                         Accepted
