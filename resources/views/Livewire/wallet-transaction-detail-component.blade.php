@@ -16,14 +16,14 @@
             </svg>
         </div>
     @else
-        @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'wallet-withdraw')
+        @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'withdraw')
             @php $refId =  $transaction->meta['sender_wallet_account_id'] @endphp
         @else
             @php $refId =  $transaction->ref_id @endphp
         @endif
         @php
             $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($refId)->first();
-            $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
+            $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet?->ledger_id)->first();
         @endphp
         <div>
             <div class="flex flex-col lg:flex-row px-1 sm:px-2 py-0 mb-2">

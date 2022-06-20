@@ -5,7 +5,8 @@
             <select wire:change="changeBaseCurrency($event.target.value)" name="wallet" class="form-control">
                 <option value="">Select Deposit To</option>
                 @foreach ($wallets as $wallet)
-                    @if($walletDefaultCountry->code != 'UK' && $walletDefaultCountry->currency == collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types', []))->firstWhere('id', $wallet->ledger?->asset_type)['name'])
+                    @php $assetType = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types', []))->firstWhere('id', $wallet->ledger?->asset_type);@endphp
+                    @if($walletDefaultCountry->code != 'UK' && isset($assetType) && $walletDefaultCountry->currency == $assetType['name'])
                     <option value="{{ $wallet->getKey() }}" @if ($selected_wallet == $wallet->getKey()) selected @endif>
                         {{ $wallet->ledger?->name }}</option>
                     @elseif($walletDefaultCountry->code == 'UK')
@@ -35,7 +36,7 @@
             <select wire:change="changeCurrency($event.target.value)" name="currency" id="currency" class="form-control">
                 <option value="">Select Deposit From</option>
                 @foreach ($currencies as $currency)
-                    @if($walletDefaultCountry->code != 'UK' && $walletDefaultCountry->currency == $currency['name'])
+                @if($walletDefaultCountry->code != 'UK' && $walletDefaultCountry->currency == $currency['name'])
                         <option value="{{ $currency['id'] }}" @if (session('currency') == $currency['id']) selected @endif>
                             {{ $currency['name'] }}</option>
                     @elseif($walletDefaultCountry->code == 'UK')
@@ -67,7 +68,9 @@
             <span class="block text-theme-6 mt-2">{{ $message }}</span>
             @enderror
         </div>
+    </div>
     @endif
+
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="reference" class="form-label sm:w-40"> Reference <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">

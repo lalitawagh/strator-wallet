@@ -60,7 +60,7 @@ class DepositController extends Controller
         $wallets = Wallet::forHolder($user)->with('ledger')->get();
         $currencies = Setting::getValue('asset_types', []);
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
-        $walletDefaultCountry = Country::find(Setting::getValue('wallet_default_country'));
+        $walletDefaultCountry = Country::find($user->country_id);
 
         return view("ledger-foundation::wallet.deposit.deposit-initial", compact('wallets', 'currencies', 'workspace', 'walletDefaultCountry'));
     }
@@ -207,6 +207,7 @@ class DepositController extends Controller
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                     'transaction_type' => 'deposit',
                     'balance' => ($wallet?->balance + $amount),
+                    'account' => 'wallet',
                 ],
             ]);
 
@@ -313,6 +314,7 @@ class DepositController extends Controller
                     'exchange_currency' => session('exchange_currency') ? session('exchange_currency') : null,
                     'transaction_type' => 'deposit',
                     'balance' => ($wallet?->balance + $amount),
+                    'account' => 'wallet',
                 ],
             ]);
 

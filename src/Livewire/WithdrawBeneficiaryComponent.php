@@ -64,11 +64,14 @@ class WithdrawBeneficiaryComponent extends Component
 
     public $country_code;
 
+    public $user;
+
     public function mount($workspace, $countryWithFlags, $defaultCountry)
     {
         $this->workspace = $workspace;
         $this->countryWithFlags = $countryWithFlags;
         $this->defaultCountry = $defaultCountry;
+        $this->user = Auth::user();
     }
 
     public function getMembershipDetails()

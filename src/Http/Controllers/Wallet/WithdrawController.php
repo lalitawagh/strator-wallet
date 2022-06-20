@@ -5,6 +5,7 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
@@ -16,6 +17,7 @@ use Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus;
 use Kanexy\PartnerFoundation\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Banking\Services\PayoutService;
+use Kanexy\PartnerFoundation\Core\Models\Log;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -35,7 +37,7 @@ class WithdrawController extends Controller
         /** @var $user App\Model\User */
         $user = Auth::user();
         $workspace = null;
-        $transactionType = 'wallet-withdraw';
+        $transactionType = 'withdraw';
 
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
@@ -68,6 +70,8 @@ class WithdrawController extends Controller
 
     public function store(WithdrawRequest $request)
     {
+        $user = Auth::user();
+        $workspace = $user->workspaces()->first();
         $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', 231);
         $wallet = Wallet::find($request->input('sender_wallet_account_id'));
         $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $wallet->ledger->asset_type);
@@ -85,11 +89,40 @@ class WithdrawController extends Controller
             'transaction_type' => 'withdraw',
             'sender_currency' => $asset_type['name'] ? $asset_type['name'] : null,
             'receiver_currency' => 'GBP',
+            'account' => 'wallet',
+            'balance' => $wallet?->balance ? ($wallet?->balance - ($request->input('amount'))) : 0,
         ];
 
         $meta = array_merge($transaction->meta,$metaDetails);
+        $transaction->workspace_id = $workspace->id;
         $transaction->meta = $meta;
         $transaction->update();
+
+        $meta = [
+            'amount' => $transaction->amount,
+            'sender_currency' =>  $transaction->meta['sender_currency'],
+            'receiver_currency' => $transaction->meta['receiver_currency'],
+            'exchange_rate' =>  null,
+            'workspace_id' => $workspace->id,
+            'type' => 'debit',
+            'payment_method' => 'wallet',
+            'ref_id' =>  $transaction->meta['sender_wallet_account_id'],
+            'ref_type' => 'wallet',
+            'settled_amount' => $transaction->amount,
+            'settled_currency' => $transaction->meta['sender_currency'] ? $transaction->meta['sender_currency'] : null,
+            'settlement_date' => date('Y-m-d'),
+            'transaction_fee' => 0,
+            'status' => 'accepted',
+        ];
+
+        $log = new Log();
+        $log->id = Str::uuid();
+        $log->text = 'transaction';
+        $log->user_id = auth()->user()->id;
+        $log->meta = $meta;
+        $log->target()->associate($transaction);
+        $log->save();
+
 
         $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
 

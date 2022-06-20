@@ -8,6 +8,7 @@ use Kanexy\Cms\Enums\RegistrationStep;
 use Kanexy\LedgerFoundation\Enums\WalletStatus;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
+use Kanexy\PartnerFoundation\Core\Enums\WorkspaceStatus;
 use Kanexy\PartnerFoundation\Membership\Enums\MembershipStatus;
 
 class WalletController extends Controller
@@ -36,6 +37,11 @@ class WalletController extends Controller
                 Wallet::create($data);
             }
         });
+
+        if (!$user->is_banking_user) {
+            $workspace->status = WorkspaceStatus::ACTIVE;
+            $workspace->update();
+        }
 
         if ($user->is_banking_user == 1) {
             $user->logRegistrationStep(RegistrationStep::BANKING);
