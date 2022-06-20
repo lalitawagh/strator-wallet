@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Kanexy\LedgerFoundation\Contracts\Payout;
+use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
 
 class WithdrawRequest extends FormRequest
@@ -24,4 +25,22 @@ class WithdrawRequest extends FormRequest
             "attachment" => ["nullable", "max:5120", "mimes:png,jpg,jpeg", "file"],
         ];
     }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $senderAccountId = $this->input('sender_wallet_account_id');
+
+            if (!is_null($senderAccountId)) {
+                $senderAccount = Wallet::findOrFail($senderAccountId);
+                $amount = (float) $this->input('amount');
+
+                if ($senderAccount->balance < $amount) {
+                    $validator->errors()->add('amount', 'Insufficient balance in the account.');
+                }
+            }
+        });
+    }
+
+
 }

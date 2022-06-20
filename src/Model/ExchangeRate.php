@@ -29,9 +29,9 @@ class ExchangeRate extends Model
 
     public static function getExchangeRateDetailsForPayout($sender_wallet,$receiver_wallet,$walletDefaultCountry)
     {
-        $exchange_rate_details = ExchangeRate::where(['base_currency' => $receiver_wallet->ledger_id,'exchange_currency' => $sender_wallet?->ledger_id])->first();
-        $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', Ledger::find($receiver_wallet->ledger_id)?->asset_type);
-        $exchange_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', Ledger::find($sender_wallet->ledger_id)?->asset_type);
+        $exchange_rate_details = ExchangeRate::where(['base_currency' => $receiver_wallet?->ledger_id,'exchange_currency' => $sender_wallet?->ledger_id])->first();
+        $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', Ledger::find($receiver_wallet?->ledger_id)?->asset_type);
+        $exchange_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', Ledger::find($sender_wallet?->ledger_id)?->asset_type);
 
         $base_currency = @$base_currency['name'];
         $exchange_currency = @$exchange_currency['name'];
