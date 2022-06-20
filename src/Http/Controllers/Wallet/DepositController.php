@@ -10,11 +10,13 @@ use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Enums\PaymentMethod;
 use Kanexy\LedgerFoundation\Http\Requests\StoreDepositRequest;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\DepositPolicy;
 use Kanexy\LedgerFoundation\Services\WalletService;
+use Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Core\Models\Log;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
@@ -151,13 +153,97 @@ class DepositController extends Controller
     {
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
+        $transaction = [];
+        $user = auth()->user();
         $details = session('deposit_request');
+
+        $wallet = Wallet::find($details['wallet']);
+
+        if(isset($details['exchange_currency']))
+        {
+           $exchange_curreny = collect(Setting::getValue('asset_types', []))->firstWhere('id', $details['exchange_currency']);
+        }
+
+
+        $depositMasterAccountDetails =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', 105);
 
         if (is_null($details)) {
             return redirect()->route('dashboard.wallet.deposit.create');
         }
 
-        return view("ledger-foundation::wallet.deposit.deposit-payment", compact('details'));
+        if($details['payment_method'] == PaymentMethod::MANUAL_TRANSFER)
+        {
+            $transactionExist = isset($details['transaction']) ?  $details['transaction'] : null;
+
+            $transaction = Transaction::updateOrCreate([
+                'id' => $transactionExist?->id,
+            ],[
+                'urn' => Transaction::generateUrn(),
+                'amount' => $details['amount'],
+                'workspace_id' => $details['workspace_id'],
+                'type' => 'credit',
+                'payment_method' => PaymentMethod::MANUAL_TRANSFER,
+                'note' => null,
+                'ref_id' =>  $details['wallet'],
+                'ref_type' => 'wallet',
+                'settled_amount' => $details['amount'],
+                'settled_currency' => $details['currency'],
+                'settlement_date' => date('Y-m-d'),
+                'settled_at' => now(),
+                'transaction_fee' => $details['fee'],
+                'status' => 'draft',
+                'meta' => [
+                    'reference_no' => Wallet::generateUrn(),
+                    'reference' => $details['reference'],
+                    'sender_id' =>  $user->id,
+                    'sender_name' =>  $user->getFullName(),
+                    'beneficiary_id' => Auth::user()->id,
+                    'beneficiary_wallet_id' => $details['wallet'],
+                    'beneficiary_name' => Auth::user()->getFullName(),
+                    'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
+                    'base_currency' =>  $details['currency'] ?  $details['currency'] : null,
+                    'exchange_currency' => @$exchange_curreny['name'] ? @$exchange_curreny['name'] : null,
+                    'transaction_type' => 'deposit',
+                    'balance' => $wallet?->balance,
+                    'account' => 'wallet',
+                ],
+            ]);
+
+            if(!isset($details['transaction_log']))
+            {
+                $meta = [
+                    'amount' => $details['amount'],
+                    'base_currency' => $details['currency'] ?  $details['currency'] : null,
+                    'exchange_currency' =>  @$exchange_curreny['name'] ? @$exchange_curreny['name'] : null,
+                    'workspace_id' => $details['workspace_id'],
+                    'type' => 'credit',
+                    'payment_method' => 'manual_transfer',
+                    'ref_id' =>  $details['wallet'],
+                    'ref_type' => 'wallet',
+                    'settled_amount' => $details['amount'],
+                    'settled_currency' => $details['currency'],
+                    'settlement_date' => date('Y-m-d'),
+                    'transaction_fee' => $details['fee'],
+                    'status' => 'accepted',
+                ];
+
+                $log = new Log();
+                $log->id = Str::uuid();
+                $log->text = 'transaction';
+                $log->user_id = auth()->user()->id;
+                $log->meta = $meta;
+                $log->target()->associate($transaction);
+                $log->save();
+
+                $details['transaction_log'] = $log;
+            }
+
+            $details['transaction'] = $transaction;
+        }
+
+        session(['deposit_request' => $details]);
+
+        return view("ledger-foundation::wallet.deposit.deposit-payment", compact('details', 'depositMasterAccountDetails', 'transaction'));
     }
 
     public function paypalPayment(Request $request)
@@ -448,5 +534,57 @@ class DepositController extends Controller
         session()->forget(['fee', 'exchange_rate', 'exchange_currency', 'base_currency', 'wallet', 'currency', 'amount', 'deposit_request']);
 
         return redirect()->route('dashboard.wallet.deposit.index', ['filter' => ['workspace_id' => $workspace_id]]);
+    }
+
+    public function transferAccepted(Request $request)
+    {
+        $transaction = Transaction::find($request->id);
+        $wallet = Wallet::find($transaction->meta['beneficiary_wallet_id']);
+
+        $metaDetails = [
+            'balance' =>  ($wallet?->balance + $transaction->amount),
+        ];
+
+        $metaInfo = $transaction?->meta ? array_merge($transaction?->meta,$metaDetails) : $metaDetails;
+
+        $transaction->meta = $metaInfo;
+        $transaction->status = TransactionStatus::ACCEPTED;
+        $transaction->update();
+
+        $wallet->credit($transaction->amount);
+
+        if($request->type == 'all')
+        {
+            return redirect()->route('dashboard.wallet.transaction.index')->with([
+                'status' => 'success',
+                'message' => 'The deposit request accepted successfully.',
+            ]);
+        }else
+        {
+            return redirect()->route('dashboard.wallet.deposit.index')->with([
+                'status' => 'success',
+                'message' => 'The deposit request accepted successfully.',
+            ]);
+        }
+    }
+
+    public function transferPending(Request $request)
+    {
+        $transaction = Transaction::find($request->id);
+        $transaction->update(['status' => TransactionStatus::PENDING]);
+
+        if($request->type == 'all')
+        {
+            return redirect()->route('dashboard.wallet.transaction.index')->with([
+                'status' => 'success',
+                'message' => 'The deposit request pending successfully.',
+            ]);
+        }else
+        {
+            return redirect()->route('dashboard.wallet.deposit.index')->with([
+                'status' => 'success',
+                'message' => 'The deposit request pending successfully.',
+            ]);
+        }
     }
 }

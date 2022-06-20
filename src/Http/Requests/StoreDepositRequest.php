@@ -49,7 +49,7 @@ class StoreDepositRequest extends FormRequest
                 $validator->errors()->add('currency', 'Currency not exists');
             }
 
-            if ($asset_type['name'] == 'INR') {
+            if ($asset_type['name'] == 'INR' && $this->input('payment_method') != \Kanexy\LedgerFoundation\Enums\PaymentMethod::MANUAL_TRANSFER) {
                 if ($this->input('amount') < 50) {
                     $validator->errors()->add('amount', 'The smallest amount you can send is 50 INR.');
                 }

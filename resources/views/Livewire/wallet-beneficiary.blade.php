@@ -9,7 +9,7 @@
     </div>
     <div class="modal-body">
         <div class="grid grid-cols-12 md:gap-0 mt-0">
-            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 sm:col-span-12 form-inline mt-2">
                 <label for="" class="form-label sm:w-30"> Name <span class="text-theme-6">*</span></label>
                 <div class="sm:w-2/6 pr-2 mb-2 sm:mb-0">
                     <input id="" type="text" class="form-control" placeholder="First Name" wire:model="first_name">
@@ -87,7 +87,7 @@
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>
-            <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 sm:col-span-12 form-inline mt-2">
                 <label for="" class="form-label sm:w-28"> Nick Name </label>
                 <div class="sm:w-5/6">
                     <input id="" type="text" class="form-control" wire:model="nick_name">
@@ -105,7 +105,7 @@
                 <h4 class="text-theme-9 mt-1">OTP Resend Success</h4>
             @endif
             <div class="grid grid-cols-12 md:gap-0 mt-5">
-                <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
+                <div class="col-span-12 md:col-span-12 lg:col-span-12 sm:col-span-12 form-inline mt-2">
                     <label for="" class="form-label sm:w-28"> Enter OTP <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="" type="text" class="form-control" placeholder="Enter OTP" wire:model="code">
