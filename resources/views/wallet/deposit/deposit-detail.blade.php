@@ -8,7 +8,7 @@
             <div class="flex flex-col pb-5">
                 <span class="font-medium text-base">Deposit Money via <strong>
                         @isset($details['payment_method'])
-                            {{ @$details['payment_method'] }}
+                         {{ trans('ledger-foundation::configuration.'.@$details['payment_method'])  }}
                         @else
                             {{ @$details['currency'] }}
                         @endisset

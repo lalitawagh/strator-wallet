@@ -59,6 +59,8 @@ Route::group(['middleware'=>['web','auth',VerificationStepMiddleware::class],'pr
     Route::get('withdraw/verify',[WithdrawController::class,'verify'])->name("withdraw.verify");
     Route::get('wallet-payout-accepted/{id}/{type}',[PayoutController::class,'transferAccepted'])->name("wallet-payout.transferAccepted");
     Route::get('wallet-withdraw-accepted/{id}/{type}',[WithdrawController::class,'withdrawAccepted'])->name("withdrawAccepted");
+    Route::get('wallet-deposit-accepted/{id}/{type}',[DepositController::class,'transferAccepted'])->name("wallet-deposit.transferAccepted");
+    Route::get('wallet-deposit-pending/{id}/{type}',[DepositController::class,'transferPending'])->name("wallet-deposit.transferPending");
 
 
 });

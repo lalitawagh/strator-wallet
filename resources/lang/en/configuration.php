@@ -35,4 +35,5 @@ return [
     'monthly'       => 'Monthly',
     'quarterly'     => 'Quarterly',
     'yearly'        => 'Yearly',
+    'manual_transfer' => 'Manual Transfer'
 ];

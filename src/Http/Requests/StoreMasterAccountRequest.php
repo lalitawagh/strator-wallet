@@ -23,7 +23,7 @@ class StoreMasterAccountRequest extends FormRequest
             'account_branch'        =>    ['required','string'],
             'account_number'        =>    ['required','numeric'],
             'sort_code'             =>    [Rule::requiredIf(request()->get('country') == 231),'nullable','numeric','digits:6'],
-            'ifsc_code'             =>    [Rule::requiredIf(request()->get('country') != 231),'nullable','numeric'],
+            'ifsc_code'             =>    [Rule::requiredIf(request()->get('country') != 231),'nullable'],
         ];
     }
 }

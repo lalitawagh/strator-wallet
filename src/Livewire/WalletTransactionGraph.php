@@ -21,7 +21,7 @@ class WalletTransactionGraph extends Component
     public function mount($wallets)
     {
         $this->wallets = $wallets;
-        $value = $wallets->first()->id;
+        $value = $wallets->first()?->id;
 
         $user = Auth::user();
         foreach (range(1, 12) as $m) {
