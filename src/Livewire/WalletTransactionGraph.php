@@ -79,7 +79,12 @@ class WalletTransactionGraph extends Component
         $creditTransactionGraphData = Transaction::whereWorkspaceId($currentWorkspaceId)->whereType(TransactionType::CREDIT)->whereRefId($value)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('meta->account', 'wallet')->get();
 
         $debitTransactionGraphData = Transaction::whereWorkspaceId($currentWorkspaceId)->whereType(TransactionType::DEBIT)->whereRefId($value)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('meta->account', 'wallet')->get();
+        $withdrawTransaction = Transaction::whereWorkspaceId($currentWorkspaceId)->whereType(TransactionType::DEBIT)->where('meta->sender_wallet_account_id', $value)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('meta->account', 'wallet')->get();
 
+        if(!is_null($debitTransactionGraphData) && !is_null($withdrawTransaction))
+        {
+            $debitTransactionGraphData = $debitTransactionGraphData->merge($withdrawTransaction);
+        }
         $creditTransactionGraphData = collect($months)->map(function ($month) use ($creditTransactionGraphData) {
             $record = $creditTransactionGraphData->where('label', $month)->first();
 
