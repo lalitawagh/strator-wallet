@@ -2,7 +2,7 @@
     <div class="grid grid-cols-12 lg:gap-10 mt-0">
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
             <label for="wallet" class="form-label sm:w-30"> Withdraw From <span class="text-theme-6">*</span></label>
-            <div class="sm:w-5/6" wire:ignore>
+            <div class="sm:w-5/6 tillselect-marging" wire:ignore>
                 <select wire:change="getWalletBalance($event.target.value)" name="sender_wallet_account_id" id="wallet"
                     class="form-control" data-search="true" required>
                     <option value="">Select Withdraw From</option>

@@ -12,9 +12,13 @@
                     </h2>
                 </div>
                 <div class="p-3">
+<<<<<<< HEAD
+                    @include ('ledger-foundation::wallet.list-transactions');
+=======
                     @include(
                         'ledger-foundation::wallet.list-transactions'
                     )
+>>>>>>> 90c3bef5558d8db2cae2519e3d1405bddd26fdb3
                 </div>
             </div>
         </div>

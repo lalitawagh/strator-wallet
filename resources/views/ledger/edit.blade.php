@@ -7,7 +7,7 @@
         <div class="grid grid-cols-12 gap-6">
             <!-- BEGIN: Daily Sales -->
             <div class="intro-y box col-span-12 xxl:col-span-12">
-                <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                <div class="flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
                     <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
                         <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
@@ -63,7 +63,7 @@
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="ledger_type" class="form-label sm:w-30">Ledger Type <span
                                         class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
+                                <div class="sm:w-5/6 tillselect-marging">
                                     @php
                                         $ledger_types = \Kanexy\LedgerFoundation\Enums\LedgerType::toArray();
                                     @endphp
@@ -107,7 +107,7 @@
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="exchange_from" class="form-label sm:w-30">Exchange From <span
                                         class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
+                                <div class="sm:w-5/6 tillselect-marging">
                                     @php
                                         $exchange_from = \Kanexy\LedgerFoundation\Enums\ExchangeFrom::toArray();
                                     @endphp
@@ -131,7 +131,7 @@
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="asset_class" class="form-label sm:w-30"> Asset Class <span
                                         class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
+                                <div class="sm:w-5/6 tillselect-marging">
                                     <select name="asset_class" id="asset_class" data-search="true"
                                         class="tail-select w-full @error('asset_class') border-theme-6 @enderror">
                                         <option value="">Select Asset Class</option>
@@ -153,7 +153,7 @@
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-30"> Status <span
                                         class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
+                                <div class="sm:w-5/6 tillselect-marging">
                                     <select name="status" id="status" data-search="true" class="tail-select w-full">
                                         <option value="">Select Status</option>
                                         <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW }}"

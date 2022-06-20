@@ -214,7 +214,7 @@ display: contents !important;
     .configarrow-toggle{
         display: none;
     }
-    .configuration-nav {
+    body .configuration-nav {
         width: 100%;
         margin-bottom: 10px;
         padding-bottom: 0;
@@ -233,8 +233,8 @@ display: contents !important;
         padding-left: 30px;
     }
     .configuration-nav.side-nav--simple .side-menu__sub-open {
-display: contents !important;
-}
+        display: contents !important;
+    }
     .breadcrumb{
         display: flex;
     }
@@ -251,8 +251,8 @@ display: contents !important;
 
 @section('content')
     <div class="md:flex w-full gap-3 mt-0">
-        <div class="flex lg:block flex-col-reverse configuration-nav configuration-layout-sidebar">
-            <div class="intro-y box mt-0 lg:mt-0" x-data="toggleConfigurationSidebarMenu()">
+        <div class="intro-y box sm:w-1/4 configuration-nav configuration-layout-sidebar">
+            <div class="mt-0 lg:mt-0" x-data="toggleConfigurationSidebarMenu()">
                 <div class="relative flex items-center p-3">
                     <div class="breadcrumb mr-auto hidden sm:flex">
                         <a href="">Wallets</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"

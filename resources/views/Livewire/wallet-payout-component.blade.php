@@ -3,7 +3,8 @@
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
             <label for="wallet" class="form-label sm:w-30"> Payout From <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging" wire:ignore>
-                <select wire:change="getWalletBalance($event.target.value)" name="wallet" id="wallet" class="form-control"  data-search="true" required>
+                <select wire:change="getWalletBalance($event.target.value)" name="wallet" id="wallet"
+                    class="form-control" data-search="true" required>
                     <option value="">Select Payout From</option>
                     @foreach ($wallets as $wallet)
                         <option value="{{ $wallet->getKey() }}" @if ($selected_wallet == $wallet->getKey()) selected @endif>
@@ -26,9 +27,10 @@
             </div>
         </div>
     </div>
-    <div class="grid grid-cols-12 lg:gap-10 mt-0">
-        <div  wire:ignore class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2 relative">
-            <label for="beneficiary" class="form-label sm:w-30"> Beneficiary <span class="text-theme-6">*</span></label>
+    <div class="grid grid-cols-12 md:gap-10 mt-0">
+        <div wire:ignore class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2 relative">
+            <label for="beneficiary" class="form-label sm:w-30"> Beneficiary <span
+                    class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging">
                 <select wire:change="changeBeneficiary($event.target.value)" name="beneficiary" id="beneficiary" class="form-control"  data-search="true">
                     @foreach ($beneficiaries as $beneficiary)
@@ -45,7 +47,7 @@
         </div>
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
             <label for="phone" class="form-label sm:w-30"> Mobile</label>
-            <div class="sm:w-5/6">
+            <div class="sm:w-5/6 tillselect-marging">
                 <div class="input-group flex flex-col sm:flex-row">
                     <div id="input-group-phone" class="input-group-text flex form-inline"
                         style="padding: 0 5px;">
@@ -117,9 +119,12 @@
 
     <div class="grid grid-cols-12 lg:gap-10 mt-0">
         <div wire:ignore class="col-span-12 md:col-span-8 lg:col-span-6  sm:col-span-8 form-inline mt-2">
-            <label for="receiver_currency" class="form-label sm:w-30"> Payout To <span class="text-theme-6">*</span></label>
+            <label for="receiver_currency" class="form-label sm:w-30"> Payout To <span
+                    class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging">
-                <select name="receiver_currency" id="receiver_currency"  wire:change="changeCurrency($event.target.value)" class="form-control" data-search="true" required>
+                <select name="receiver_currency" id="receiver_currency"
+                    wire:change="changeCurrency($event.target.value)" class="form-control" data-search="true"
+                    required>
                     <option value="">Select Payout To</option>
                     @foreach ($wallets as $wallet)
                         <option value="{{ $wallet->getKey() }}" @if ($selected_wallet == $wallet->getKey()) selected @endif>

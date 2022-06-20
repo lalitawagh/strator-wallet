@@ -97,7 +97,12 @@
                                             <button type="submit" class="btn btn-sm btn-primary sm:ml-2 -mt-1 mb-2">Add New</button>
                                         </div>
                                         <!-- BEGIN: HTML Table Data -->
-                                        <div class="intro-y p-3 mt-0">
+                                        <div class="intro-y px-5 py-3 mt-0">
+                                            <div class="intro-y mt-0">
+                                                <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                                                    <x-list-view-filters/>
+                                                </div>
+                                            </div>
                                             <div class=" overflow-x-auto overflow-y-hidden">
                                                 <!-- <div id="tabulator" class="mt-5 table-report table-report--tabulator"></div> -->
 

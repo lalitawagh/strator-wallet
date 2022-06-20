@@ -165,11 +165,15 @@
                                                 </div>
                                                 <!-- BEGIN: HTML Table Data -->
                                                 <div class="intro-y p-3 mt-0">
+                                                    <div class="intro-y mt-0">
+                                                        <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                                                            <x-list-view-filters/>
+                                                        </div>
+                                                    </div>
                                                     <div class=" overflow-x-auto overflow-y-hidden">
                                                         <!-- <div id="tabulator" class="mt-5 table-report table-report--tabulator"></div> -->
 
-                                                        <table id="tableID"
-                                                            class="shroting display table table-report -mt-2">
+                                                        <table id="tableID" class="shroting display table table-report -mt-2">
                                                             <thead class="short-wrp">
                                                                 <tr>
                                                                     <th>

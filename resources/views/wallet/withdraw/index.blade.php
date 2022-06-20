@@ -162,7 +162,12 @@
                                                     @endif
                                                 </div>
                                                 <!-- BEGIN: HTML Table Data -->
-                                                <div class="intro-y box p-0 mt-0">
+                                                <div class="intro-y box px-5 py-3 mt-0">
+                                                    <div class="intro-y mt-0">
+                                                        <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                                                            <x-list-view-filters/>
+                                                        </div>
+                                                    </div>
                                                     <div class=" overflow-x-auto overflow-y-hidden">
                                                         <table id="tableID" class="shroting display table table-report mt-0">
                                                             <thead class="short-wrp">
