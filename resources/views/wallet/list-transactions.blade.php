@@ -4,16 +4,9 @@
             <x-list-view-filters/>
             @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSubscriber())
                 @if ($transactionType == 'deposit')
-<<<<<<< HEAD
-                <a href="{{ route('dashboard.wallet.deposit.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 ml-2 sm:-mt-2">Deposit</a>
-                @elseif ($transactionType == 'payout')
-                    <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 ml-2 sm:-mt-2">Payout</a>
-=======
-
                 <a href="{{ route('dashboard.wallet.deposit.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Deposit</a>
                 @elseif ($transactionType == 'payout')
                 <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Payout</a>
->>>>>>> 90c3bef5558d8db2cae2519e3d1405bddd26fdb3
                 @endif
             @endif
         </div>
@@ -267,7 +260,7 @@
                                                 </a>
                                                 @endif
 
-                                                @if ($transactionType != 'payout' && !is_null(@$transaction?->status) && $transaction?->status != 'accepted')
+                                                @if ($transactionType != 'payout' && $transaction->meta['transaction_type'] == 'deposit' && !is_null(@$transaction?->status) && $transaction?->status != 'accepted')
                                                 <a href="{{ route('dashboard.wallet.wallet-deposit.transferAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
                                                     class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
                                                     <x-feathericon-check
@@ -275,7 +268,7 @@
                                                     Accepted
                                                 </a>
                                                 @endif
-                                                @if ($transactionType != 'payout' && !is_null(@$transaction?->status) && $transaction?->status != 'pending'  && $transaction?->status != 'accepted')
+                                                @if ($transactionType != 'payout' && $transaction->meta['transaction_type'] == 'deposit' && !is_null(@$transaction?->status) && $transaction?->status != 'pending'  && $transaction?->status != 'accepted')
                                                 <a href="{{ route('dashboard.wallet.wallet-deposit.transferPending', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
                                                     class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
                                                     <x-feathericon-alert-circle
