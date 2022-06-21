@@ -91,23 +91,6 @@
                             </div>
 
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
-                                <label for="exchange_fee" class="form-label sm:w-30">Exchange Fee <span
-                                        class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <input id="exchange_fee" name="exchange_fee" type="text"
-                                        class="form-control @error('exchange_fee') border-theme-6 @enderror"
-                                        value="{{ old('exchange_fee') }}" onKeyPress="return isNumberKey(event);"
-                                        required>
-
-                                    @error('exchange_fee')
-                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-12 md:gap-3 mt-0">
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="exchange_rate" class="form-label sm:w-30">Exchange Rate <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
@@ -117,19 +100,6 @@
                                         required>
 
                                     @error('exchange_rate')
-                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
-                                <label for="note" class="form-label sm:w-30"> Note <span
-                                        class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <input type="text" class="form-control" name="note" value="{{ old('note') }}"
-                                        required>
-
-                                    @error('note')
                                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -161,6 +131,20 @@
                                         data-single-mode="true">
 
                                     @error('valid_date')
+                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-12 md:gap-3 mt-0">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
+                                <label for="note" class="form-label sm:w-30"> Note <span
+                                        class="text-theme-6">*</span></label>
+                                <div class="sm:w-5/6">
+                                    <input type="text" class="form-control" name="note" value="{{ old('note') }}"
+                                        required>
+
+                                    @error('note')
                                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror
                                 </div>

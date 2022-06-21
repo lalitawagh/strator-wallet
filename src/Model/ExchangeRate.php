@@ -27,16 +27,22 @@ class ExchangeRate extends Model
         return $this->hasOne(Ledger::class,'id','base_currency');
     }
 
-    public static function getExchangeRateDetailsForPayout($sender_wallet,$receiver_wallet,$walletDefaultCountry)
+    public static function getExchangeRateDetailsForPayout($sender_wallet,$receiver_wallet,$walletDefaultCountry,$amount)
     {
         $exchange_rate_details = ExchangeRate::where(['base_currency' => $receiver_wallet?->ledger_id,'exchange_currency' => $sender_wallet?->ledger_id])->first();
         $base_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', Ledger::find($receiver_wallet?->ledger_id)?->asset_type);
         $exchange_currency = collect(Setting::getValue('asset_types',[]))->firstWhere('id', Ledger::find($sender_wallet?->ledger_id)?->asset_type);
 
+        $exchangeFee = collect(Setting::getValue('wallet_fees',[]))->where('base_currency' , $sender_wallet?->ledger_id)->where('exchange_currency' ,$receiver_wallet?->ledger_id)->where('payment_type','payout')->first();
+        $fee = 0;
+        if(isset($exchangeFee) && !is_null($amount))
+        {
+            $fee = ($exchangeFee['fee_type'] == 'percentage') ? $amount * ($exchangeFee['percentage']/100) : $exchangeFee['amount'];
+        }
+
         $base_currency = @$base_currency['name'];
         $exchange_currency = @$exchange_currency['name'];
         $exchange_rate =  $exchange_rate_details?->exchange_rate;
-        $fee = $exchange_rate_details?->exchange_fee;
 
         $exchange_rate_details = [
             'exchange_rate' => $exchange_rate,
@@ -48,11 +54,17 @@ class ExchangeRate extends Model
         return $exchange_rate_details;
     }
 
-    public static function getExchangeRateDetailsForDeposit($sender_wallet,$receiver_wallet,$value)
+    public static function getExchangeRateDetailsForDeposit($sender_wallet,$receiver_wallet,$value,$amount)
     {
         $sender_asset_category = $sender_wallet?->ledger->asset_category;
         $receiver_asset_category = $receiver_wallet?->asset_category;
 
+        $exchangeFee = collect(Setting::getValue('wallet_fees',[]))->where('base_currency' , $sender_wallet?->ledger_id)->where('exchange_currency' ,$receiver_wallet?->id)->where('payment_type','deposit')->first();
+        $fee = 0;
+        if(isset($exchangeFee) && !is_null($amount))
+        {
+            $fee = ($exchangeFee['fee_type'] == 'percentage') ? $amount * ($exchangeFee['percentage']/100) : $exchangeFee['amount'];
+        }
 
         if(@$sender_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY &&  @$receiver_asset_category == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
         {
@@ -65,7 +77,6 @@ class ExchangeRate extends Model
             {
                 $exchange_rate = Currency::convert()->from($base_currency)->to($exchange_currency)->get();
             }
-            $fee = $receiver_wallet?->deposit_fee;
         }else{
 
             $exchange_rate_details = ExchangeRate::where(['base_currency' => $sender_wallet?->ledger_id,'exchange_currency' => @$value])->first();
@@ -75,7 +86,6 @@ class ExchangeRate extends Model
             $base_currency = @$base_currency['name'];
             $exchange_currency = @$exchange_currency['name'];
             $exchange_rate =  $exchange_rate_details?->exchange_rate;
-            $fee = $exchange_rate_details?->exchange_fee;
         }
 
         $exchange_rate_details = [

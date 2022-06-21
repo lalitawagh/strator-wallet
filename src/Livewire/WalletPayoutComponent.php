@@ -68,6 +68,16 @@ class WalletPayoutComponent extends Component
     public function changeAmount($value)
     {
         $this->amount = $value;
+        $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
+        $receiver_wallet = Wallet::whereId($this->selected_currency)->first();
+        $exchangeFee = collect(Setting::getValue('wallet_fees',[]))->where('base_currency' , $sender_wallet?->ledger_id)->where('exchange_currency' ,$receiver_wallet?->ledger_id)->where('payment_type','payout')->first();
+        $this->fee = 0;
+        if(isset($exchangeFee) && !empty($this->amount))
+        {
+            $this->fee = ($exchangeFee['fee_type'] == 'percentage') ? $this->amount * ($exchangeFee['percentage']/100) : $exchangeFee['amount'];
+        }
+
+        session(['payout_fee' => $this->fee]);
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
@@ -85,7 +95,7 @@ class WalletPayoutComponent extends Component
 
         $walletDefaultCountry = Country::find(Setting::getValue('wallet_default_country'));
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet,$exchange_wallet,$walletDefaultCountry);
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet,$exchange_wallet,$walletDefaultCountry,$this->amount);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
@@ -101,7 +111,7 @@ class WalletPayoutComponent extends Component
             'payout_currency' => $value
         ]);
     }
-    
+
 
     public function changeBeneficiary($value)
     {
@@ -120,7 +130,7 @@ class WalletPayoutComponent extends Component
 
         $walletDefaultCountry = Country::find(Setting::getValue('wallet_default_country'));
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet,$exchange_wallet,$walletDefaultCountry);
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet,$exchange_wallet,$walletDefaultCountry,$this->amount);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
