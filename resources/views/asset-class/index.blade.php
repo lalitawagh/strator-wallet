@@ -89,7 +89,7 @@
                             @endphp
                             @foreach ($asset_class_lists as $index => $asset_class_list)
                                 <tr>
-                                    <td class="whitespace-nowrap text-left">{{ $index + 1 }}</td>
+                                    <td class="whitespace-nowrap text-left">{{ $asset_class_lists->firstItem() + $i }}</td>
                                     <td class="whitespace-nowrap text-left">{{ $asset_class_list['name'] }}</td>
                                     <td class="whitespace-nowrap text-left">
                                         @isset($asset_class_list['image'])
