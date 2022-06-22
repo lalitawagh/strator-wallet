@@ -62,6 +62,7 @@ class WalletPayoutComponent extends Component
         $this->selected_wallet = old('wallet');
         $this->selected_currency = old('receiver_currency');
         $this->phone = $beneficiaries->first()?->mobile;
+        $this->country_code =  $beneficiaries->first()?->meta['country_code'] ?? '231';
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 

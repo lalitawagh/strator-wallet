@@ -8,6 +8,7 @@ use Kanexy\LedgerFoundation\Contracts\Fee;
 use Kanexy\LedgerFoundation\Http\Helper;
 use Kanexy\LedgerFoundation\Http\Requests\StoreFeeRequest;
 use Kanexy\LedgerFoundation\Model\Ledger;
+use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\FeePolicy;
 
 class FeeController extends Controller
@@ -33,6 +34,15 @@ class FeeController extends Controller
     public function store(StoreFeeRequest $request)
     {
         $data = $request->validated();
+        $sender_wallet = Wallet::whereId($data['base_currency'])->first();
+        $receiver_wallet = Wallet::whereId($data['exchange_currency'])->first();
+        $existFee = collect(Setting::getValue('wallet_fees',[]))->where('base_currency' , $sender_wallet?->ledger_id)->where('exchange_currency' ,$receiver_wallet?->ledger_id)->where('payment_type',$data['payment_type'])->first();
+
+        if(!is_null($existFee))
+        {
+            return back()->withError('Exchange Already Exists');
+        }
+
         $data['id'] = now()->format('dmYHis');
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
 
