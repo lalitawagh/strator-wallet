@@ -21,7 +21,6 @@ class StoreExchangeRateRequest extends FormRequest
             'frequency'              =>    ['required'],
             'valid_date'             =>    ['nullable'],
             'is_hard_stop'           =>    ['nullable'],
-            'exchange_fee'           =>    ['required'],
             'exchange_rate'          =>    ['required'],
             'note'                   =>    ['required'],
         ];

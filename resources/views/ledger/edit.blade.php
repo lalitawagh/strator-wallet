@@ -178,52 +178,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-12 md:gap-3 mt-0">
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
-                                <label for="deposit_fee" class="form-label sm:w-30">Deposit Fee <span
-                                        class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <input id="deposit_fee" name="deposit_fee" type="text"
-                                        class="form-control @error('deposit_fee') border-theme-6 @enderror"
-                                        value="{{ old('deposit_fee', $ledger->deposit_fee) }}"
-                                        onKeyPress="return isNumberKey(event);" required>
 
-                                    @error('deposit_fee')
-                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
-                                <label for="withdraw_fee" class="form-label sm:w-30">Withdraw Fee <span
-                                        class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <input id="withdraw_fee" name="withdraw_fee" type="text"
-                                        class="form-control @error('withdraw_fee') border-theme-6 @enderror"
-                                        value="{{ old('withdraw_fee', $ledger->withdraw_fee) }}"
-                                        onKeyPress="return isNumberKey(event);" required>
-
-                                    @error('withdraw_fee')
-                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-12 md:gap-3 mt-0">
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
-                                <label for="payout_fee" class="form-label sm:w-30">Payout Fee <span
-                                        class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
-                                    <input id="payout_fee" name="payout_fee" type="text"
-                                        class="form-control @error('payout_fee') border-theme-6 @enderror"
-                                        value="{{ old('payout_fee', $ledger->payout_fee) }}"
-                                        onKeyPress="return isNumberKey(event);" required>
-
-                                    @error('payout_fee')
-                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="text-right mt-5">
                             <a href="{{ route('dashboard.wallet.ledger.index') }}"

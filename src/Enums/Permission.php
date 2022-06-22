@@ -41,4 +41,9 @@ class Permission
     public const PAYOUT_VIEW   = 'ledger-foundation::wallet_payout.view';
     public const PAYOUT_CREATE = 'ledger-foundation::wallet_payout.create';
     public const PAYOUT_SHOW   = 'ledger-foundation::wallet_payout.show';
+
+    public const FEE_VIEW   = 'ledger-foundation::fee.view';
+    public const FEE_CREATE = 'ledger-foundation::fee.create';
+    public const FEE_EDIT   = 'ledger-foundation::fee.show';
+    public const FEE_DELETE   = 'ledger-foundation::fee.delete';
 }
