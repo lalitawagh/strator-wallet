@@ -39,7 +39,8 @@
                                     <select name="base_currency" id="base_currency" class="form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
-                                            <option value="{{ $ledger->getKey() }}">{{ $ledger->name }}</option>
+                                            <option value="{{ $ledger->getKey() }}" @if (old('base_currency') == $ledger->getKey())
+                                                selected @endif>{{ $ledger->name }}</option>
                                         @endforeach
                                     </select>
 
@@ -56,7 +57,8 @@
                                     <select name="exchange_currency" id="exchange_currency" class="form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
-                                            <option value="{{ $ledger->getKey() }}">{{ $ledger->name }}</option>
+                                            <option value="{{ $ledger->getKey() }}" @if (old('exchange_currency') == $ledger->getKey())
+                                                selected @endif>{{ $ledger->name }}</option>
                                         @endforeach
                                     </select>
 
@@ -73,9 +75,12 @@
                                 <label for="payment_type" class="form-label sm:w-30">Payment Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
                                     <select class="form-control" data-search="true" name="payment_type">
-                                        <option value="deposit">Deposit</option>
-                                        <option value="payout">Payout</option>
-                                        <option value="withdraw">Withdraw</option>
+                                        <option value="deposit" @if (old('payment_type') == 'deposit')
+                                            selected @endif >Deposit</option>
+                                        <option value="payout" @if (old('payment_type') == 'payout')
+                                            selected @endif>Payout</option>
+                                        <option value="withdraw" @if (old('payment_type') == 'withdraw')
+                                            selected @endif>Withdraw</option>
                                     </select>
 
                                     @error('payment_type')
