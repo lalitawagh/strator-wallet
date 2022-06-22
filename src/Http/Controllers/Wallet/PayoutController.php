@@ -69,14 +69,15 @@ class PayoutController extends Controller
         $sender_wallet = Wallet::with('ledger')->find($data['wallet']);
 
         $receiver_ledger = Wallet::find($data['receiver_currency']);
+        $beneficiary = Contact::find($data['beneficiary']);
+        $beneficiary_user = User::wherePhone($beneficiary?->mobile)->first();
 
-        if($sender_wallet->id == $receiver_ledger->id)
+        if($sender_wallet->id == $receiver_ledger->id && $beneficiary_user->getKey() == $user->getKey())
         {
             return back()->withError("Payout not process with same wallet");
         }
 
-        $beneficiary = Contact::find($data['beneficiary']);
-        $beneficiary_user = User::wherePhone($beneficiary?->mobile)->first();
+
         $beneficiary_wallet = NULL;
         if (isset($beneficiary_user)) {
             $beneficiary_wallet = Wallet::forHolder($beneficiary_user)->whereLedgerId($receiver_ledger?->ledger_id)->first();
