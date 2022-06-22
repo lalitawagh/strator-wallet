@@ -17,7 +17,7 @@ class FeeController extends Controller
     {
         $this->authorize(FeePolicy::VIEW, Fee::class);
 
-        $fees = Helper::paginate(collect(Setting::getValue('wallet_fees',[])));
+        $fees = Helper::paginate(collect(Setting::getValue('wallet_fees',[]))->sort());
 
         return view("ledger-foundation::fees.index", compact('fees'));
     }

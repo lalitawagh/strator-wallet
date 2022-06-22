@@ -108,6 +108,9 @@
                             </thead>
 
                             <tbody>
+                                @php
+                                    $i = 0;
+                                @endphp
                                 @foreach ($fees as $index => $fee)
                                     @php
                                         $exchangeCurrency = \Kanexy\LedgerFoundation\Model\Ledger::whereId($fee['exchange_currency'])->first();
@@ -115,7 +118,7 @@
                                     @endphp
                                     <tr>
                                         <td class="whitespace-nowrap text-left">
-                                            {{ $index + 1 }}</td>
+                                            {{ $fees->firstItem() + $i }}</td>
                                         <td class="whitespace-nowrap text-left">
                                             @isset($baseCurrency['name'])
                                                 {{ $baseCurrency['name'] }}
@@ -155,6 +158,9 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @php
+                                    $i++;
+                                    @endphp
                                 @endforeach
                             </tbody>
                         </table>
