@@ -348,7 +348,8 @@ display: contents !important;
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="side-menu">
+                        <a href="{{ route('dashboard.wallet.fee.index') }}"
+                            class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.fee.index' || Route::current()->getName() == 'dashboard.wallet.fee.create' || Route::current()->getName() == 'dashboard.wallet.fee.edit') side-menu--active @endif">
                             <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                             <div class="side-menu__title"> Fees Setup </div>
                         </a>

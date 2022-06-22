@@ -33,6 +33,8 @@ class DepositWalletComponent extends Component
 
     public $user;
 
+    public $amount;
+
     public function mount($wallets, $currencies, $walletDefaultCountry)
     {
         $this->wallets = $wallets;
@@ -63,7 +65,7 @@ class DepositWalletComponent extends Component
         $base_asset_category = $exchange_wallet?->asset_category;
         $exchange_asset_category = @$asset_type['asset_category'];
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForDeposit($sender_wallet, $exchange_wallet, $value);
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForDeposit($sender_wallet, $exchange_wallet, $value,$this->amount);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
@@ -82,6 +84,21 @@ class DepositWalletComponent extends Component
         ]);
     }
 
+    public function changeAmount($value)
+    {
+        $this->amount = $value;
+        $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
+        $receiver_wallet = Ledger::whereId($sender_wallet?->ledger_id)->first();
+        $exchangeFee = collect(Setting::getValue('wallet_fees',[]))->where('base_currency' , $sender_wallet?->ledger_id)->where('exchange_currency' ,$receiver_wallet?->id)->where('payment_type','deposit')->first();
+        $this->fee = 0;
+        if(isset($exchangeFee) && !empty($this->amount))
+        {
+            $this->fee = ($exchangeFee['fee_type'] == 'percentage') ? $this->amount * ($exchangeFee['percentage']/100) : $exchangeFee['amount'];
+        }
+
+        session(['fee' => $this->fee]);
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
+    }
     public function render()
     {
         return view('ledger-foundation::Livewire.deposit-wallet-component');
