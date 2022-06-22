@@ -23,7 +23,7 @@
     <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
         <label for="amount" class="form-label sm:w-40"> Amount <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">
-            <input id="amount" type="text" class="form-control" name="amount" value="{{ old('amount') }}" required
+            <input id="amount" wire:change="changeAmount($event.target.value)" wire:model="amount" type="text" class="form-control" name="amount" value="{{ old('amount') }}" required
                 onKeyPress="return isNumberKey(event);">
             @error('amount')
                 <span class="block text-theme-6 mt-2">{{ $message }}</span>

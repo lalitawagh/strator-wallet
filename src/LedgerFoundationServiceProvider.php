@@ -34,6 +34,7 @@ use Kanexy\LedgerFoundation\Policies\AssetTypePolicy;
 use Kanexy\LedgerFoundation\Policies\CommodityTypePolicy;
 use Kanexy\LedgerFoundation\Policies\DepositPolicy;
 use Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy;
+use Kanexy\LedgerFoundation\Policies\FeePolicy;
 use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
 use Kanexy\LedgerFoundation\Policies\MasterAccountPolicy;
 use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
@@ -75,7 +76,8 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         AssetClassConfiguration::class => AssetClassPolicy::class,
         AssetTypeConfiguration::class => AssetTypePolicy::class,
         CommodityTypeConfiguration::class => CommodityTypePolicy::class,
-        MasterAccount::class => MasterAccountPolicy::class
+        MasterAccount::class => MasterAccountPolicy::class,
+        Fee::class => FeePolicy::class,
     ];
 
 

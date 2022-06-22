@@ -6,6 +6,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetClassController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\AssetTypeController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\CommodityTypeController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\ExchangeRateController;
+use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\FeeController;
 use Kanexy\LedgerFoundation\Http\Controllers\Ledgers\LedgerController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\DashboardController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\DepositController;
@@ -34,6 +35,7 @@ Route::group(['middleware'=>['web','auth',VerificationStepMiddleware::class],'pr
     Route::resource("master-account",MasterAccountController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource("asset-class",AssetClassController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('asset-type', AssetTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
+    Route::resource('fee', FeeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('commodity-type', CommodityTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('ledger', LedgerController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('dispute', DisputeController::class)->only(['index', 'create', 'store', 'show']);

@@ -70,10 +70,10 @@
                         </span>
 
                         <select id="countryWithPhone" name="country_code" onchange="getFlagImg(this)" data-search="true"
-                            class="tail-select" style="width:30%" wire:change="getCountry($event.target.value)">
+                            class="tail-select" style="width:30%">
                             @foreach ($countryWithFlags as $country)
                                 <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
-                                    @if ($country->id == $country_code) selected @elseif ($country->id == old('country_code', $user->country_id)) selected @else  @endif>
+                                    @isset($country_code) @if ($country->id == $country_code) selected @endif @else @if ($country->id == old('country_code', $user->country_id)) selected @else  @endif @endisset>
                                     {{ $country->name }} ({{ $country->phone }})
                                 </option>
                             @endforeach
@@ -173,8 +173,9 @@
         @if (isset($fee))
             @php
                 $exchange_rate = $exchange_rate ?? number_format((float) $exchange_rate, 2, '.', '');
-                $total = $amount ? ($amount - $fee) / $exchange_rate : '';
+                $total = ($exchange_rate != 0) ? ($amount - $fee) / $exchange_rate : '';
             @endphp
+
             <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
                 <label for="exchange_fee" class="form-label sm:w-30"> </label>
                 <div class="sm:w-5/6">

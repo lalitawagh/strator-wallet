@@ -1,6 +1,6 @@
 @extends("ledger-foundation::config-skeleton")
 
-@section('title', 'Exchange Rate')
+@section('title', 'Fee Setup')
 
 @section('config-content')
     <div class="configuration-container w-screen">
@@ -19,10 +19,10 @@
                             stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="breadcrumb--active">Exchange Rate</a>
+                        <a href="" class="breadcrumb--active">Fee Setup</a>
                     </div>
                     <div>
-                        <a href="{{ route('dashboard.wallet.exchange-rate.create') }}"
+                        <a href="{{ route('dashboard.wallet.fee.create') }}"
                             class="btn btn-sm btn-primary shadow-md">Create New</a>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                                             </svg>
                                         </span>
                                     </th>
-                                    <th class="whitespace-nowrap text-left">Frequency
+                                    <th class="whitespace-nowrap text-left">Payment Type
                                         <span class="flex short-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                                 viewBox="0 0 24 24" stroke="currentColor">
@@ -74,7 +74,7 @@
                                             </svg>
                                         </span>
                                     </th>
-                                    <th class="whitespace-nowrap text-left">Valid Date
+                                    <th class="whitespace-nowrap text-left">Amount
                                         <span class="flex short-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                                 viewBox="0 0 24 24" stroke="currentColor">
@@ -88,7 +88,7 @@
                                             </svg>
                                         </span>
                                     </th>
-                                    <th class="whitespace-nowrap text-left">Exchange Rate
+                                    <th class="whitespace-nowrap text-left">Percentage
                                         <span class="flex short-icon">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
                                                 viewBox="0 0 24 24" stroke="currentColor">
@@ -108,24 +108,28 @@
                             </thead>
 
                             <tbody>
-                                @foreach ($exchange_rates as $index => $exchange_rate)
+                                @php
+                                    $i = 0;
+                                @endphp
+                                @foreach ($fees as $index => $fee)
                                     @php
-                                        $exchangeCurrency = \Kanexy\LedgerFoundation\Model\Ledger::whereId($exchange_rate->exchange_currency)->first();
+                                        $exchangeCurrency = \Kanexy\LedgerFoundation\Model\Ledger::whereId($fee['exchange_currency'])->first();
+                                        $baseCurrency = \Kanexy\LedgerFoundation\Model\Ledger::whereId($fee['base_currency'])->first();
                                     @endphp
                                     <tr>
                                         <td class="whitespace-nowrap text-left">
-                                            {{ $exchange_rates->firstItem() + $index }}</td>
+                                            {{ $fees->firstItem() + $i }}</td>
                                         <td class="whitespace-nowrap text-left">
-                                            @isset($exchange_rate->ledger?->name)
-                                                {{ $exchange_rate->ledger?->name }}
+                                            @isset($baseCurrency['name'])
+                                                {{ $baseCurrency['name'] }}
                                             @endisset
                                         </td>
-                                        <td class="whitespace-nowrap text-left">{{ $exchangeCurrency?->name }}</td>
+                                        <td class="whitespace-nowrap text-left"> @isset($exchangeCurrency['name']){{ $exchangeCurrency['name'] }}@endisset</td>
                                         <td class="whitespace-nowrap text-left">
-                                            {{ trans('ledger-foundation::configuration.' . $exchange_rate?->frequency) }}
+                                            {{ ucfirst($fee['payment_type']) }}
                                         </td>
-                                        <td class="whitespace-nowrap text-left">{{ $exchange_rate?->valid_date }}</td>
-                                        <td class="whitespace-nowrap text-left">{{ $exchange_rate?->exchange_rate }}</td>
+                                        <td class="whitespace-nowrap text-left">{{ $fee['amount'] }}</td>
+                                        <td class="whitespace-nowrap text-left">{{ $fee['percentage'] }}</td>
                                         <td class="whitespace-nowrap text-left">
                                             <div class="dropdown">
                                                 <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
@@ -134,12 +138,12 @@
 
                                                 <div class="dropdown-menu w-48">
                                                     <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                        <a href="{{ route('dashboard.wallet.exchange-rate.edit', $exchange_rate?->id) }}"
+                                                        <a href="{{ route('dashboard.wallet.fee.edit', $fee['id']) }}"
                                                             class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                             <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                         </a>
                                                         <form
-                                                            action="{{ route('dashboard.wallet.exchange-rate.destroy', $exchange_rate?->id) }}"
+                                                            action="{{ route('dashboard.wallet.fee.destroy', $fee['id']) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -154,12 +158,15 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @php
+                                    $i++;
+                                    @endphp
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                     <div class="my-2">
-                        {{ $exchange_rates->links() }}
+                        {{-- {{ $exchange_rates->links() }} --}}
                     </div>
                 </div>
             </div>
