@@ -34,9 +34,9 @@ class FeeController extends Controller
     public function store(StoreFeeRequest $request)
     {
         $data = $request->validated();
-        $sender_wallet = Wallet::whereId($data['base_currency'])->first();
-        $receiver_wallet = Wallet::whereId($data['exchange_currency'])->first();
-        $existFee = collect(Setting::getValue('wallet_fees',[]))->where('base_currency' , $sender_wallet?->ledger_id)->where('exchange_currency' ,$receiver_wallet?->ledger_id)->where('payment_type',$data['payment_type'])->first();
+        $sender_wallet = $data['base_currency'];
+        $receiver_wallet = $data['exchange_currency'];
+        $existFee = collect(Setting::getValue('wallet_fees',[]))->where('base_currency' , $sender_wallet)->where('exchange_currency' ,$receiver_wallet)->where('payment_type',$data['payment_type'])->first();
 
         if(!is_null($existFee))
         {

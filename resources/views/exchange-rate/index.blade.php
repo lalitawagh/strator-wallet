@@ -102,20 +102,7 @@
                                             </svg>
                                         </span>
                                     </th>
-                                    <th class="whitespace-nowrap text-left">Exchange Fee
-                                        <span class="flex short-icon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9"
-                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                            </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9"
-                                                viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                            </svg>
-                                        </span>
-                                    </th>
+
                                     <th class="whitespace-nowrap text-left">Action</th>
                                 </tr>
                             </thead>
@@ -139,7 +126,6 @@
                                         </td>
                                         <td class="whitespace-nowrap text-left">{{ $exchange_rate?->valid_date }}</td>
                                         <td class="whitespace-nowrap text-left">{{ $exchange_rate?->exchange_rate }}</td>
-                                        <td class="whitespace-nowrap text-left">{{ $exchange_rate?->exchange_fee }}</td>
                                         <td class="whitespace-nowrap text-left">
                                             <div class="dropdown">
                                                 <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
