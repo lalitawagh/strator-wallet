@@ -9,7 +9,7 @@
             <div class="box">
                 <div class="flex items-center p-3 border-b border-gray-200 dark:border-dark-5">
                     <h2 class="font-medium text-base mr-auto">
-                        Withdraw
+                        Withdraw1
                     </h2>
                 </div>
                 <div class="p-5">
