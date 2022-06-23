@@ -71,7 +71,7 @@
 
 
                         <div class="grid grid-cols-12 md:gap-3 mt-2">
-                            <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
+                            <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-0">
                                 <label for="payment_type" class="form-label sm:w-30">Payment Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
                                     <select class="form-control" data-search="true" name="payment_type">
@@ -88,7 +88,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-0">
                                 <label for="status" class="form-label sm:w-30"> Status </label>
                                 <div class="sm:w-5/6 tillselect-marging">
                                     <input id="status" name="status" type="checkbox" class="form-check-switch"  @if (old("status")  === \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) checked @endif>
@@ -101,7 +101,7 @@
                         </div>
 
                         <div class="grid grid-cols-12 md:gap-3 mt-2" @if (old('fee_type') == 'amount') x-data="{ selected: '1' }" @elseif (old('fee_type') == 'percentage') x-data="{ selected: '0' }" @else x-data="{ selected: '3' }" @endif>
-                            <div class="items-center justify-center col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
+                            <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                                 <label for="amount" class="form-label sm:w-30">Fee <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 sm:pt-0 tillselect-marging" >
                                     <div class="form-check mr-2">
@@ -117,7 +117,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '1'" >
+                            <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-0" x-show="selected == '1'" >
                                 <label for="amount" class="form-label sm:w-30">Amount <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
                                     <input id="amount" name="amount" type="text" class="form-control @error('amount') border-theme-6 @enderror amount" value="{{ old('amount') }}">
@@ -127,7 +127,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '0'">
+                            <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-0" x-show="selected == '0'">
                                 <label for="percentage tillselect-marging" class="form-label sm:w-30">Percentage <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <div class="input-group">
