@@ -3,9 +3,7 @@
 namespace Kanexy\LedgerFoundation\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Kanexy\LedgerFoundation\Contracts\Payout;
 use Kanexy\LedgerFoundation\Model\Wallet;
-use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
 
 class WithdrawRequest extends FormRequest
 {
@@ -23,6 +21,14 @@ class WithdrawRequest extends FormRequest
             "amount" => ["required", "numeric", "min:0.01"],
             "note" => ["nullable", "string"],
             "attachment" => ["nullable", "max:5120", "mimes:png,jpg,jpeg", "file"],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'sender_wallet_account_id.required'    => 'The withdraw from field is required.',
+            'beneficiary_id.required' => 'The beneficiary field is required.',
         ];
     }
 

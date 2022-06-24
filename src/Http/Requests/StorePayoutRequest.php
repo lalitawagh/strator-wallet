@@ -30,4 +30,13 @@ class StorePayoutRequest extends FormRequest
             'workspace_id'      => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'wallet.required'            => 'The payout from field is required.',
+            'receiver_currency.required' => 'The payout to field is required.',
+            'beneficiary.required'       => 'The beneficiary field is required.',
+        ];
+    }
 }
