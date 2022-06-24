@@ -58,7 +58,6 @@ class WalletPayoutComponent extends Component
         $this->ledgers = $ledgers;
         $this->asset_types = $asset_types;
         $this->balance = old('balance');
-        $this->amount = old('amount');
         $this->selected_wallet = old('wallet');
         $this->selected_currency = old('receiver_currency');
         $this->phone = $beneficiaries->first()?->mobile;
@@ -88,7 +87,7 @@ class WalletPayoutComponent extends Component
         $wallet = Wallet::find($value);
         $this->selected_wallet = $value;
         $this->balance = $wallet?->balance;
-
+        $this->amount  = $this->amount;
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
         $this->selected_wallet = $value;
         $sender_wallet = Wallet::whereId($value)->first();
