@@ -12,7 +12,7 @@
                         </option>
                     @endforeach
                 </select>
-                @error('wallet')
+                @error('sender_wallet_account_id')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror
             </div>
