@@ -99,11 +99,14 @@ class WalletWithdrawComponent extends Component
 
     public function render()
     {
-        $this->remaining_amount =  number_format((float)0, 2, '.', '');;
+        if(is_numeric($this->amount))
+        {
+            $this->remaining_amount =  number_format((float)0, 2, '.', '');;
 
-        if ($this->amount) {
-            $remaining_amount = $this->balance - $this->amount;
-            $this->remaining_amount =  number_format((float)$remaining_amount, 2, '.', '');
+            if ($this->amount) {
+                $remaining_amount = $this->balance - $this->amount;
+                $this->remaining_amount =  number_format((float)$remaining_amount, 2, '.', '');
+            }
         }
 
         return view('ledger-foundation::Livewire.wallet-withdraw-component');
