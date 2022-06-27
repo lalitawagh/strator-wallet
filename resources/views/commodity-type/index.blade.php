@@ -28,11 +28,11 @@
                             class="btn btn-sm btn-primary shadow-md">Create New</a>
                     </div>
                 </div>
-                <div class="p-5">
-                    <div class="overflow-x-auto box">
-                        <table class="table">
-                            <thead>
-                                <tr class="bg-gray-300 dark:bg-dark-1">
+                <div class="px-3 py-0">
+                    <div class="overflow-x-auto overflow-y-hidden">
+                        <table class="shroting display table table-report mt-0">
+                            <thead class="short-wrp">
+                                <tr class="">
                                     <th class="w-16 whitespace-nowrap text-left">#</th>
                                     <th class="whitespace-nowrap text-left">Name
                                         <span class="flex short-icon">
@@ -76,7 +76,7 @@
                                             </svg>
                                         </span>
                                     </th>
-                                    <th class="whitespace-nowrap text-left">Action</th>
+                                    <th class="whitespace-nowrap text-left w-16">Action</th>
                                 </tr>
                             </thead>
 

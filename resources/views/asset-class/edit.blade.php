@@ -19,7 +19,7 @@
                     <form action="{{ route('dashboard.wallet.asset-class.update',$asset_class['id']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="grid grid-cols-12 lg:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-0 xl:gap-3 mt-0">
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="name" class="form-label sm:w-30">Name <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
@@ -48,7 +48,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 lg:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-0 xl:gap-3 mt-0">
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-30"> Status</label>
                                 <div class="sm:w-5/6">
