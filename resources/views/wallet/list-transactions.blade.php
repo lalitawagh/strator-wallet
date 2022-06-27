@@ -186,7 +186,7 @@
                         @php
                             $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet?->ledger_id)->first();
                         @endphp
-                        @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'payout' && $transaction->status == 'pending-confirmation')
+                        @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] != 'deposit' && $transaction->status == 'pending-confirmation')
                         @else
                             <tr class="intro-x">
                                 <td>
