@@ -135,6 +135,8 @@ class WithdrawController extends Controller
         $wallet = Wallet::findOrFail($transaction->meta['sender_wallet_account_id']);
         $balance = ($wallet->balance - $transaction->amount);
         try {
+            $transaction->status = TransactionStatus::PENDING;
+            $transaction->update();
 
             $wallet->balance = $balance;
             $wallet->update();
