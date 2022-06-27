@@ -1,6 +1,6 @@
 <div>
     <div class="intro-y mt-0">
-        <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
+        <div class="sm:flex justify-end flex-wrap items-center sm:py-1 border-b border-gray-200 dark:border-dark-5 gap-1">
             <x-list-view-filters/>
             @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSubscriber())
                 @if ($transactionType == 'deposit')
