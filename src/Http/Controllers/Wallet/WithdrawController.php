@@ -43,11 +43,11 @@ class WithdrawController extends Controller
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
 
-        $transactions = Transaction::where(["meta->transaction_type" => $transactionType])->latest()->paginate();
+        $transactions = Transaction::where('status', '!=', TransactionStatus::PENDING_CONFIRMATION)->where(["meta->transaction_type" => $transactionType])->latest()->paginate();
 
         if($user->isSubscriber())
         {
-            $transactions = Transaction::where(["meta->transaction_type" => $transactionType,'initiator_id' => $user->id])->latest()->paginate();
+            $transactions = Transaction::where('status', '!=', TransactionStatus::PENDING_CONFIRMATION)->where(["meta->transaction_type" => $transactionType,'initiator_id' => $user->id])->latest()->paginate();
         }
 
 
