@@ -12,9 +12,9 @@ class CustomerRegistrationForm extends Item
 {
     public function validationRules(): array
     {
-        
+
         return [
-            'country_id' => ['required_if:country_id,!=,UK', 'exists:countries,id'],
+            'country_id' => ['required', 'exists:countries,id'],
             'nationality' => ['required_if:country_id,!=,UK'],
         ];
     }
@@ -23,7 +23,7 @@ class CustomerRegistrationForm extends Item
     {
         return [
             'nationality.required_if' => 'Please enter your nationality',
-            'country_id.required_if' => 'Please enter your residence',
+            'country_id.required' => 'Please enter your residence',
         ];
     }
 

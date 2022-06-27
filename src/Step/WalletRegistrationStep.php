@@ -22,7 +22,7 @@ class WalletRegistrationStep extends Item
         $steps = [];
         $country = Country::find(Auth::user()?->country_id);
 
-        if(!is_null($country?->code))
+        if(!is_null($country?->code) && $country?->code != 'UK')
         {
             $steps = [
                 new StepItem(membership_type: 'personal', label: 'Plan & Packages', step: RegistrationStep::PLAN_AND_PACKAGES ,source :'web', url: route('customer.signup.plan.index'),priority:2000),
