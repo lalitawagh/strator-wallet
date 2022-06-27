@@ -23,13 +23,13 @@
 
                                     <div class="intro-y  overflow-x-auto overflow-y-hidden  mt-3 sm:mt-0">
 
-                                        <div class="sm:flex items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                                        <div class="flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
                                             <div class="nav nav-tabs mr-auto hidden sm:flex" role="tablist">
                                                 <a id="work-in-progress-mobile-new-tab" data-toggle="tab" data-target="#work-in-progress-new" href="javascript:;" class="py-2 ml-0 active" role="tab" aria-selected="true">ALL</a>
                                                 <!-- <a id="week-work-in-progress-mobile-last-week-tab" data-toggle="tab" data-target="#work-in-progress-last-week" href="javascript:;" class="py-2 ml-6" role="tab" aria-selected="false">ASSIGNED TO ME</a>  -->
                                             </div>
                                             <div class="flex items-center md:ml-auto mb-2">
-                                                <div class="col-span-6 sm:col-span-3 lg:col-span-2 xl:col-span-1 search hidden sm:block mr-2 ml-auto">
+                                                <div class="col-span-6 sm:col-span-3 lg:col-span-2 xl:col-span-1 search sm:block mr-2 ml-auto">
                                                     <input list="browsers" name="browser" id="browser" placeholder="Search" class="search__input form-control border-transparent placeholder-theme-13">
                                                     <i data-feather="search" class="search__icon dark:text-gray-300"></i>
                                                 </div>
@@ -45,7 +45,7 @@
 
                                             </div>
 
-                                            <div class="flex sm:flex mt-5 sm:mt-0 mb-2" style="margin-top:-6px;">
+                                            <div class="flex sm:flex sm:mt-0 sm:mt-0 mb-2">
 
                                                 <div class="dropdown sm:w-auto mr-2">
                                                     <button class="dropdown-toggle btn btn-sm py-2 btn-outline-secondary w-full sm:w-auto" aria-expanded="false"><i data-feather="filter" class="w-4 h-4 ml-auto sm:ml-0 mr-2"></i> Filter <i data-feather="chevron-down" class="w-4 h-4 ml-auto sm:ml-2"></i> </button>
@@ -99,7 +99,7 @@
                                         <!-- BEGIN: HTML Table Data -->
                                         <div class="intro-y px-5 py-3 mt-0">
                                             <div class="intro-y mt-0">
-                                                <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                                                <div class="sm:flex justify-end flex-wrap items-center sm:py-1 border-b border-gray-200 dark:border-dark-5 gap-1">
                                                     <x-list-view-filters/>
                                                 </div>
                                             </div>
