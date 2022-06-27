@@ -43,7 +43,7 @@ class PayoutController extends Controller
                 AllowedFilter::exact('workspace_id'),
             ]);
 
-        $transactions = $transactions->where("meta->transaction_type", 'payout')->latest()->paginate();
+        $transactions = $transactions->where('status', '!=', TransactionStatus::PENDING_CONFIRMATION)->where("meta->transaction_type", 'payout')->latest()->paginate();
 
         return view("ledger-foundation::wallet.payout.index", compact('workspace', 'transactions', 'transactionType'));
     }
@@ -109,7 +109,7 @@ class PayoutController extends Controller
             'initiator_id' => optional($user)->getKey(),
             'initiator_type' => optional($user)->getMorphClass(),
             'transaction_fee' => session('payout_fee') ? session('payout_fee') : 0,
-            'status' => 'pending',
+            'status' => TransactionStatus::PENDING_CONFIRMATION,
             'note' => $data['note'],
             'meta' => [
                 'reference' => $data['reference'],
@@ -184,7 +184,7 @@ class PayoutController extends Controller
             'settlement_date' => date('Y-m-d'),
             'settled_at' => now(),
             'transaction_fee' => $transaction->fee,
-            'status' => 'accepted',
+            'status' => TransactionStatus::ACCEPTED,
             'note' => $transaction->note,
             'meta' => [
                 'reference' => $transaction->meta['reference'],
