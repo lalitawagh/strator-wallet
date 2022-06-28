@@ -43,11 +43,11 @@ class WithdrawController extends Controller
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
         }
 
-        $transactions = Transaction::where('status', '!=', TransactionStatus::PENDING_CONFIRMATION)->where(["meta->transaction_type" => $transactionType])->latest()->paginate();
+        $transactions = Transaction::where(["meta->transaction_type" => $transactionType])->latest()->paginate();
 
         if($user->isSubscriber())
         {
-            $transactions = Transaction::where('status', '!=', TransactionStatus::PENDING_CONFIRMATION)->where(["meta->transaction_type" => $transactionType,'initiator_id' => $user->id])->latest()->paginate();
+            $transactions = Transaction::where(["meta->transaction_type" => $transactionType,'initiator_id' => $user->id])->latest()->paginate();
         }
 
 
@@ -84,6 +84,7 @@ class WithdrawController extends Controller
         // dd($beneficiary);
 
         $transaction = $this->payoutService->initialize($sender, $beneficiary, $request->validated());
+
         $metaDetails = [
             'sender_wallet_account_id' => $request->input('sender_wallet_account_id'),
             'transaction_type' => 'withdraw',
@@ -96,6 +97,7 @@ class WithdrawController extends Controller
         $meta = array_merge($transaction->meta,$metaDetails);
         $transaction->workspace_id = $workspace->id;
         $transaction->meta = $meta;
+        $transaction->attachment =  $request->has('attachment') ? $request->file('attachment')->store('Images', 'azure'): null;
         $transaction->update();
 
         $meta = [
@@ -135,9 +137,6 @@ class WithdrawController extends Controller
         $wallet = Wallet::findOrFail($transaction->meta['sender_wallet_account_id']);
         $balance = ($wallet->balance - $transaction->amount);
         try {
-            $transaction->status = TransactionStatus::PENDING;
-            $transaction->update();
-
             $wallet->balance = $balance;
             $wallet->update();
         } catch (\Exception $exception) {
