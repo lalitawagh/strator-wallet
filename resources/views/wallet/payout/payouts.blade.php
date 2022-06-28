@@ -15,7 +15,7 @@
                     @if (Session::has('error'))
                     <span class="block text-theme-6">{{ Session::get('error') }}</span>
                     @endif
-                    <form action="{{ route('dashboard.wallet.payout.store',['workspace_id' => $workspace->getKey()]) }}" method="POST">
+                    <form action="{{ route('dashboard.wallet.payout.store',['workspace_id' => $workspace->getKey()]) }}" method="POST"  enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="workspace_id" value="{{ $workspace->getKey() }}">
                         @livewire('wallet-payout-component',['wallets' => $wallets, 'beneficiaries' => $beneficiaries, 'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'user' => $user,'ledgers' => $ledgers, 'asset_types' => $asset_types])
