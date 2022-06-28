@@ -130,6 +130,11 @@ class PayoutController extends Controller
             ],
         ]);
 
+        if (!empty($request->has('attachment'))) {
+
+            $transaction->update(['attachment' => $request->file('attachment')->store('Images', 'azure')]);
+        }
+
         $meta = [
             'amount' => $amount,
             'sender_currency' => session('payout_base_currency'),
@@ -186,6 +191,7 @@ class PayoutController extends Controller
             'transaction_fee' => $transaction->fee,
             'status' => TransactionStatus::ACCEPTED,
             'note' => $transaction->note,
+            'attachment' => $transaction?->attachment ? $transaction->attachment : null,
             'meta' => [
                 'reference' => $transaction->meta['reference'],
                 'sender_ref_id' => $transaction->meta['sender_ref_id'],
@@ -204,6 +210,8 @@ class PayoutController extends Controller
                 'account' => 'wallet',
             ],
         ]);
+
+
 
         $transaction->status = 'accepted';
         $transaction->update();
