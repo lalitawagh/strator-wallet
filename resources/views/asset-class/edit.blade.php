@@ -38,7 +38,7 @@
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">
                                     @isset($asset_class['image'])
-                                    <img class="rounded-md proof-default pt-2" style="width:100px;" alt="" src="{{ \Kanexy\PartnerFoundation\Core\Helper::getTemporaryUrl($asset_class['image']) }}">
+                                    <img class="rounded-md proof-default pt-2" style="width:100px;" alt="" src="{{ \Illuminate\Support\Facades\Storage::temporaryUrl($asset_class['image'],now()->addMinutes(5))  }}">
                                     @endisset
 
                                     @error('image')

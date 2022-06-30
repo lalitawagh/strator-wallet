@@ -93,7 +93,7 @@
                                     <td class="whitespace-nowrap text-left">{{ $asset_class_list['name'] }}</td>
                                     <td class="whitespace-nowrap text-left">
                                         @isset($asset_class_list['image'])
-                                        <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" alt="" src="{{ \Kanexy\PartnerFoundation\Core\Helper::getTemporaryUrl($asset_class_list['image']) }}">
+                                        <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" alt="" src="{{ \Illuminate\Support\Facades\Storage::temporaryUrl($asset_class_list['image'],now()->addMinutes(5)) }}">
                                         @endisset
                                     </td>
                                     <td class="whitespace-nowrap text-left"> {{ trans('ledger-foundation::configuration.'.$asset_class_list['status']) }}

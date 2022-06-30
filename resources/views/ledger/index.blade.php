@@ -162,7 +162,7 @@
                                         <td class="whitespace-nowrap text-left">
                                             @isset($ledger->image)
                                                 <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" alt=""
-                                                    src="{{ \Kanexy\PartnerFoundation\Core\Helper::getTemporaryUrl($ledger->image) }}">
+                                                    src="{{ \Illuminate\Support\Facades\Storage::temporaryUrl($ledger->image,now()->addMinutes(5)) }}">
                                             @endisset
                                         </td>
                                         <td class="whitespace-nowrap text-left">

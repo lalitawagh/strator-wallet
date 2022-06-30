@@ -90,7 +90,7 @@
                                         <td class="whitespace-nowrap text-left">{{ $commodity_type_list['name'] }}</td>
                                         <td class="whitespace-nowrap text-left">
                                             @isset($commodity_type_list['image'])
-                                            <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" src="{{ \Kanexy\PartnerFoundation\Core\Helper::getTemporaryUrl($commodity_type_list['image']) }}">
+                                            <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" src="{{ \Illuminate\Support\Facades\Storage::temporaryUrl($commodity_type_list['image'],now()->addMinutes(5)) }}">
                                             @endisset
                                         </td>
                                         <td class="whitespace-nowrap text-left">

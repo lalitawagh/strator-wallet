@@ -208,7 +208,7 @@
                         <div class="flex flex-col lg:flex-row mt-3">
                             <div class="truncate sm:whitespace-normal flex items-center">
                                 <img width="100" height="100"
-                                    src="{{ \Kanexy\PartnerFoundation\Core\Helper::getTemporaryUrl($transaction->attachment) }}" />
+                                    src="{{ \Illuminate\Support\Facades\Storage::temporaryUrl($transaction->attachment,now()->addMinutes(5)) }}" />
                             </div>
                         </div>
                     </div>
@@ -243,7 +243,7 @@
                             <div class="truncate sm:whitespace-normal flex items-center">
                                 @isset($transaction->attachment)
                                     <img width="100" height="100"
-                                        src="{{ \Kanexy\PartnerFoundation\Core\Helper::getTemporaryUrl($transaction->attachment) }}" />
+                                        src="{{ \Illuminate\Support\Facades\Storage::temporaryUrl($transaction->attachment,now()->addMinutes(5)) }}" />
                                 @endisset
                                 <input type="file" id="attachment" name="attachment" class="ml-2 w-full" />
                             </div>
