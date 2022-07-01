@@ -131,9 +131,10 @@
                                 <label for="valid_date" class="form-label sm:w-30">Valid Date <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <input id="valid_date" name="valid_date" type="date"
-                                        class="form-control @error('valid_date') border-theme-6 @enderror"
-                                        value="{{ old('valid_date', $exchange_rate->valid_date) }}">
+                                    <input id="valid_date" name="valid_date"
+                                        class="form-control datepicker_flatpicker @error('valid_date') border-theme-6 @enderror"
+                                        value="{{ old('valid_date', $exchange_rate->valid_date) }}"  placeholder="DD-MM-YYYY" data-min-date="{{ \Carbon\Carbon::now()->subYear(0)->format('Y-m-d') }}"
+                                        data-single-mode="true">
 
                                     @error('valid_date')
                                         <span class="block text-theme-6 mt-2">{{ $message }}</span>

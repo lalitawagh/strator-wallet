@@ -189,7 +189,7 @@
                 <div class="mt-5">
                     <p class="text-sm tracking-wide font-medium uppercase">Reference</p>
 
-                    <div class="flex flex-col lg:flex-row mt-3">
+                    <div class="flex break-all flex-col lg:flex-row mt-3">
                         <div class="truncate sm:whitespace-normal flex items-center">
                             <span>
                                 {{ $transaction->meta['reference'] }}
