@@ -39,7 +39,8 @@
                                     <select name="base_currency" id="base_currency" class="form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
-                                            <option value="{{ $ledger->getKey() }}">{{ $ledger->name }}</option>
+                                            <option value="{{ $ledger->getKey() }}" @if (old('base_currency') == $ledger->getKey())
+                                                selected @endif>{{ $ledger->name }}</option>
                                         @endforeach
                                     </select>
 
@@ -56,7 +57,8 @@
                                     <select name="exchange_currency" id="exchange_currency" class="form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
-                                            <option value="{{ $ledger->getKey() }}">{{ $ledger->name }}</option>
+                                            <option value="{{ $ledger->getKey() }}" @if (old('exchange_currency') == $ledger->getKey())
+                                                selected @endif>{{ $ledger->name }}</option>
                                         @endforeach
                                     </select>
 
