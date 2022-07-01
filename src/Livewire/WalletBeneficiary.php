@@ -63,6 +63,7 @@ class WalletBeneficiary extends Component
         $this->defaultCountry = $defaultCountry;
         $this->user = Auth::user();
         $this->country_code = $this->user->country_id;
+        $this->mobile = !is_null($this->mobile) ?? Helper::normalizePhone($this->mobile);
     }
 
 
@@ -74,8 +75,8 @@ class WalletBeneficiary extends Component
 
     public function getMembershipDetails()
     {
-        $mobile = Helper::normalizePhone($this->mobile);
-        $workspace = User::wherePhone($mobile)->first()?->workspaces()->first();
+        $this->mobile = Helper::normalizePhone($this->mobile);
+        $workspace = User::wherePhone($this->mobile)->first()?->workspaces()->first();
         $membership = $workspace?->memberships()->first();
 
         $this->membership_urn = $membership?->urn;

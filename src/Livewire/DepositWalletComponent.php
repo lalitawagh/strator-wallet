@@ -69,7 +69,7 @@ class DepositWalletComponent extends Component
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
-        $this->exchange_rate =  @$exchange_rate_details['exchange_rate'];
+        $this->exchange_rate =  @$exchange_rate_details['exchange_rate'] ?? 1;
         $this->fee = @$exchange_rate_details['fee'];
 
         session([
