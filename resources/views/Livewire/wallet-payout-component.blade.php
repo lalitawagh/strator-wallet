@@ -77,7 +77,7 @@
                             @foreach ($countryWithFlags as $country)
                                 <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                                     @isset($country_code) @if ($country->id == $country_code) selected @endif @else @if ($country->id == old('country_code', $user->country_id)) selected @else  @endif @endisset>
-                                    {{ $country->name }} ({{ $country->phone }})
+                                    {{ $country->code }} ({{ $country->phone }})
                                 </option>
                             @endforeach
                         </select>

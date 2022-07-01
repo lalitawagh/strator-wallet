@@ -88,7 +88,8 @@
                                     <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                                         @if ($country->id == old('country_code', $user->country_id)) selected @endif>
                                         {{ $country->code }} ({{ $country->phone }})
-                                            {{ $country->name }} ({{ $country->phone }})
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <input wire:model="mobile" wire:change="getMembershipDetails()" id="mobile" name="mobile"
