@@ -96,7 +96,7 @@
                                         </td>
                                         <td class="whitespace-nowrap text-left">
                                             @isset($asset_type_list['image'])
-                                            <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_type_list['image']) }}">
+                                            <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" src="{{ \Illuminate\Support\Facades\Storage::temporaryUrl($asset_type_list['image'],now()->addMinutes(5)) }}">
                                             @endisset
                                         </td>
                                         <td class="whitespace-nowrap text-left">{{ trans('ledger-foundation::configuration.'.$asset_type_list['status']) }}

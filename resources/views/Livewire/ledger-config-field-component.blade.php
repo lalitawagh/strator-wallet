@@ -29,7 +29,7 @@
                 <input type="file" class="form-control" name="image">
                 @isset($ledger?->image)
                     <img class="rounded-md proof-default" style="width:100px;" alt=""
-                        src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger?->image) }}">
+                        src="{{ \Illuminate\Support\Facades\Storage::temporaryUrl($ledger->image,now()->addMinutes(5)) }}">
                 @endisset
 
                 @error('image')

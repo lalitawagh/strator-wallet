@@ -1,4 +1,4 @@
-@extends("ledger-foundation::config-skeleton")
+@extends('ledger-foundation::config-skeleton')
 
 @section('title', 'Ledger')
 
@@ -7,7 +7,8 @@
         <div class="grid grid-cols-12 gap-6">
             <!-- BEGIN: Daily Sales -->
             <div class="intro-y box col-span-12 xxl:col-span-12">
-                <div class="sm:flex  gap-2 sm:gap-0 flex-wrap items-center px-5 py-2 border-b border-gray-200 dark:border-dark-5">
+                <div
+                    class="sm:flex  gap-2 sm:gap-0 flex-wrap items-center px-5 py-2 border-b border-gray-200 dark:border-dark-5">
 
                     <div class="breadcrumb mr-auto hidden sm:flex">
                         <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
@@ -30,7 +31,7 @@
                 </div>
                 <div class="p-3">
                     <div class="intro-y p-0 mt-0 overflow-x-auto overflow-y-hidden">
-                        <table  id="tableID" class="shroting display table table-report -mt-2">
+                        <table id="tableID" class="shroting display table table-report -mt-2">
                             <thead class="short-wrp">
                                 <tr class="">
                                     <th class="w-16 whitespace-nowrap text-left">#</th>
@@ -160,9 +161,8 @@
                                         <td class="whitespace-nowrap text-left">{{ $ledger->name }}</td>
                                         <td class="whitespace-nowrap text-left">
                                             @isset($ledger->image)
-                                                <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default"
-                                                    alt=""
-                                                    src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}">
+                                                <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" alt=""
+                                                    src="{{ \Illuminate\Support\Facades\Storage::temporaryUrl($ledger->image,now()->addMinutes(5)) }}">
                                             @endisset
                                         </td>
                                         <td class="whitespace-nowrap text-left">
@@ -170,7 +170,8 @@
                                         <td class="whitespace-nowrap text-left">
                                             {{ trans('ledger-foundation::configuration.' . $ledger->exchange_type) }}</td>
                                         <td class="whitespace-nowrap text-left">
-                                            {{ trans('ledger-foundation::configuration.' . $ledger->asset_category) }}</td>
+                                            {{ trans('ledger-foundation::configuration.' . $ledger->asset_category) }}
+                                        </td>
                                         <td class="whitespace-nowrap text-left">{{ @$assetType['name'] }}</td>
                                         <td class="whitespace-nowrap text-left">{{ @$assetClass['name'] }}</td>
                                         <td class="whitespace-nowrap text-left">
