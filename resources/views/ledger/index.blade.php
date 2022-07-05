@@ -151,13 +151,16 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $i = 0;
+                                @endphp
                                 @foreach ($ledgers as $index => $ledger)
                                     @php
                                         $assetType = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types', []))->firstWhere('id', $ledger->asset_type);
                                         $assetClass = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_classes', []))->firstWhere('id', $ledger->asset_class);
                                     @endphp
                                     <tr>
-                                        <td class="whitespace-nowrap text-left">{{ $ledgers->firstItem() + $index }}</td>
+                                        <td class="whitespace-nowrap text-left">{{ $ledgers->firstItem() + $i }}</td>
                                         <td class="whitespace-nowrap text-left">{{ $ledger->name }}</td>
                                         <td class="whitespace-nowrap text-left">
                                             @isset($ledger->image)
@@ -205,6 +208,9 @@
                     </div>
                     </td>
                     </tr>
+                    @php
+                    $i++;
+                    @endphp
                     @endforeach
                     </tbody>
                     </table>
