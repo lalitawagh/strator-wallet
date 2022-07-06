@@ -152,7 +152,7 @@ class WalletPayoutComponent extends Component
     {
         $this->remaining_amount =  number_format((float)0, 2, '.', '');;
 
-        if ($this->amount) {
+        if (is_numeric($this->amount)) {
             $remaining_amount = $this->balance - $this->amount;
             $this->remaining_amount =  number_format((float)$remaining_amount, 2, '.', '');
         }
