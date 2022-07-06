@@ -165,7 +165,7 @@
                                         <td class="whitespace-nowrap text-left">
                                             @isset($ledger->image)
                                                 <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" alt=""
-                                                    src="{{ \Illuminate\Support\Facades\Storage::temporaryUrl($ledger->image,now()->addMinutes(5)) }}">
+                                                    src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($ledger->image,now()->addMinutes(5)) }}">
                                             @endisset
                                         </td>
                                         <td class="whitespace-nowrap text-left">
