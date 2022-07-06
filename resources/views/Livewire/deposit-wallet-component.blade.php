@@ -41,8 +41,10 @@
                         <option value="{{ $currency['id'] }}" @if (session('currency') == $currency['id']) selected @endif>
                             {{ $currency['name'] }}</option>
                     @elseif($walletDefaultCountry->code == 'UK')
-                        <option value="{{ $currency['id'] }}" @if (session('currency') == $currency['id']) selected @endif>
-                        {{ $currency['name'] }}</option>
+                        @if( $currency['asset_category'] == 'fiat_currency')
+                            <option value="{{ $currency['id'] }}" @if (session('currency') == $currency['id']) selected @endif>
+                            {{ $currency['name'] }}</option>
+                        @endif
                     @endif
                 @endforeach
             </select>
