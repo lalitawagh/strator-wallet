@@ -15,7 +15,7 @@ class AssetClassController extends Controller
     {
         $this->authorize(AssetClassPolicy::VIEW, AssetClassConfiguration::class);
 
-        $asset_class_lists = Helper::paginate(collect(Setting::getValue('asset_classes', []))->sort());
+        $asset_class_lists = Helper::paginate(collect(Setting::getValue('asset_classes', []))->reverse());
 
         return view("ledger-foundation::asset-class.index", compact('asset_class_lists'));
     }

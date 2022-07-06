@@ -15,7 +15,7 @@ class CommodityTypeController extends Controller
     {
         $this->authorize(CommodityTypePolicy::VIEW, CommodityTypeConfiguration::class);
 
-        $commodity_type_lists = Helper::paginate(collect(Setting::getValue('commodity_types', []))->sort());
+        $commodity_type_lists = Helper::paginate(collect(Setting::getValue('commodity_types', []))->reverse());
 
         return view("ledger-foundation::commodity-type.index", compact('commodity_type_lists'));
     }
