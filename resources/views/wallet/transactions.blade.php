@@ -34,6 +34,11 @@
                     </h2>
                 </div>
                 <div class="p-5">
+                    <div id="before-slider-loader" class="z-50 static w-full">
+                        <img src="https://paladins-draft.com/img/circle_loading.gif" width="64" height="64" class="m-auto mt-1/4 m-20">
+                        <p class="text-center font-medium">Loading Transactions</p>
+                    </div>
+                    <div id="after-slider-loader" style="display:none;">
                     @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber() && is_null($walletID))
                         <div id="multiple-item-slider" class="wallet-slide preview pb-10" role="tablist">
                             <div class="mx-6">
@@ -100,6 +105,7 @@
                     @else
                         @include('ledger-foundation::wallet.list-transactions')
                     @endif
+                    </div>
                 </div>
             </div>
         </div>
@@ -116,6 +122,8 @@
         Livewire.emit('transactionList', walletID)
     }
     $(document).ready(function(){
+        $("#before-slider-loader").remove();
+        $("#after-slider-loader").show();
         Livewire.emit('transactionList', '{{ $first_wallet_id ?? null }}');
     });
     </script>
