@@ -67,7 +67,7 @@
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
                 <label for="phone" class="form-label sm:w-32"> Mobile </label>
                 <div class="sm:w-5/6">
-                    <div class="input-group flex flex-col sm:flex-row mt-2">
+                    <div class="input-group flex flex-col sm:flex-row mt-0">
                         <div id="input-group-phone" wire:ignore class="input-group-text flex form-inline"
                             style="padding: 0 5px;">
 
