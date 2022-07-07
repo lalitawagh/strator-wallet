@@ -166,7 +166,7 @@
                         </table>
                     </div>
                     <div class="my-2">
-                        {{-- {{ $exchange_rates->links() }} --}}
+                        {{ $fees->links() }}
                     </div>
                 </div>
             </div>
