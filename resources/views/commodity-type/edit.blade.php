@@ -37,7 +37,7 @@
                                 <label for="logo" class="form-label sm:w-30"> Image </label>
                                 <div class="sm:w-5/6">
                                     <input type="file" class="form-control" name="image">
-                                    <img class="rounded-md proof-default" style="width:100px;" alt="" src="@isset($commodity_type['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($commodity_type['image']) }}@endisset">
+                                    <img class="rounded-md proof-default" style="width:100px;" alt="" src="@isset($commodity_type['image']){{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($commodity_type['image'],now()->addMinutes(5))  }}@endisset">
                                     @error('image')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                                     @enderror

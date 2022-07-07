@@ -48,6 +48,13 @@ class ExchangeRateController extends Controller
             return back()->withError('Exchange currency not exists');
         }
 
+        $existExchangeRate = ExchangeRate::where(['base_currency' => $data['base_currency'],'exchange_currency' => $data['exchange_currency']])->first();
+
+        if(!is_null($existExchangeRate))
+        {
+            return back()->withError('This exchange rate already exist');
+        }
+
         ExchangeRate::create($data);
 
         return redirect()->route("dashboard.wallet.exchange-rate.index")->with([

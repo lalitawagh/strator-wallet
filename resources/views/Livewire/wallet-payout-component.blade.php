@@ -77,7 +77,7 @@
                             @foreach ($countryWithFlags as $country)
                                 <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                                     @isset($country_code) @if ($country->id == $country_code) selected @endif @else @if ($country->id == old('country_code', $user->country_id)) selected @else  @endif @endisset>
-                                    {{ $country->name }} ({{ $country->phone }})
+                                    {{ $country->code }} ({{ $country->phone }})
                                 </option>
                             @endforeach
                         </select>
@@ -102,7 +102,7 @@
             <label for="amount" class="form-label sm:w-30"> Amount to Pay <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
                 <input wire:change="changeAmount($event.target.value)" id="amount" name="amount" type="text" value=" {{ old('amount',$amount) }}" class="form-control"
-                    onKeyPress="return isNumberKey(event);" required>
+                    onKeyPress="return isNumberKey(event);" onpaste="return false;" required>
                 @error('amount')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror
@@ -173,7 +173,7 @@
         </div>
     </div>
     <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
-        @if (isset($fee))
+        @if (isset($fee) && is_numeric($amount))
             @php
                 $exchange_rate = $exchange_rate ?? number_format((float) $exchange_rate, 2, '.', '');
                 $total = ($exchange_rate != 0) ? ($amount - $fee) / $exchange_rate : '';

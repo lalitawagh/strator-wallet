@@ -189,7 +189,7 @@
                 <div class="mt-5">
                     <p class="text-sm tracking-wide font-medium uppercase">Reference</p>
 
-                    <div class="flex flex-col lg:flex-row mt-3">
+                    <div class="flex break-all flex-col lg:flex-row mt-3">
                         <div class="truncate sm:whitespace-normal flex items-center">
                             <span>
                                 {{ $transaction->meta['reference'] }}
@@ -208,7 +208,7 @@
                         <div class="flex flex-col lg:flex-row mt-3">
                             <div class="truncate sm:whitespace-normal flex items-center">
                                 <img width="100" height="100"
-                                    src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($transaction->attachment) }}" />
+                                    src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($transaction->attachment,now()->addMinutes(5)) }}" />
                             </div>
                         </div>
                     </div>
@@ -243,7 +243,7 @@
                             <div class="truncate sm:whitespace-normal flex items-center">
                                 @isset($transaction->attachment)
                                     <img width="100" height="100"
-                                        src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($transaction->attachment) }}" />
+                                        src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($transaction->attachment,now()->addMinutes(5)) }}" />
                                 @endisset
                                 <input type="file" id="attachment" name="attachment" class="ml-2 w-full" />
                             </div>

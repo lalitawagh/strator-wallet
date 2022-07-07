@@ -35,7 +35,7 @@ class ExchangeRate extends Model
 
         $exchangeFee = collect(Setting::getValue('wallet_fees',[]))->where('base_currency' , $sender_wallet?->ledger_id)->where('exchange_currency' ,$receiver_wallet?->ledger_id)->where('payment_type','payout')->first();
         $fee = 0;
-        if(isset($exchangeFee) && !is_null($amount))
+        if(isset($exchangeFee) && !is_null($amount) && is_numeric($amount))
         {
             $fee = ($exchangeFee['fee_type'] == 'percentage') ? $amount * ($exchangeFee['percentage']/100) : $exchangeFee['amount'];
         }

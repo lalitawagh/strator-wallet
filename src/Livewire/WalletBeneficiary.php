@@ -63,9 +63,10 @@ class WalletBeneficiary extends Component
         $this->defaultCountry = $defaultCountry;
         $this->user = Auth::user();
         $this->country_code = $this->user->country_id;
+        $this->mobile = !is_null($this->mobile) ?? Helper::normalizePhone($this->mobile);
     }
 
-    
+
     public function getCountry($value)
     {
         $this->country_code = $value;
@@ -74,8 +75,8 @@ class WalletBeneficiary extends Component
 
     public function getMembershipDetails()
     {
-        $mobile = Helper::normalizePhone($this->mobile);
-        $workspace = User::wherePhone($mobile)->first()?->workspaces()->first();
+        $this->mobile = Helper::normalizePhone($this->mobile);
+        $workspace = User::wherePhone($this->mobile)->first()?->workspaces()->first();
         $membership = $workspace?->memberships()->first();
 
         $this->membership_urn = $membership?->urn;
@@ -100,33 +101,43 @@ class WalletBeneficiary extends Component
             'country_code' => 'nullable',
         ]);
 
-        if (is_null($this->membership_urn)) {
-            $this->addError('mobile', 'Membership not exists with this mobile number');
-        } else {
+        $existContact = Contact::where(['workspace_id' => $this->workspace->id,'mobile' => Helper::normalizePhone($data['mobile']),'ref_type' => 'wallet'])->first();
 
-            $data['mobile'] = Helper::normalizePhone($data['mobile']);
-            $data['workspace_id'] = $this->workspace->id;
-            $data['ref_type'] = 'wallet';
-            $data['classification'] = $this->classification;
-            $data['status'] = 'active';
-            $data['meta'] = [ 'country_code' => $data['country_code']];
+        if(!is_null($existContact))
+        {
+            $this->addError('mobile', 'Beneficiary already exist');
+        }else{
 
-            /** @var Contact $contact */
-            $contact = Contact::create($data);
+            if (is_null($this->membership_urn)) {
+                $this->addError('mobile', 'Membership not exists with this mobile number');
+            } else {
 
-            event(new ContactCreated($contact));
+                $data['mobile'] = Helper::normalizePhone($data['mobile']);
+                $data['workspace_id'] = $this->workspace->id;
+                $data['ref_type'] = 'wallet';
+                $data['classification'] = $this->classification;
+                $data['status'] = 'active';
+                $data['meta'] = [ 'country_code' => $data['country_code']];
 
-            /** @var \App\Models\User $user */
-            $user = auth()->user();
-            $this->contact = $contact;
+                /** @var Contact $contact */
+                $contact = Contact::create($data);
 
-            $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
-            // $contact->generateOtp("sms");
-            $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
-            //$user->generateOtp("sms");
+                event(new ContactCreated($contact));
 
-            $this->beneficiary_created = true;
+                /** @var \App\Models\User $user */
+                $user = auth()->user();
+                $this->contact = $contact;
+
+                $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+                // $contact->generateOtp("sms");
+                $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
+                //$user->generateOtp("sms");
+
+                $this->beneficiary_created = true;
+            }
         }
+
+
     }
 
     public function resendOtp(OneTimePassword $oneTimePassword)
