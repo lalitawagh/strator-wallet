@@ -112,7 +112,7 @@ class WithdrawBeneficiaryComponent extends Component
 
         $exitsBeneficiary = Contact::beneficiaries()->verified()->forWorkspace($user->workspaces()->first())->whereRefType('wrappex')->where(['meta->beneficiary_type' => 'withdraw'])->first();
 
-        if (isset($exitsBeneficiary)) {
+        if (isset($exitsBeneficiary) && $user->country_code == '91') {
             $this->addError('beneficiary', 'You can create only one beneficiary');
         } else {
 
