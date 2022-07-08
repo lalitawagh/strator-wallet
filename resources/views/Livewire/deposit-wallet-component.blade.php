@@ -42,7 +42,7 @@
                     <option value="{{ $currency->getKey() }}" @if ($selected_wallet == $currency->getKey()) selected @endif>
                         {{ $currency->name }}</option>
                     @elseif($walletDefaultCountry->code == 'UK')
-                        @if( $assetType['asset_category'] == 'fiat_currency')
+                        @if(@$assetType['asset_category'] == 'fiat_currency')
                             <option value="{{ $currency->getKey() }}" @if ($selected_wallet == $currency->getKey()) selected @endif>
                                 {{ $currency->name }}</option>
                         @endif
