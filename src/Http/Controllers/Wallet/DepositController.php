@@ -60,7 +60,7 @@ class DepositController extends Controller
 
         $user = Auth::user();
         $wallets = Wallet::forHolder($user)->with('ledger')->get();
-        $currencies = Setting::getValue('asset_types', []);
+        $currencies = Ledger::get();
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
         $walletDefaultCountry = Country::find($user->country_id);
 
@@ -73,12 +73,13 @@ class DepositController extends Controller
 
         $data = $request->validated();
 
-        $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $data['currency']);
+        $wallet = Wallet::find($data['wallet']);
+        $exchange_ledger = Ledger::whereId($data['currency'])->first();
+        $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $exchange_ledger?->asset_type);
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
 
         $data['amount'] = $data['amount'];
 
-        $exchange_ledger = Ledger::whereAssetType($data['currency'])->first();
         $exchange_wallet_details = Wallet::forHolder(Auth::user())->whereLedgerId($exchange_ledger?->id)->first();
 
         $amount = $data['amount']  + session('fee');
@@ -87,9 +88,12 @@ class DepositController extends Controller
             return back()->withError('Insufficient balance in this wallet account.');
         }
 
-        $data['exchange_currency'] = $data['currency'];
+        $base_curreny = collect(Setting::getValue('asset_types', []))->firstWhere('id', $wallet?->ledger->asset_type);
+        $exchange_curreny = collect(Setting::getValue('asset_types', []))->firstWhere('id', $exchange_ledger->asset_type);
+
+        $data['exchange_currency'] = @$base_curreny['name'];
         $data['fee'] = session('fee') ?? 0;
-        $data['currency'] = $asset_type['name'];
+        $data['currency'] = @$exchange_curreny['name'];
         $data['workspace_id'] = $workspace->id;
         $data['asset_category'] = $asset_type['asset_category'];
 
@@ -159,10 +163,6 @@ class DepositController extends Controller
 
         $wallet = Wallet::find($details['wallet']);
 
-        if(isset($details['exchange_currency']))
-        {
-           $exchange_curreny = collect(Setting::getValue('asset_types', []))->firstWhere('id', $details['exchange_currency']);
-        }
 
         $depositMasterAccountDetails =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', $user->country_id);
 
@@ -172,21 +172,29 @@ class DepositController extends Controller
 
         if($details['payment_method'] == PaymentMethod::MANUAL_TRANSFER)
         {
+
+            if (session('exchange_rate')) {
+                $amount = ($details['amount']) * session('exchange_rate');
+            }else
+            {
+                $amount = ($details['amount']);
+            }
+
             $transactionExist = isset($details['transaction']) ?  $details['transaction'] : null;
 
             $transaction = Transaction::updateOrCreate([
                 'id' => $transactionExist?->id,
             ],[
                 'urn' => Transaction::generateUrn(),
-                'amount' => $details['amount'],
+                'amount' => $amount,
                 'workspace_id' => $details['workspace_id'],
                 'type' => 'credit',
                 'payment_method' => PaymentMethod::MANUAL_TRANSFER,
                 'note' => null,
                 'ref_id' =>  $details['wallet'],
                 'ref_type' => 'wallet',
-                'settled_amount' => $details['amount'],
-                'settled_currency' => $details['currency'],
+                'settled_amount' => $amount,
+                'settled_currency' => $details['exchange_currency'],
                 'settlement_date' => date('Y-m-d'),
                 'settled_at' => now(),
                 'transaction_fee' => $details['fee'],
@@ -200,8 +208,8 @@ class DepositController extends Controller
                     'beneficiary_wallet_id' => $details['wallet'],
                     'beneficiary_name' => Auth::user()->getFullName(),
                     'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
-                    'base_currency' =>  $details['currency'] ?  $details['currency'] : null,
-                    'exchange_currency' => @$exchange_curreny['name'] ? @$exchange_curreny['name'] : null,
+                    'base_currency' => @$details['currency'] ?  @$details['currency'] : null,
+                    'exchange_currency' => @$details['exchange_currency'] ?  @$details['exchange_currency'] : null,
                     'transaction_type' => 'deposit',
                     'balance' => $wallet?->balance,
                     'account' => 'wallet',
@@ -211,16 +219,16 @@ class DepositController extends Controller
             if(!isset($details['transaction_log']))
             {
                 $meta = [
-                    'amount' => $details['amount'],
-                    'base_currency' => $details['currency'] ?  $details['currency'] : null,
-                    'exchange_currency' =>  @$exchange_curreny['name'] ? @$exchange_curreny['name'] : null,
+                    'amount' => $amount,
+                    'base_currency' => @$details['currency'] ?  @$details['currency'] : null,
+                    'exchange_currency' =>  @$details['exchange_currency'] ?  @$details['exchange_currency'] : null,
                     'workspace_id' => $details['workspace_id'],
                     'type' => 'credit',
                     'payment_method' => 'manual_transfer',
                     'ref_id' =>  $details['wallet'],
                     'ref_type' => 'wallet',
-                    'settled_amount' => $details['amount'],
-                    'settled_currency' => $details['currency'],
+                    'settled_amount' => $amount,
+                    'settled_currency' => $details['exchange_currency'],
                     'settlement_date' => date('Y-m-d'),
                     'transaction_fee' => $details['fee'],
                     'status' => 'accepted',
@@ -362,7 +370,7 @@ class DepositController extends Controller
 
             $amount = ($depositRequest['amount'] - ($response['data']['transaction_fee'] / 100));
             if (session('exchange_rate')) {
-                $amount = ($depositRequest['amount'] - ($response['data']['transaction_fee'] / 100)) / session('exchange_rate');
+                $amount = ($depositRequest['amount'] - ($response['data']['transaction_fee'] / 100)) * session('exchange_rate');
             }
 
             $wallet = Wallet::find($depositRequest['wallet']);
@@ -377,7 +385,7 @@ class DepositController extends Controller
                 'ref_id' =>  $depositRequest['wallet'],
                 'ref_type' => 'wallet',
                 'settled_amount' => $amount,
-                'settled_currency' => $depositRequest['currency'],
+                'settled_currency' => $depositRequest['exchange_currency'],
                 'settlement_date' => date('Y-m-d'),
                 'settled_at' => now(),
                 'transaction_fee' => $depositRequest['fee'],
@@ -413,7 +421,7 @@ class DepositController extends Controller
                 'ref_id' =>  $depositRequest['wallet'],
                 'ref_type' => 'wallet',
                 'settled_amount' => $amount,
-                'settled_currency' => $depositRequest['currency'],
+                'settled_currency' => $depositRequest['exchange_currency'],
                 'settlement_date' => date('Y-m-d'),
                 'transaction_fee' => $depositRequest['fee'],
                 'status' => 'accepted',
