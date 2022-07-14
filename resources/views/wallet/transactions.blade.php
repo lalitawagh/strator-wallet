@@ -114,6 +114,14 @@
     @include('ledger-foundation::wallet.transaction-detail-modal')
 
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $("#before-slider-loader").remove();
+            $("#after-slider-loader").show();
+        });
+    </script>
+@endpush
 @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
     @push('scripts')
     <script>
@@ -122,8 +130,6 @@
         Livewire.emit('transactionList', walletID)
     }
     $(document).ready(function(){
-        $("#before-slider-loader").remove();
-        $("#after-slider-loader").show();
         Livewire.emit('transactionList', '{{ $first_wallet_id ?? null }}');
     });
     </script>
