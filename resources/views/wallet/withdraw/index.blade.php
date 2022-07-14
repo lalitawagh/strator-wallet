@@ -405,110 +405,113 @@
                                                             <tbody>
                                                                 @isset($transactions)
                                                                     @foreach ($transactions as $index => $transaction)
-                                                                        @php
-                                                                            $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->meta['sender_wallet_account_id'])->first();
-                                                                            $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
-                                                                        @endphp
-                                                                        <tr class="intro-x">
-                                                                            <td>
-                                                                                <div class="form-check mt-1 border-gray-400">
-                                                                                    <input id="checkbox-switch-1"
-                                                                                        class="form-check-input"
-                                                                                        type="checkbox" value="">
-                                                                                    <label class="form-check-label"
-                                                                                        for="checkbox-switch-1"></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="whitespace-nowrap text-left">
-                                                                                <a href="javascript:void(0);"
-                                                                                    data-toggle="modal"
-                                                                                    data-target="#transaction-detail-modal"
-                                                                                    onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
-                                                                                    style="color:#70297d !important;">{{ $transaction->urn }}</a>
-                                                                            </td>
-                                                                            <td class="whitespace-nowrap text-left">
-                                                                                {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
-                                                                            </td>
-                                                                            <td class="whitespace-nowrap text-left">
-                                                                                {{ $wallet->name }}</td>
-                                                                            <td class="whitespace-nowrap text-left">
-                                                                                {{ $transaction->meta['beneficiary_name'] }}
-                                                                            </td>
-                                                                            @if (isset($transactionType) && $transactionType == 'deposit')
+                                                                        @if (isset($transaction->meta['transaction_type']) && @$transaction->status == 'draft')
+                                                                        @else
+                                                                            @php
+                                                                                $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->meta['sender_wallet_account_id'])->first();
+                                                                                $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
+                                                                            @endphp
+                                                                            <tr class="intro-x">
+                                                                                <td>
+                                                                                    <div class="form-check mt-1 border-gray-400">
+                                                                                        <input id="checkbox-switch-1"
+                                                                                            class="form-check-input"
+                                                                                            type="checkbox" value="">
+                                                                                        <label class="form-check-label"
+                                                                                            for="checkbox-switch-1"></label>
+                                                                                    </div>
+                                                                                </td>
                                                                                 <td class="whitespace-nowrap text-left">
-                                                                                    {{ ucfirst($transaction->payment_method) }}
+                                                                                    <a href="javascript:void(0);"
+                                                                                        data-toggle="modal"
+                                                                                        data-target="#transaction-detail-modal"
+                                                                                        onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
+                                                                                        style="color:#70297d !important;">{{ $transaction->urn }}</a>
                                                                                 </td>
-                                                                            @else
                                                                                 <td class="whitespace-nowrap text-left">
-                                                                                    {{ $ledger?->name }}
+                                                                                    {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
                                                                                 </td>
-                                                                            @endif
-                                                                            @if ($transaction->type === 'debit')
-                                                                                <td
-                                                                                    class="whitespace-nowrap text-center text-theme-6">
-                                                                                    @if ($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
-                                                                                        {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
-                                                                                    @else
-                                                                                        {{ $ledger?->symbol }}
-                                                                                        {{ number_format((float) $transaction->amount, 2, '.', '') }}
-                                                                                    @endif
+                                                                                <td class="whitespace-nowrap text-left">
+                                                                                    {{ $wallet->name }}</td>
+                                                                                <td class="whitespace-nowrap text-left">
+                                                                                    {{ $transaction->meta['beneficiary_name'] }}
                                                                                 </td>
-                                                                                <td class="whitespace-nowrap text-center">-
+                                                                                @if (isset($transactionType) && $transactionType == 'deposit')
+                                                                                    <td class="whitespace-nowrap text-left">
+                                                                                        {{ ucfirst($transaction->payment_method) }}
+                                                                                    </td>
+                                                                                @else
+                                                                                    <td class="whitespace-nowrap text-left">
+                                                                                        {{ $ledger?->name }}
+                                                                                    </td>
+                                                                                @endif
+                                                                                @if ($transaction->type === 'debit')
+                                                                                    <td
+                                                                                        class="whitespace-nowrap text-center text-theme-6">
+                                                                                        @if ($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
+                                                                                            {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
+                                                                                        @else
+                                                                                            {{ $ledger?->symbol }}
+                                                                                            {{ number_format((float) $transaction->amount, 2, '.', '') }}
+                                                                                        @endif
+                                                                                    </td>
+                                                                                    <td class="whitespace-nowrap text-center">-
+                                                                                    </td>
+                                                                                @else
+                                                                                    <td class="whitespace-nowrap text-center">-
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="whitespace-nowrap text-center text-theme-9">
+                                                                                        @if ($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
+                                                                                            {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
+                                                                                        @else
+                                                                                            {{ $ledger?->symbol }}
+                                                                                            {{ number_format((float) $transaction->amount, 2, '.', '') }}
+                                                                                        @endif
+                                                                                    </td>
+                                                                                @endif
+                                                                                <td class="whitespace-nowrap text-center">
+                                                                                    {{ $ledger?->symbol }}
+                                                                                    {{ number_format((float) @$transaction->meta['balance'], 2, '.', '') }}
                                                                                 </td>
-                                                                            @else
-                                                                                <td class="whitespace-nowrap text-center">-
-                                                                                </td>
-                                                                                <td
-                                                                                    class="whitespace-nowrap text-center text-theme-9">
-                                                                                    @if ($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
-                                                                                        {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
-                                                                                    @else
-                                                                                        {{ $ledger?->symbol }}
-                                                                                        {{ number_format((float) $transaction->amount, 2, '.', '') }}
-                                                                                    @endif
-                                                                                </td>
-                                                                            @endif
-                                                                            <td class="whitespace-nowrap text-center">
-                                                                                {{ $ledger?->symbol }}
-                                                                                {{ number_format((float) @$transaction->meta['balance'], 2, '.', '') }}
-                                                                            </td>
-                                                                            <td class="whitespace-nowrap text-left">
-                                                                                {{ ucfirst($transaction->status) }}</td>
-                                                                            <td class="whitespace-nowrap text-left">
-                                                                                {{ @$transaction->meta['reference'] }}</td>
-                                                                            <td class="table-report__action">
-                                                                                <div class="absolute top-0 mt-2 dropdown">
-                                                                                    <a class="dropdown-toggle w-5 h-5 block"
-                                                                                        href="javascript:;"
-                                                                                        aria-expanded="false">
-                                                                                        <x-feathericon-settings
-                                                                                            class="w-5 h-5 text-gray-600" />
-                                                                                    </a>
-                                                                                    <div class="dropdown-menu w-40">
-                                                                                        <div
-                                                                                            class="dropdown-menu__content box p-2">
-                                                                                            <a href="javascript:void(0);"
-                                                                                                data-toggle="modal"
-                                                                                                data-target="#transaction-detail-modal"
-                                                                                                onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
-                                                                                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                                                <x-feathericon-eye
-                                                                                                    class="w-4 h-4 mr-1" />
-                                                                                                Show
-                                                                                            </a>
-                                                                                            @if (\Illuminate\Support\Facades\Auth::user()->isSuperAdmin() && $transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
-                                                                                                <a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => 'Withdraw']) }}"
-                                                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
-                                                                                                    <x-feathericon-check
+                                                                                <td class="whitespace-nowrap text-left">
+                                                                                    {{ ucfirst($transaction->status) }}</td>
+                                                                                <td class="whitespace-nowrap text-left">
+                                                                                    {{ @$transaction->meta['reference'] }}</td>
+                                                                                <td class="table-report__action">
+                                                                                    <div class="absolute top-0 mt-2 dropdown">
+                                                                                        <a class="dropdown-toggle w-5 h-5 block"
+                                                                                            href="javascript:;"
+                                                                                            aria-expanded="false">
+                                                                                            <x-feathericon-settings
+                                                                                                class="w-5 h-5 text-gray-600" />
+                                                                                        </a>
+                                                                                        <div class="dropdown-menu w-40">
+                                                                                            <div
+                                                                                                class="dropdown-menu__content box p-2">
+                                                                                                <a href="javascript:void(0);"
+                                                                                                    data-toggle="modal"
+                                                                                                    data-target="#transaction-detail-modal"
+                                                                                                    onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
+                                                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                    <x-feathericon-eye
                                                                                                         class="w-4 h-4 mr-1" />
-                                                                                                    Accepted
+                                                                                                    Show
                                                                                                 </a>
-                                                                                            @endif
+                                                                                                @if (\Illuminate\Support\Facades\Auth::user()->isSuperAdmin() && $transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
+                                                                                                    <a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => 'Withdraw']) }}"
+                                                                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                        <x-feathericon-check
+                                                                                                            class="w-4 h-4 mr-1" />
+                                                                                                        Accepted
+                                                                                                    </a>
+                                                                                                @endif
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endif
                                                                     @endforeach
                                                                 @endisset
                                                             </tbody>

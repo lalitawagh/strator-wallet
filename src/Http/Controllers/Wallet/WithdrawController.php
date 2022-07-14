@@ -98,6 +98,7 @@ class WithdrawController extends Controller
         $transaction->workspace_id = $workspace->id;
         $transaction->meta = $meta;
         $transaction->attachment =  $request->has('attachment') ? $request->file('attachment')->store('Images', 'azure'): null;
+        $transaction->status = 'draft';
         $transaction->update();
 
         $meta = [
@@ -137,6 +138,9 @@ class WithdrawController extends Controller
         $wallet = Wallet::findOrFail($transaction->meta['sender_wallet_account_id']);
         $balance = ($wallet->balance - $transaction->amount);
         try {
+            $transaction->status = 'pending-confirmation';
+            $transaction->update();
+
             $wallet->balance = $balance;
             $wallet->update();
         } catch (\Exception $exception) {
@@ -159,6 +163,24 @@ class WithdrawController extends Controller
     public function withdrawAccepted(Request $request)
     {
         $transaction = Transaction::find($request->id);
+        $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', auth()->user()->country_id);
+        $masterAccount = Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
+        if($masterAccount->balance <  $transaction->amount)
+        {
+            if($request->type == 'all')
+            {
+                return redirect()->route('dashboard.wallet.transaction.index')->with([
+                    'status' => 'error',
+                    'message' => 'Please add funds to your MTC account.',
+                ]);
+            }
+
+            return redirect()->route('dashboard.wallet.withdraw.index')->with([
+                'status' => 'error',
+                'message' => 'Please add funds to your MTC account.',
+            ]);
+        }
+
         $this->payoutService->process($transaction);
 
         if($request->type == 'all')
