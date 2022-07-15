@@ -27,7 +27,7 @@
 
                                                 <div
                                                     class="flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
-                                                    <div class="nav nav-tabs mr-auto hidden sm:flex" role="tablist">
+                                                    <div class="w-auto w-auto nav nav-tabs mr-auto hidden sm:flex" role="tablist">
                                                         <a id="work-in-progress-mobile-new-tab" data-toggle="tab"
                                                             data-target="#work-in-progress-new" href="javascript:;"
                                                             class="py-2 ml-0 active" role="tab"
@@ -37,7 +37,7 @@
                                                     <div class="flex items-center md:ml-auto mb-2">
                                                         <div
                                                             class="col-span-6 sm:col-span-3 lg:col-span-2 xl:col-span-1 search sm:block mr-2 ml-auto">
-                                                            <input list="browsers" name="browser" id="browser"
+                                                            <input type="text" list="browsers" name="browser" id="browser"
                                                                 placeholder="Search"
                                                                 class="search__input form-control border-transparent placeholder-theme-13">
                                                             <i data-feather="search"
@@ -94,7 +94,7 @@
                                                                     <form class="filter-form relative">
                                                                         <div class="form mb-1">
                                                                             <select data-search="true"
-                                                                                class="tail-select w-full form-control-sm mt-2">
+                                                                                class="tom-select w-full form-control-sm mt-2">
                                                                                 <option value="1">Column Name</option>
                                                                                 <option value="2">Column Name 1
                                                                                 </option>
@@ -110,7 +110,7 @@
                                                                         </div>
                                                                         <div class="form mb-1">
                                                                             <select data-search="true"
-                                                                                class="tail-select w-full form-control-sm mt-2">
+                                                                                class="tom-select w-full form-control-sm mt-2">
                                                                                 <option value="1">Action is true
                                                                                 </option>
                                                                                 <option value="2">Action is false
@@ -177,7 +177,7 @@
                                                             <thead class="short-wrp">
                                                                 <tr>
                                                                     <th>
-                                                                        <div class="form-check mt-1 border-gray-400">
+                                                                        <div class="form-check mt-0 border-gray-400">
                                                                             <input id="checkbox-switch-1"
                                                                                 class="form-check-input" type="checkbox"
                                                                                 value="">
@@ -411,7 +411,7 @@
                                                                         @endphp
                                                                         <tr class="intro-x">
                                                                             <td>
-                                                                                <div class="form-check mt-1 border-gray-400">
+                                                                                <div class="form-check mt-0 border-gray-400">
                                                                                     <input id="checkbox-switch-1"
                                                                                         class="form-check-input"
                                                                                         type="checkbox" value="">

@@ -76,7 +76,7 @@
                                         $exchange_rate_frequencies = \Kanexy\LedgerFoundation\Enums\ExchangeRateFrequency::toArray();
                                     @endphp
                                     <select name="frequency" id="frequency" data-search="true"
-                                        class="tail-select w-full @error('frequency') border-theme-6 @enderror">
+                                        class="tom-select w-full @error('frequency') border-theme-6 @enderror">
                                         @foreach ($exchange_rate_frequencies as $exchange_rate_frequency)
                                             <option value="{{ $exchange_rate_frequency }}">
                                                 {{ trans('ledger-foundation::configuration.' . $exchange_rate_frequency) }}

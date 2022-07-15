@@ -68,7 +68,7 @@
                                         $ledger_types = \Kanexy\LedgerFoundation\Enums\LedgerType::toArray();
                                     @endphp
                                     <select name="ledger_type" id="ledger_type" data-search="true"
-                                        class="tail-select w-full @error('ledger_type') border-theme-6 @enderror">
+                                        class="tom-select w-full @error('ledger_type') border-theme-6 @enderror">
                                         <option value="">Select Ledger Type</option>
                                         @foreach ($ledger_types as $key => $ledger_type)
                                             <option value="{{ $ledger_type }}"
@@ -112,7 +112,7 @@
                                         $exchange_from = \Kanexy\LedgerFoundation\Enums\ExchangeFrom::toArray();
                                     @endphp
                                     <select name="exchange_from" id="exchange_from" data-search="true"
-                                        class="tail-select w-full @error('exchange_from') border-theme-6 @enderror">
+                                        class="tom-select w-full @error('exchange_from') border-theme-6 @enderror">
                                         <option value="">Select Exchange From</option>
                                         @foreach ($exchange_from as $key => $exchange_from_val)
                                             <option value="{{ $exchange_from_val }}"
@@ -133,7 +133,7 @@
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
                                     <select name="asset_class" id="asset_class" data-search="true"
-                                        class="tail-select w-full @error('asset_class') border-theme-6 @enderror">
+                                        class="tom-select w-full @error('asset_class') border-theme-6 @enderror">
                                         <option value="">Select Asset Class</option>
                                         @foreach ($asset_classes as $asset_class)
                                             <option value="{{ $asset_class['id'] }}"
@@ -154,7 +154,7 @@
                                 <label for="status" class="form-label sm:w-30"> Status <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
-                                    <select name="status" id="status" data-search="true" class="tail-select w-full">
+                                    <select name="status" id="status" data-search="true" class="tom-select w-full">
                                         <option value="">Select Status</option>
                                         <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW }}"
                                             @if (old('status', $ledger->status) === \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW) selected @endif>

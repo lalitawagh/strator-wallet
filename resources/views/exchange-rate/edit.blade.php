@@ -79,7 +79,7 @@
                                         $exchange_rate_frequencies = \Kanexy\LedgerFoundation\Enums\ExchangeRateFrequency::toArray();
                                     @endphp
                                     <select name="frequency" id="frequency" data-search="true"
-                                        class="tail-select w-full @error('frequency') border-theme-6 @enderror">
+                                        class="tom-select w-full @error('frequency') border-theme-6 @enderror">
                                         @foreach ($exchange_rate_frequencies as $exchange_rate_frequency)
                                             <option value="{{ $exchange_rate_frequency }}"
                                                 @if ($exchange_rate->frequency == $exchange_rate_frequency) selected @endif>
@@ -112,7 +112,7 @@
 
 
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
 
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="is_hard_stop" class="form-label sm:w-30">Hard Stop </label>
