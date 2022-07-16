@@ -163,7 +163,10 @@ class WithdrawController extends Controller
     public function withdrawAccepted(Request $request)
     {
         $transaction = Transaction::find($request->id);
-        $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', auth()->user()->country_id);
+        $workspace = Workspace::find($transaction->workspace_id);
+        $user = $workspace->users()->first();
+     
+        $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', $user->country_id);
         $masterAccount = Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
         if($masterAccount->balance <  $transaction->amount)
         {
