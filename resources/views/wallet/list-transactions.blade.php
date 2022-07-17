@@ -196,7 +196,7 @@
                                     </div>
                                 </td>
                                 <td class="whitespace-nowrap text-left">
-                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" style="color:#70297d !important;">{{ $transaction->urn }}</a>
+                                    <a href="javascript:void(0);" data-tw-toggle="modal" data-tw-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" style="color:#70297d !important;">{{ $transaction->urn }}</a>
                                 </td>
                                 <td class="whitespace-nowrap text-left">{{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}</td>
                                 <td class="whitespace-nowrap text-left">
@@ -251,7 +251,7 @@
                                         <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <x-feathericon-settings class="w-5 h-5 text-gray-600" /> </a>
                                         <div class="dropdown-menu w-40">
                                             <div class="dropdown-menu__content box p-2">
-                                                <a href="javascript:void(0);" data-toggle="modal" data-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <x-feathericon-eye class="w-4 h-4 mr-1" /> Show </a>
+                                                <a href="javascript:void(0);" data-tw-toggle="modal" data-tw-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <x-feathericon-eye class="w-4 h-4 mr-1" /> Show </a>
                                                 @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
                                                     @if ($transactionType != 'deposit' && !is_null(@$transaction?->meta['transfer_status']) && $transaction?->meta['transfer_status'] == 'pending')
                                                     <a href="{{ route('dashboard.wallet.wallet-payout.transferAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"

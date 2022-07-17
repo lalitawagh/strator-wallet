@@ -31,10 +31,10 @@
                                                 <div
                                                     class="sm:flex items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5">
                                                     <div class="w-auto w-auto nav nav-tabs mr-auto hidden sm:flex" role="tablist">
-                                                        <a id="work-in-progress-mobile-new-tab" data-toggle="tab"
-                                                            data-target="#work-in-progress-new" href="javascript:;"
+                                                        <a id="work-in-progress-mobile-new-tab" data-tw-toggle="tab"
+                                                            data-tw-target="#work-in-progress-new" href="javascript:;"
                                                             class="py-2 ml-0 active" role="tab" aria-selected="true">ALL</a>
-                                                        <!-- <a id="week-work-in-progress-mobile-last-week-tab" data-toggle="tab" data-target="#work-in-progress-last-week" href="javascript:;" class="py-2 ml-6" role="tab" aria-selected="false">ASSIGNED TO ME</a>  -->
+                                                        <!-- <a id="week-work-in-progress-mobile-last-week-tab" data-tw-toggle="tab" data-tw-target="#work-in-progress-last-week" href="javascript:;" class="py-2 ml-6" role="tab" aria-selected="false">ASSIGNED TO ME</a>  -->
                                                     </div>
                                                     <div class="flex items-center md:ml-auto mb-2">
                                                         <div
@@ -79,86 +79,83 @@
 
                                                     </div>
 
-                                                    <div class="flex sm:flex mt-5 sm:mt-0 mb-2">
-
-                                                        <div class="dropdown sm:w-auto mr-2">
-                                                            <button
-                                                                class="dropdown-toggle btn btn-sm py-2 btn-outline-secondary w-full sm:w-auto"
-                                                                aria-expanded="false"><i data-feather="filter"
-                                                                    class="w-4 h-4 ml-auto sm:ml-0 mr-2"></i> Filter <i
-                                                                    data-feather="chevron-down"
-                                                                    class="w-4 h-4 ml-auto sm:ml-2"></i> </button>
-                                                            <div class="dropdown-menu w-40 filter-dropbox">
-                                                                <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                                                    <div class="w-full sm:w-auto flex sm:mt-0 sm:mt-0 mb-2">
+                                                        <div class="dropdown mr-2">
+                                                            <button class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 dropdown-toggle btn box flex items-center" aria-expanded="false" data-tw-toggle="dropdown">
+                                                                <i data-lucide="filter" class="w-4 h-4 ml-auto sm:ml-0 mr-2"></i> Filter
+                                                                <i data-lucide="chevron-down" class="w-4 h-4 ml-auto sm:ml-2"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu filter-dropbox">
+                                                                <ul class="dropdown-content">
                                                                     <a id="tabulator-export-xlsx" href="javascript:;"
                                                                         class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                        Add Custom Filter </a>
-                                                                    <form class="filter-form relative">
-                                                                        <div class="form mb-1">
-                                                                            <select data-search="true"
-                                                                                class="tom-select w-full form-control-sm mt-2">
-                                                                                <option value="1">Column Name</option>
-                                                                                <option value="2">Column Name 1</option>
-                                                                                <option value="3">Column Name 2</option>
-                                                                            </select>
-                                                                            <span class="float-right ml-2 absolute plus"
-                                                                                style="margin:0;">
-                                                                                <a href="javascript:;"><i
-                                                                                        data-feather="trash-2"
-                                                                                        class="w-4 h-4 mr-2"></i></a>
-                                                                            </span>
-                                                                        </div>
-                                                                        <div class="form mb-1">
-                                                                            <select data-search="true"
-                                                                                class="tom-select w-full form-control-sm mt-2">
-                                                                                <option value="1">Action is true</option>
-                                                                                <option value="2">Action is false</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </form>
-                                                                    <div class="flex mt-3">
-                                                                        <div class="w-full px-2">
-                                                                            <div class="form-inline">
-                                                                                <button type="submit"
-                                                                                    class="btn btn-elevated-primary btn-sm mr-1"><i
-                                                                                        data-feather="file-text"
-                                                                                        class="w-5 h-5 mr-1"></i>
-                                                                                    Apply</button>
-                                                                                <a href="javascript:void(0);"
-                                                                                    class="btn btn-secondary btn-sm mr-1"><i
-                                                                                        data-feather="plus-circle"
-                                                                                        class="w-5 h-5 mr-1"></i> Add a
-                                                                                    condition</a>
-
+                                                                        Add Custom Filter
+                                                                    </a>
+                                                                    <li>
+                                                                        <form class="filter-form relative">
+                                                                            <div class="form mb-1">
+                                                                                <select data-search="true"
+                                                                                    class="tom-select w-full form-control-sm mt-2">
+                                                                                    <option value="1">Column Name</option>
+                                                                                    <option value="2">Column Name 1
+                                                                                    </option>
+                                                                                    <option value="3">Column Name 2
+                                                                                    </option>
+                                                                                </select>
+                                                                                <span class="float-right ml-2 absolute plus"
+                                                                                    style="margin:0;">
+                                                                                    <a href="javascript:;"><i data-lucide="trash-2" class="w-4 h-4 mr-2"></i></a>
+                                                                                </span>
+                                                                            </div>
+                                                                            <div class="form mb-1">
+                                                                                <select data-search="true"
+                                                                                    class="tom-select w-full form-control-sm mt-2">
+                                                                                    <option value="1">Action is true</option>
+                                                                                    <option value="2">Action is false</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </form>
+                                                                        <div class="flex mt-3">
+                                                                            <div class="w-full px-2">
+                                                                                <div class="form-inline">
+                                                                                    <button type="submit" class="btn btn-elevated-primary btn-sm mr-1">
+                                                                                        <i data-lucide="file-text" class="w-5 h-5 mr-1"></i> Apply
+                                                                                    </button>
+                                                                                    <a href="javascript:void(0);" class="btn btn-secondary btn-sm mr-1">
+                                                                                        <i data-lucide="plus-circle" class="w-5 h-5 mr-1"></i> Add a condition
+                                                                                    </a>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <button id="tabulator-print"
-                                                            class="w-full btn btn-sm py-2 btn-outline-secondary sm:w-auto mr-2">
-                                                            <i data-feather="printer" class="w-4 h-4 mr-2"></i> Print
-                                                        </button>
-                                                        <div class="dropdown sm:w-auto">
-                                                            <button
-                                                                class="dropdown-toggle btn btn-sm py-2 btn-outline-secondary w-full sm:w-auto"
-                                                                aria-expanded="false"> Export <i data-feather="chevron-down"
-                                                                    class="w-4 h-4 ml-auto sm:ml-2"></i> </button>
-                                                            <div class="dropdown-menu w-40">
-                                                                <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                                    <a id="tabulator-export-xlsx" href="javascript:;"
-                                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                        <i data-feather="file-text"
-                                                                            class="w-4 h-4 mr-2"></i> Export XLSX </a>
-                                                                    <a id="tabulator-export-html" href="javascript:;"
-                                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                        <i data-feather="file-text"
-                                                                            class="w-4 h-4 mr-2"></i> Export PDF </a>
-                                                                </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="" class="dropdown-item"> <i data-lucide="activity" class="w-4 h-4 mr-2"></i> <span class="truncate">Indonesian</span> </a>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
                                                         </div>
 
+                                                        <button type="button" class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 btn box mr-2 flex items-center sm:ml-0"> <i data-lucide="printer" class="w-4 h-4 mr-2"></i> Print </button>
+
+                                                        <div class="dropdown">
+                                                            <button class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 dropdown-toggle btn btn-primary shadow-md flex items-center" aria-expanded="false" data-tw-toggle="dropdown">
+                                                                Export <i class="w-4 h-4 ml-2" data-lucide="chevron-down"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu w-40">
+                                                                <ul class="dropdown-content">
+                                                                    <li>
+                                                                        <a id="tabulator-export-xlsx" href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                            <i data-lucide="file-text" class="w-4 h-4 mr-2"></i> Export XLSX
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a id="tabulator-export-html" href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                            <i data-lucide="file-text" class="w-4 h-4 mr-2"></i> Export PDF
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <button type="submit"
                                                         class="btn btn-sm btn-primary sm:ml-2 -mt-1 mb-2">Add New</button>
@@ -383,7 +380,7 @@
                                     </select>
                                     <span class="block text-theme-6 mt-2"></span>
                                 </div>
-                                <a data-toggle="modal" data-target="#walletbenificary-modal"
+                                <a data-tw-toggle="modal" data-tw-target="#walletbenificary-modal"
                                     class="absolute top-0 right-0 plus"
                                     style="cursor: pointer;right: -18px;top: 0;margin-top: 20px;">
                                     <i data-feather="plus-circle" class="w-4 h-4 ml-4"></i>
@@ -443,7 +440,7 @@
                         </div>
                     </form>
                     <div class="text-right mt-5">
-                        <a data-toggle="modal" data-target="#wsave-preview-modal" class="btn btn-primary w-24">Save</a>
+                        <a data-tw-toggle="modal" data-tw-target="#wsave-preview-modal" class="btn btn-primary w-24">Save</a>
                     </div>
                 </div>
             </div>

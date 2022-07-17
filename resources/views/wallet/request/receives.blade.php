@@ -11,8 +11,8 @@
                         Receive/Request payment
                     </h2>
                     {{-- <div>
-                        <a class="btn btn-sm btn-primary shadow-md" data-toggle="modal"
-                            data-target="#WalletPayout-modal">Payout</a>
+                        <a class="btn btn-sm btn-primary shadow-md" data-tw-toggle="modal"
+                            data-tw-target="#WalletPayout-modal">Payout</a>
                     </div> --}}
                 </div>
                 <!--S Payout list-->
@@ -50,8 +50,8 @@
                                     </select>
                                     <span class="block text-theme-6 mt-2"></span>
                                 </div>
-                                <a data-toggle="modal" data-target="#walletbenificary-modal" class="absolute top-0 right-0 plus" style="cursor: pointer;right: -18px;top: 0;margin-top: 20px;">
-                                    <i data-feather="plus-circle" class="w-4 h-4 ml-4"></i>
+                                <a data-tw-toggle="modal" data-tw-target="#walletbenificary-modal" class="absolute top-0 right-0 plus" style="cursor: pointer;right: -18px;top: 0;margin-top: 20px;">
+                                    <i data-lucide="plus-circle" class="w-4 h-4 ml-4"></i>
                                 </a>
                             </div>
                             <div class="col-span-12 md:col-span-12 lg:col-span-6 form-inline mt-0">
@@ -105,7 +105,7 @@
                         </div>
                     </form>
                     <div class="text-right mt-5">
-                        <a data-toggle="modal" data-target="#wsave-preview-modal" class="btn btn-primary w-24">Save</a>
+                        <a data-tw-toggle="modal" data-tw-target="#wsave-preview-modal" class="btn btn-primary w-24">Save</a>
                     </div>
                 </div>
 
