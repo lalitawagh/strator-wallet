@@ -105,17 +105,13 @@ class FeeController extends Controller
 
         Setting::updateOrCreate(['key' => 'wallet_fees'], ['value' => $settings]);
 
+        $count = $request->count ?? 0;
         $url = $request->previousPage ?? route("dashboard.wallet.fee.index");
+        $message = [
+            'status' => 'success',
+            'message' => 'Fee deleted successfully.',
+        ];
 
-        if($request->count > 1)
-            return redirect()->back()->with([
-                'status' => 'success',
-                'message' => 'Fee deleted successfully.',
-            ]);
-        else
-            return redirect($url)->with([
-                'status' => 'success',
-                'message' => 'Fee deleted successfully.',
-            ]);
+        return Helper::redirectionOnDelete($count, $url, $message);
     }
 }
