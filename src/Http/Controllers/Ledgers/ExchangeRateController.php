@@ -2,9 +2,11 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
+use Illuminate\Http\Request;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Http\Helper;
 use Kanexy\LedgerFoundation\Http\Requests\StoreExchangeRateRequest;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
@@ -102,16 +104,20 @@ class ExchangeRateController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $this->authorize(ExchangeRatePolicy::DELETE, ExchangeRate::class);
 
         $exchange_rate = ExchangeRate::findOrFail($id);
         $exchange_rate->delete();
 
-        return redirect()->route("dashboard.wallet.exchange-rate.index")->with([
+        $count = $request->count ?? 0;
+        $url = $request->previousPage ?? route("dashboard.wallet.exchange-rate.index");
+        $message = [
             'status' => 'success',
             'message' => 'Exchange rate deleted successfully.',
-        ]);
+        ];
+
+        return Helper::redirectionOnDelete($count, $url, $message);
     }
 }

@@ -14,4 +14,12 @@ class Helper
         $items = $items instanceof Collection ? $items : Collection::make($items);
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, ['path' => request()->url()]);
     }
+
+    public static function redirectionOnDelete($count, $url, $message)
+    {
+        if($count > 1)
+            return redirect()->back()->with($message);
+        else
+            return redirect($url)->with($message);
+    }
 }
