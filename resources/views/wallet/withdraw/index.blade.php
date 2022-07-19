@@ -159,7 +159,7 @@
                                                     @if ($user->isSubscriber())
                                                         <a href="{{ route('dashboard.wallet.withdraw.create', ['workspace_id' => $workspace->id]) }}"
                                                             type="button"
-                                                            class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Withdraw</a>
+                                                            class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2 py-2">Withdraw</a>
                                                     @endif
                                                 </div>
                                                 <!-- BEGIN: HTML Table Data -->

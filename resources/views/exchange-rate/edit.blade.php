@@ -37,7 +37,7 @@
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
 
-                                    <select name="base_currency" id="base_currency" class="form-control"
+                                    <select name="base_currency" id="base_currency" class="tom-select form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}"
@@ -56,7 +56,7 @@
                                 <label for="exchange_currency" class="form-label sm:w-30">Exchange To <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
-                                    <select name="exchange_currency" id="exchange_currency" class="form-control"
+                                    <select name="exchange_currency" id="exchange_currency" class="tom-select form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}" @if ($exchange_rate->exchange_currency == $ledger->getKey()) selected @endif>{{ $ledger->name }}</option>

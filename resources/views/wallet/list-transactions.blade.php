@@ -4,9 +4,9 @@
             <x-list-view-filters/>
             @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSubscriber())
                 @if ($transactionType == 'deposit')
-                <a href="{{ route('dashboard.wallet.deposit.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Deposit</a>
+                <a href="{{ route('dashboard.wallet.deposit.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2 py-2">Deposit</a>
                 @elseif ($transactionType == 'payout')
-                <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Payout</a>
+                <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2 py-2">Payout</a>
                 @endif
             @endif
         </div>
@@ -248,7 +248,14 @@
                                 <td class="whitespace-nowrap text-left">{{ @$transaction->meta['reference'] }}</td>
                                 <td class="table-report__action">
                                     <div class="absolute top-0 mt-2 dropdown">
-                                        <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <x-feathericon-settings class="w-5 h-5 text-gray-600" /> </a>
+                                        {{-- <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false">
+                                            <x-feathericon-settings class="w-5 h-5 text-gray-600" />
+                                        </a> --}}
+                                        <button class="dropdown-toggle btn px-2 box" aria-expanded="false" data-tw-toggle="dropdown">
+                                            <span class="w-5 h-5 flex items-center justify-center">
+                                                <i class="w-5 h-5" data-lucide="settings"></i>
+                                            </span>
+                                        </button>
                                         <div class="dropdown-menu w-40">
                                             <div class="dropdown-menu__content box p-2">
                                                 <a href="javascript:void(0);" data-tw-toggle="modal" data-tw-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <x-feathericon-eye class="w-4 h-4 mr-1" /> Show </a>

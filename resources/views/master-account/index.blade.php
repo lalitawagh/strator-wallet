@@ -33,7 +33,7 @@
                 <div class="intro-y mt-0">
                     <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
                         <x-list-view-filters/>
-                        <a href="{{ route('dashboard.wallet.master-account.create') }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Create New</a>
+                        <a href="{{ route('dashboard.wallet.master-account.create') }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2 py-2">Create New</a>
                     </div>
                 </div>
                 <div class="intro-y p-0 mt-0 overflow-x-auto overflow-y-hidden">

@@ -44,7 +44,7 @@
             <div class="sm:w-5/6 tillselect-marging">
 
                 <select name="asset_category" wire:change="changeAssetCategory($event.target.value)" id="asset_category"
-                    class="w-full @error('asset_category') border-theme-6 @enderror form-control">
+                    class="tom-select w-full @error('asset_category') border-theme-6 @enderror form-control">
                     <option value="">Select Asset Category</option>
                     @foreach ($asset_categories as $key => $asset_category)
                         <option value="{{ $asset_category }}" @if (old('asset_category', $selected_asset_category) == $asset_category) selected @endif>
@@ -62,7 +62,7 @@
             <label for="asset_type" class="form-label sm:w-30"> Asset Type <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging">
                 <select name="asset_type" id="asset_type" wire:change="changeAssetType($event.target.value)"
-                    class="w-full  @error('asset_type') border-theme-6 @enderror form-control">
+                    class="tom-select w-full  @error('asset_type') border-theme-6 @enderror form-control">
                     <option value="">Select Asset Type</option>
                     @foreach ($asset_types as $asset_type)
                         <option value="{{ $asset_type['id'] }}" @if (old('asset_type') == $asset_type['id'] || $selected_asset_type == $asset_type['id']) selected @endif>

@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-span-12 sm:col-span-8 md:col-span-6">
                         <label for="modal-form-6" class="form-label">Size</label>
-                        <select id="modal-form-6" class="form-select">
+                        <select id="modal-form-6" class="tom-select form-select">
                             <option>10</option>
                             <option>25</option>
                             <option>35</option>
