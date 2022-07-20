@@ -2,6 +2,7 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
+use Illuminate\Http\Request;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Contracts\AssetTypeConfiguration;
@@ -84,7 +85,7 @@ class AssetTypeController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $this->authorize(AssetTypePolicy::DELETE, AssetTypeConfiguration::class);
 
@@ -97,9 +98,13 @@ class AssetTypeController extends Controller
 
         Setting::updateOrCreate(['key' => 'asset_types'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.wallet.asset-type.index")->with([
+        $count = $request->count ?? 0;
+        $url = $request->previousPage ?? route("dashboard.wallet.asset-type.index");
+        $message = [
             'status' => 'success',
             'message' => 'Asset Type deleted successfully.',
-        ]);
+        ];
+
+        return Helper::redirectionOnDelete($count, $url, $message);
     }
 }

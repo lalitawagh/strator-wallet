@@ -116,6 +116,9 @@
                                                         @csrf
                                                         @method('DELETE')
 
+                                                        <input type="hidden" name="count" value="{{ $asset_class_lists->count() }}" />
+                                                        <input type="hidden" name="previousPage" value="{{ $asset_class_lists->previousPageUrl() }}" />
+
                                                         <button type="submit"
                                                             class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
                                                             <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete
