@@ -90,7 +90,7 @@
                                         <td class="whitespace-nowrap text-left">{{ $commodity_type_list['name'] }}</td>
                                         <td class="whitespace-nowrap text-left">
                                             @isset($commodity_type_list['image'])
-                                            <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($commodity_type_list['image']) }}">
+                                            <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($commodity_type_list['image'],now()->addMinutes(5)) }}">
                                             @endisset
                                         </td>
                                         <td class="whitespace-nowrap text-left">
@@ -113,6 +113,9 @@
                                                                 method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
+
+                                                                <input type="hidden" name="count" value="{{ $commodity_type_lists->count() }}" />
+                                                                <input type="hidden" name="previousPage" value="{{ $commodity_type_lists->previousPageUrl() }}" />
 
                                                             <button type="submit"
                                                                 class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">

@@ -2,6 +2,7 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
+use Illuminate\Http\Request;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration;
@@ -15,7 +16,7 @@ class CommodityTypeController extends Controller
     {
         $this->authorize(CommodityTypePolicy::VIEW, CommodityTypeConfiguration::class);
 
-        $commodity_type_lists = Helper::paginate(collect(Setting::getValue('commodity_types', []))->sort());
+        $commodity_type_lists = Helper::paginate(collect(Setting::getValue('commodity_types', []))->reverse());
 
         return view("ledger-foundation::commodity-type.index", compact('commodity_type_lists'));
     }
@@ -83,7 +84,7 @@ class CommodityTypeController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $this->authorize(CommodityTypePolicy::DELETE, CommodityTypeConfiguration::class);
 
@@ -96,9 +97,13 @@ class CommodityTypeController extends Controller
 
         Setting::updateOrCreate(['key' => 'commodity_types'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.wallet.commodity-type.index")->with([
+        $count = $request->count ?? 0;
+        $url = $request->previousPage ?? route("dashboard.wallet.commodity-type.index");
+        $message = [
             'status' => 'success',
             'message' => 'Commodity Type deleted successfully.',
-        ]);
+        ];
+
+        return Helper::redirectionOnDelete($count, $url, $message);
     }
 }

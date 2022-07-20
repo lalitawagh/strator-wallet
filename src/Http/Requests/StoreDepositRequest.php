@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\DepositPolicy;
 
@@ -44,7 +45,8 @@ class StoreDepositRequest extends FormRequest
                 }
             }
 
-            $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $this->input('currency'));
+            $legder = Ledger::whereId($this->input('currency'))->first();
+            $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $legder?->asset_type);
             if (is_null($asset_type)) {
                 $validator->errors()->add('currency', 'Currency not exists');
             }

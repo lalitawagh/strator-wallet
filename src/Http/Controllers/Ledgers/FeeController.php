@@ -2,6 +2,7 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
+use Illuminate\Http\Request;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Contracts\Fee;
@@ -17,7 +18,7 @@ class FeeController extends Controller
     {
         $this->authorize(FeePolicy::VIEW, Fee::class);
 
-        $fees = Helper::paginate(collect(Setting::getValue('wallet_fees',[]))->sort());
+        $fees = Helper::paginate(collect(Setting::getValue('wallet_fees',[]))->reverse());
 
         return view("ledger-foundation::fees.index", compact('fees'));
     }
@@ -91,7 +92,7 @@ class FeeController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $this->authorize(FeePolicy::DELETE, Fee::class);
 
@@ -104,9 +105,13 @@ class FeeController extends Controller
 
         Setting::updateOrCreate(['key' => 'wallet_fees'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.wallet.fee.index")->with([
+        $count = $request->count ?? 0;
+        $url = $request->previousPage ?? route("dashboard.wallet.fee.index");
+        $message = [
             'status' => 'success',
             'message' => 'Fee deleted successfully.',
-        ]);
+        ];
+
+        return Helper::redirectionOnDelete($count, $url, $message);
     }
 }
