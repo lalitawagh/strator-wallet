@@ -117,7 +117,7 @@
 }
 .configuration-nav .side-nav {width: auto;color: #333;}
 
-.configuration-nav .side-nav .side-menu__title {
+/* .configuration-nav .side-nav .side-menu__title {
     color: #333;
     display:flex !important;
 }
@@ -127,7 +127,7 @@
 }
 .configuration-nav .side-nav .side-menu__icon {
     color: #333;
-}
+} */
 .configuration-nav .side-nav>ul>li>.side-menu.side-menu--active {
     --tw-bg-opacity: 1;
     background-color:transparent !important;
@@ -267,14 +267,14 @@ display: contents !important;
                     <ul>
                         <li>
                             <a href="#" class="side-menu">
-                                <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> General </div>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('dashboard.wallet.ledger.index') }}"
                                 class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.ledger.index' || Route::current()->getName() == 'dashboard.wallet.ledger.create' || Route::current()->getName() == 'dashboard.wallet.ledger.edit') side-menu--active @endif">
-                                <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Ledgers </div>
                             </a>
                         </li>
@@ -284,10 +284,10 @@ display: contents !important;
                                 @if (Route::current()->getName() == 'dashboard.wallet.asset-type.index' || Route::current()->getName() == 'dashboard.wallet.asset-type.create' || Route::current()->getName() == 'dashboard.wallet.asset-type.edit' || Route::current()->getName() == 'dashboard.wallet.asset-class.index' || Route::current()->getName() == 'dashboard.wallet.asset-class.create' || Route::current()->getName() == 'dashboard.wallet.asset-class.edit' || Route::current()->getName() == 'dashboard.wallet.commodity-type.index' || Route::current()->getName() == 'dashboard.wallet.commodity-type.create' || Route::current()->getName() == 'dashboard.wallet.commodity-type.edit')
                                     side-menu--active side-menu--open
                                 @endif">
-                                <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title">
                                     Config Fields
-                                    <div class="side-menu__sub-icon"> <i data-feather="chevron-down"></i> </div>
+                                    <div class="side-menu__sub-icon"> <i data-lucide="chevron-down"></i> </div>
                                 </div>
                             </a>
                             @if (Route::current()->getName() == 'dashboard.wallet.asset-type.index' || Route::current()->getName() == 'dashboard.wallet.asset-type.create' || Route::current()->getName() == 'dashboard.wallet.asset-type.edit' || Route::current()->getName() == 'dashboard.wallet.asset-class.index' || Route::current()->getName() == 'dashboard.wallet.asset-class.create' || Route::current()->getName() == 'dashboard.wallet.asset-class.edit' || Route::current()->getName() == 'dashboard.wallet.commodity-type.index' || Route::current()->getName() == 'dashboard.wallet.commodity-type.create' || Route::current()->getName() == 'dashboard.wallet.commodity-type.edit')
@@ -299,7 +299,7 @@ display: contents !important;
                             <a href="{{ route('dashboard.wallet.asset-type.index') }}"
                                 class="side-menu  @if (Route::current()->getName() == 'dashboard.wallet.asset-type.index' || Route::current()->getName() == 'dashboard.wallet.asset-type.create' || Route::current()->getName() == 'dashboard.wallet.asset-type.edit')
                                          side-menu--active @endif">
-                                <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Asset Type </div>
                             </a>
                         </li>
@@ -308,14 +308,14 @@ display: contents !important;
                                 class="side-menu
                                     @if (Route::current()->getName() == 'dashboard.wallet.asset-class.index' || Route::current()->getName() == 'dashboard.wallet.asset-class.create' || Route::current()->getName() == 'dashboard.wallet.asset-class.edit')
                                          side-menu--active @endif">
-                                <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Asset Class </div>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('dashboard.wallet.commodity-type.index') }}"
                                 class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.commodity-type.index' || Route::current()->getName() == 'dashboard.wallet.commodity-type.create' || Route::current()->getName() == 'dashboard.wallet.commodity-type.edit')  side-menu--active @endif">
-                                <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> Commodity Type </div>
                             </a>
                         </li>
@@ -324,46 +324,46 @@ display: contents !important;
                     <li>
                         <a href="{{ route('dashboard.wallet.exchange-rate.index') }}"
                             class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.exchange-rate.index' || Route::current()->getName() == 'dashboard.wallet.exchange-rate.create' || Route::current()->getName() == 'dashboard.wallet.exchange-rate.edit') side-menu--active @endif">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="side-menu__title"> Exchange Rate </div>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('dashboard.wallet.master-account.index') }}"
                             class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.master-account.index' || Route::current()->getName() == 'dashboard.wallet.master-account.create' || Route::current()->getName() == 'dashboard.wallet.master-account.edit') side-menu--active @endif">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="side-menu__title"> Master Account </div>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('dashboard.wallet.fee.index') }}"
                             class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.fee.index' || Route::current()->getName() == 'dashboard.wallet.fee.create' || Route::current()->getName() == 'dashboard.wallet.fee.edit') side-menu--active @endif">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="side-menu__title"> Fees Setup </div>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="side-menu__title"> Notifications </div>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="side-menu__title"> ForEx </div>
                         </a>
                     </li>
 
                     <li>
                         <a href="#" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="side-menu__title"> Payment Methods </div>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="side-menu__title"> Preferences </div>
                         </a>
                     </li>

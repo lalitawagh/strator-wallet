@@ -25,7 +25,7 @@
                                     @php
                                         $asset_categories = \Kanexy\LedgerFoundation\Enums\AssetCategory::toArray();
                                     @endphp
-                                    <select name="asset_category" id="asset_category"  data-search="true" class="tail-select w-full @error('asset_category') border-theme-6 @enderror">
+                                    <select name="asset_category" id="asset_category"  data-search="true" class="tom-select w-full @error('asset_category') border-theme-6 @enderror">
                                         @foreach ($asset_categories as $key => $asset_category)
                                             <option value="{{ $asset_category }}" @if (old('asset_category') == $asset_category) selected @endif>{{ trans('ledger-foundation::configuration.'.$asset_category) }}</option>
                                         @endforeach

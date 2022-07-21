@@ -278,11 +278,11 @@
 </div>
 @push('scripts')
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            Livewire.hook('element.updated', (el, component) => {
-                feather.replace();
-            });
-        });
+        // document.addEventListener("DOMContentLoaded", () => {
+        //     Livewire.hook('element.updated', (el, component) => {
+        //         feather.replace();
+        //     });
+        // });
 
         $(".edit-transaction").click(function() {
             $(this).addClass('hidden');

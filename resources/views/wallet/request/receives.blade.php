@@ -11,18 +11,18 @@
                         Receive/Request payment
                     </h2>
                     {{-- <div>
-                        <a class="btn btn-sm btn-primary shadow-md" data-toggle="modal"
-                            data-target="#WalletPayout-modal">Payout</a>
+                        <a class="btn btn-sm btn-primary shadow-md" data-tw-toggle="modal"
+                            data-tw-target="#WalletPayout-modal">Payout</a>
                     </div> --}}
                 </div>
                 <!--S Payout list-->
                 <div class="p-5">
                     <form action="" method="">
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                             <div class="col-span-12 md:col-span-12 lg:col-span-6 form-inline mt-0">
                                 <label for="" class="form-label sm:w-28"> Wallet <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <select data-search="true" class="tail-select mt-0 sm:mr-2 w-full  form-control mb-1" name="currency">
+                                    <select data-search="true" class="tom-select mt-0 sm:mr-2 w-full  form-control mb-1" name="currency">
 
                                         <option>Paypal</option>
                                         <option>Stripe</option>
@@ -39,19 +39,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                             <div class="col-span-12 md:col-span-12 lg:col-span-6 form-inline mt-0 relative">
                                 <label for="" class="form-label sm:w-28"> Beneficiary <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <select data-search="true" class="tail-select mt-0 sm:mr-2 w-full  form-control mb-1" name="currency">
+                                    <select data-search="true" class="tom-select mt-0 sm:mr-2 w-full  form-control mb-1" name="currency">
                                         <option>Paypal</option>
                                         <option>Stripe</option>
                                         <option>Bank</option>
                                     </select>
                                     <span class="block text-theme-6 mt-2"></span>
                                 </div>
-                                <a data-toggle="modal" data-target="#walletbenificary-modal" class="absolute top-0 right-0 plus" style="cursor: pointer;right: -18px;top: 0;margin-top: 20px;">
-                                    <i data-feather="plus-circle" class="w-4 h-4 ml-4"></i>
+                                <a data-tw-toggle="modal" data-tw-target="#walletbenificary-modal" class="absolute top-0 right-0 plus" style="cursor: pointer;right: -18px;top: 0;margin-top: 20px;">
+                                    <i data-lucide="plus-circle" class="w-4 h-4 ml-4"></i>
                                 </a>
                             </div>
                             <div class="col-span-12 md:col-span-12 lg:col-span-6 form-inline mt-0">
@@ -62,7 +62,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                             <div class="col-span-12 md:col-span-12 lg:col-span-6 form-inline mt-0">
                                 <label for="" class="form-label sm:w-28"> Amount to Pay <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
@@ -78,7 +78,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                             <div class="col-span-12 md:col-span-12 lg:col-span-6 form-inline mt-0" style="align-items: center;">
                                 <label for="" class="form-label sm:w-28"> Note </label>
                                 <div class="sm:w-5/6">
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
                             <div class="col-span-12 md:col-span-12 lg:col-span-6 form-inline mt-0">
                                 <label for="" class="form-label sm:w-28"> Reason </label>
                                 <div class="sm:w-5/6">
@@ -105,7 +105,7 @@
                         </div>
                     </form>
                     <div class="text-right mt-5">
-                        <a data-toggle="modal" data-target="#wsave-preview-modal" class="btn btn-primary w-24">Save</a>
+                        <a data-tw-toggle="modal" data-tw-target="#wsave-preview-modal" class="btn btn-primary w-24">Save</a>
                     </div>
                 </div>
 

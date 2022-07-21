@@ -12,14 +12,14 @@ $totalAmount = $transaction->amount;
         <div class="text-xs text-right sm:ml-auto flex mb-0">
             <a target="_blank" href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&subject=Manual Deposit Account Details&body= Payee Name :- {{  $transaction?->meta['sender_name'] }} %0D%0A Payment reference :- {{ @$transaction?->meta['reference_no'] }} %0D%0A Amount To Send:- {{ $totalAmount }} {{ @$details['currency'] }}
                     %0D%0A Bank Account Name:- {{ $depositMasterAccountDetails['account_holder_name'] }} %0D%0A Account Number :- {{ $depositMasterAccountDetails['account_number'] }} %0D%0A  @isset($depositMasterAccountDetails['sort_code']) Sort Number:- {{ @$depositMasterAccountDetails['sort_code'] }} @else IFSC Code:- {{ @$depositMasterAccountDetails['ifsc_code'] }} @endisset ">
-                <i data-feather="share-2" class="dark:text-gray-300 block mx-auto mr-2"></i>
+                <i data-lucide="share-2" class="dark:text-gray-300 block mx-auto mr-2"></i>
             </a>
-            <a href="javascript:void(0);" onclick="get_pdf('manual')"><i data-feather="download" class="dark:text-gray-300 block mx-auto mr-2"></i></a>
+            <a href="javascript:void(0);" onclick="get_pdf('manual')"><i data-lucide="download" class="dark:text-gray-300 block mx-auto mr-2"></i></a>
             <a onclick="copyData(this)"
                 data-copy="Manual Deposit Account Details- Payee Name :- {{  $transaction?->meta['sender_name'] }}  Payment reference :- {{ @$transaction?->meta['reference_no'] }}  Amount To Send:- {{ $totalAmount }} {{ @$details['currency'] }}
                     Bank Account Name:- {{ $depositMasterAccountDetails['account_holder_name'] }}  Account Number :- {{ $depositMasterAccountDetails['account_number'] }}  @isset($depositMasterAccountDetails['sort_code']) Sort Number:- {{ @$depositMasterAccountDetails['sort_code'] }} @else   IFSC Code:- {{ @$depositMasterAccountDetails['ifsc_code'] }} @endisset  "
                 href="javascript:void(0);">
-                <i data-feather="copy" class="dark:text-gray-300 block mx-auto mr-2"></i>
+                <i data-lucide="copy" class="dark:text-gray-300 block mx-auto mr-2"></i>
             </a>
         </div>
     </div>

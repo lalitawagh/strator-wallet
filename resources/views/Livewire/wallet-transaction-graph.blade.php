@@ -9,8 +9,8 @@
         <div class="hidden" id="updateWalletDebit">{{ $debitWalletTransactionGraphData }}</div>
         <div class="dropdown xl:ml-auto mt-5 xl:mt-0">
             <div class="sm:ml-auto mt-3 sm:mt-0 relative text-gray-700 dark:text-gray-300">
-                <i data-feather="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>
-                <select class="tail-select w-60" wire:change="getWalletTransaction($event.target.value)">
+                <i data-lucide="calendar" class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"></i>
+                <select class="tom-select w-60" wire:change="getWalletTransaction($event.target.value)">
                     @foreach ($wallets as $wallet)
                         <option value="{{ $wallet->getKey() }}" @if($selected_wallet == $wallet->getKey()) selected @endif>{{ $wallet->ledger?->name }}</option>
                     @endforeach

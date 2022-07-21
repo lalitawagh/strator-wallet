@@ -37,7 +37,7 @@
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
 
-                                    <select name="base_currency" id="base_currency" class="form-control"
+                                    <select name="base_currency" id="base_currency" class="tom-select form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}"
@@ -56,7 +56,7 @@
                                 <label for="exchange_currency" class="form-label sm:w-30">Exchange To <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
-                                    <select name="exchange_currency" id="exchange_currency" class="form-control"
+                                    <select name="exchange_currency" id="exchange_currency" class="tom-select form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}" @if ($exchange_rate->exchange_currency == $ledger->getKey()) selected @endif>{{ $ledger->name }}</option>
@@ -79,7 +79,7 @@
                                         $exchange_rate_frequencies = \Kanexy\LedgerFoundation\Enums\ExchangeRateFrequency::toArray();
                                     @endphp
                                     <select name="frequency" id="frequency" data-search="true"
-                                        class="tail-select w-full @error('frequency') border-theme-6 @enderror">
+                                        class="tom-select w-full @error('frequency') border-theme-6 @enderror">
                                         @foreach ($exchange_rate_frequencies as $exchange_rate_frequency)
                                             <option value="{{ $exchange_rate_frequency }}"
                                                 @if ($exchange_rate->frequency == $exchange_rate_frequency) selected @endif>
@@ -112,7 +112,7 @@
 
 
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-8 mt-0">
 
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="is_hard_stop" class="form-label sm:w-30">Hard Stop </label>

@@ -164,8 +164,9 @@
                                         <td class="whitespace-nowrap text-left">{{ $ledger->name }}</td>
                                         <td class="whitespace-nowrap text-left">
                                             @isset($ledger->image)
-                                                <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" alt=""
-                                                    src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($ledger->image,now()->addMinutes(5)) }}">
+                                                <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default"
+                                                    alt=""
+                                                    src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($ledger->image, now()->addMinutes(5)) }}">
                                             @endisset
                                         </td>
                                         <td class="whitespace-nowrap text-left">
@@ -181,50 +182,59 @@
                                             {{ trans('ledger-foundation::configuration.' . $ledger->status) }}</td>
                                         <td class="whitespace-nowrap text-left">
                                             <div class="dropdown">
-                                                <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                                    <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
+                                                <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
+                                                    data-tw-toggle="dropdown">
+                                                    <span class="w-5 h-5 flex items-center justify-center">
+                                                        <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
+                                                    </span>
                                                 </button>
+                                                <div class="dropdown-menu w-40">
+                                                    <ul class="dropdown-content">
+                                                        <li>
+                                                            <a href="{{ route('dashboard.wallet.ledger.edit', $ledger->id) }}"
+                                                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
+                                                            </a>
+                                                        </li>
 
-                                                <div class="dropdown-menu w-48">
-                                                    <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                                        <a href="{{ route('dashboard.wallet.ledger.edit', $ledger->id) }}"
-                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                            <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
-                                                        </a>
-                                                        <form
-                                                            action="{{ route('dashboard.wallet.ledger.destroy', $ledger->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
+                                                        <li>
+                                                            <form
+                                                                action="{{ route('dashboard.wallet.ledger.destroy', $ledger->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
 
-                                                            <input type="hidden" name="count" value="{{ $ledgers->count() }}" />
-                                                            <input type="hidden" name="previousPage" value="{{ $ledgers->previousPageUrl() }}" />
+                                                                <input type="hidden" name="count"
+                                                                    value="{{ $ledgers->count() }}" />
+                                                                <input type="hidden" name="previousPage"
+                                                                    value="{{ $ledgers->previousPageUrl() }}" />
 
-                                                            <button type="submit"
-                                                                class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
-                                                                <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete
-                                                            </button>
-                                                        </form>
-                                                    </div>
+                                                                <button type="submit"
+                                                                    class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                                    <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
+                                                                    Delete
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $i++;
+                                    @endphp
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                    </td>
-                    </tr>
-                    @php
-                    $i++;
-                    @endphp
-                    @endforeach
-                    </tbody>
-                    </table>
-                </div>
-                <div class="my-2">
-                    {{ $ledgers->links() }}
+                    <div class="my-2">
+                        {{ $ledgers->links() }}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- END: Daily Sales -->
+        <!-- END: Daily Sales -->
 
     </div>
     </div>

@@ -176,7 +176,7 @@
                                                 </div>
                                             </div>
                                             <div class="source-code hidden">
-                                                <button data-target="#copy-standard-editor" class="copy-code btn py-1 px-2 btn-outline-secondary"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Copy example code </button>
+                                                <button data-tw-target="#copy-standard-editor" class="copy-code btn py-1 px-2 btn-outline-secondary"> <i data-lucide="file" class="w-4 h-4 mr-2"></i> Copy example code </button>
                                                 <div class="overflow-y-auto mt-3 rounded-md">
                                                     <pre class="source-preview" id="copy-standard-editor"> <code class="text-xs p-0 rounded-md html pl-5 pt-8 pb-4 -mb-10 -mt-10"> HTMLOpenTagdiv class=&quot;editor&quot;HTMLCloseTag HTMLOpenTagpHTMLCloseTagContent of the editor.HTMLOpenTag/pHTMLCloseTag HTMLOpenTag/divHTMLCloseTag </code> </pre>
                                                 </div>
@@ -189,7 +189,7 @@
                                 <div class="w-full">
                                     <div class="form-inline mt-2">
                                         <label for="regular-form-1" class="form-label sm:w-20">Status</label>
-                                        <select data-search="true" class="tail-select w-full form-control">
+                                        <select data-search="true" class="tom-select w-full form-control">
                                             <option value="1">Open</option>
                                             <option value="2">Type and search field2</option>
                                         </select>

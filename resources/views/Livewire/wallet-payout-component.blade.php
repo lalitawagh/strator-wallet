@@ -4,7 +4,7 @@
             <label for="wallet" class="form-label sm:w-30"> Payout From <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging" wire:ignore>
                 <select wire:change="getWalletBalance($event.target.value)" name="wallet" id="wallet"
-                    class="form-control" data-search="true" required>
+                    class="tom-select form-control" data-search="true" required>
                     <option value="">Select Payout From</option>
                     @foreach ($wallets as $wallet)
                         <option value="{{ $wallet->getKey() }}" @if (old('wallet',$selected_wallet) == $wallet->getKey()) selected @endif>
@@ -33,13 +33,13 @@
                     class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging">
                 <div class="w-full relative">
-                    <select wire:change="changeBeneficiary($event.target.value)" name="beneficiary" id="beneficiary" class="form-control"  data-search="true">
+                    <select wire:change="changeBeneficiary($event.target.value)" name="beneficiary" id="beneficiary" class="tom-select form-control"  data-search="true">
                         @foreach ($beneficiaries as $beneficiary)
                             <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
                         @endforeach
                     </select>
-                    <a data-toggle="modal" data-target="#walletbenificary-modal" class="absolute top-0 right-0 plus" style="">
-                        <i data-feather="plus-circle" class="w-4 h-4 ml-4"></i>
+                    <a data-tw-toggle="modal" data-tw-target="#walletbenificary-modal" class="absolute top-0 right-0 plus" style="">
+                        <i data-lucide="plus-circle" class="w-4 h-4 ml-4"></i>
                     </a>
                 </div>
                 @error('beneficiary')
@@ -73,7 +73,7 @@
                         </span>
 
                         <select id="countryWithPhone" name="country_code" onchange="getFlagImg(this)" data-search="true"
-                            class="tail-select" style="width:30%">
+                            class="tom-select" style="width:30%">
                             @foreach ($countryWithFlags as $country)
                                 <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                                     @isset($country_code) @if ($country->id == $country_code) selected @endif @else @if ($country->id == old('country_code', $user->country_id)) selected @else  @endif @endisset>
@@ -126,7 +126,7 @@
                     class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging">
                 <select name="receiver_currency" id="receiver_currency"
-                    wire:change="changeCurrency($event.target.value)" class="form-control" data-search="true"
+                    wire:change="changeCurrency($event.target.value)" class="tom-select form-control" data-search="true"
                     required>
                     <option value="">Select Payout To</option>
                     @foreach ($wallets as $wallet)

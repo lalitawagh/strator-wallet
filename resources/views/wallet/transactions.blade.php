@@ -54,9 +54,9 @@
                                             <div class="h-full bg-gray-200 dark:bg-dark-1 rounded-md">
                                                 <h3 class="h-full font-medium flex items-center justify-center text-2xl">
                                                     <a id="{{ $key }}-tab" href="javascript:void(0);"
-                                                    onclick="walletTabSelect('{{ $wallet->getKey() }}')" data-toggle="tab"
+                                                    onclick="walletTabSelect('{{ $wallet->getKey() }}')" data-tw-toggle="tab"
                                                     class="flex-1 items-center px-3 py-2 mt-2 pb-5 font-medium wallet-slide-tab @if($key == 0) active @endif">
-                                                        <div class="col-span-12 sm:col-span-4 xl:col-span-4 intro-y" id="k-wallet" data-toggle="tab" data-target="#k-wallet">
+                                                        <div class="col-span-12 sm:col-span-4 xl:col-span-4 intro-y" id="k-wallet" data-tw-toggle="tab" data-tw-target="#k-wallet">
                                                             <div class="report-box zoom-in">
                                                                 <div class="box p-5">
                                                                     <div class="flex">

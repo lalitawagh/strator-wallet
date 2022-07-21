@@ -4,7 +4,7 @@
             <label for="wallet" class="form-label sm:w-30"> Withdraw From <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging" wire:ignore>
                 <select wire:change="getWalletBalance($event.target.value)" name="sender_wallet_account_id" id="wallet"
-                    class="form-control" data-search="true" required>
+                    class="tom-select form-control" data-search="true" required>
                     <option value="">Select Withdraw From</option>
                     @foreach ($wallets as $wallet)
                         <option value="{{ $wallet->getKey() }}" @if ($selected_wallet == $wallet->getKey()) selected @endif>
@@ -33,13 +33,13 @@
                     class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
                 <div class="w-full relative">
-                <select name="beneficiary_id" id="beneficiary_id" class="form-control" data-search="true">
+                <select name="beneficiary_id" id="beneficiary_id" class="tom-select form-control" data-search="true">
                     @foreach ($beneficiaries as $beneficiary)
                         <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
                     @endforeach
                 </select>
-                <a data-toggle="modal" data-target="#withdrawbenificary-modal" class="absolute top-0 right-0 plus" style="">
-                    <i data-feather="plus-circle" class="w-4 h-4 ml-4"></i>
+                <a data-tw-toggle="modal" data-tw-target="#withdrawbenificary-modal" class="absolute top-0 right-0 plus" style="">
+                    <i data-lucide="plus-circle" class="w-4 h-4 ml-4"></i>
                 </a>
                 </div>
                 @error('beneficiary_id')
