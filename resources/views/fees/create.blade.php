@@ -70,7 +70,7 @@
                         </div>
 
 
-                        <div class="grid grid-cols-12 md:gap-3 mt-2">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-2">
                             <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-0">
                                 <label for="payment_type" class="form-label sm:w-30">Payment Type <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
@@ -91,7 +91,7 @@
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-0">
                                 <label for="status" class="form-label sm:w-30"> Status </label>
                                 <div class="sm:w-5/6 tillselect-marging">
-                                    <input id="status" name="status" type="checkbox" class="form-check-switch"  @if (old("status")  === \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) checked @endif>
+                                    <input id="status" name="status" type="checkbox" class="form-check-input"  @if (old("status")  === \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) checked @endif>
 
                                     @error('status')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -100,7 +100,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-3 mt-2" @if (old('fee_type') == 'amount') x-data="{ selected: '1' }" @elseif (old('fee_type') == 'percentage') x-data="{ selected: '0' }" @else x-data="{ selected: '3' }" @endif>
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-2" @if (old('fee_type') == 'amount') x-data="{ selected: '1' }" @elseif (old('fee_type') == 'percentage') x-data="{ selected: '0' }" @else x-data="{ selected: '3' }" @endif>
                             <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                                 <label for="amount" class="form-label sm:w-30">Fee <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 sm:pt-0 tillselect-marging" >

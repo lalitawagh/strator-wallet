@@ -413,11 +413,8 @@
                                                                                 </div>
                                                                             </td>
                                                                             <td class="whitespace-nowrap text-left">
-                                                                                <a href="javascript:void(0);"
-                                                                                    data-tw-toggle="modal"
-                                                                                    data-tw-target="#transaction-detail-modal"
-                                                                                    onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
-                                                                                    style="color:#70297d !important;">{{ $transaction->urn }}</a>
+                                                                                <a class="active-clr" href="javascript:void(0);" ata-tw-toggle="modal" data-tw-target="#transaction-detail-modal"
+                                                                                    onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})">{{ $transaction->urn }}</a>
                                                                             </td>
                                                                             <td class="whitespace-nowrap text-left">
                                                                                 {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}

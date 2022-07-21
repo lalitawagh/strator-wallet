@@ -345,7 +345,7 @@
                     <form action="" method="">
                         <div class="grid grid-cols-12 md:gap-0 mt-0">
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Wallet <span
+                                <label for="" class="form-label sm:w-30"> Wallet <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <select data-search="true" class="tom-select mt-0 sm:mr-2 w-full  form-control mb-1"
@@ -359,7 +359,7 @@
                                 </div>
                             </div>
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Balance </label>
+                                <label for="" class="form-label sm:w-30"> Balance </label>
                                 <div class="sm:w-5/6">
                                     <input id="" disabled type="text" class="form-control" value=""
                                         placeholder="£ 1,320.00">
@@ -369,7 +369,7 @@
                         </div>
                         <div class="grid grid-cols-12 md:gap-0 mt-0">
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0 relative">
-                                <label for="" class="form-label sm:w-28"> Beneficiary <span
+                                <label for="" class="form-label sm:w-30"> Beneficiary <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <select data-search="true" class="tom-select mt-0 sm:mr-2 w-full  form-control mb-1"
@@ -387,7 +387,7 @@
                                 </a>
                             </div>
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Mobile </label>
+                                <label for="" class="form-label sm:w-30"> Mobile </label>
                                 <div class="sm:w-5/6">
                                     <input id="" type="text" class="form-control" value="">
                                     <span class="block text-theme-6 mt-2"></span>
@@ -396,7 +396,7 @@
                         </div>
                         <div class="grid grid-cols-12 md:gap-0 mt-0">
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Amount to Pay <span
+                                <label for="" class="form-label sm:w-30"> Amount to Pay <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <input id="" type="text" class="form-control" value="">
@@ -404,7 +404,7 @@
                                 </div>
                             </div>
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Remaining </label>
+                                <label for="" class="form-label sm:w-30"> Remaining </label>
                                 <div class="sm:w-5/6">
                                     <input id="" disabled type="text" class="form-control" value=""
                                         placeholder="£ 120.00">
@@ -415,14 +415,14 @@
                         <div class="grid grid-cols-12 md:gap-0 mt-0">
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0"
                                 style="align-items: center;">
-                                <label for="" class="form-label sm:w-28"> Note </label>
+                                <label for="" class="form-label sm:w-30"> Note </label>
                                 <div class="sm:w-5/6">
                                     <input id="" type="text" class="form-control" value="">
                                     <span class="block text-theme-6 mt-2"></span>
                                 </div>
                             </div>
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Attachment </label>
+                                <label for="" class="form-label sm:w-30"> Attachment </label>
                                 <div class="sm:w-5/6">
                                     <input id="" name="" type="file" class="form-control w-full " placeholder="">
                                     <span class="block text-theme-6 mt-2"></span>
@@ -431,7 +431,7 @@
                         </div>
                         <div class="grid grid-cols-12 md:gap-0 mt-0">
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="" class="form-label sm:w-28"> Reason </label>
+                                <label for="" class="form-label sm:w-30"> Reason </label>
                                 <div class="sm:w-5/6">
                                     <input id="" type="text" class="form-control" value="">
                                     <span class="block text-theme-6 mt-2"></span>
@@ -459,7 +459,7 @@
                 <div class="modal-body">
                     <div class="grid grid-cols-12 md:gap-0 mt-0">
                         <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                            <label for="" class="form-label sm:w-28"> Mobile No <span
+                            <label for="" class="form-label sm:w-30"> Mobile No <span
                                     class="text-theme-6">*</span></label>
                             <div class="sm:w-5/6">
                                 <input id="" type="text" class="form-control" value="">
@@ -467,7 +467,7 @@
                             </div>
                         </div>
                         <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                            <label for="" class="form-label sm:w-28"> Otp <span class="text-theme-6">*</span></label>
+                            <label for="" class="form-label sm:w-30"> Otp <span class="text-theme-6">*</span></label>
                             <div class="sm:w-5/6">
                                 <input id="" type="text" class="form-control" value="">
                                 <span class="block text-theme-6 mt-2"></span>
