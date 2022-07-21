@@ -47,7 +47,7 @@
                             </span>
 
                             <select id="countryWithPhone" wire:change="changeCountryCode($event.target.value)" name="country_code" onchange="getFlagImgWallet(this)"
-                                data-search="true" class="tom-select" style="width:30%">
+                                data-search="true" class="tom-select">
                                 @foreach ($countryWithFlags as $country)
                                     <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                                         @if ($country->id == old('country_code', $user->country_id)) selected @endif>
