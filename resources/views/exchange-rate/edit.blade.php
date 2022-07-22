@@ -31,7 +31,7 @@
                         method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="grid grid-cols-12 lg:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-2">
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="base_currency" class="form-label sm:w-30">Exchange From <span
                                         class="text-theme-6">*</span></label>
@@ -70,7 +70,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 lg:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-2">
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="frequency" class="form-label sm:w-30">Frequency <span
                                         class="text-theme-6">*</span></label>
@@ -117,7 +117,7 @@
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="is_hard_stop" class="form-label sm:w-30">Hard Stop </label>
                                 <div class="sm:w-5/6">
-                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch"
+                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-input"
                                         onclick="toggleHardStop(this)"
                                         @if ($exchange_rate->is_hard_stop === 1) checked  @elseif(!is_null(old('is_hard_stop'))) checked @endif>
 
@@ -143,7 +143,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 lg:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-2">
 
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="note" class="form-label sm:w-30"> Note <span

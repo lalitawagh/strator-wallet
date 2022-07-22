@@ -232,32 +232,39 @@
                 </thead>
                 <tbody>
                     @isset($transactions)
-
-                        @foreach ($transactions as $index => $transaction)
-                            @if ((isset($transaction->meta['transaction_type']) && @$transaction->meta['transaction_type'] == 'deposit') ||
-                                @$transaction->meta['transaction_type'] == 'payout')
-                                @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
-                            @else
-                                @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->meta['sender_wallet_account_id'])->first(); @endphp
-                            @endif
-                            @php
-                                $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet?->ledger_id)->first();
-                            @endphp
-                            @if (isset($transaction->meta['transaction_type']) &&
-                                @$transaction->meta['transaction_type'] == 'payout' &&
-                                @$transaction->status == 'pending-confirmation')
-                            @elseif (isset($transaction->meta['transaction_type']) &&
-                                @$transaction->meta['transaction_type'] == 'withdraw' &&
-                                @$transaction->status == 'draft')
-                            @else
-                                <tr class="intro-x">
-                                    <td>
-                                        <div class="form-check mt-0 border-gray-400">
-                                            <input id="checkbox-switch-1" class="form-check-input" type="checkbox"
-                                                value="">
-                                            <label class="form-check-label" for="checkbox-switch-1"></label>
-                                        </div>
-                                    </td>
+                    @foreach ($transactions as $index => $transaction)
+                        @if(isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit' || $transaction->meta['transaction_type'] == 'payout')
+                            @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
+                        @else
+                            @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->meta['sender_wallet_account_id'])->first(); @endphp
+                        @endif
+                        @php
+                            $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet?->ledger_id)->first();
+                        @endphp
+                        @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] != 'deposit' && $transaction->status == 'pending-confirmation')
+                        @else
+                            <tr class="intro-x">
+                                <td>
+                                    <div class="form-check mt-0 border-gray-400">
+                                        <input id="checkbox-switch-1" class="form-check-input" type="checkbox" value="">
+                                        <label class="form-check-label" for="checkbox-switch-1"></label>
+                                    </div>
+                                </td>
+                                <td class="whitespace-nowrap text-left">
+                                    <a class="active-clr" href="javascript:void(0);" data-tw-toggle="modal" data-tw-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})">{{ $transaction->urn }}</a>
+                                </td>
+                                <td class="whitespace-nowrap text-left">{{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}</td>
+                                <td class="whitespace-nowrap text-left">
+                                    @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'wallet-withdraw' ||  $transaction->meta['transaction_type'] == 'withdraw')
+                                        {{ $wallet->name }}
+                                    @else
+                                        {{ @$transaction->meta['sender_name'] }}
+                                    @endif
+                                </td>
+                                <td class="whitespace-nowrap text-left">{{ $transaction->meta['beneficiary_name'] }}</td>
+                                @if(isset($transactionType) && $transactionType == 'deposit')
+                                    <td class="whitespace-nowrap text-left">  {{ trans('ledger-foundation::configuration.'.$transaction->payment_method)  }}</td>
+                                @else
                                     <td class="whitespace-nowrap text-left">
                                         <a href="javascript:void(0);" data-tw-toggle="modal"
                                             data-tw-target="#transaction-detail-modal"
@@ -396,9 +403,10 @@
                                             </div>
                                         </div>
                                     </td>
-                                </tr>
+                                @endif
+                            </tr>
                             @endif
-                        @endforeach
+                    @endforeach
                     @endisset
                 </tbody>
             </table>

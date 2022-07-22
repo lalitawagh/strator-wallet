@@ -54,13 +54,13 @@
                             <form>
                                 <div class="w-full">
                                     <div class="form-inline">
-                                    <label for="regular-form-1" class="form-label sm:w-20">Input Text</label>
+                                    <label for="regular-form-1" class="form-label sm:w-28">Input Text</label>
                                     <textarea id="" type="textarea" class="form-control" placeholder="Input text"></textarea>
                                     </div>
                                     <div class="md:flex mt-2">
 
                                             <div class="form-inline">
-                                                <label for="beneficiary" class="form-label sm:w-20">Attachments</label>
+                                                <label for="beneficiary" class="form-label sm:w-28">Attachments</label>
                                                 <input id="bic_swift_code" name="bic_swift_code" type="file" class="form-control w-full " placeholder="BIC Swift Code">
                                                 <span class="text-theme-6 block mt-2"></span>
                                             </div>
@@ -167,7 +167,7 @@
                                 <div class="md:flex mt-2">
                                     <div class="w-full px-4">
                                     <div class="form-inline mt-2">
-                                        <label for="horizontal-form-5" class="form-label sm:w-20">Reply</label>
+                                        <label for="horizontal-form-5" class="form-label sm:w-28">Reply</label>
                                         <div class="form w-full ml-0">
                                         <div class="p-0" id="standard-editor">
                                             <div class="preview">
@@ -188,7 +188,7 @@
                                 </div>
                                 <div class="w-full">
                                     <div class="form-inline mt-2">
-                                        <label for="regular-form-1" class="form-label sm:w-20">Status</label>
+                                        <label for="regular-form-1" class="form-label sm:w-28">Status</label>
                                         <select data-search="true" class="tom-select w-full form-control">
                                             <option value="1">Open</option>
                                             <option value="2">Type and search field2</option>
@@ -197,7 +197,7 @@
                                     <div class="md:flex mt-2">
 
                                             <div class="form-inline">
-                                                <label for="beneficiary" class="form-label sm:w-20">Attachments</label>
+                                                <label for="beneficiary" class="form-label sm:w-28">Attachments</label>
                                                 <input id="bic_swift_code" name="bic_swift_code" type="file" class="form-control w-full " placeholder="BIC Swift Code">
                                                 <span class="text-theme-6 block mt-2"></span>
                                             </div>

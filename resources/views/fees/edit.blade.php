@@ -84,10 +84,10 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
+                            <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-0">
                                 <label for="status" class="form-label sm:w-30"> Status </label>
                                 <div class="sm:w-5/6 tillselect-marging">
-                                    <input id="status" name="status" type="checkbox" class="form-check-switch"  @if (old("status",$fee['status'])  === \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) checked @endif>
+                                    <input id="status" name="status" type="checkbox" class="form-check-input"  @if (old("status",$fee['status'])  === \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) checked @endif>
 
                                     @error('status')
                                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -113,7 +113,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '1'" >
+                            <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-0" x-show="selected == '1'" >
                                 <label for="amount" class="form-label sm:w-30">Amount <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
                                     <input id="amount" name="amount" type="text" class="form-control @error('amount') border-theme-6 @enderror amount" value="{{ old('amount',$fee['amount']) }}">
@@ -123,7 +123,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2" x-show="selected == '0'">
+                            <div class="col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-0" x-show="selected == '0'">
                                 <label for="percentage tillselect-marging" class="form-label sm:w-30">Percentage <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
                                     <div class="input-group">

@@ -112,7 +112,7 @@
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="is_hard_stop" class="form-label sm:w-30">Hard Stop </label>
                                 <div class="sm:w-5/6">
-                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch"
+                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-input"
                                         onclick="toggleHardStop(this)" @if (!is_null(old('is_hard_stop'))) checked @endif>
 
                                     @error('is_hard_stop')
