@@ -43,7 +43,7 @@
             <label for="asset_category" class="form-label sm:w-30">Asset Category <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging">
 
-                <select name="asset_category" wire:change="changeAssetCategory($event.target.value)" id="asset_category_special"
+                <select name="asset_category" wire:change="changeAssetCategory($event.target.value)" id="asset_category"
                     class="tom-select w-full @error('asset_category') border-theme-6 @enderror form-control">
                     <option value="">Select Asset Category</option>
                     @foreach ($asset_categories as $key => $asset_category)
