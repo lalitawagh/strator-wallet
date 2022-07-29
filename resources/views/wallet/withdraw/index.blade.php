@@ -446,8 +446,8 @@
                                                                                 </td>
                                                                                 <td class="whitespace-nowrap text-left">
                                                                                     <a href="javascript:void(0);"
-                                                                                        data-toggle="modal"
-                                                                                        data-target="#transaction-detail-modal"
+                                                                                        data-tw-toggle="modal"
+                                                                                        data-tw-target="#transaction-detail-modal"
                                                                                         onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
                                                                                         style="color:#70297d !important;">{{ $transaction->urn }}</a>
                                                                                 </td>
@@ -518,8 +518,8 @@
                                                                                             <ul class="dropdown-content">
                                                                                                 <li>
                                                                                                     <a href="javascript:void(0);"
-                                                                                                        data-toggle="modal"
-                                                                                                        data-target="#transaction-detail-modal"
+                                                                                                        data-tw-toggle="modal"
+                                                                                                        data-tw-target="#transaction-detail-modal"
                                                                                                         onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
                                                                                                         class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                                                         <x-feathericon-eye
