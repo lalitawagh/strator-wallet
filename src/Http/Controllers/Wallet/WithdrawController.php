@@ -166,7 +166,7 @@ class WithdrawController extends Controller
         $workspace = Workspace::find($transaction->workspace_id);
         $user = $workspace->users()->first();
      
-        $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', $user->country_id);
+        $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', 231);
         $masterAccount = Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
         if($masterAccount->balance <  $transaction->amount)
         {
