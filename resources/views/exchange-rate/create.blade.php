@@ -39,7 +39,8 @@
                                     <select name="base_currency" id="base_currency" class="form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
-                                            <option value="{{ $ledger->getKey() }}">{{ $ledger->name }}</option>
+                                            <option value="{{ $ledger->getKey() }}" @if (old('base_currency') == $ledger->getKey())
+                                                selected @endif>{{ $ledger->name }}</option>
                                         @endforeach
                                     </select>
 
@@ -56,7 +57,8 @@
                                     <select name="exchange_currency" id="exchange_currency" class="form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
-                                            <option value="{{ $ledger->getKey() }}">{{ $ledger->name }}</option>
+                                            <option value="{{ $ledger->getKey() }}" @if (old('exchange_currency') == $ledger->getKey())
+                                                selected @endif>{{ $ledger->name }}</option>
                                         @endforeach
                                     </select>
 
@@ -123,12 +125,13 @@
                                 class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2 @if (!is_null(old('is_hard_stop'))) @else valid_date hidden @endif">
                                 <label for="valid_date" class="form-label sm:w-30">Valid Date <span
                                         class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6">
+                                <div class="sm:w-5/6 relative">
                                     <input id="valid_date" name="valid_date"
                                         class="form-control datepicker_flatpicker @error('valid_date') border-theme-6 @enderror"
                                         placeholder="DD-MM-YYYY" value="{{ old('valid_date') }}"
                                         data-min-date="{{ \Carbon\Carbon::now()->subYear(0)->format('Y-m-d') }}"
                                         data-single-mode="true">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4 z-10 absolute my-auto inset-y-0 mr-3 right-0"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
 
                                     @error('valid_date')
                                         <span class="block text-theme-6 mt-2">{{ $message }}</span>

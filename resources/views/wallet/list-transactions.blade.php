@@ -177,16 +177,18 @@
                 </thead>
                 <tbody>
                     @isset($transactions)
+                        
                     @foreach ($transactions as $index => $transaction)
-                        @if(isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit' || $transaction->meta['transaction_type'] == 'payout')
+                        @if(isset($transaction->meta['transaction_type']) && @$transaction->meta['transaction_type'] == 'deposit' || @$transaction->meta['transaction_type'] == 'payout')
                             @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
                         @else
-                            @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->meta['sender_wallet_account_id'])->first(); @endphp
+                           @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->meta['sender_wallet_account_id'])->first(); @endphp
                         @endif
                         @php
                             $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet?->ledger_id)->first();
                         @endphp
-                        @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'payout' && $transaction->status == 'pending-confirmation')
+                        @if (isset($transaction->meta['transaction_type']) && @$transaction->meta['transaction_type'] == 'payout' && @$transaction->status == 'pending-confirmation')
+                        @elseif (isset($transaction->meta['transaction_type']) && @$transaction->meta['transaction_type'] == 'withdraw' && @$transaction->status == 'draft')
                         @else
                             <tr class="intro-x">
                                 <td>
@@ -200,7 +202,7 @@
                                 </td>
                                 <td class="whitespace-nowrap text-left">{{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}</td>
                                 <td class="whitespace-nowrap text-left">
-                                    @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'wallet-withdraw' ||  $transaction->meta['transaction_type'] == 'withdraw')
+                                    @if (isset($transaction->meta['transaction_type']) && @$transaction->meta['transaction_type'] == 'wallet-withdraw' ||  @$transaction->meta['transaction_type'] == 'withdraw')
                                         {{ $wallet->name }}
                                     @else
                                         {{ @$transaction->meta['sender_name'] }}

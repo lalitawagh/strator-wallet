@@ -93,7 +93,7 @@
                                     <td class="whitespace-nowrap text-left">{{ $asset_class_list['name'] }}</td>
                                     <td class="whitespace-nowrap text-left">
                                         @isset($asset_class_list['image'])
-                                        <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->url($asset_class_list['image']) }}">
+                                        <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" alt="" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($asset_class_list['image'],now()->addMinutes(5)) }}">
                                         @endisset
                                     </td>
                                     <td class="whitespace-nowrap text-left"> {{ trans('ledger-foundation::configuration.'.$asset_class_list['status']) }}
@@ -115,6 +115,9 @@
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
+
+                                                        <input type="hidden" name="count" value="{{ $asset_class_lists->count() }}" />
+                                                        <input type="hidden" name="previousPage" value="{{ $asset_class_lists->previousPageUrl() }}" />
 
                                                         <button type="submit"
                                                             class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">

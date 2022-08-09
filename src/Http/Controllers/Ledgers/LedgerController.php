@@ -2,8 +2,10 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
+use Illuminate\Http\Request;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Http\Helper;
 use Kanexy\LedgerFoundation\Http\Requests\StoreLedgerRequest;
 use Kanexy\LedgerFoundation\Jobs\RegisterWalletsForLedger;
 use Kanexy\LedgerFoundation\Model\Ledger;
@@ -15,7 +17,7 @@ class LedgerController extends Controller
     {
         $this->authorize(LedgerPolicy::VIEW, Ledger::class);
 
-        $ledgers = Ledger::orderBy('id', 'desc')->paginate(7);
+        $ledgers = Ledger::orderBy('id', 'desc')->latest()->paginate(7);
 
         return view("ledger-foundation::ledger.index", compact('ledgers'));
     }
@@ -78,16 +80,20 @@ class LedgerController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $this->authorize(LedgerPolicy::DELETE, Ledger::class);
 
         $ledger = Ledger::findOrFail($id);
         $ledger->delete();
 
-        return redirect()->route("dashboard.wallet.ledger.index")->with([
+        $count = $request->count ?? 0;
+        $url = $request->previousPage ?? route("dashboard.wallet.ledger.index");
+        $message = [
             'status' => 'success',
             'message' => 'Ledger deleted successfully.',
-        ]);
+        ];
+
+        return Helper::redirectionOnDelete($count, $url, $message);
     }
 }

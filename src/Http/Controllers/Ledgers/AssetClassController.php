@@ -2,6 +2,7 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
+use Illuminate\Http\Request;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration;
@@ -15,7 +16,7 @@ class AssetClassController extends Controller
     {
         $this->authorize(AssetClassPolicy::VIEW, AssetClassConfiguration::class);
 
-        $asset_class_lists = Helper::paginate(collect(Setting::getValue('asset_classes', []))->sort());
+        $asset_class_lists = Helper::paginate(collect(Setting::getValue('asset_classes', []))->reverse());
 
         return view("ledger-foundation::asset-class.index", compact('asset_class_lists'));
     }
@@ -83,7 +84,7 @@ class AssetClassController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $this->authorize(AssetClassPolicy::DELETE, AssetClassConfiguration::class);
 
@@ -96,9 +97,13 @@ class AssetClassController extends Controller
 
         Setting::updateOrCreate(['key' => 'asset_classes'], ['value' => $settings]);
 
-        return redirect()->route("dashboard.wallet.asset-class.index")->with([
+        $count = $request->count ?? 0;
+        $url = $request->previousPage ?? route("dashboard.wallet.asset-class.index");
+        $message = [
             'status' => 'success',
             'message' => 'Asset Class deleted successfully.',
-        ]);
+        ];
+
+        return Helper::redirectionOnDelete($count, $url, $message);
     }
 }

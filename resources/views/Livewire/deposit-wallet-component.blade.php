@@ -37,12 +37,15 @@
                 class="form-control">
                 <option value="">Select Deposit From</option>
                 @foreach ($currencies as $currency)
-                @if($walletDefaultCountry->code != 'UK' && $walletDefaultCountry->currency == $currency['name'])
-                        <option value="{{ $currency['id'] }}" @if (session('currency') == $currency['id']) selected @endif>
-                            {{ $currency['name'] }}</option>
+                    @php $assetType = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types', []))->firstWhere('id', $currency->asset_type);@endphp
+                    @if($walletDefaultCountry->code != 'UK' && isset($assetType) && $walletDefaultCountry->currency == $assetType['name'])
+                    <option value="{{ $currency->getKey() }}" @if ($selected_wallet == $currency->getKey()) selected @endif>
+                        {{ $currency->name }}</option>
                     @elseif($walletDefaultCountry->code == 'UK')
-                        <option value="{{ $currency['id'] }}" @if (session('currency') == $currency['id']) selected @endif>
-                        {{ $currency['name'] }}</option>
+                        @if(@$assetType['asset_category'] == 'fiat_currency')
+                            <option value="{{ $currency->getKey() }}" @if ($selected_wallet == $currency->getKey()) selected @endif>
+                                {{ $currency->name }}</option>
+                        @endif
                     @endif
                 @endforeach
             </select>

@@ -80,7 +80,7 @@ class WalletWithdrawComponent extends Component
 
         $walletDefaultCountry = Country::find(Setting::getValue('wallet_default_country'));
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet,$exchange_wallet,$walletDefaultCountry);
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet,$exchange_wallet,$walletDefaultCountry,$this->amount);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];

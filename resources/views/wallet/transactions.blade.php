@@ -34,6 +34,11 @@
                     </h2>
                 </div>
                 <div class="p-5">
+                    <div id="before-slider-loader" class="z-50 static w-full">
+                        <img src="https://paladins-draft.com/img/circle_loading.gif" width="64" height="64" class="m-auto mt-1/4 m-20">
+                        <p class="text-center font-medium">Loading Transactions</p>
+                    </div>
+                    <div id="after-slider-loader" style="display:none;">
                     @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber() && is_null($walletID))
                         <div id="multiple-item-slider" class="wallet-slide preview pb-10" role="tablist">
                             <div class="mx-6">
@@ -58,7 +63,7 @@
                                                                         <span class="text-lg font-medium truncate mr-5font-bold leading-8 mt-0 align-self item-center">{{ $ledger?->name }}</span>
                                                                         <div class="ml-auto">
                                                                             <div class="flex mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
-                                                                                <img alt="" class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" src="@isset($ledger?->image){{ \Illuminate\Support\Facades\Storage::disk('azure')->url($ledger->image) }}@endisset">
+                                                                                <img alt="" class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" src="@isset($ledger?->image) {{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($ledger->image,now()->addMinutes(5)) }} @endisset">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -100,6 +105,7 @@
                     @else
                         @include('ledger-foundation::wallet.list-transactions')
                     @endif
+                    </div>
                 </div>
             </div>
         </div>
@@ -108,6 +114,14 @@
     @include('ledger-foundation::wallet.transaction-detail-modal')
 
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $("#before-slider-loader").remove();
+            $("#after-slider-loader").show();
+        });
+    </script>
+@endpush
 @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
     @push('scripts')
     <script>
