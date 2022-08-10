@@ -96,21 +96,32 @@
                                                                                         onclick="window.location.href+='?filter[workspace_id]={{ $workspace->id }}&wallet_id={{ $wallet->getKey() }}'">Transactions</span>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="ml-auto">
-                                                                                <div
-                                                                                    class="report-box__indicator bg-theme-6 cursor-pointer mt-1">
-                                                                                    @if ($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
-                                                                                        {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($wallet?->balance, $ledger?->name) }}
-                                                                                    @else
-                                                                                        {{ $ledger?->symbol }}
-                                                                                        {{ $wallet?->balance }}
-                                                                                    @endif
+                                                                            <div class="flex mt-3">
+                                                                                <span
+                                                                                    class="text-lg @if ($wallet->status == \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) text-success @else text-theme-6 @endif">
+                                                                                    {{ trans('ledger-foundation::configuration.' . $wallet->status) }}</span>
+                                                                                <div class="ml-auto">
+                                                                                    <div
+                                                                                        class="report-box__indicator bg-theme-1 cursor-pointer mt-1">
+                                                                                        <span class="px-3"
+                                                                                            onclick="window.location.href+='?filter[workspace_id]={{ $workspace->id }}&wallet_id={{ $wallet->getKey() }}'">Transactions</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="ml-auto">
+                                                                                    <div
+                                                                                        class="report-box__indicator bg-theme-6 cursor-pointer mt-1">
+                                                                                        @if ($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
+                                                                                            {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($wallet?->balance, $ledger?->name) }}
+                                                                                        @else
+                                                                                            {{ $ledger?->symbol }}
+                                                                                            {{ $wallet?->balance }}
+                                                                                        @endif
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
                                                         </a>
                                                     </h3>
                                                 </div>
