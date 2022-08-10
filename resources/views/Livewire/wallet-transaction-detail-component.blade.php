@@ -29,7 +29,7 @@
             <div class="flex flex-col lg:flex-row px-1 sm:px-2 py-0 mb-2">
                 <div class="dark:text-theme-10">
                     <p
-                        class="text-xl font-medium @if ($transaction->type === 'debit') text-theme-6 @else text-theme-9 @endif">
+                        class="text-xl font-medium @if ($transaction->type === 'debit') text-theme-6 @else text-success @endif">
                         @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit')
                             {{ \Illuminate\Support\Str::upper($ledger?->symbol ?? null) }}
                         @else

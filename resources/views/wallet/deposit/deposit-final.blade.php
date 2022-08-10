@@ -3,7 +3,7 @@
 @section('deposit-content')
     <div class="px-5 sm:px-20 mt-0 pt-0">
         <div class="p-5 text-center">
-            <i data-lucide="check-circle" class="w-16 h-16 text-theme-9 mx-auto mt-3"></i>
+            <i data-lucide="check-circle" class="w-16 h-16 text-success mx-auto mt-3"></i>
             @isset($details['payment_method'])
                 @if ($details['payment_method'] == 'stripe')
                     @php

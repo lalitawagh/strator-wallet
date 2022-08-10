@@ -198,7 +198,7 @@
                                     </div>
                                 </td>
                                 <td class="whitespace-nowrap text-left">
-                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" style="color:#70297d !important;">{{ $transaction->urn }}</a>
+                                    <a href="javascript:void(0);" data-tw-toggle="modal" data-tw-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" class="active-clr">{{ $transaction->urn }}</a>
                                 </td>
                                 <td class="whitespace-nowrap text-left">{{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}</td>
                                 <td class="whitespace-nowrap text-left">
@@ -227,7 +227,7 @@
                                     <td class="whitespace-nowrap text-center">-</td>
                                 @else
                                     <td class="whitespace-nowrap text-center">-</td>
-                                    <td class="whitespace-nowrap text-center text-theme-9">
+                                    <td class="whitespace-nowrap text-center text-success">
                                         @if($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
                                             {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
                                         @else
@@ -248,18 +248,18 @@
                                     @endif
                                 @endif
                                 <td class="whitespace-nowrap text-left">{{ @$transaction->meta['reference'] }}</td>
-                                <td class="table-report__action">
+                                <td class="whitespace-nowrap text-left">
                                     <div class="dropdown">
                                         <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
                                             data-tw-toggle="dropdown">
                                             <span class="w-5 h-5 flex items-center justify-center">
-                                                <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
+                                                <x-feathericon-settings class="w-5 h-5 text-gray-600" />
                                             </span>
                                         </button>
                                         <div class="dropdown-menu w-40">
                                             <ul class="dropdown-content">
                                                 <li>
-                                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <x-feathericon-eye class="w-4 h-4 mr-1" /> Show </a>
+                                                    <a href="javascript:void(0);" data-tw-toggle="modal" data-tw-target="#transaction-detail-modal" onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <x-feathericon-eye class="w-4 h-4 mr-1" /> Show </a>
                                                 </li>
 
                                                

@@ -74,7 +74,7 @@
                                                                     <div class="text-base text-gray-600 mt-1">{{ $wallet?->urn }}</span>
                                                                     </div>
                                                                     <div class="flex mt-3">
-                                                                        <span class="text-lg @if ($wallet->status == \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) text-theme-9 @else text-theme-6 @endif"> {{ trans('ledger-foundation::configuration.'.$wallet->status) }}</span>
+                                                                        <span class="text-lg @if ($wallet->status == \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) text-success @else text-theme-6 @endif"> {{ trans('ledger-foundation::configuration.'.$wallet->status) }}</span>
                                                                         <div class="ml-auto">
                                                                             <div class="report-box__indicator bg-theme-1 cursor-pointer mt-1">
                                                                                 <span class="px-3" onclick="window.location.href+='?filter[workspace_id]={{ $workspace->id }}&wallet_id={{ $wallet->getKey() }}'">Transactions</span>
