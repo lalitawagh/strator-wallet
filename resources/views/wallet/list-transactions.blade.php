@@ -6,10 +6,10 @@
             @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSubscriber())
                 @if ($transactionType == 'deposit')
                     <a href="{{ route('dashboard.wallet.deposit.create', ['workspace_id' => $workspace->id]) }}"
-                        class="btn btn-sm btn-primary shadow-md py-2 sm:ml-1 sm:-mt-2 sm:mb-0 mb-2">Deposit</a>
+                        class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Deposit</a>
                 @elseif ($transactionType == 'payout')
                     <a href="{{ route('dashboard.wallet.payout.create', ['workspace_id' => $workspace->id]) }}"
-                        class="btn btn-sm btn-primary shadow-md py-2 sm:ml-1 sm:-mt-2 sm:mb-0 mb-2">Payout</a>
+                        class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Payout</a>
                 @endif
             @endif
         </div>
@@ -284,20 +284,16 @@
                                         </td>
                                     @else
                                         <td class="whitespace-nowrap text-left">
-                                            <a class="active-clr" href="javascript:void(0);" data-tw-toggle="modal"
-                                                data-tw-target="#transaction-detail-modal"
-                                                onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})">{{ $transaction->urn }}</a>
+                                            {{ $ledger?->name }}
                                         </td>
-                                        <td class="whitespace-nowrap text-left">
-                                            {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
-                                        </td>
-                                        <td class="whitespace-nowrap text-left">
-                                            @if ((isset($transaction->meta['transaction_type']) &&
-                                                @$transaction->meta['transaction_type'] == 'wallet-withdraw') ||
-                                                @$transaction->meta['transaction_type'] == 'withdraw')
-                                                {{ $wallet->name }}
+                                    @endif
+                                    @if ($transaction->type === 'debit')
+                                        <td class="whitespace-nowrap text-center text-theme-6">
+                                            @if ($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
+                                                {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
                                             @else
-                                                {{ @$transaction->meta['sender_name'] }}
+                                                {{ $ledger?->symbol }}
+                                                {{ number_format((float) $transaction->amount, 2, '.', '') }}
                                             @endif
                                         </td>
                                         <td class="whitespace-nowrap text-center">-</td>
@@ -311,35 +307,20 @@
                                                 {{ number_format((float) $transaction->amount, 2, '.', '') }}
                                             @endif
                                         </td>
-                                        @if (isset($transactionType) && $transactionType == 'deposit')
+                                    @endif
+                                    <td class="whitespace-nowrap text-center"> {{ $ledger?->symbol }}
+                                        {{ number_format((float) @$transaction->meta['balance'], 2, '.', '') }} </td>
+                                    <td class="whitespace-nowrap text-left">{{ ucfirst($transaction->status) }}</td>
+                                    @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
+                                        @if ($transactionType == 'payout' || $transactionType == 'all')
                                             <td class="whitespace-nowrap text-left">
-                                                {{ trans('ledger-foundation::configuration.' . $transaction->payment_method) }}
-                                            </td>
-                                        @else
-                                            <td class="whitespace-nowrap text-left">
-                                                {{ $ledger?->name }}
-                                            </td>
+                                                {{ ucfirst(@$transaction?->meta['transfer_status']) }}</td>
                                         @endif
-                                        @if ($transaction->type === 'debit')
-                                            <td class="whitespace-nowrap text-center text-theme-6">
-                                                @if ($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
-                                                    {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
-                                                @else
-                                                    {{ $ledger?->symbol }}
-                                                    {{ number_format((float) $transaction->amount, 2, '.', '') }}
-                                                @endif
-                                            </td>
-                                            <td class="whitespace-nowrap text-center">-</td>
-                                        @else
-                                            <td class="whitespace-nowrap text-center">-</td>
-                                            <td class="whitespace-nowrap text-center text-success">
-                                                @if ($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
-                                                    {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
-                                                @else
-                                                    {{ $ledger?->symbol }}
-                                                    {{ number_format((float) $transaction->amount, 2, '.', '') }}
-                                                @endif
-                                            </td>
+                                    @endif
+                                    @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
+                                        @if ($transactionType == 'all')
+                                            <td class="whitespace-nowrap text-left">
+                                                {{ ucfirst(@$transaction->meta['transaction_type']) }}</td>
                                         @endif
                                     @endif
                                     <td class="whitespace-nowrap text-left">{{ @$transaction->meta['reference'] }}</td>
@@ -362,65 +343,52 @@
                                                         </a>
                                                     </li>
 
-                                                    </button>
-                                                    <div class="dropdown-menu w-40">
-                                                        <ul class="dropdown-content">
-                                                            <li>
-                                                                <a href="javascript:void(0);" data-tw-toggle="modal"
-                                                                    data-tw-target="#transaction-detail-modal"
-                                                                    onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
-                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <x-feathericon-eye class="w-4 h-4 mr-1" /> Show
-                                                                </a>
-                                                            </li>
 
+                                                    @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
+                                                        @if ($transactionType != 'deposit' &&
+                                                            !is_null(@$transaction?->meta['transfer_status']) &&
+                                                            $transaction?->meta['transfer_status'] == 'pending')
+                                                            <li><a href="{{ route('dashboard.wallet.wallet-payout.transferAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
+                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
+                                                                    <x-feathericon-check class="w-4 h-4 mr-1" />
+                                                                    Accepted
+                                                                </a></li>
+                                                        @endif
 
-                                                            @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSuperAdmin())
-                                                                @if ($transactionType != 'deposit' &&
-                                                                    !is_null(@$transaction?->meta['transfer_status']) &&
-                                                                    $transaction?->meta['transfer_status'] == 'pending')
-                                                                    <li><a href="{{ route('dashboard.wallet.wallet-payout.transferAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
-                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
-                                                                            <x-feathericon-check class="w-4 h-4 mr-1" />
-                                                                            Accepted
-                                                                        </a></li>
-                                                                @endif
+                                                        @if ($transactionType != 'payout' &&
+                                                            $transaction->meta['transaction_type'] == 'deposit' &&
+                                                            !is_null(@$transaction?->status) &&
+                                                            $transaction?->status != 'accepted')
+                                                            <li><a href="{{ route('dashboard.wallet.wallet-deposit.transferAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
+                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
+                                                                    <x-feathericon-check class="w-4 h-4 mr-1" />
+                                                                    Accepted
+                                                                </a></li>
+                                                        @endif
+                                                        @if ($transactionType != 'payout' &&
+                                                            $transaction->meta['transaction_type'] == 'deposit' &&
+                                                            !is_null(@$transaction?->status) &&
+                                                            $transaction?->status != 'pending' &&
+                                                            $transaction?->status != 'accepted')
+                                                            <li><a href="{{ route('dashboard.wallet.wallet-deposit.transferPending', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
+                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                                    <x-feathericon-alert-circle class="w-4 h-4 mr-1" />
+                                                                    Pending
+                                                                </a></li>
+                                                        @endif
 
-                                                                @if ($transactionType != 'payout' &&
-                                                                    $transaction->meta['transaction_type'] == 'deposit' &&
-                                                                    !is_null(@$transaction?->status) &&
-                                                                    $transaction?->status != 'accepted')
-                                                                    <li><a href="{{ route('dashboard.wallet.wallet-deposit.transferAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
-                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
-                                                                            <x-feathericon-check class="w-4 h-4 mr-1" />
-                                                                            Accepted
-                                                                        </a></li>
-                                                                @endif
-                                                                @if ($transactionType != 'payout' &&
-                                                                    $transaction->meta['transaction_type'] == 'deposit' &&
-                                                                    !is_null(@$transaction?->status) &&
-                                                                    $transaction?->status != 'pending' &&
-                                                                    $transaction?->status != 'accepted')
-                                                                    <li><a href="{{ route('dashboard.wallet.wallet-deposit.transferPending', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
-                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
-                                                                            <x-feathericon-alert-circle
-                                                                                class="w-4 h-4 mr-1" />
-                                                                            Pending
-                                                                        </a></li>
-                                                                @endif
+                                                        @if ($transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
+                                                            <li><a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
+                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
+                                                                    <x-feathericon-check class="w-4 h-4 mr-1" />
+                                                                    Accepted
+                                                                </a></li>
+                                                        @endif
+                                                    @endif
 
-                                                                @if ($transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
-                                                                    <li><a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
-                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
-                                                                            <x-feathericon-check class="w-4 h-4 mr-1" />
-                                                                            Accepted
-                                                                        </a></li>
-                                                                @endif
-                                                            @endif
-
-                                                        </ul>
-                                                    </div>
+                                                </ul>
                                             </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @endif
