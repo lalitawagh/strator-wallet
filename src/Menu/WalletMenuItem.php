@@ -29,6 +29,7 @@ class WalletMenuItem extends Item
         $menus = [
             new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
             new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            new MenuItem('Transfer', 'activity', url: route('dashboard.wallet.transfer.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()],'type' => 'transfer'])),
             new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
             new MenuItem('Withdraw', 'activity',url: route('dashboard.wallet.withdraw.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
         ];
