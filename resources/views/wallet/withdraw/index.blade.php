@@ -26,7 +26,7 @@
                                             <div class="intro-y  overflow-x-auto overflow-y-hidden  mt-3 sm:mt-0">
 
                                                 <div
-                                                    class="flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                                                    class="text-right flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
                                                     <div class="w-auto w-auto nav nav-tabs mr-auto hidden sm:flex"
                                                         role="tablist">
                                                         <a id="work-in-progress-mobile-new-tab" data-tw-toggle="tab"
@@ -44,7 +44,7 @@
                                                             <i data-lucide="search"
                                                                 class="search__icon dark:text-gray-300"></i>
                                                         </div>
-                                                        <div class="dark:text-gray-300">1 of 50</div>
+                                                        {{-- <div class="dark:text-gray-300">1 of 50</div>
                                                         <a href="javascript:;"
                                                             class="w-5 h-5 ml-1 flex items-center justify-center dark:text-gray-300">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -62,7 +62,7 @@
                                                                 stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-chevron-right w-5 h-5">
                                                                 <polyline points="9 18 15 12 9 6"></polyline>
-                                                            </svg> </a>
+                                                            </svg> </a> --}}
 
                                                         <a href="#"
                                                             class="ml-auto w-5 h-5 ml-2 mr-2 flex items-center justify-center dark:text-gray-300">
@@ -77,7 +77,7 @@
                                                         </a>
                                                     </div>
 
-                                                    <div class="w-full sm:w-auto flex sm:mt-0 sm:mt-0 mb-2">
+                                                    <div class="w-full sm:w-auto flex sm:mt-0 sm:mt-0 mb-2 justify-end">
                                                         <div class="dropdown mr-2">
                                                             <button
                                                                 class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 dropdown-toggle btn box flex items-center"
@@ -106,8 +106,7 @@
                                                                                     <option value="3">Column Name 2
                                                                                     </option>
                                                                                 </select>
-                                                                                <span
-                                                                                    class="float-right ml-2 absolute plus"
+                                                                                <span class="float-right ml-2 absolute plus"
                                                                                     style="margin:0;">
                                                                                     <a href="javascript:;"><i
                                                                                             data-lucide="trash-2"

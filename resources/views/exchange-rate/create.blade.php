@@ -1,4 +1,4 @@
-@extends("ledger-foundation::config-skeleton")
+@extends('ledger-foundation::config-skeleton')
 
 @section('title', 'Exchange Rate')
 
@@ -6,7 +6,8 @@
     <div class="configuration-container w-screen">
         <div class="grid grid-cols-12 gap-6">
             <div class="intro-y box col-span-12 xxl:col-span-12">
-                <div class="flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                <div
+                    class="flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
                     <div class="breadcrumb mr-auto hidden sm:flex">
                         <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
@@ -39,8 +40,9 @@
                                     <select name="base_currency" id="base_currency" class="tom-select form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
-                                            <option value="{{ $ledger->getKey() }}" @if (old('base_currency') == $ledger->getKey())
-                                                selected @endif>{{ $ledger->name }}</option>
+                                            <option value="{{ $ledger->getKey() }}"
+                                                @if (old('base_currency') == $ledger->getKey()) selected @endif>{{ $ledger->name }}
+                                            </option>
                                         @endforeach
                                     </select>
 
@@ -57,8 +59,9 @@
                                     <select name="exchange_currency" id="exchange_currency" class="tom-select form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
-                                            <option value="{{ $ledger->getKey() }}" @if (old('exchange_currency') == $ledger->getKey())
-                                                selected @endif>{{ $ledger->name }}</option>
+                                            <option value="{{ $ledger->getKey() }}"
+                                                @if (old('exchange_currency') == $ledger->getKey()) selected @endif>{{ $ledger->name }}
+                                            </option>
                                         @endforeach
                                     </select>
 
@@ -111,7 +114,7 @@
                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="is_hard_stop" class="form-label sm:w-30">Hard Stop </label>
-                                <div class="sm:w-5/6">
+                                <div class="sm:w-5/6 form-check form-switch">
                                     <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-input"
                                         onclick="toggleHardStop(this)" @if (!is_null(old('is_hard_stop'))) checked @endif>
 
@@ -131,7 +134,16 @@
                                         placeholder="DD-MM-YYYY" value="{{ old('valid_date') }}"
                                         data-min-date="{{ \Carbon\Carbon::now()->subYear(0)->format('Y-m-d') }}"
                                         data-single-mode="true">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide w-4 h-4 z-10 absolute my-auto inset-y-0 mr-3 right-0"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="lucide w-4 h-4 z-10 absolute my-auto inset-y-0 mr-3 right-0">
+                                        <rect x="3" y="4" width="18" height="18"
+                                            rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
 
                                     @error('valid_date')
                                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -144,8 +156,8 @@
                                 <label for="note" class="form-label sm:w-30"> Note <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <input type="text" class="form-control" name="note" value="{{ old('note') }}"
-                                        required>
+                                    <input type="text" class="form-control" name="note"
+                                        value="{{ old('note') }}" required>
 
                                     @error('note')
                                         <span class="block text-theme-6 mt-2">{{ $message }}</span>

@@ -91,7 +91,7 @@
                                             </svg>
                                         </span>
                                     </th>
-                                    <th class="whitespace-nowrap text-left">Action
+                                    <th class="whitespace-nowrap text-left w-20">Action
                                     </th>
                                 </tr>
                             </thead>

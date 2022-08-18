@@ -1,4 +1,4 @@
-@extends("ledger-foundation::config-skeleton")
+@extends('ledger-foundation::config-skeleton')
 
 @section('title', 'Edit Ledger')
 
@@ -7,7 +7,8 @@
         <div class="grid grid-cols-12 gap-6">
             <!-- BEGIN: Daily Sales -->
             <div class="intro-y box col-span-12 xxl:col-span-12">
-                <div class="flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                <div
+                    class="flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
                     <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
                         <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
@@ -29,7 +30,7 @@
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-2">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="name" class="form-label sm:w-30">Ledger Name <span
                                         class="text-theme-6">*</span></label>
@@ -59,7 +60,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-2">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="ledger_type" class="form-label sm:w-30">Ledger Type <span
                                         class="text-theme-6">*</span></label>
@@ -99,11 +100,9 @@
                         </div>
 
 
-                        @livewire('ledger-config-field-component', ['asset_types' => $asset_types,'asset_categories' =>
-                        \Kanexy\LedgerFoundation\Enums\AssetCategory::toArray() ,'commodity_types' => $commodity_types,
-                        'ledger' => $ledger])
+                        @livewire('ledger-config-field-component', ['asset_types' => $asset_types, 'asset_categories' => \Kanexy\LedgerFoundation\Enums\AssetCategory::toArray(), 'commodity_types' => $commodity_types, 'ledger' => $ledger])
 
-                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-2">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="exchange_from" class="form-label sm:w-30">Exchange From <span
                                         class="text-theme-6">*</span></label>
@@ -149,7 +148,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-2">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="status" class="form-label sm:w-30"> Status <span
                                         class="text-theme-6">*</span></label>
