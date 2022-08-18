@@ -75,8 +75,6 @@ class ExchangeRateController extends Controller
         return view("ledger-foundation::exchange-rate.edit", compact('exchange_rate', 'asset_types', 'ledgers'));
     }
 
-
-
     public function update(StoreExchangeRateRequest $request, $id)
     {
 
