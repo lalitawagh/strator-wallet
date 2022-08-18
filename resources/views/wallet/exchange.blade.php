@@ -65,7 +65,7 @@
                                                                 </div>
                                                                 <div class="form mb-1">
                                                                     <select data-search="true" class="tail-select w-full form-control-sm mt-2">
-                                                                        <option value="1">Action is true</option>
+                                                                        <option value="1"> is true</option>
                                                                         <option value="2">Action is false</option>
                                                                     </select>
                                                                 </div>

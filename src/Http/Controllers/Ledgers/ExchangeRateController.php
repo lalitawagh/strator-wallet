@@ -50,10 +50,9 @@ class ExchangeRateController extends Controller
             return back()->withError('Exchange currency not exists');
         }
 
-        $existExchangeRate = ExchangeRate::where(['base_currency' => $data['base_currency'],'exchange_currency' => $data['exchange_currency']])->first();
+        $existExchangeRate = ExchangeRate::where(['base_currency' => $data['base_currency'], 'exchange_currency' => $data['exchange_currency']])->first();
 
-        if(!is_null($existExchangeRate))
-        {
+        if (!is_null($existExchangeRate)) {
             return back()->withError('This exchange rate already exist');
         }
 
@@ -76,8 +75,11 @@ class ExchangeRateController extends Controller
         return view("ledger-foundation::exchange-rate.edit", compact('exchange_rate', 'asset_types', 'ledgers'));
     }
 
+
+
     public function update(StoreExchangeRateRequest $request, $id)
     {
+
         $exchange_rate = ExchangeRate::findOrFail($id);
         $data = $request->validated();
         $data['valid_date'] = $data['valid_date'] ? date('Y-m-d', strtotime($data['valid_date'])) : NULL;
@@ -93,6 +95,13 @@ class ExchangeRateController extends Controller
             return back()->withError('Exchange currency not exists');
         }
 
+        $existExchangeRate = ExchangeRate::where(['base_currency' => $data['base_currency'], 'exchange_currency' => $data['exchange_currency']])->first();
+
+
+        if (!is_null($existExchangeRate) && ($id != $existExchangeRate->id)) {
+            return back()->withError('This exchange rate already exist');
+        }
+
         $data['is_hard_stop'] = $request->has('is_hard_stop') ? '1' : '0';
 
 
@@ -103,7 +112,6 @@ class ExchangeRateController extends Controller
             'message' => 'Ledger updated successfully.',
         ]);
     }
-
     public function destroy($id, Request $request)
     {
         $this->authorize(ExchangeRatePolicy::DELETE, ExchangeRate::class);
