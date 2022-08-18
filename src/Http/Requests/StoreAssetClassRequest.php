@@ -3,6 +3,7 @@
 namespace Kanexy\LedgerFoundation\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration;
 use Kanexy\LedgerFoundation\Policies\AssetClassPolicy;
 
@@ -16,7 +17,7 @@ class StoreAssetClassRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        =>    ['required'],
+            'name'        =>    ['required','string', new AlphaSpaces],
             'image'       =>    ['nullable', 'image'],
             'status'      =>    ['nullable'],
         ];

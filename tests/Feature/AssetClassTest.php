@@ -15,9 +15,9 @@ class AssetClassTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'name'        =>    'rohit',
-            'status'      =>    'active',
+            'name'        =>    'Currency',
         ];
+
         $response = $this->postJson(route('dashboard.wallet.asset-class.store'),$data);
         $response->assertStatus(302);
     }
@@ -30,8 +30,9 @@ class AssetClassTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-
+            'name'        =>    '12bond',
         ];
+
         $response = $this->postJson(route('dashboard.wallet.asset-class.store'),$data);
         $response->assertStatus(422);
     }
@@ -44,10 +45,10 @@ class AssetClassTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'name'        =>    'rohit',
-            'status'      =>    'active',
+            'name'        =>    'Bond',
         ];
-        $response = $this->putJson(route('dashboard.wallet.asset-class.update','14082022105047'),$data);
+
+        $response = $this->putJson(route('dashboard.wallet.asset-class.update','14082022140925'),$data);
         $response->assertStatus(302);
     }
 
@@ -59,9 +60,10 @@ class AssetClassTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-
+            'name'        =>    '123bond',
         ];
-        $response = $this->putJson(route('dashboard.wallet.asset-class.update','14082022105047'),$data);
+
+        $response = $this->putJson(route('dashboard.wallet.asset-class.update','14082022140925'),$data);
         $response->assertStatus(422);
     }
 
@@ -72,7 +74,7 @@ class AssetClassTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->delete(route('dashboard.wallet.asset-class.destroy','14082022105047'));
+        $response = $this->delete(route('dashboard.wallet.asset-class.destroy','14082022140925'));
         $response->assertStatus(302);
     }
 

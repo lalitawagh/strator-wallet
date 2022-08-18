@@ -15,9 +15,10 @@ class AssetTypeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'name'        =>    'rohit',
-            'asset_category'      =>    'xyz',
+            'name'                =>    'INR',
+            'asset_category'      =>    'fiat_currency',
         ];
+
         $response = $this->postJson(route('dashboard.wallet.asset-type.store'),$data);
         $response->assertStatus(302);
     }
@@ -30,8 +31,10 @@ class AssetTypeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'name'        =>    'rohit',
+            'name'                =>    '123',
+            'asset_category'      =>    'xyz',
         ];
+
         $response = $this->postJson(route('dashboard.wallet.asset-type.store'),$data);
         $response->assertStatus(422);
     }
@@ -44,10 +47,11 @@ class AssetTypeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'name'        =>    'rohit',
-            'asset_category'      =>    'xyz',
+            'name'                =>    'GBP',
+            'asset_category'      =>    'fiat_currency',
         ];
-        $response = $this->putJson(route('dashboard.wallet.asset-type.update','15082022090505'),$data);
+
+        $response = $this->putJson(route('dashboard.wallet.asset-type.update','18082022045222'),$data);
         $response->assertStatus(302);
     }
 
@@ -59,9 +63,11 @@ class AssetTypeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'name'        =>    'rohit',
+            'name'                =>    '1df',
+            'asset_category'      =>    'abc',
         ];
-        $response = $this->putJson(route('dashboard.wallet.asset-type.update','15082022090505'),$data);
+
+        $response = $this->putJson(route('dashboard.wallet.asset-type.update','18082022045222'),$data);
         $response->assertStatus(422);
     }
 
@@ -72,7 +78,7 @@ class AssetTypeTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->delete(route('dashboard.wallet.asset-type.destroy','15082022090505'));
+        $response = $this->delete(route('dashboard.wallet.asset-type.destroy','18082022045222'));
         $response->assertStatus(302);
     }
 }

@@ -15,8 +15,9 @@ class CommodityTypeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'name'        =>    'purva',
+            'name'        =>    'Energy',
         ];
+
         $response = $this->postJson(route('dashboard.wallet.commodity-type.store'),$data);
         $response->assertStatus(302);
     }
@@ -29,8 +30,9 @@ class CommodityTypeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-
+            'name'        =>    '1Energy',
         ];
+
         $response = $this->postJson(route('dashboard.wallet.commodity-type.store'),$data);
         $response->assertStatus(422);
     }
@@ -43,9 +45,10 @@ class CommodityTypeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'name'        =>    'purva',
+            'name'        =>    'Energy',
         ];
-        $response = $this->putJson(route('dashboard.wallet.commodity-type.update','15082022093157'),$data);
+
+        $response = $this->putJson(route('dashboard.wallet.commodity-type.update','15082022094017'),$data);
         $response->assertStatus(302);
     }
 
@@ -57,9 +60,10 @@ class CommodityTypeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-
+            'name'        =>    '12energy',
         ];
-        $response = $this->putJson(route('dashboard.wallet.commodity-type.update','15082022090505'),$data);
+
+        $response = $this->putJson(route('dashboard.wallet.commodity-type.update','15082022094017'),$data);
         $response->assertStatus(422);
     }
 
@@ -70,7 +74,7 @@ class CommodityTypeTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->delete(route('dashboard.wallet.commodity-type.destroy','15082022090505'));
+        $response = $this->delete(route('dashboard.wallet.commodity-type.destroy','15082022094017'));
         $response->assertStatus(302);
     }
 }

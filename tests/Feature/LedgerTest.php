@@ -15,16 +15,17 @@ class LedgerTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'name'        =>    'INR',
-            'code'      =>    'INR XC',
-            'ledger_type'      =>    'bank',
-            'exchange_type'      =>    'fiat',
-            'exchange_from'      =>    'wrappex',
-            'asset_category'      =>    'fiat_currency',
-            'asset_class'      =>    '14082022104027',
-            'asset_type'      =>    '19062022175532',
-            'status'      =>    'active',
+            'name'              =>    'India Currency',
+            'code'              =>    'INR',
+            'ledger_type'       =>    'bank',
+            'exchange_type'     =>    'fiat',
+            'exchange_from'     =>    'wrappex',
+            'asset_category'    =>    'fiat_currency',
+            'asset_class'       =>    '18082022064905',
+            'asset_type'        =>    '18082022045705',
+            'status'            =>    'active',
         ];
+
         $response = $this->postJson(route('dashboard.wallet.ledger.store'),$data);
         $response->assertStatus(302);
     }
@@ -37,13 +38,16 @@ class LedgerTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'name'        =>    'INR',
-            'code'      =>    'INR XC',
-            'ledger_type'      =>    'bank',
-            'exchange_from'      =>    'wrappex',
-            'asset_class'      =>    '14082022104027',
-            'status'      =>    'active',
+            'name'              =>    'India Currency',
+            'code'              =>    'INR',
+            'ledger_type'       =>    'bank',
+            'exchange_type'     =>    'fiat',
+            'asset_category'    =>    'fiat_currency',
+            'asset_class'       =>    '18082022064905',
+            'asset_type'        =>    '18082022045705',
+            'status'            =>    'active',
         ];
+
         $response = $this->postJson(route('dashboard.wallet.ledger.store'),$data);
         $response->assertStatus(422);
     }
@@ -56,17 +60,18 @@ class LedgerTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'name'        =>    'INR',
-            'code'      =>    'INR XC',
-            'ledger_type'      =>    'bank',
-            'exchange_type'      =>    'fiat',
-            'exchange_from'      =>    'wrappex',
-            'asset_category'      =>    'fiat_currency',
-            'asset_class'      =>    '14082022104027',
-            'asset_type'      =>    '19062022175532',
-            'status'      =>    'active',
+            'name'              =>    'Binance',
+            'code'              =>    'BNB',
+            'ledger_type'       =>    'bank',
+            'exchange_type'     =>    'fiat',
+            'exchange_from'     =>    'local',
+            'asset_category'    =>    'fiat_currency',
+            'asset_class'       =>    '18082022064905',
+            'asset_type'        =>    '18082022045705',
+            'status'            =>    'active',
         ];
-        $response = $this->putJson(route('dashboard.wallet.ledger.update','9'),$data);
+
+        $response = $this->putJson(route('dashboard.wallet.ledger.update','11'),$data);
         $response->assertStatus(302);
     }
 
@@ -78,14 +83,17 @@ class LedgerTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'name'        =>    'INR',
-            'code'      =>    'INR XC',
-            'ledger_type'      =>    'bank',
-            'exchange_from'      =>    'wrappex',
-            'asset_type'      =>    '19062022175532',
-            'status'      =>    'active',
+            'name'              =>    'Binance',
+            'code'              =>    'BNB',
+            'ledger_type'       =>    'bank',
+            'exchange_type'     =>    'fiat',
+            'asset_category'    =>    'fiat_currency',
+            'asset_class'       =>    '18082022064905',
+            'asset_type'        =>    '18082022045705',
+            'status'            =>    'active',
         ];
-        $response = $this->putJson(route('dashboard.wallet.ledger.update','9'),$data);
+
+        $response = $this->putJson(route('dashboard.wallet.ledger.update','11'),$data);
         $response->assertStatus(422);
     }
 
@@ -96,7 +104,7 @@ class LedgerTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->delete(route('dashboard.wallet.ledger.destroy','9'));
+        $response = $this->delete(route('dashboard.wallet.ledger.destroy','11'));
         $response->assertStatus(302);
     }
 }

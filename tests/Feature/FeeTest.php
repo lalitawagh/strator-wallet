@@ -15,12 +15,13 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'base_currency'        =>    '2',
-            'exchange_currency'      =>    '3',
-            'payment_type'      =>    'payout',
-            'fee_type'      =>    'amount',
-            'amount'      =>    '5',
+            'base_currency'         =>    '2',
+            'exchange_currency'     =>    '3',
+            'payment_type'          =>    'payout',
+            'fee_type'              =>    'amount',
+            'amount'                =>    '5',
         ];
+
         $response = $this->postJson(route('dashboard.wallet.fee.store'),$data);
         $response->assertStatus(302);
     }
@@ -33,11 +34,12 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'base_currency'        =>    '2',
-            'payment_type'      =>    'payout',
-            'fee_type'      =>    'amount',
-            'amount'      =>    '5',
+            'base_currency'   =>    '2',
+            'payment_type'    =>    'payout',
+            'fee_type'        =>    'amount',
+            'amount'          =>    '-5',
         ];
+
         $response = $this->postJson(route('dashboard.wallet.fee.store'),$data);
         $response->assertStatus(422);
     }
@@ -51,11 +53,12 @@ class FeeTest extends TestCase
 
         $data = [
             'base_currency'        =>    '2',
-            'exchange_currency'      =>    '3',
-            'payment_type'      =>    'payout',
-            'fee_type'      =>    'amount',
-            'amount'      =>    '5',
+            'exchange_currency'    =>    '3',
+            'payment_type'         =>    'payout',
+            'fee_type'             =>    'amount',
+            'amount'               =>    '5',
         ];
+
         $response = $this->putJson(route('dashboard.wallet.fee.update','15082022114732'),$data);
         $response->assertStatus(302);
     }
@@ -68,11 +71,12 @@ class FeeTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'base_currency'        =>    '2',
-            'payment_type'      =>    'payout',
-            'fee_type'      =>    'amount',
-            'amount'      =>    '5',
+            'base_currency'      =>    '2',
+            'payment_type'       =>    'payout',
+            'fee_type'           =>    'amount',
+            'amount'             =>    '-5',
         ];
+
         $response = $this->putJson(route('dashboard.wallet.fee.update','15082022114732'),$data);
         $response->assertStatus(422);
     }

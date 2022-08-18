@@ -15,13 +15,14 @@ class ExchangeRateTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'base_currency'        =>    '1',
+            'base_currency'          =>    '1',
             'exchange_currency'      =>    '2',
-            'frequency'      =>    'daily',
-            'valid_date'    =>      '2022-08-15',
-            'exchange_rate'      =>    '0.01',
-            'note'      =>    '1 INR = 0.01 GBP',
+            'frequency'              =>    'daily',
+            'valid_date'             =>    '2022-08-15',
+            'exchange_rate'          =>    '0.01',
+            'note'                   =>    '1 INR = 0.01 GBP',
         ];
+
         $response = $this->postJson(route('dashboard.wallet.exchange-rate.store'),$data);
         $response->assertStatus(302);
     }
@@ -34,11 +35,13 @@ class ExchangeRateTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'base_currency'        =>    '1',
+            'base_currency'          =>    '1',
             'exchange_currency'      =>    '2',
-            'valid_date'    =>      '2022-08-15',
-            'note'      =>    '1 INR = 0.01 GBP',
+            'valid_date'             =>    '2022-08-15',
+            'exchange_rate'          =>    '-0.01',
+            'note'                   =>    '1 INR = 0.01 GBP',
         ];
+
         $response = $this->postJson(route('dashboard.wallet.exchange-rate.store'),$data);
         $response->assertStatus(422);
     }
@@ -51,14 +54,15 @@ class ExchangeRateTest extends TestCase
         $this->actingAs($user);
 
         $data = [
-            'base_currency'        =>    '1',
+            'base_currency'          =>    '1',
             'exchange_currency'      =>    '2',
-            'frequency'      =>    'daily',
-            'valid_date'    =>      '2022-08-15',
-            'exchange_rate'      =>    '0.01',
-            'note'      =>    '1 INR = 0.01 GBP',
+            'frequency'              =>    'daily',
+            'valid_date'             =>    '2022-08-15',
+            'exchange_rate'          =>    '0.01',
+            'note'                   =>    '1 INR = 0.01 GBP',
         ];
-        $response = $this->putJson(route('dashboard.wallet.exchange-rate.update','6'),$data);
+
+        $response = $this->putJson(route('dashboard.wallet.exchange-rate.update','7'),$data);
         $response->assertStatus(302);
     }
 
@@ -71,11 +75,13 @@ class ExchangeRateTest extends TestCase
 
         $data = [
             'base_currency'        =>    '1',
-            'frequency'      =>    'daily',
-            'valid_date'    =>      '2022-08-15',
-            'note'      =>    '1 INR = 0.01 GBP',
+            'frequency'            =>    'daily',
+            'valid_date'           =>    '2022-08-15',
+            'exchange_rate'        =>    '-0.01',
+            'note'                 =>    '1 INR = 0.01 GBP',
         ];
-        $response = $this->putJson(route('dashboard.wallet.exchange-rate.update','6'),$data);
+
+        $response = $this->putJson(route('dashboard.wallet.exchange-rate.update','7'),$data);
         $response->assertStatus(422);
     }
 
@@ -86,7 +92,7 @@ class ExchangeRateTest extends TestCase
 
         $this->actingAs($user);
 
-        $response = $this->delete(route('dashboard.wallet.exchange-rate.destroy','6'));
+        $response = $this->delete(route('dashboard.wallet.exchange-rate.destroy','7'));
         $response->assertStatus(302);
     }
 }
