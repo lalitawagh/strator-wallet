@@ -51,7 +51,7 @@
                     </div>
                     <div class="intro-y p-0 mt-0 overflow-x-auto overflow-y-hidden">
                         <table id="tableID" class="shroting display table table-report -mt-2">
-                            <thead class="short-wrp">
+                            <thead class="short-wrp dark:bg-darkmode-400 dark:border-darkmode-400">
                                 <tr class="">
                                     <th class="w-16 whitespace-nowrap text-left">#</th>
                                     <th class="whitespace-nowrap text-left">Country
@@ -177,7 +177,7 @@
                                                     <ul class="dropdown-content">
                                                         <li>
                                                             <a href="{{ route('dashboard.wallet.master-account.edit', $master_account['id']) }}"
-                                                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                 <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                             </a>
                                                         </li>
@@ -190,7 +190,7 @@
                                                                 @method('DELETE')
 
                                                                 <button type="submit"
-                                                                    class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                                    class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                     <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
                                                                     Delete
                                                                 </button>

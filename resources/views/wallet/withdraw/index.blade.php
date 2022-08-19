@@ -521,7 +521,7 @@
                                                                                                         data-tw-toggle="modal"
                                                                                                         data-tw-target="#transaction-detail-modal"
                                                                                                         onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
-                                                                                                        class="flex items-center block Done">
+                                                                                                        class="flex items-center block Done dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white">
                                                                                                         <x-feathericon-eye
                                                                                                             class="w-4 h-4 mr-1" />
                                                                                                         Show
@@ -532,7 +532,7 @@
                                                                                                     @if (\Illuminate\Support\Facades\Auth::user()->isSuperAdmin() &&
                                                                                                         $transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
                                                                                                         <a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => 'Withdraw']) }}"
-                                                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-orange-200">
                                                                                                             <x-feathericon-check
                                                                                                                 class="w-4 h-4 mr-1" />
                                                                                                             Accepted
