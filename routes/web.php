@@ -40,7 +40,6 @@ Route::group(['middleware'=>['web','auth',VerificationStepMiddleware::class],'pr
     Route::resource('ledger', LedgerController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('dispute', DisputeController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('payout', PayoutController::class)->only(['index', 'create', 'store', 'show']);
-    Route::resource('transfer', PayoutController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('receive', ReceiveController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('deposit', DepositController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('transaction', TransactionController::class)->only(['index', 'create', 'store', 'show']);

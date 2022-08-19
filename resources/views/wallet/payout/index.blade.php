@@ -1,6 +1,6 @@
 @extends('ledger-foundation::layouts.master')
 
-@if(request()->input('type'))
+@if(request()->input('type') == trans('ledger-foundation::configuration.transfer'))
     @section('title', 'Wallet Transfer')
 @else
     @section('title', 'Wallet Payout')
@@ -12,7 +12,7 @@
         <div class="box">
             <div class="flex items-center p-3 border-b border-gray-200 dark:border-dark-5">
                 <h2 class="font-medium text-base mr-auto">
-                    @if(request()->input('type'))
+                    @if(request()->input('type') == trans('ledger-foundation::configuration.transfer'))
                     Transfer
                     @else
                     Payouts
