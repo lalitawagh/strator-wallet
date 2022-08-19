@@ -195,7 +195,8 @@
                                                     <div class=" overflow-x-auto overflow-y-hidden">
                                                         <table id="tableID"
                                                             class="shroting display table table-report mt-0">
-                                                            <thead class="short-wrp">
+                                                            <thead
+                                                                class="short-wrp dark:bg-darkmode-400 dark:border-darkmode-400">
                                                                 <tr>
                                                                     <th>
                                                                         <div class="form-check mt-0 border-gray-400">
@@ -520,7 +521,7 @@
                                                                                                         data-tw-toggle="modal"
                                                                                                         data-tw-target="#transaction-detail-modal"
                                                                                                         onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
-                                                                                                        class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                                                        class="flex items-center block Done">
                                                                                                         <x-feathericon-eye
                                                                                                             class="w-4 h-4 mr-1" />
                                                                                                         Show
