@@ -54,7 +54,8 @@
                                                 }
                                             @endphp
                                             <div class="px-2 col-span-12 sm:col-span-4 xl:col-span-4 flex">
-                                                <div class="h-full bg-gray-200 dark:bg-dark-1 rounded-md">
+                                                <div
+                                                    class="short-wrp dark:bg-darkmode-400 dark:border-darkmode-400 h-full bg-gray-200 dark:bg-dark-1 rounded-md">
                                                     <h3
                                                         class="h-full font-medium flex items-center justify-center text-2xl">
                                                         <a id="{{ $key }}-tab" href="javascript:void(0);"

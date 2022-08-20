@@ -17,7 +17,7 @@
     <div class="intro-y box p-0 mt-0">
         <div class=" overflow-x-auto overflow-y-hidden">
             <table id="tableID" class="shroting display table table-report mt-0">
-                <thead class="short-wrp">
+                <thead class="short-wrp dark:bg-darkmode-400 dark:border-darkmode-400">
                     <tr>
                         <th>
                             <div class="form-check mt-1 border-gray-400">
@@ -262,7 +262,7 @@
                                         <a href="javascript:void(0);" data-tw-toggle="modal"
                                             data-tw-target="#transaction-detail-modal"
                                             onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
-                                            class="active-clr">{{ $transaction->urn }}</a>
+                                            class="active-clr dark:text-slate-300">{{ $transaction->urn }}</a>
                                     </td>
                                     <td class="whitespace-nowrap text-left">
                                         {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
@@ -338,7 +338,7 @@
                                                         <a href="javascript:void(0);" data-tw-toggle="modal"
                                                             data-tw-target="#transaction-detail-modal"
                                                             onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
-                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                            class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white">
                                                             <x-feathericon-eye class="w-4 h-4 mr-1" /> Show
                                                         </a>
                                                     </li>
@@ -349,7 +349,7 @@
                                                             !is_null(@$transaction?->meta['transfer_status']) &&
                                                             $transaction?->meta['transfer_status'] == 'pending')
                                                             <li><a href="{{ route('dashboard.wallet.wallet-payout.transferAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
-                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
+                                                                    class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white">
                                                                     <x-feathericon-check class="w-4 h-4 mr-1" />
                                                                     Accepted
                                                                 </a></li>
@@ -360,7 +360,7 @@
                                                             !is_null(@$transaction?->status) &&
                                                             $transaction?->status != 'accepted')
                                                             <li><a href="{{ route('dashboard.wallet.wallet-deposit.transferAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
-                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
+                                                                    class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white">
                                                                     <x-feathericon-check class="w-4 h-4 mr-1" />
                                                                     Accepted
                                                                 </a></li>
@@ -371,7 +371,7 @@
                                                             $transaction?->status != 'pending' &&
                                                             $transaction?->status != 'accepted')
                                                             <li><a href="{{ route('dashboard.wallet.wallet-deposit.transferPending', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
-                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-orange-200 dark:hover:bg-dark-2 rounded-md">
+                                                                    class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white">
                                                                     <x-feathericon-alert-circle class="w-4 h-4 mr-1" />
                                                                     Pending
                                                                 </a></li>
@@ -379,7 +379,7 @@
 
                                                         @if ($transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
                                                             <li><a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
-                                                                    class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-green-200 dark:hover:bg-dark-2 rounded-md">
+                                                                    class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white">
                                                                     <x-feathericon-check class="w-4 h-4 mr-1" />
                                                                     Accepted
                                                                 </a></li>

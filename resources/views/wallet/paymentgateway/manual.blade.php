@@ -7,7 +7,7 @@ $totalAmount = $transaction->amount;
     @endphp
 @endif
 <div class="border-2 border-dashed border-gray-200 dark:border-dark-5 rounded-md sm:p-5 sm:m-3">
-    <div class=" p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mb-3">
+    <div class="dark:bg-darkmode-400 dark:border-darkmode-400 p-3 bg-gray-200 sm:flex text-lg text-theme-1 dark:text-theme-10 font-medium mb-3">
         <h3 class="text-lg font-medium mr-auto mb-0">Deposit Account Details</h3>
         <div class="text-xs text-right sm:ml-auto flex mb-0">
             <a target="_blank" href="https://mail.google.com/mail/u/0/?fs=1&tf=cm&subject=Manual Deposit Account Details&body= Payee Name :- {{  $transaction?->meta['sender_name'] }} %0D%0A Payment reference :- {{ @$transaction?->meta['reference_no'] }} %0D%0A Amount To Send:- {{ $totalAmount }} {{ @$details['currency'] }}
