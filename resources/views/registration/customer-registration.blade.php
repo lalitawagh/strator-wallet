@@ -81,7 +81,7 @@
             class="text-theme-6">*</span></label>
     <div class="sm:w-3/5 tillselect-marging">
         <select id="nationality" name="nationality" data-search="true"
-            class="tom-select w-full @error('nationality') border-theme-6 @enderror">
+            class="w-full @error('nationality') border-theme-6 @enderror">
             @foreach ($nationalities as $key => $nationality)
                 <option value="{{ $nationality }}" @if ($nationality == old('nationality', $defaultCountry->code == $key ? $nationality : '')) selected  @endif>
                     {{ ucfirst($nationality) }}
@@ -99,7 +99,7 @@
 
     <div class="sm:w-3/5 tillselect-marging">
         <select id="country_id" name="country_id" data-search="true"
-            class="tom-select w-full @error('country_id') border-theme-6 @enderror">
+            class="w-full @error('country_id') border-theme-6 @enderror">
             @foreach ($countries as $key => $value)
                 <option value="{{ $key }}" @if ($key == old('country_id', $defaultCountry->id)) selected @elseif($key == old('country_id', $user?->country_id)) selected @endif>
                     {{ $value }}

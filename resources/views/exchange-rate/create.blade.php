@@ -37,7 +37,7 @@
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
 
-                                    <select name="base_currency" id="base_currency" class="tom-select form-control"
+                                    <select name="base_currency" id="base_currency" class="form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}"
@@ -56,7 +56,7 @@
                                 <label for="exchange_currency" class="form-label sm:w-30">Exchange To <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
-                                    <select name="exchange_currency" id="exchange_currency" class="tom-select form-control"
+                                    <select name="exchange_currency" id="exchange_currency" class="form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}"
@@ -81,7 +81,7 @@
                                         $exchange_rate_frequencies = \Kanexy\LedgerFoundation\Enums\ExchangeRateFrequency::toArray();
                                     @endphp
                                     <select name="frequency" id="frequency" data-search="true"
-                                        class="tom-select w-full @error('frequency') border-theme-6 @enderror">
+                                        class="w-full @error('frequency') border-theme-6 @enderror">
                                         @foreach ($exchange_rate_frequencies as $exchange_rate_frequency)
                                             <option value="{{ $exchange_rate_frequency }}">
                                                 {{ trans('ledger-foundation::configuration.' . $exchange_rate_frequency) }}

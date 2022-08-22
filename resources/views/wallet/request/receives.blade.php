@@ -22,7 +22,7 @@
                             <div class="col-span-12 md:col-span-12 lg:col-span-6 form-inline mt-0">
                                 <label for="" class="form-label sm:w-30"> Wallet <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <select data-search="true" class="tom-select mt-0 sm:mr-2 w-full  form-control mb-1" name="currency">
+                                    <select data-search="true" class="mt-0 sm:mr-2 w-full  form-control mb-1" name="currency">
 
                                         <option>Paypal</option>
                                         <option>Stripe</option>
@@ -43,7 +43,7 @@
                             <div class="col-span-12 md:col-span-12 lg:col-span-6 form-inline mt-0 relative">
                                 <label for="" class="form-label sm:w-30"> Beneficiary <span class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6">
-                                    <select data-search="true" class="tom-select mt-0 sm:mr-2 w-full  form-control mb-1" name="currency">
+                                    <select data-search="true" class="mt-0 sm:mr-2 w-full  form-control mb-1" name="currency">
                                         <option>Paypal</option>
                                         <option>Stripe</option>
                                         <option>Bank</option>

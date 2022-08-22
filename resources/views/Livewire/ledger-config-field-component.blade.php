@@ -9,7 +9,7 @@
                     $exchange_types = \Kanexy\LedgerFoundation\Enums\ExchangeType::toArray();
                 @endphp
                 <select name="exchange_type" id="exchange_type" wire:change="changeExchangeType($event.target.value)"
-                    data-search="true" class="tom-select w-full @error('exchange_type') border-theme-6 @enderror">
+                    data-search="true" class="w-full @error('exchange_type') border-theme-6 @enderror">
                     <option value="">Select Exchange Type</option>
                     @foreach ($exchange_types as $key => $exchange_type)
                         <option value="{{ $exchange_type }}" @if (old('exchange_type', $selected_exchange_type) == $exchange_type) selected @endif>
@@ -44,7 +44,7 @@
             <div class="sm:w-5/6 tillselect-marging">
 
                 <select name="asset_category" wire:change="changeAssetCategory($event.target.value)" id="asset_category"
-                    class="tom-select w-full @error('asset_category') border-theme-6 @enderror form-control">
+                    class="w-full @error('asset_category') border-theme-6 @enderror form-control">
                     <option value="">Select Asset Category</option>
                     @foreach ($asset_categories as $key => $asset_category)
                         <option value="{{ $asset_category }}" @if (old('asset_category', $selected_asset_category) == $asset_category) selected @endif>
@@ -62,7 +62,7 @@
             <label for="asset_type" class="form-label sm:w-30"> Asset Type <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6 tillselect-marging">
                 <select name="asset_type" id="asset_type" wire:change="changeAssetType($event.target.value)"
-                    class="tom-select w-full  @error('asset_type') border-theme-6 @enderror form-control">
+                    class="w-full  @error('asset_type') border-theme-6 @enderror form-control">
                     <option value="">Select Asset Type</option>
                     @foreach ($asset_types as $asset_type)
                         <option value="{{ $asset_type['id'] }}" @if (old('asset_type') == $asset_type['id'] || $selected_asset_type == $asset_type['id']) selected @endif>
@@ -83,7 +83,7 @@
                 <label for="commodity_category" class="form-label sm:w-30"> Commodity Category <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6 tillselect-marging">
                     <select name="commodity_category" id="commodity_category" data-search="true"
-                        class="tom-select w-full @error('commodity_category') border-theme-6 @enderror">
+                        class="w-full @error('commodity_category') border-theme-6 @enderror">
                         <option value="">Select Commodity Category</option>
                         @foreach ($commodity_types as $commodity_type)
                             <option value="{{ $commodity_type['id'] }}"
