@@ -99,7 +99,7 @@
                 </div>
             </div>
 
-            <div class="mt-5 float-right">
+            <div class="mt-5 float-right w-2/5 text-sm break-all">
                 <p class="text-sm tracking-wide font-medium uppercase">Receiver Currency</p>
 
                 <div class="flex flex-col lg:flex-row mt-3">
@@ -135,7 +135,7 @@
                 </div>
             </div>
 
-            <div class="mt-5 float-right">
+            <div class="mt-5 float-right w-2/5 text-sm break-all">
                 <p class="text-sm tracking-wide font-medium uppercase">Beneficiary Account</p>
 
                 <div class="flex flex-col lg:flex-row mt-3">
@@ -150,14 +150,14 @@
                 </div>
                 <div class="flex flex-col lg:flex-row mt-3">
                     @isset($transaction->meta['beneficiary_bank_account_number'])
-                    <div class="sm:whitespace-normal flex items-center sm:w-full md:ml-0">
-                        <x-feathericon-globe height="12" />
+                        <div class="sm:whitespace-normal flex items-center sm:w-full md:ml-0">
+                            <x-feathericon-globe height="12" />
 
-                        <span class="font-medium">
-                            {{ $transaction->meta['beneficiary_bank_code'] }} /
-                            {{ $transaction->meta['beneficiary_bank_account_number'] }}
-                        </span>
-                    </div>
+                            <span class="font-medium">
+                                {{ $transaction->meta['beneficiary_bank_code'] }} /
+                                {{ $transaction->meta['beneficiary_bank_account_number'] }}
+                            </span>
+                        </div>
                     @endisset
                 </div>
 
@@ -174,7 +174,9 @@
                         <x-feathericon-user height="12" />
 
                         <span>
-                            @if (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'wallet-withdraw' ||  $transaction->meta['transaction_type'] == 'withdraw')
+                            @if ((isset($transaction->meta['transaction_type']) &&
+                                $transaction->meta['transaction_type'] == 'wallet-withdraw') ||
+                                $transaction->meta['transaction_type'] == 'withdraw')
                                 {{ $wallet->name }}
                             @else
                                 {{ @$transaction->meta['sender_name'] }}
@@ -208,7 +210,7 @@
                         <div class="flex flex-col lg:flex-row mt-3">
                             <div class="truncate sm:whitespace-normal flex items-center">
                                 <img width="100" height="100"
-                                    src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($transaction->attachment,now()->addMinutes(5)) }}" />
+                                    src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($transaction->attachment, now()->addMinutes(5)) }}" />
                             </div>
                         </div>
                     </div>
@@ -243,7 +245,7 @@
                             <div class="truncate sm:whitespace-normal flex items-center">
                                 @isset($transaction->attachment)
                                     <img width="100" height="100"
-                                        src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($transaction->attachment,now()->addMinutes(5)) }}" />
+                                        src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($transaction->attachment, now()->addMinutes(5)) }}" />
                                 @endisset
                                 <input type="file" id="attachment" name="attachment" class="ml-2 w-full" />
                             </div>
@@ -255,8 +257,7 @@
 
                         <div class="flex flex-col lg:flex-row mt-3">
                             <div class="truncate sm:whitespace-normal flex items-center">
-                                <textarea id="note" name="note" class="form-control w-full"
-                                    value="{{ $transaction->note }}">{{ $transaction->note }}</textarea>
+                                <textarea id="note" name="note" class="form-control w-full" value="{{ $transaction->note }}">{{ $transaction->note }}</textarea>
                             </div>
                         </div>
                     </div>
