@@ -1,7 +1,7 @@
 <div>
     <div class="intro-y mt-0">
         <div
-            class="sm:flex justify-end flex-wrap items-center sm:py-1 border-b border-gray-200 dark:border-dark-5 gap-1">
+            class="text-right flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
             <x-list-view-filters />
             @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSubscriber())
                 @if ($transactionType == 'deposit')
@@ -262,7 +262,7 @@
                                         <a href="javascript:void(0);" data-tw-toggle="modal"
                                             data-tw-target="#transaction-detail-modal"
                                             onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
-                                            class="active-clr dark:text-slate-300">{{ $transaction->urn }}</a>
+                                            class="active-clr">{{ $transaction->urn }}</a>
                                     </td>
                                     <td class="whitespace-nowrap text-left">
                                         {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
