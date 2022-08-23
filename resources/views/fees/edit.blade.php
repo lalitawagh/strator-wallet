@@ -112,7 +112,7 @@
                                 class="items-center justify-center col-span-12 lg:col-span-12 xl:col-span-6 form-inline mt-2">
                                 <label for="amount" class="form-label sm:w-30 fee-label">Fee <span
                                         class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6 self-center">
+                                <div class="sm:w-5/6 sm:pt-3">
                                     <div class="form-check mr-2">
                                         <input id="radio-switch-1" class="form-check-input" type="radio"
                                             x-on:click="selected = '1'" name="fee_type" value="amount"
