@@ -38,7 +38,7 @@
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
 
-                                    <select name="base_currency" id="base_currency" class="tom-select form-control"
+                                    <select name="base_currency" id="base_currency" class="form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}"
@@ -57,7 +57,7 @@
                                 <label for="exchange_currency" class="form-label sm:w-30">Exchange To <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
-                                    <select name="exchange_currency" id="exchange_currency" class="tom-select form-control"
+                                    <select name="exchange_currency" id="exchange_currency" class="form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}"
@@ -79,7 +79,7 @@
                                 <label for="payment_type" class="form-label sm:w-30">Payment Type <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
-                                    <select class="tom-select form-control" data-search="true" name="payment_type">
+                                    <select class="form-control" data-search="true" name="payment_type">
                                         <option value="deposit" @if (old('payment_type', $fee['payment_type']) == 'deposit') selected @endif>Deposit
                                         </option>
                                         <option value="payout" @if (old('payment_type', $fee['payment_type']) == 'payout') selected @endif>Payout

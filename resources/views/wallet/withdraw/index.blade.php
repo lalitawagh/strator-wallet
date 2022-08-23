@@ -98,7 +98,7 @@
                                                                         <form class="filter-form relative">
                                                                             <div class="form mb-1">
                                                                                 <select data-search="true"
-                                                                                    class="tom-select w-full form-control-sm mt-2">
+                                                                                    class="w-full form-control-sm mt-2">
                                                                                     <option value="1">Column Name
                                                                                     </option>
                                                                                     <option value="2">Column Name 1
@@ -115,7 +115,7 @@
                                                                             </div>
                                                                             <div class="form mb-1">
                                                                                 <select data-search="true"
-                                                                                    class="tom-select w-full form-control-sm mt-2">
+                                                                                    class="w-full form-control-sm mt-2">
                                                                                     <option value="1">Action is true
                                                                                     </option>
                                                                                     <option value="2">Action is false

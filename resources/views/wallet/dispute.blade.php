@@ -189,7 +189,7 @@
                                 <div class="w-full">
                                     <div class="form-inline mt-2">
                                         <label for="regular-form-1" class="form-label sm:w-28">Status</label>
-                                        <select data-search="true" class="tom-select w-full form-control">
+                                        <select data-search="true" class="w-full form-control">
                                             <option value="1">Open</option>
                                             <option value="2">Type and search field2</option>
                                         </select>

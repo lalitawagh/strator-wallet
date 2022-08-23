@@ -60,7 +60,7 @@
                                                                 <a id="tabulator-export-xlsx" href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">  Add Custom Filter </a>
                                                                 <form class="filter-form relative">
                                                                     <div class="form mb-1">
-                                                                        <select data-search="true" class="tom-select w-full form-control-sm mt-2">
+                                                                        <select data-search="true" class="w-full form-control-sm mt-2">
                                                                             <option value="1">Column Name</option>
                                                                             <option value="2">Column Name 1</option>
                                                                             <option value="3">Column Name 2</option>
@@ -70,7 +70,7 @@
                                                                         </span>
                                                                     </div>
                                                                     <div class="form mb-1">
-                                                                        <select data-search="true" class="tom-select w-full form-control-sm mt-2">
+                                                                        <select data-search="true" class="w-full form-control-sm mt-2">
                                                                             <option value="1">Action is true</option>
                                                                             <option value="2">Action is false</option>
                                                                         </select>

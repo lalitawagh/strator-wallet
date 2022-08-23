@@ -35,7 +35,7 @@
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
                                     <select name="country" id="country" onchange="getCountry(this)" data-search="true"
-                                        class="tom-select w-full @error('country') border-theme-6 @enderror" required>
+                                        class="w-full @error('country') border-theme-6 @enderror" required>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->id }}"
                                                 @if (old('country', 231) == $country->id) selected @endif> {{ $country->name }}
@@ -52,7 +52,7 @@
                                 <label for="status" class="form-label sm:w-60"> Status <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
-                                    <select name="status" id="status" data-search="true" class="tom-select w-full">
+                                    <select name="status" id="status" data-search="true" class="w-full">
                                         <option value="">Select Status</option>
                                         <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE }}"
                                             @if (old('status') === \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE) selected @endif>
