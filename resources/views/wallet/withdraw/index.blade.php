@@ -449,7 +449,7 @@
                                                                                         data-tw-toggle="modal"
                                                                                         data-tw-target="#transaction-detail-modal"
                                                                                         onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
-                                                                                        class="active-clr dark:text-slate-300">{{ $transaction->urn }}</a>
+                                                                                        class="active-clr">{{ $transaction->urn }}</a>
                                                                                 </td>
                                                                                 <td class="whitespace-nowrap text-left">
                                                                                     {{ $transaction->getLastProcessDateTime()->format($defaultDateFormat . ' ' . $defaultTimeFormat) }}
