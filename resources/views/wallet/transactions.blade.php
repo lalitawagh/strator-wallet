@@ -19,7 +19,7 @@
 
         .wallet-slide .active {
             --tw-border-opacity: 1;
-            border-color: rgba(112, 41, 125, var(--tw-border-opacity));
+            border-color: rgb(var(--color-primary) / var(--tw-bg-opacity));
             border-bottom-width: 2px;
             font-weight: 500;
         }

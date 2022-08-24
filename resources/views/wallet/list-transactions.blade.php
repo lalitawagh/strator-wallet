@@ -6,10 +6,10 @@
             @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSubscriber())
                 @if ($transactionType == 'deposit')
                     <a href="{{ route('dashboard.wallet.deposit.create', ['workspace_id' => $workspace->id]) }}"
-                        class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Deposit</a>
+                        class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 py-2 sm:mb-0 mb-2">Deposit</a>
                 @elseif ($transactionType == 'payout')
                     <a href="{{ route('dashboard.wallet.payout.create', ['workspace_id' => $workspace->id]) }}"
-                        class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Payout</a>
+                        class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 py-2 sm:mb-0 mb-2">Payout</a>
                 @endif
             @endif
         </div>
