@@ -47,12 +47,14 @@
 
                                             <div class="flex sm:flex sm:mt-0 sm:mt-0 mb-2">
                                                 <div class="dropdown sm:w-auto mr-2">
+
                                                     <button class="dropdown-toggle btn btn-sm py-2 btn-outline-secondary w-full sm:w-auto" aria-expanded="false" data-tw-toggle="dropdown">
                                                         <span class="w-5 h-5 flex items-center justify-center">
                                                             <i data-lucide="filter" class="w-4 h-4 ml-auto sm:ml-0 mr-2"></i> Filter
                                                             <i data-lucide="chevron-down" class="w-4 h-4 ml-auto sm:ml-2"></i>
                                                         </span>
                                                     </button>
+
 
                                                     <div class="dropdown-menu w-40 filter-dropbox box dark:bg-dark-1 p-2">
                                                         <ul class="dropdown-content">
