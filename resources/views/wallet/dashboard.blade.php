@@ -44,7 +44,7 @@
                                         </div>
                                         <div class="text-xs mt-0.5">{{ date('d M Y',strtotime($transaction->created_at))}}</div>
                                     </div>
-                                    <div @if($transaction->type === 'debit') class="text-theme-6" @else class="text-theme-9" @endif>
+                                    <div @if($transaction->type === 'debit') class="text-theme-6" @else class="text-success" @endif>
                                         @if($transaction->type === 'debit') - @else + @endif
                                         @if($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
                                             {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}

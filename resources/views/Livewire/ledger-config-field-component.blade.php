@@ -9,7 +9,7 @@
                     $exchange_types = \Kanexy\LedgerFoundation\Enums\ExchangeType::toArray();
                 @endphp
                 <select name="exchange_type" id="exchange_type" wire:change="changeExchangeType($event.target.value)"
-                    data-search="true" class="tail-select w-full @error('exchange_type') border-theme-6 @enderror">
+                    data-search="true" class="w-full @error('exchange_type') border-theme-6 @enderror">
                     <option value="">Select Exchange Type</option>
                     @foreach ($exchange_types as $key => $exchange_type)
                         <option value="{{ $exchange_type }}" @if (old('exchange_type', $selected_exchange_type) == $exchange_type) selected @endif>
@@ -22,7 +22,7 @@
                 @enderror
             </div>
         </div>
-
+        
         <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
             <label for="logo" class="form-label sm:w-30"> Logo </label>
             <div class="sm:w-5/6">
@@ -83,7 +83,7 @@
                 <label for="commodity_category" class="form-label sm:w-30"> Commodity Category <span class="text-theme-6">*</span></label>
                 <div class="sm:w-5/6 tillselect-marging">
                     <select name="commodity_category" id="commodity_category" data-search="true"
-                        class="tail-select w-full @error('commodity_category') border-theme-6 @enderror">
+                        class="w-full @error('commodity_category') border-theme-6 @enderror">
                         <option value="">Select Commodity Category</option>
                         @foreach ($commodity_types as $commodity_type)
                             <option value="{{ $commodity_type['id'] }}"

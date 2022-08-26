@@ -1,15 +1,25 @@
-@extends("ledger-foundation::config-skeleton")
+@extends('ledger-foundation::config-skeleton')
 
 @section('title', 'Asset Type')
 
-@section("config-content")
+@section('config-content')
     <div class="configuration-container w-screen">
         <div class="grid grid-cols-12 gap-6">
             <div class="intro-y box col-span-12 xxl:col-span-12">
-                <div class="sm:flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                <div
+                    class="sm:flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
                     <div class="breadcrumb mr-auto hidden sm:flex">
-                        <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                        <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                        <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg"
+                            width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
                         <a href="" class="breadcrumb--active">Asset Type</a>
                     </div>
                     <div>
@@ -20,7 +30,7 @@
                 <div class="p-5">
                     <div class="intro-y p-0 mt-0 overflow-x-auto overflow-y-hidden">
                         <table id="tableID" class="shroting display table table-report -mt-2">
-                            <thead class="short-wrp">
+                            <thead class="short-wrp dark:bg-darkmode-400 dark:border-darkmode-400">
                                 <tr class="">
                                     <th class="w-16 whitespace-nowrap text-left">#</th>
                                     <th class="whitespace-nowrap text-left">Name
@@ -79,7 +89,7 @@
                                             </svg>
                                         </span>
                                     </th>
-                                    <th class="whitespace-nowrap text-left">Action</th>
+                                    <th class="whitespace-nowrap text-left w-20">Action</th>
                                 </tr>
                             </thead>
 
@@ -89,51 +99,64 @@
                                 @endphp
                                 @foreach ($asset_type_lists as $index => $asset_type_list)
                                     <tr>
-                                        <td class="border-b dark:border-dark-5">{{ $asset_type_lists->firstItem() + $i }}</td>
+                                        <td class="border-b dark:border-dark-5">{{ $asset_type_lists->firstItem() + $i }}
+                                        </td>
                                         <td class="border-b dark:border-dark-5">{{ $asset_type_list['name'] }}</td>
                                         <td class="border-b dark:border-dark-5">
                                             {{ ucwords(strtolower(str_replace('_', ' ', $asset_type_list['asset_category']))) }}
                                         </td>
                                         <td class="whitespace-nowrap text-left">
                                             @isset($asset_type_list['image'])
-                                            <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default" src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($asset_type_list['image'],now()->addMinutes(5)) }}">
+                                                <img class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default"
+                                                    src="{{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($asset_type_list['image'], now()->addMinutes(5)) }}">
                                             @endisset
                                         </td>
-                                        <td class="whitespace-nowrap text-left">{{ trans('ledger-foundation::configuration.'.$asset_type_list['status']) }}
+                                        <td class="whitespace-nowrap text-left">
+                                            {{ trans('ledger-foundation::configuration.' . $asset_type_list['status']) }}
                                         </td>
                                         <td class="whitespace-nowrap text-left">
                                             <div class="dropdown">
-                                                <button class="dropdown-toggle btn btn-sm" aria-expanded="false">
-                                                    <i data-feather="settings" class="w-5 h-5 text-gray-600"></i>
+                                                <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
+                                                    data-tw-toggle="dropdown">
+                                                    <span class="w-5 h-5 flex items-center justify-center">
+                                                        <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
+                                                    </span>
                                                 </button>
-
-                                                    <div class="dropdown-menu w-48">
-                                                        <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
+                                                <div class="dropdown-menu w-40">
+                                                    <ul class="dropdown-content">
+                                                        <li>
                                                             <a href="{{ route('dashboard.wallet.asset-type.edit', $asset_type_list['id']) }}"
-                                                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                <i data-feather="edit-2" class="w-4 h-4 mr-2"></i> Edit
+                                                                class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                             </a>
+                                                        </li>
+
+                                                        <li>
                                                             <form
                                                                 action="{{ route('dashboard.wallet.asset-type.destroy', $asset_type_list['id']) }}"
                                                                 method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
 
-                                                                <input type="hidden" name="count" value="{{ $asset_type_lists->count() }}" />
-                                                                <input type="hidden" name="previousPage" value="{{ $asset_type_lists->previousPageUrl() }}" />
+                                                                <input type="hidden" name="count"
+                                                                    value="{{ $asset_type_lists->count() }}" />
+                                                                <input type="hidden" name="previousPage"
+                                                                    value="{{ $asset_type_lists->previousPageUrl() }}" />
 
-                                                            <button type="submit"
-                                                                class="w-full flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
-                                                                <i data-feather="trash" class="w-4 h-4 mr-2"></i> Delete
-                                                            </button>
-                                                        </form>
-                                                    </div>
+                                                                <button type="submit"
+                                                                    class="w-full flex items-center block  hover:bg-red-200 dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                    <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
+                                                                    Delete
+                                                                </button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
                                     @php
-                                    $i++;
+                                        $i++;
                                     @endphp
                                 @endforeach
                             </tbody>
