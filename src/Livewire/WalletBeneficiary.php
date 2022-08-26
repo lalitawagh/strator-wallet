@@ -56,11 +56,14 @@ class WalletBeneficiary extends Component
 
     public $user;
 
-    public function mount($workspace, $countryWithFlags, $defaultCountry)
+    public $type;
+
+    public function mount($workspace, $countryWithFlags, $defaultCountry, $type)
     {
         $this->workspace = $workspace;
         $this->countryWithFlags = $countryWithFlags;
         $this->defaultCountry = $defaultCountry;
+        $this->type = $type;
         $this->user = Auth::user();
         $this->country_code = $this->user->country_id;
         $this->mobile = !is_null($this->mobile) ?? Helper::normalizePhone($this->mobile);
@@ -101,6 +104,14 @@ class WalletBeneficiary extends Component
             'country_code' => 'nullable',
         ]);
 
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
+        if($this->type == 'transfer' && $data['mobile'] != $user->phone)
+        {
+            $this->addError('mobile', 'You can create self beneficiary');
+        }
+
         $existContact = Contact::where(['workspace_id' => $this->workspace->id,'mobile' => Helper::normalizePhone($data['mobile']),'ref_type' => 'wallet'])->first();
 
         if(!is_null($existContact))
@@ -124,8 +135,6 @@ class WalletBeneficiary extends Component
 
                 event(new ContactCreated($contact));
 
-                /** @var \App\Models\User $user */
-                $user = auth()->user();
                 $this->contact = $contact;
 
                 $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
