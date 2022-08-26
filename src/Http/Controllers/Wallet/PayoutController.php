@@ -55,9 +55,9 @@ class PayoutController extends Controller
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
         $wallets =  Wallet::forHolder($user)->get();
-        $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wallet')->latest()->get();
         $ledgers = Ledger::get();
         $asset_types = Setting::getValue('asset_types', []);
+        $beneficiaries = ($request->input('type') == 'transfer') ? Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wallet')->whereMobile($user->phone)->latest()->get() : Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wallet')->latest()->get();
 
         return view("ledger-foundation::wallet.payout.payouts", compact('countryWithFlags', 'defaultCountry', 'user', 'workspace', 'beneficiaries', 'ledgers', 'wallets', 'asset_types'));
     }
@@ -76,7 +76,6 @@ class PayoutController extends Controller
         {
             return back()->withError("Payout not process with same wallet");
         }
-
 
         $beneficiary_wallet = NULL;
         if (isset($beneficiary_user)) {
