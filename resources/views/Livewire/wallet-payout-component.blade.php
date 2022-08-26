@@ -38,8 +38,8 @@
                             <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
                         @endforeach
                     </select>
-                    <a data-toggle="modal" data-target="#walletbenificary-modal" class="absolute top-0 right-0 plus" style="">
-                        <i data-feather="plus-circle" class="w-4 h-4 ml-4"></i>
+                    <a data-tw-toggle="modal" data-tw-target="#walletbenificary-modal" class="absolute top-0 right-0 plus" style="">
+                        <i data-lucide="plus-circle" class="w-4 h-4 ml-4"></i>
                     </a>
                 </div>
                 @error('beneficiary')
@@ -73,7 +73,7 @@
                         </span>
 
                         <select id="countryWithPhone" name="country_code" onchange="getFlagImg(this)" data-search="true"
-                            class="tail-select" style="width:30%">
+                            class="w-full">
                             @foreach ($countryWithFlags as $country)
                                 <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                                     @isset($country_code) @if ($country->id == $country_code) selected @endif @else @if ($country->id == old('country_code', $user->country_id)) selected @else  @endif @endisset>

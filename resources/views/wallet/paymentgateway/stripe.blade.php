@@ -70,7 +70,7 @@
             // Custom styling can be passed to options when creating an Element.
             var style = {
                 base: {
-                    color: '#32325d',
+                    color: '#8c99a9',
                     lineHeight: '18px',
                     fontFamily: '"Raleway", Helvetica, sans-serif',
                     fontSmoothing: 'antialiased',

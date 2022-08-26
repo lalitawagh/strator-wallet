@@ -1,4 +1,4 @@
-@extends("ledger-foundation::config-skeleton")
+@extends('ledger-foundation::config-skeleton')
 
 @section('title', 'Exchange Rate')
 
@@ -6,7 +6,8 @@
     <div class="configuration-container w-screen">
         <div class="grid grid-cols-12 gap-6">
             <div class="intro-y box col-span-12 xxl:col-span-12">
-                <div class="flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                <div
+                    class="flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
                     <div class="breadcrumb mr-auto hidden sm:flex">
                         <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
@@ -31,7 +32,7 @@
                         method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="grid grid-cols-12 lg:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="base_currency" class="form-label sm:w-30">Exchange From <span
                                         class="text-theme-6">*</span></label>
@@ -59,7 +60,9 @@
                                     <select name="exchange_currency" id="exchange_currency" class="form-control"
                                         data-search="true">
                                         @foreach ($ledgers as $ledger)
-                                            <option value="{{ $ledger->getKey() }}" @if ($exchange_rate->exchange_currency == $ledger->getKey()) selected @endif>{{ $ledger->name }}</option>
+                                            <option value="{{ $ledger->getKey() }}"
+                                                @if ($exchange_rate->exchange_currency == $ledger->getKey()) selected @endif>{{ $ledger->name }}
+                                            </option>
                                         @endforeach
                                     </select>
 
@@ -70,7 +73,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 lg:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="frequency" class="form-label sm:w-30">Frequency <span
                                         class="text-theme-6">*</span></label>
@@ -79,7 +82,7 @@
                                         $exchange_rate_frequencies = \Kanexy\LedgerFoundation\Enums\ExchangeRateFrequency::toArray();
                                     @endphp
                                     <select name="frequency" id="frequency" data-search="true"
-                                        class="tail-select w-full @error('frequency') border-theme-6 @enderror">
+                                        class="w-full @error('frequency') border-theme-6 @enderror">
                                         @foreach ($exchange_rate_frequencies as $exchange_rate_frequency)
                                             <option value="{{ $exchange_rate_frequency }}"
                                                 @if ($exchange_rate->frequency == $exchange_rate_frequency) selected @endif>
@@ -112,12 +115,12 @@
 
 
 
-                        <div class="grid grid-cols-12 md:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
 
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="is_hard_stop" class="form-label sm:w-30">Hard Stop </label>
-                                <div class="sm:w-5/6">
-                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-switch"
+                                <div class="sm:w-5/6 form-check form-switch">
+                                    <input id="is_hard_stop" name="is_hard_stop" type="checkbox" class="form-check-input"
                                         onclick="toggleHardStop(this)"
                                         @if ($exchange_rate->is_hard_stop === 1) checked  @elseif(!is_null(old('is_hard_stop'))) checked @endif>
 
@@ -133,7 +136,9 @@
                                 <div class="sm:w-5/6">
                                     <input id="valid_date" name="valid_date"
                                         class="form-control datepicker_flatpicker @error('valid_date') border-theme-6 @enderror"
-                                        value="{{ old('valid_date', $exchange_rate->valid_date) }}"  placeholder="DD-MM-YYYY" data-min-date="{{ \Carbon\Carbon::now()->subYear(0)->format('Y-m-d') }}"
+                                        value="{{ old('valid_date', $exchange_rate->valid_date) }}"
+                                        placeholder="DD-MM-YYYY"
+                                        data-min-date="{{ \Carbon\Carbon::now()->subYear(0)->format('Y-m-d') }}"
                                         data-single-mode="true">
 
                                     @error('valid_date')
@@ -143,7 +148,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-12 lg:gap-10 mt-0">
+                        <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
 
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
                                 <label for="note" class="form-label sm:w-30"> Note <span

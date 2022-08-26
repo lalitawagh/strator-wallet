@@ -1,4 +1,4 @@
-@extends("ledger-foundation::config-skeleton")
+@extends('ledger-foundation::config-skeleton')
 
 @section('title', 'Create Ledger')
 
@@ -7,7 +7,8 @@
         <div class="grid grid-cols-12 gap-6">
             <!-- BEGIN: Daily Sales -->
             <div class="intro-y box col-span-12 xxl:col-span-12">
-                <div class="flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                <div
+                    class="flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
                     <div class="-intro-x breadcrumb mr-auto hidden sm:flex">
                         <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
@@ -67,7 +68,7 @@
                                         $ledger_types = \Kanexy\LedgerFoundation\Enums\LedgerType::toArray();
                                     @endphp
                                     <select name="ledger_type" id="ledger_type" data-search="true"
-                                        class="tail-select w-full @error('ledger_type') border-theme-6 @enderror">
+                                        class="w-full @error('ledger_type') border-theme-6 @enderror">
                                         <option value="">Select Ledger Type</option>
                                         @foreach ($ledger_types as $key => $ledger_type)
                                             <option value="{{ $ledger_type }}"
@@ -98,9 +99,7 @@
                         </div>
 
 
-                        @livewire('ledger-config-field-component', ['asset_types' => $asset_types,'asset_categories' =>
-                        \Kanexy\LedgerFoundation\Enums\AssetCategory::toArray() ,'commodity_types' => $commodity_types,
-                        'ledger' => []])
+                        @livewire('ledger-config-field-component', ['asset_types' => $asset_types, 'asset_categories' => \Kanexy\LedgerFoundation\Enums\AssetCategory::toArray(), 'commodity_types' => $commodity_types, 'ledger' => []])
 
                         <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
                             <div class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2">
@@ -111,7 +110,7 @@
                                         $exchange_from = \Kanexy\LedgerFoundation\Enums\ExchangeFrom::toArray();
                                     @endphp
                                     <select name="exchange_from" id="exchange_from" data-search="true"
-                                        class="tail-select w-full @error('exchange_from') border-theme-6 @enderror">
+                                        class="w-full @error('exchange_from') border-theme-6 @enderror">
                                         <option value="">Select Exchange From</option>
                                         @foreach ($exchange_from as $key => $exchange_from_val)
                                             <option value="{{ $exchange_from_val }}"
@@ -132,7 +131,7 @@
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
                                     <select name="asset_class" id="asset_class" data-search="true"
-                                        class="tail-select w-full @error('asset_class') border-theme-6 @enderror">
+                                        class="w-full @error('asset_class') border-theme-6 @enderror">
                                         <option value="">Select Asset Class</option>
                                         @foreach ($asset_classes as $asset_class)
                                             <option value="{{ $asset_class['id'] }}"
@@ -153,7 +152,7 @@
                                 <label for="status" class="form-label sm:w-30"> Status <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
-                                    <select name="status" id="status" data-search="true" class="tail-select w-full">
+                                    <select name="status" id="status" data-search="true" class="w-full">
                                         <option value="">Select Status</option>
                                         <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW }}"
                                             @if (old('status') === \Kanexy\LedgerFoundation\Enums\LedgerStatus::NEW) checked @endif>
