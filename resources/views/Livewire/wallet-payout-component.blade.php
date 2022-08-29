@@ -116,7 +116,7 @@
     <label for="amount" class="form-label sm:w-30"> Amount to Pay <span class="text-theme-6">*</span></label>
     <div class="sm:w-5/6">
         <input wire:change="changeAmount($event.target.value)" id="amount" name="amount" type="text"
-            value=" {{ old('amount', $amount) }}" class="form-control" onKeyPress="return isNumberKey(event);"
+            value="{{ old('amount', $amount) }}" class="form-control" onKeyPress="return isNumberKey(event);"
             onpaste="return false;" required>
         @error('amount')
             <span class="block text-theme-6 mt-2">{{ $message }}</span>
