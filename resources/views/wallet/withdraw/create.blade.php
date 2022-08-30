@@ -2,16 +2,6 @@
 
 @section('title', 'Wallet Withdraw')
 
-@push('styles')
-    <style>
-        .modal.modal-slide-over.show>.modal-dialog {
-            margin-right: 0px;
-            height: 1060px;
-            background-color: rgb(var(--color-primary) / var(--tw-bg-opacity));
-        }
-    </style>
-@endpush
-
 @section('content')
 
     <div class="grid grid-cols-12 gap-6 mb-3">
@@ -43,7 +33,7 @@
     </div>
 
     <div id="withdrawbenificary-modal" class="modal modal-slide-over z-50" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg iphone-scroll-2">
             <div class="modal-content">
                 @livewire('withdraw-beneficiary', ['workspace' => $workspace, 'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry])
             </div>
