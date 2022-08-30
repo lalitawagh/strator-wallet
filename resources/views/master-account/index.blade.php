@@ -23,26 +23,28 @@
         <div class="grid grid-cols-12 gap-6">
             <div class="intro-y box col-span-12 xxl:col-span-12">
                 <div
-                    class="gap-2 sm:gap-0 asset-create sm:flex flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
-                    <div class="breadcrumb mr-auto hidden sm:flex">
-                        <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                        <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg"
-                            width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="overflow-x-auto overflow-y-hidden sm:flex gap-2 gap-2 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5 text-right">
+                    <div class="breadcrumb mr-auto sm:flex justify-around">
+                        <a class="whitespace-nowrap text-left " href="">Wallet</a><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="breadcrumb--active">Master Accounts</a>
+                        <a class="whitespace-nowrap text-left " href="" class="">Configuration</a><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                        <a href="" class="whitespace-nowrap text-left breadcrumb--active">Master Accounts</a>
                     </div>
 
                 </div>
                 <div class="px-5 py-3">
                     <div class="intro-y mt-0">
-                        <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                        <div
+                            class="text-right flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
                             <x-list-view-filters />
                             <a href="{{ route('dashboard.wallet.master-account.create') }}"
                                 class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2 py-2">Create

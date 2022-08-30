@@ -7,20 +7,21 @@
         <div class="grid grid-cols-12 gap-6">
             <div class="intro-y box col-span-12 xxl:col-span-12">
                 <div
-                    class="sm:flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
-                    <div class="breadcrumb mr-auto hidden sm:flex">
-                        <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                        <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg"
-                            width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="overflow-x-auto overflow-y-hidden sm:flex gap-2 gap-2 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5 text-right">
+                    <div class="bbreadcrumb mr-auto sm:flex justify-around">
+                        <a class="whitespace-nowrap text-left " href="">Wallet</a><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="breadcrumb--active">Asset Type</a>
+                        <a class="whitespace-nowrap text-left " href="" class="">Configuration</a><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                        <a href="" class="whitespace-nowrap text-left breadcrumb--active">Asset Type</a>
                     </div>
                     <div>
                         <a href="{{ route('dashboard.wallet.asset-type.create') }}"
