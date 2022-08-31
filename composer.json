@@ -28,8 +28,8 @@
         "laravel/passport": "^10.4"
     },
     "require-dev": {
-        "kanexy/cms": "dev-dev",
-        "kanexy/partner-foundation": "dev-dev",
+        "kanexy/cms": "dev-uat",
+        "kanexy/partner-foundation": "dev-uat",
         "phpunit/phpunit": "^9.3",
         "orchestra/testbench": "^6.15"
     },
