@@ -1,6 +1,10 @@
 @extends('ledger-foundation::layouts.master')
 
-@section('title', 'Wallet Payout')
+@if (request()->input('type') == trans('ledger-foundation::configuration.transfer'))
+    @section('title', 'Wallet Transfer')
+@else
+    @section('title', 'Wallet Payout')
+@endif
 
 @section('content')
     <div class="grid grid-cols-12 gap-6 mb-3">
@@ -8,7 +12,11 @@
             <div class="box">
                 <div class="flex items-center p-3 border-b border-gray-200 dark:border-dark-5">
                     <h2 class="font-medium text-base mr-auto">
-                        Payout
+                        @if (request()->input('type') == trans('ledger-foundation::configuration.transfer'))
+                        Transfer
+                        @else
+                        Payouts
+                        @endif
                     </h2>
                 </div>
                 <div class="p-5">
@@ -31,9 +39,9 @@
     </div>
 
     <div id="walletbenificary-modal" class="modal modal-slide-over z-50" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg iphone-scroll-2">
             <div class="modal-content">
-                 @livewire('wallet-beneficiary',['workspace' => $workspace,'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry])
+                 @livewire('wallet-beneficiary',['workspace' => $workspace,'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'type' => request()->input('type')])
             </div>
         </div>
     </div>
