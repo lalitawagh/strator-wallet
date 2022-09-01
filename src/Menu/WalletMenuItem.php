@@ -27,11 +27,11 @@ class WalletMenuItem extends Item
         $user = Auth::user();
 
         $menus = [
-            new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
-            new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
-            new MenuItem('Transfer', 'activity', url: route('dashboard.wallet.payout.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()],'type' => 'transfer'])),
-            new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
-            new MenuItem('Withdraw', 'activity',url: route('dashboard.wallet.withdraw.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index',['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
+            new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index',['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
+            new MenuItem('Transfer', 'activity', url: route('dashboard.wallet.payout.index',['filter' => ['workspace_id' => app('activeWorkspaceId')],'type' => 'transfer'])),
+            new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index',['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
+            new MenuItem('Withdraw', 'activity',url: route('dashboard.wallet.withdraw.index',['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
         ];
      
         if ($user->isSuperAdmin()) {
