@@ -33,7 +33,7 @@
     </div>
 
     <div id="withdrawbenificary-modal" class="modal modal-slide-over z-50" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg iphone-scroll-2">
+        <div class="modal-dialog modal-lg ihphone-scroll-height">
             <div class="modal-content">
                 @livewire('withdraw-beneficiary', ['workspace' => $workspace, 'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry])
             </div>
