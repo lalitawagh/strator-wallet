@@ -18,7 +18,20 @@ class WalletMenuItem extends Item
 
     public function getIsVisible(): bool
     {
-        return true;
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if (
+            $user->hasPermissionTo(Permission::PAYOUT_VIEW) || $user->hasPermissionTo(Permission::DEPOSIT_VIEW) ||
+            $user->hasPermissionTo(Permission::COMMODITY_TYPE_VIEW) || $user->hasPermissionTo(Permission::ASSET_CLASS_VIEW) ||
+            $user->hasPermissionTo(Permission::ASSET_TYPE_VIEW) || $user->hasPermissionTo(Permission::FEE_VIEW) ||
+            $user->hasPermissionTo(Permission::MASTER_ACCOUNT_VIEW) || $user->hasPermissionTo(Permission::LEDGER_VIEW) ||
+            $user->hasPermissionTo(Permission::EXCHANGE_RATE_VIEW)
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     public function getSubmenu(): array
@@ -27,14 +40,14 @@ class WalletMenuItem extends Item
         $user = Auth::user();
 
         $menus = [
-            new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
-            new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
-            new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
-            new MenuItem('Withdraw', 'activity',url: route('dashboard.wallet.withdraw.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            new MenuItem('Withdraw', 'activity', url: route('dashboard.wallet.withdraw.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
         ];
-     
+
         if ($user->isSuperAdmin()) {
-            $menus[]=new MenuItem('Configuration', 'activity', url: route('dashboard.wallet.ledger.index'));
+            $menus[] = new MenuItem('Configuration', 'activity', url: route('dashboard.wallet.ledger.index'));
         }
 
         return $menus;
