@@ -27,7 +27,7 @@
                     </div>
                     <div>
                         @can(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::CREATE,
-                            \Kanexy\LedgerFoundation\Model\Ledger::class)
+                            \Kanexy\LedgerFoundation\Models\Ledger::class)
                             <a href="{{ route('dashboard.wallet.ledger.create') }}"
                                 class="btn btn-sm btn-primary shadow-md">Create New</a>
                         @endcan
@@ -153,7 +153,7 @@
                                     </th>
                                     @if (Gate::check(
                                         \Kanexy\LedgerFoundation\Policies\LedgerPolicy::EDIT,
-                                        \Kanexy\LedgerFoundation\Model\Ledger::class) || Gate::check(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::DELETE, \Kanexy\LedgerFoundation\Model\Ledger::class))
+                                        \Kanexy\LedgerFoundation\Models\Ledger::class) || Gate::check(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::DELETE, \Kanexy\LedgerFoundation\Models\Ledger::class))
                                         <th class="whitespace-nowrap text-left">Action</th>
                                     @endif
                                 </tr>
@@ -190,7 +190,7 @@
                                             {{ trans('ledger-foundation::configuration.' . $ledger->status) }}</td>
                                         @if (Gate::check(
                                             \Kanexy\LedgerFoundation\Policies\LedgerPolicy::EDIT,
-                                            \Kanexy\LedgerFoundation\Model\Ledger::class) || Gate::check(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::DELETE, \Kanexy\LedgerFoundation\Model\Ledger::class))
+                                            \Kanexy\LedgerFoundation\Models\Ledger::class) || Gate::check(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::DELETE, \Kanexy\LedgerFoundation\Models\Ledger::class))
                                             <td class="whitespace-nowrap text-left">
                                                 <div class="dropdown">
                                                     <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
@@ -202,7 +202,7 @@
                                                     <div class="dropdown-menu w-40">
                                                         <ul class="dropdown-content">
                                                             @can(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::EDIT,
-                                                                \Kanexy\LedgerFoundation\Model\Ledger::class)
+                                                                \Kanexy\LedgerFoundation\Models\Ledger::class)
                                                                 <li>
                                                                     <a href="{{ route('dashboard.wallet.ledger.edit', $ledger->id) }}"
                                                                         class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
@@ -211,7 +211,7 @@
                                                                 </li>
                                                             @endcan
                                                             @can(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::DELETE,
-                                                                \Kanexy\LedgerFoundation\Model\Ledger::class)
+                                                                \Kanexy\LedgerFoundation\Models\Ledger::class)
                                                                 <li>
                                                                     <form
                                                                         action="{{ route('dashboard.wallet.ledger.destroy', $ledger->id) }}"
