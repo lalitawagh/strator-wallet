@@ -21,13 +21,7 @@ class WalletMenuItem extends Item
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        if (
-            $user->hasPermissionTo(Permission::PAYOUT_VIEW) || $user->hasPermissionTo(Permission::DEPOSIT_VIEW) ||
-            $user->hasPermissionTo(Permission::COMMODITY_TYPE_VIEW) || $user->hasPermissionTo(Permission::ASSET_CLASS_VIEW) ||
-            $user->hasPermissionTo(Permission::ASSET_TYPE_VIEW) || $user->hasPermissionTo(Permission::FEE_VIEW) ||
-            $user->hasPermissionTo(Permission::MASTER_ACCOUNT_VIEW) || $user->hasPermissionTo(Permission::LEDGER_VIEW) ||
-            $user->hasPermissionTo(Permission::EXCHANGE_RATE_VIEW)
-        ) {
+        if ($user->hasAnyPermission([Permission::PAYOUT_VIEW, Permission::DEPOSIT_VIEW, Permission::COMMODITY_TYPE_VIEW, Permission::ASSET_CLASS_VIEW, Permission::ASSET_TYPE_VIEW, Permission::FEE_VIEW, Permission::MASTER_ACCOUNT_VIEW, Permission::LEDGER_VIEW, Permission::EXCHANGE_RATE_VIEW])) {
             return true;
         }
 
@@ -40,14 +34,24 @@ class WalletMenuItem extends Item
         $user = Auth::user();
 
         $menus = [
-            new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
-            new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
-            new MenuItem('Transfer', 'activity', url: route('dashboard.wallet.payout.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()],'type' => 'transfer'])),
-            new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
-            new MenuItem('Withdraw', 'activity',url: route('dashboard.wallet.withdraw.index',['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            new MenuItem('Withdraw', 'activity', url: route('dashboard.wallet.withdraw.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
         ];
 
-        if ($user->isSuperAdmin()) {
+        if ($user->hasPermissionTo(Permission::PAYOUT_VIEW)) {
+            $menus = [
+                new MenuItem('Transfer', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()], 'type' => 'transfer'])),
+                new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            ];
+        }
+
+        if ($user->hasPermissionTo(Permission::DEPOSIT_VIEW)) {
+            $menus = [
+                new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]))
+            ];
+        }
+
+        if ($user->hasAnyPermission([Permission::COMMODITY_TYPE_VIEW, Permission::ASSET_CLASS_VIEW, Permission::ASSET_TYPE_VIEW, Permission::FEE_VIEW, Permission::MASTER_ACCOUNT_VIEW, Permission::LEDGER_VIEW, Permission::EXCHANGE_RATE_VIEW])) {
             $menus[] = new MenuItem('Configuration', 'activity', url: route('dashboard.wallet.ledger.index'));
         }
 
