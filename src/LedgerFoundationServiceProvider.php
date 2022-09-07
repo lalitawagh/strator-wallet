@@ -170,7 +170,6 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Livewire::component('ledger-config-field-component', LedgerConfigFieldComponent::class);
         Livewire::component('wallet-transactions-list-component', WalletTransactionsListComponent::class);
         Livewire::component('wallet-transaction-detail-component', WalletTransactionDetailComponent::class);
-
         Livewire::component('wallet-beneficiary', WalletBeneficiary::class);
         Livewire::component('wallet-payout-component', WalletPayoutComponent::class);
         Livewire::component('wallet-withdraw-component', WalletWithdrawComponent::class);

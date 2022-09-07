@@ -8,21 +8,24 @@
         </div>
     </div>
     <div class="modal-body">
-        <div class="grid grid-cols-12 md:gap-0 mt-0">
+        <div class="grid grid-cols-12 md:gap-0 mt-0 ihphone-scroll-height-inr2">
             <div class="col-span-12 md:col-span-12 lg:col-span-12 sm:col-span-12 form-inline mt-2">
                 <label for="" class="form-label sm:w-30"> Name <span class="text-theme-6">*</span></label>
                 <div class="sm:w-2/6 pr-2 mb-2 sm:mb-0">
-                    <input id="" type="text" class="form-control" placeholder="First Name" wire:model="first_name">
+                    <input id="" type="text" class="form-control" placeholder="First Name"
+                        wire:model="first_name">
                     @error('first_name')
                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="sm:w-2/6 pr-2 mb-2 sm:mb-0">
-                    <input id="" type="text" class="form-control" placeholder="Middle Name" wire:model="middle_name">
+                    <input id="" type="text" class="form-control" placeholder="Middle Name"
+                        wire:model="middle_name">
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
                 <div class="sm:w-2/6 pr-2 mb-2 sm:mb-0">
-                    <input id="" type="text" class="form-control" placeholder="Last Name" wire:model="last_name">
+                    <input id="" type="text" class="form-control" placeholder="Last Name"
+                        wire:model="last_name">
                     @error('last_name')
                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
                     @enderror
@@ -35,7 +38,8 @@
                         <div id="input-group-phone" wire:ignore class="input-group-text flex form-inline"
                             style="padding: 0 5px;">
 
-                            <span id="countryWithPhoneFlagImgWallet" style="display: flex;
+                            <span id="countryWithPhoneFlagImgWallet"
+                                style="display: flex;
                                         justify-content: center;
                                         align-items: center;
                                         align-self: center;margin-right:10px;">
@@ -46,8 +50,9 @@
                                 @endforeach
                             </span>
 
-                            <select id="countryWithPhone" wire:change="changeCountryCode($event.target.value)" name="country_code" onchange="getFlagImgWallet(this)"
-                                data-search="true" class="tail-select" style="width:30%">
+                            <select id="countryWithPhone" wire:change="changeCountryCode($event.target.value)"
+                                name="country_code" onchange="getFlagImgWallet(this)" data-search="true"
+                                class="tail-select">
                                 @foreach ($countryWithFlags as $country)
                                     <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                                         @if ($country->id == old('country_code', $user->country_id)) selected @endif>
@@ -102,17 +107,18 @@
         @isset($beneficiary_created)
             <h2 class="font-medium text-base mr-auto mt-5">Verify OTP</h2>
             @if ($sent_resend_otp == true)
-                <h4 class="text-theme-9 mt-1">OTP Resend Success</h4>
+                <h4 class="text-success mt-1">OTP Resend Success</h4>
             @endif
             <div class="grid grid-cols-12 md:gap-0 mt-5">
                 <div class="col-span-12 md:col-span-12 lg:col-span-12 sm:col-span-12 form-inline mt-2">
                     <label for="" class="form-label sm:w-28"> Enter OTP <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
-                        <input id="" type="text" class="form-control" placeholder="Enter OTP" wire:model="code">
+                        <input id="" type="text" class="form-control" placeholder="Enter OTP"
+                            wire:model="code">
                         @error('code')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror
-                        <a wire:click="resendOtp({{ $oneTimePassword }})" class="block text-theme-1 mt-2"
+                        <a wire:click="resendOtp({{ $oneTimePassword }})" class="block active-clr mt-2"
                             style="cursor: pointer;">Resend OTP </a>
                     </div>
                 </div>

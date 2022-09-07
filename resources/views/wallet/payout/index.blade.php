@@ -1,6 +1,10 @@
 @extends('ledger-foundation::layouts.master')
 
-@section('title', 'Wallet Payouts')
+@if (request()->input('type') == trans('ledger-foundation::configuration.transfer'))
+    @section('title', 'Wallet Transfer')
+@else
+    @section('title', 'Wallet Payout')
+@endif
 
 @section('content')
 <div class="grid grid-cols-12 gap-6">
@@ -8,7 +12,11 @@
         <div class="box">
             <div class="flex items-center p-3 border-b border-gray-200 dark:border-dark-5">
                 <h2 class="font-medium text-base mr-auto">
+                    @if (request()->input('type') == trans('ledger-foundation::configuration.transfer'))
+                    Transfer
+                    @else
                     Payouts
+                    @endif
                 </h2>
             </div>
             <div class="p-3">
@@ -27,12 +35,12 @@
                     <h2 class="font-medium text-base mr-auto">
                         Broadcast Message
                     </h2>
-                    <button class="btn btn-outline-secondary hidden sm:flex"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Docs </button>
+                    <button class="btn btn-outline-secondary hidden sm:flex"> <i data-lucide="file" class="w-4 h-4 mr-2"></i> Download Docs </button>
                     <div class="dropdown sm:hidden">
-                        <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-feather="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-600"></i> </a>
+                        <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i data-lucide="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-600"></i> </a>
                         <div class="dropdown-menu w-40">
                             <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                <a href="javascript:;" class="flex items-center p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="file" class="w-4 h-4 mr-2"></i> Download Docs </a>
+                                <a href="javascript:;" class="flex items-center p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-lucide="file" class="w-4 h-4 mr-2"></i> Download Docs </a>
                             </div>
                         </div>
                     </div>

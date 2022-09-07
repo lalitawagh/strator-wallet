@@ -38,8 +38,8 @@
                         <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
                     @endforeach
                 </select>
-                <a data-toggle="modal" data-target="#withdrawbenificary-modal" class="absolute top-0 right-0 plus" style="">
-                    <i data-feather="plus-circle" class="w-4 h-4 ml-4"></i>
+                <a data-tw-toggle="modal" data-tw-target="#withdrawbenificary-modal" class="absolute top-0 right-0 plus" style="">
+                    <i data-lucide="plus-circle" class="w-4 h-4 ml-4"></i>
                 </a>
                 </div>
                 @error('beneficiary_id')
