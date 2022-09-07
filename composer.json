@@ -7,16 +7,6 @@
         "ledger-foundation"
     ],
     "license": "MIT",
-    "repositories": {
-        "kanexy/cms": {
-            "type": "git",
-            "url": "https://sttipuclmnau2ebdqt4metexs3seba2ujz2hefnl3qimrvjwdkaa@dev.azure.com/Kanexy/Kanexy%20Platform/_git/cms"
-        },
-        "kanexy/partner-foundation": {
-            "type": "git",
-            "url": "https://sttipuclmnau2ebdqt4metexs3seba2ujz2hefnl3qimrvjwdkaa@dev.azure.com/Kanexy/Kanexy%20Platform/_git/partner-foundation"
-        }
-    },
     "authors": [
         {
             "name": "Kanexy",
@@ -28,8 +18,6 @@
         "laravel/passport": "^10.4"
     },
     "require-dev": {
-        "kanexy/cms": "dev-uat",
-        "kanexy/partner-foundation": "dev-uat",
         "phpunit/phpunit": "^9.3",
         "orchestra/testbench": "^6.15"
     },
