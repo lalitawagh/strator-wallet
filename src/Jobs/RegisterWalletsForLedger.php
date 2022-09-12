@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Kanexy\LedgerFoundation\Enums\WalletStatus;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\Cms\Models\User;
+use Kanexy\LedgerFoundation\Model\Ledger;
 
 class RegisterWalletsForLedger implements ShouldQueue
 {
@@ -21,7 +22,7 @@ class RegisterWalletsForLedger implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($ledger)
+    public function __construct(Ledger $ledger)
     {
         $this->ledger = $ledger;
     }
@@ -33,11 +34,12 @@ class RegisterWalletsForLedger implements ShouldQueue
      */
     public function handle()
     {
-        $users = User::isSubscribers()->get();
+        $users = User::where('id','!=',1)->get();
 
         if ($this->ledger->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $this->ledger->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET) {
 
             foreach ($users as $user) {
+               
                 $wallet = Wallet::where(['ledger_id' => $this->ledger->getKey(), "holder_type" => $user->getMorphClass(), "holder_id" => $user->getKey()])->first();
 
                 if (!is_null($wallet)) {
