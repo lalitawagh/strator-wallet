@@ -10,7 +10,6 @@ use Illuminate\Queue\SerializesModels;
 use Kanexy\LedgerFoundation\Enums\WalletStatus;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\Cms\Models\User;
-use Kanexy\LedgerFoundation\Model\Ledger;
 
 class RegisterWalletsForLedger implements ShouldQueue
 {
@@ -22,7 +21,7 @@ class RegisterWalletsForLedger implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Ledger $ledger)
+    public function __construct($ledger)
     {
         $this->ledger = $ledger;
     }
