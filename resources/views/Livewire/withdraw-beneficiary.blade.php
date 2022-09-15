@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="modal-body">
-        <div class="grid grid-cols-12 md:gap-0 mt-0">
+        <div class="grid grid-cols-12 md:gap-0 mt-0 ihphone-scroll-height-inr1">
             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                 <label for="" class="form-label sm:w-48"> Name <span class="text-theme-6">*</span></label>
                 <div class="sm:w-2/6 pr-2 mb-2 sm:mb-0">
