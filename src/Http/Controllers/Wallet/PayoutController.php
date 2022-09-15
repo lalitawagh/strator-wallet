@@ -52,6 +52,7 @@ class PayoutController extends Controller
     {
         $user = Auth::user();
         $countryWithFlags = Country::orderBy("name")->get();
+        $countries = Country::get();
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
         $wallets =  Wallet::forHolder($user)->get();
@@ -59,7 +60,7 @@ class PayoutController extends Controller
         $asset_types = Setting::getValue('asset_types', []);
         $beneficiaries = ($request->input('type') == 'transfer') ? Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wallet')->whereMobile($user->phone)->latest()->get() : Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wallet')->latest()->get();
 
-        return view("ledger-foundation::wallet.payout.payouts", compact('countryWithFlags', 'defaultCountry', 'user', 'workspace', 'beneficiaries', 'ledgers', 'wallets', 'asset_types'));
+        return view("ledger-foundation::wallet.payout.payouts", compact('countryWithFlags', 'defaultCountry', 'user', 'workspace', 'beneficiaries', 'ledgers', 'wallets', 'asset_types','countries'));
     }
 
     public function store(StorePayoutRequest $request)
