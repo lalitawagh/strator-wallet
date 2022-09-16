@@ -273,6 +273,8 @@ display: contents !important;
                                 <div class="side-menu__title"> General </div>
                             </a>
                         </li>
+                        @can(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::VIEW,
+                        \Kanexy\LedgerFoundation\Model\Ledger::class)
                         <li>
                             <a href="{{ route('dashboard.wallet.ledger.index') }}"
                                 class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.ledger.index' || Route::current()->getName() == 'dashboard.wallet.ledger.create' || Route::current()->getName() == 'dashboard.wallet.ledger.edit') side-menu--active @endif">
@@ -280,6 +282,7 @@ display: contents !important;
                                 <div class="side-menu__title"> Ledgers </div>
                             </a>
                         </li>
+                        @endcan
                         <li>
                             <a href="javascript:;.html"
                                 class="side-menu
@@ -297,6 +300,7 @@ display: contents !important;
                                 @else
                                     <ul class="xl:pl-6 sm:pl-6">
                             @endif
+                        @can(\Kanexy\LedgerFoundation\Policies\AssetTypePolicy::VIEW,\Kanexy\LedgerFoundation\Contracts\AssetTypeConfiguration::class)
                         <li>
                             <a href="{{ route('dashboard.wallet.asset-type.index') }}"
                                 class="side-menu  @if (Route::current()->getName() == 'dashboard.wallet.asset-type.index' || Route::current()->getName() == 'dashboard.wallet.asset-type.create' || Route::current()->getName() == 'dashboard.wallet.asset-type.edit')
@@ -305,6 +309,8 @@ display: contents !important;
                                 <div class="side-menu__title"> Asset Type </div>
                             </a>
                         </li>
+                        @endcan
+                        @can(\Kanexy\LedgerFoundation\Policies\AssetClassPolicy::VIEW,\Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class)
                         <li>
                             <a href="{{ route('dashboard.wallet.asset-class.index') }}"
                                 class="side-menu
@@ -314,6 +320,8 @@ display: contents !important;
                                 <div class="side-menu__title"> Asset Class </div>
                             </a>
                         </li>
+                        @endcan
+                        @can(\Kanexy\LedgerFoundation\Policies\CommodityTypePolicy::VIEW,\Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration::class)
                         <li>
                             <a href="{{ route('dashboard.wallet.commodity-type.index') }}"
                                 class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.commodity-type.index' || Route::current()->getName() == 'dashboard.wallet.commodity-type.create' || Route::current()->getName() == 'dashboard.wallet.commodity-type.edit')  side-menu--active @endif">
@@ -321,8 +329,10 @@ display: contents !important;
                                 <div class="side-menu__title"> Commodity Type </div>
                             </a>
                         </li>
+                        @endcan
                     </ul>
                     </li>
+                    @can(\Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::VIEW,\Kanexy\LedgerFoundation\Models\ExchangeRate::class)
                     <li>
                         <a href="{{ route('dashboard.wallet.exchange-rate.index') }}"
                             class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.exchange-rate.index' || Route::current()->getName() == 'dashboard.wallet.exchange-rate.create' || Route::current()->getName() == 'dashboard.wallet.exchange-rate.edit') side-menu--active @endif">
@@ -330,6 +340,8 @@ display: contents !important;
                             <div class="side-menu__title"> Exchange Rate </div>
                         </a>
                     </li>
+                    @endcan
+                    @can(\Kanexy\LedgerFoundation\Policies\MasterAccountPolicy::VIEW,\Kanexy\LedgerFoundation\Contracts\MasterAccount::class)
                     <li>
                         <a href="{{ route('dashboard.wallet.master-account.index') }}"
                             class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.master-account.index' || Route::current()->getName() == 'dashboard.wallet.master-account.create' || Route::current()->getName() == 'dashboard.wallet.master-account.edit') side-menu--active @endif">
@@ -337,6 +349,8 @@ display: contents !important;
                             <div class="side-menu__title"> Master Account </div>
                         </a>
                     </li>
+                    @endcan
+                    @can(\Kanexy\LedgerFoundation\Policies\FeePolicy::VIEW,\Kanexy\LedgerFoundation\Contracts\Fee::class)
                     <li>
                         <a href="{{ route('dashboard.wallet.fee.index') }}"
                             class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.fee.index' || Route::current()->getName() == 'dashboard.wallet.fee.create' || Route::current()->getName() == 'dashboard.wallet.fee.edit') side-menu--active @endif">
@@ -344,6 +358,7 @@ display: contents !important;
                             <div class="side-menu__title"> Fees Setup </div>
                         </a>
                     </li>
+                    @endcan
                     <li>
                         <a href="#" class="side-menu">
                             <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
