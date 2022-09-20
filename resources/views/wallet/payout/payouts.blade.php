@@ -27,7 +27,7 @@
                         method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="workspace_id" value="{{ $workspace->getKey() }}">
-                        @livewire('wallet-payout-component', ['wallets' => $wallets, 'beneficiaries' => $beneficiaries, 'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'user' => $user, 'ledgers' => $ledgers, 'asset_types' => $asset_types])
+                        @livewire('wallet-payout-component', ['wallets' => $wallets, 'beneficiaries' => $beneficiaries, 'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'user' => $user, 'ledgers' => $ledgers, 'asset_types' => $asset_types, 'workspace' => $workspace, 'type' => request()->input('type')])
 
                         <div class="text-right mt-5">
                             <button class="btn btn-primary w-24" type="submit">Submit</button>
