@@ -5,11 +5,11 @@
         $subtotal = @$details['fee'] + @$details['amount'];
         $total = \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($subtotal, $details['currency'])->formatByDecimal();
     @endphp
-    <div class="overlay"></div>
+    <div class="overlay dark:bg-darkmode-400 dark:border-darkmode-400"></div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 required">
         <label for="horizontal-form-3" class="form-label sm:w-24">Total Amount</label>
         <div class="sm:w-5/6">
-            <div class="font-medium text-base">
+            <div class="font-medium text-base pt-2">
                 @if ($details['asset_category'] == \Kanexy\LedgerFoundation\Enums\AssetCategory::FIAT_CURRENCY)
                     {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($subtotal, $details['currency']) }}
                 @else
@@ -28,7 +28,7 @@
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-5 card required">
         <label for="horizontal-form-3" class="form-label sm:w-24">Card Details</label>
         <div class="sm:w-5/6">
-            <div id="card-element" style="padding-top: 5px;"></div>
+            <div id="card-element" style="padding-top: 10px;"></div>
         </div>
     </div>
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-5 card required">
