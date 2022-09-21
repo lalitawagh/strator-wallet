@@ -158,8 +158,9 @@ class WithdrawBeneficiaryComponent extends Component
             // $contact->generateOtp("sms");
             $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
             //$user->generateOtp("sms");
-
+            session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);
             $this->beneficiary_created = true;
+            $this->dispatchBrowserEvent('showOtpModel');
         }
 
     }

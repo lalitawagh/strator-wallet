@@ -23,11 +23,12 @@
         <div class="grid grid-cols-12 gap-6">
             <div class="intro-y box col-span-12 xxl:col-span-12">
                 <div
-                    class="gap-2 sm:gap-0 flex-wrap asset-create sm:flex items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
-                    <div class="breadcrumb mr-auto hidden sm:flex">
+                    class="overflow-x-auto overflow-y-hidden sm:flex gap-2 gap-2 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5 text-right">
+                    <div class="breadcrumb mr-auto sm:flex justify-around">
                         <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
+                            stroke-linejoin="round"
+                            class="whitespace-nowrap text-left feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                         <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg"
@@ -36,11 +37,14 @@
                             class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="breadcrumb--active">Asset Class</a>
+                        <a href="" class="whitespace-nowrap text-left breadcrumb--active">Asset Class</a>
                     </div>
                     <div>
-                        <a href="{{ route('dashboard.wallet.asset-class.create') }}"
-                            class="btn btn-sm btn-primary shadow-md">Create New</a>
+                        @can(\Kanexy\LedgerFoundation\Policies\AssetClassPolicy::CREATE,
+                            \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class)
+                            <a href="{{ route('dashboard.wallet.asset-class.create') }}"
+                                class="btn btn-sm btn-primary shadow-md">Create New</a>
+                        @endcan
                     </div>
                 </div>
                 <div class="p-5">
@@ -91,8 +95,15 @@
                                             </svg>
                                         </span>
                                     </th>
-                                    <th class="whitespace-nowrap text-left w-20">Action
-                                    </th>
+                                    @if (Gate::check(
+                                        \Kanexy\LedgerFoundation\Policies\AssetClassPolicy::EDIT,
+                                        \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class) ||
+                                        Gate::check(
+                                            \Kanexy\LedgerFoundation\Policies\AssetClassPolicy::DELETE,
+                                            \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class))
+                                        <th class="whitespace-nowrap text-left w-20">Action
+                                        </th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -114,46 +125,58 @@
                                         <td class="whitespace-nowrap text-left">
                                             {{ trans('ledger-foundation::configuration.' . $asset_class_list['status']) }}
                                         </td>
-                                        <td class="whitespace-nowrap text-left">
-                                            <div class="dropdown">
-                                                <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
-                                                    data-tw-toggle="dropdown">
-                                                    <span class="w-5 h-5 flex items-center justify-center">
-                                                        <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
-                                                    </span>
-                                                </button>
-                                                <div class="dropdown-menu w-40">
-                                                    <ul class="dropdown-content">
-                                                        <li>
-                                                            <a href="{{ route('dashboard.wallet.asset-class.edit', $asset_class_list['id']) }}"
-                                                                class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
-                                                            </a>
-                                                        </li>
+                                        @if (Gate::check(
+                                            \Kanexy\LedgerFoundation\Policies\AssetClassPolicy::EDIT,
+                                            \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class) ||
+                                            Gate::check(
+                                                \Kanexy\LedgerFoundation\Policies\AssetClassPolicy::DELETE,
+                                                \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class))
+                                            <td class="whitespace-nowrap text-left">
+                                                <div class="dropdown">
+                                                    <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
+                                                        data-tw-toggle="dropdown">
+                                                        <span class="w-5 h-5 flex items-center justify-center">
+                                                            <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
+                                                        </span>
+                                                    </button>
+                                                    <div class="dropdown-menu w-40">
+                                                        <ul class="dropdown-content">
+                                                            @can(\Kanexy\LedgerFoundation\Policies\AssetClassPolicy::EDIT,
+                                                                \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class)
+                                                                <li>
+                                                                    <a href="{{ route('dashboard.wallet.asset-class.edit', $asset_class_list['id']) }}"
+                                                                        class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                        <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
+                                                                    </a>
+                                                                </li>
+                                                            @endcan
+                                                            @can(\Kanexy\LedgerFoundation\Policies\AssetClassPolicy::DELETE,
+                                                                \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class)
+                                                                <li>
+                                                                    <form
+                                                                        action="{{ route('dashboard.wallet.asset-class.destroy', $asset_class_list['id']) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
 
-                                                        <li>
-                                                            <form
-                                                                action="{{ route('dashboard.wallet.asset-class.destroy', $asset_class_list['id']) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
+                                                                        <input type="hidden" name="count"
+                                                                            value="{{ $asset_class_lists->count() }}" />
+                                                                        <input type="hidden" name="previousPage"
+                                                                            value="{{ $asset_class_lists->previousPageUrl() }}" />
 
-                                                                <input type="hidden" name="count"
-                                                                    value="{{ $asset_class_lists->count() }}" />
-                                                                <input type="hidden" name="previousPage"
-                                                                    value="{{ $asset_class_lists->previousPageUrl() }}" />
-
-                                                                <button type="submit"
-                                                                    class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
-                                                                    Delete
-                                                                </button>
-                                                            </form>
-                                                        </li>
-                                                    </ul>
+                                                                        <button type="submit"
+                                                                            class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                            <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
+                                                                            Delete
+                                                                        </button>
+                                                                    </form>
+                                                                </li>
+                                                            @endcan
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
+                                            </td>
+                                        @endif
                                     </tr>
                                     @php
                                         $i++;

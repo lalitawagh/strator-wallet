@@ -23,30 +23,35 @@
         <div class="grid grid-cols-12 gap-6">
             <div class="intro-y box col-span-12 xxl:col-span-12">
                 <div
-                    class="gap-2 sm:gap-0 asset-create sm:flex flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
-                    <div class="breadcrumb mr-auto hidden sm:flex">
-                        <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                        <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg"
-                            width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="overflow-x-auto overflow-y-hidden sm:flex gap-2 gap-2 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5 text-right">
+                    <div class="breadcrumb mr-auto sm:flex justify-around">
+                        <a class="whitespace-nowrap text-left " href="">Wallet</a><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="breadcrumb--active">Master Accounts</a>
+                        <a class="whitespace-nowrap text-left " href="" class="">Configuration</a><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                        <a href="" class="whitespace-nowrap text-left breadcrumb--active">Master Accounts</a>
                     </div>
 
                 </div>
                 <div class="px-5 py-3">
                     <div class="intro-y mt-0">
-                        <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                        <div
+                            class="text-right flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
                             <x-list-view-filters />
+                            @can(\Kanexy\LedgerFoundation\Policies\MasterAccountPolicy::CREATE,
+                            \Kanexy\LedgerFoundation\Contracts\MasterAccount::class)
                             <a href="{{ route('dashboard.wallet.master-account.create') }}"
                                 class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2 py-2">Create
                                 New</a>
+                            @endcan
                         </div>
                     </div>
                     <div class="intro-y p-0 mt-0 overflow-x-auto overflow-y-hidden">
@@ -138,7 +143,11 @@
                                             </svg>
                                         </span>
                                     </th>
+                                    @if (Gate::check(
+                                        \Kanexy\LedgerFoundation\Policies\MasterAccountPolicy::EDIT,
+                                        \Kanexy\LedgerFoundation\Contracts\MasterAccount::class) || Gate::check(\Kanexy\LedgerFoundation\Policies\MasterAccountPolicy::DELETE, \Kanexy\LedgerFoundation\Contracts\MasterAccount::class))
                                     <th class="whitespace-nowrap text-left">Action</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -164,7 +173,9 @@
                                         <td class="whitespace-nowrap text-left">
                                             {{ trans('ledger-foundation::configuration.' . $master_account['status']) }}
                                         </td>
-
+                                        @if (Gate::check(
+                                        \Kanexy\LedgerFoundation\Policies\MasterAccountPolicy::EDIT,
+                                        \Kanexy\LedgerFoundation\Contracts\MasterAccount::class) || Gate::check(\Kanexy\LedgerFoundation\Policies\MasterAccountPolicy::DELETE, \Kanexy\LedgerFoundation\Contracts\MasterAccount::class))
                                         <td class="whitespace-nowrap text-left">
                                             <div class="dropdown">
                                                 <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
@@ -175,13 +186,18 @@
                                                 </button>
                                                 <div class="dropdown-menu w-40">
                                                     <ul class="dropdown-content">
+                                                        @can(\Kanexy\LedgerFoundation\Policies\MasterAccountPolicy::EDIT,
+                                                        \Kanexy\LedgerFoundation\Contracts\MasterAccount::class)
                                                         <li>
                                                             <a href="{{ route('dashboard.wallet.master-account.edit', $master_account['id']) }}"
                                                                 class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                 <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                             </a>
                                                         </li>
+                                                        @endcan
 
+                                                        @can(\Kanexy\LedgerFoundation\Policies\MasterAccountPolicy::DELETE,
+                                                        \Kanexy\LedgerFoundation\Contracts\MasterAccount::class)
                                                         <li>
                                                             <form
                                                                 action="{{ route('dashboard.wallet.master-account.destroy', $master_account['id']) }}"
@@ -196,10 +212,12 @@
                                                                 </button>
                                                             </form>
                                                         </li>
+                                                        @endcan
                                                     </ul>
                                                 </div>
                                             </div>
                                         </td>
+                                        @endif
                                     </tr>
                                     @php
                                         $i++;

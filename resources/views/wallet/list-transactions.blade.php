@@ -241,7 +241,10 @@
                                 @$transaction->meta['transaction_type'] == 'payout')
                                 @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
                             @else
-                                @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->meta['sender_wallet_account_id'])->first(); @endphp
+                                @isset($transaction?->meta['sender_wallet_account_id'])
+                                    @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->meta['sender_wallet_account_id'])->first(); @endphp
+                                @endisset
+                                
                             @endif
                             @php
                                 $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet?->ledger_id)->first();
@@ -279,7 +282,7 @@
                                             {{ @$transaction->meta['sender_name'] }}
                                         @endif
                                     </td>
-                                    <td class="whitespace-nowrap text-left">{{ $transaction->meta['beneficiary_name'] }}
+                                    <td class="whitespace-nowrap text-left">{{ @$transaction?->meta['beneficiary_name'] }}
                                     </td>
                                     @if (isset($transactionType) && $transactionType == 'deposit')
                                         <td class="whitespace-nowrap text-left">

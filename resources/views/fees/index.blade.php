@@ -7,25 +7,29 @@
         <div class="grid grid-cols-12 gap-6">
             <div class="intro-y box col-span-12 xxl:col-span-12">
                 <div
-                    class="sm:flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                    class="overflow-x-auto overflow-y-hidden sm:flex gap-2 gap-2 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5 text-right">
 
-                    <div class="breadcrumb mr-auto hidden sm:flex">
-                        <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                        <a href="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px"
-                            height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
+                    <div class="breadcrumb mr-auto sm:flex justify-around">
+                        <a class="whitespace-nowrap text-left " href="">Wallet</a><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="breadcrumb--active">Fee Setup</a>
+                        <a class="whitespace-nowrap text-left " href="">Configuration</a><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                        <a href="" class="whitespace-nowrap text-left breadcrumb--active">Fee Setup</a>
                     </div>
                     <div>
-                        <a href="{{ route('dashboard.wallet.fee.create') }}" class="btn btn-sm btn-primary shadow-md">Create
-                            New</a>
+                        @can(\Kanexy\LedgerFoundation\Policies\FeePolicy::CREATE,
+                            \Kanexy\LedgerFoundation\Contracts\Fee::class)
+                            <a href="{{ route('dashboard.wallet.fee.create') }}" class="btn btn-sm btn-primary shadow-md">Create
+                                New</a>
+                        @endcan
                     </div>
                 </div>
                 <div class="p-5">
@@ -104,8 +108,11 @@
                                             </svg>
                                         </span>
                                     </th>
-
-                                    <th class="whitespace-nowrap text-left">Action</th>
+                                    @if (Gate::check(
+                                        \Kanexy\LedgerFoundation\Policies\FeePolicy::EDIT,
+                                        \Kanexy\LedgerFoundation\Contracts\Fee::class) || Gate::check(\Kanexy\LedgerFoundation\Policies\FeePolicy::DELETE, \Kanexy\LedgerFoundation\Contracts\Fee::class))
+                                        <th class="whitespace-nowrap text-left">Action</th>
+                                    @endif
                                 </tr>
                             </thead>
 
@@ -135,46 +142,55 @@
                                         </td>
                                         <td class="whitespace-nowrap text-left">{{ $fee['amount'] }}</td>
                                         <td class="whitespace-nowrap text-left">{{ $fee['percentage'] }}</td>
-                                        <td class="whitespace-nowrap text-left">
-                                            <div class="dropdown">
-                                                <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
-                                                    data-tw-toggle="dropdown">
-                                                    <span class="w-5 h-5 flex items-center justify-center">
-                                                        <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
-                                                    </span>
-                                                </button>
-                                                <div class="dropdown-menu w-40">
-                                                    <ul class="dropdown-content">
-                                                        <li>
-                                                            <a href="{{ route('dashboard.wallet.fee.edit', $fee['id']) }}"
-                                                                class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
-                                                            </a>
-                                                        </li>
+                                        @if (Gate::check(
+                                            \Kanexy\LedgerFoundation\Policies\FeePolicy::EDIT,
+                                            \Kanexy\LedgerFoundation\Contracts\Fee::class) || Gate::check(\Kanexy\LedgerFoundation\Policies\FeePolicy::DELETE, \Kanexy\LedgerFoundation\Contracts\Fee::class))
+                                            <td class="whitespace-nowrap text-left">
+                                                <div class="dropdown">
+                                                    <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
+                                                        data-tw-toggle="dropdown">
+                                                        <span class="w-5 h-5 flex items-center justify-center">
+                                                            <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
+                                                        </span>
+                                                    </button>
+                                                    <div class="dropdown-menu w-40">
+                                                        <ul class="dropdown-content">
+                                                            @can(\Kanexy\LedgerFoundation\Policies\FeePolicy::EDIT,
+                                                                \Kanexy\LedgerFoundation\Contracts\Fee::class)
+                                                                <li>
+                                                                    <a href="{{ route('dashboard.wallet.fee.edit', $fee['id']) }}"
+                                                                        class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                        <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
+                                                                    </a>
+                                                                </li>
+                                                            @endcan
+                                                            @can(\Kanexy\LedgerFoundation\Policies\FeePolicy::DELETE,
+                                                                \Kanexy\LedgerFoundation\Contracts\Fee::class)
+                                                                <li>
+                                                                    <form
+                                                                        action="{{ route('dashboard.wallet.fee.destroy', $fee['id']) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
 
-                                                        <li>
-                                                            <form
-                                                                action="{{ route('dashboard.wallet.fee.destroy', $fee['id']) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
+                                                                        <input type="hidden" name="count"
+                                                                            value="{{ $fees->count() }}" />
+                                                                        <input type="hidden" name="previousPage"
+                                                                            value="{{ $fees->previousPageUrl() }}" />
 
-                                                                <input type="hidden" name="count"
-                                                                    value="{{ $fees->count() }}" />
-                                                                <input type="hidden" name="previousPage"
-                                                                    value="{{ $fees->previousPageUrl() }}" />
-
-                                                                <button type="submit"
-                                                                    class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
-                                                                    Delete
-                                                                </button>
-                                                            </form>
-                                                        </li>
-                                                    </ul>
+                                                                        <button type="submit"
+                                                                            class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                            <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
+                                                                            Delete
+                                                                        </button>
+                                                                    </form>
+                                                                </li>
+                                                            @endcan
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
+                                            </td>
+                                        @endif
                                     </tr>
                                     @php
                                         $i++;

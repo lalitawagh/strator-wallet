@@ -7,25 +7,29 @@
         <div class="grid grid-cols-12 gap-6">
             <div class="intro-y box col-span-12 xxl:col-span-12">
                 <div
-                    class="sm:flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
+                    class="overflow-x-auto overflow-y-hidden sm:flex gap-2 gap-2 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5 text-right">
 
-                    <div class="breadcrumb mr-auto hidden sm:flex">
-                        <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                        <a href="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px"
-                            height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round"
+                    <div class="breadcrumb mr-auto sm:flex justify-around">
+                        <a class="whitespace-nowrap text-left " href="">Wallet</a><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="breadcrumb--active">Exchange Rate</a>
+                        <a class="whitespace-nowrap text-left " href="">Configuration</a><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                        <a href="" class="whitespace-nowrap text-left breadcrumb--active">Exchange Rate</a>
                     </div>
                     <div>
-                        <a href="{{ route('dashboard.wallet.exchange-rate.create') }}"
-                            class="btn btn-sm btn-primary shadow-md">Create New</a>
+                        @can(\Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::CREATE,
+                            \Kanexy\LedgerFoundation\Models\ExchangeRate::class)
+                            <a href="{{ route('dashboard.wallet.exchange-rate.create') }}"
+                                class="btn btn-sm btn-primary shadow-md">Create New</a>
+                        @endcan
                     </div>
                 </div>
                 <div class="p-5">
@@ -104,8 +108,14 @@
                                             </svg>
                                         </span>
                                     </th>
-
-                                    <th class="whitespace-nowrap text-left">Action</th>
+                                    @if (Gate::check(
+                                        \Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::EDIT,
+                                        \Kanexy\LedgerFoundation\Models\ExchangeRate::class) ||
+                                        Gate::check(
+                                            \Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::DELETE,
+                                            \Kanexy\LedgerFoundation\Models\ExchangeRate::class))
+                                        <th class="whitespace-nowrap text-left">Action</th>
+                                    @endif
                                 </tr>
                             </thead>
 
@@ -128,46 +138,59 @@
                                         </td>
                                         <td class="whitespace-nowrap text-left">{{ $exchange_rate?->valid_date }}</td>
                                         <td class="whitespace-nowrap text-left">{{ $exchange_rate?->exchange_rate }}</td>
-                                        <td class="whitespace-nowrap text-left">
-                                            <div class="dropdown">
-                                                <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
-                                                    data-tw-toggle="dropdown">
-                                                    <span class="w-5 h-5 flex items-center justify-center">
-                                                        <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
-                                                    </span>
-                                                </button>
-                                                <div class="dropdown-menu w-40">
-                                                    <ul class="dropdown-content">
-                                                        <li>
-                                                            <a href="{{ route('dashboard.wallet.exchange-rate.edit', $exchange_rate?->id) }}"
-                                                                class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
-                                                            </a>
-                                                        </li>
+                                        @if (Gate::check(
+                                            \Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::EDIT,
+                                            \Kanexy\LedgerFoundation\Models\ExchangeRate::class) ||
+                                            Gate::check(
+                                                \Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::DELETE,
+                                                \Kanexy\LedgerFoundation\Models\ExchangeRate::class))
+                                            <td class="whitespace-nowrap text-left">
+                                                <div class="dropdown">
+                                                    <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
+                                                        data-tw-toggle="dropdown">
+                                                        <span class="w-5 h-5 flex items-center justify-center">
+                                                            <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
+                                                        </span>
+                                                    </button>
+                                                    <div class="dropdown-menu w-40">
+                                                        <ul class="dropdown-content">
+                                                            @can(\Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::EDIT,
+                                                                \Kanexy\LedgerFoundation\Models\ExchangeRate::class)
+                                                                <li>
+                                                                    <a href="{{ route('dashboard.wallet.exchange-rate.edit', $exchange_rate?->id) }}"
+                                                                        class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                        <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
+                                                                    </a>
+                                                                </li>
+                                                            @endcan
 
-                                                        <li>
-                                                            <form
-                                                                action="{{ route('dashboard.wallet.exchange-rate.destroy', $exchange_rate?->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
+                                                            @can(\Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::DELETE,
+                                                                \Kanexy\LedgerFoundation\Models\ExchangeRate::class)
+                                                                <li>
+                                                                    <form
+                                                                        action="{{ route('dashboard.wallet.exchange-rate.destroy', $exchange_rate?->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
 
-                                                                <input type="hidden" name="count"
-                                                                    value="{{ $exchange_rates->count() }}" />
-                                                                <input type="hidden" name="previousPage"
-                                                                    value="{{ $exchange_rates->previousPageUrl() }}" />
+                                                                        <input type="hidden" name="count"
+                                                                            value="{{ $exchange_rates->count() }}" />
+                                                                        <input type="hidden" name="previousPage"
+                                                                            value="{{ $exchange_rates->previousPageUrl() }}" />
 
-                                                                <button type="submit"
-                                                                    class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
-                                                                    Delete
-                                                                </button>
-                                                            </form>
-                                                        </li>
-                                                    </ul>
+                                                                        <button type="submit"
+                                                                            class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                            <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
+                                                                            Delete
+                                                                        </button>
+                                                                    </form>
+                                                                </li>
+                                                            @endcan
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

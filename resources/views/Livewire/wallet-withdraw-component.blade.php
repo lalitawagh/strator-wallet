@@ -29,18 +29,18 @@
     </div>
     <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
         <div wire:ignore class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
-            <label for="beneficiary" class="form-label sm:w-30"> Beneficiary <span
-                    class="text-theme-6">*</span></label>
+            <label for="beneficiary" class="form-label sm:w-30"> Beneficiary <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
                 <div class="w-full relative">
-                <select name="beneficiary_id" id="beneficiary_id" class="form-control" data-search="true">
-                    @foreach ($beneficiaries as $beneficiary)
-                        <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
-                    @endforeach
-                </select>
-                <a data-tw-toggle="modal" data-tw-target="#withdrawbenificary-modal" class="absolute top-0 right-0 plus" style="">
-                    <i data-lucide="plus-circle" class="w-4 h-4 ml-4"></i>
-                </a>
+                    <select name="beneficiary_id" id="beneficiary_id" class="form-control" data-search="true">
+                        @foreach ($beneficiaries as $beneficiary)
+                            <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
+                        @endforeach
+                    </select>
+                    <a data-tw-toggle="modal" data-tw-target="#withdrawbenificary-modal"
+                        class="absolute top-0 right-0 plus" style="">
+                        <i data-lucide="plus-circle" class="w-4 h-4 ml-4"></i>
+                    </a>
                 </div>
                 @error('beneficiary_id')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -104,4 +104,35 @@
             </div>
         </div>
     </div>
+    <!-- BEGIN: OTP Modal -->
+    <div id="otp-modal" class="modal modal-slide-over otp-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header p-5">
+                    <h2 class="font-medium text-base mr-auto">
+                        OTP Verification
+                    </h2>
+                    <div class="items-center justify-center mt-0">
+                        {{-- <a data-tw-toggle="modal" data-tw-target="#review-transfer"
+                            class="btn-sm bg-indigo-600 btn-primary text-white font-bold py-3 px-6 rounded">Confirm</a> --}}
+                    </div>
+                </div>
+                @livewire('otp-wallet-verification-component', ['countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'user' => $user, 'workspace' => $workspace, 'type' => 'withdraw'])
+            </div>
+        </div>
+    </div>
+    <!-- END: OTP Modal -->
 </div>
+</div>
+@push('scripts')
+    <script>
+        window.addEventListener('showOtpModel', event => {
+            const mySlideOver = tailwind.Modal.getOrCreateInstance(document.querySelector(
+                "#withdrawbenificary-modal"));
+            mySlideOver.hide();
+
+            const showModal = tailwind.Modal.getOrCreateInstance(document.querySelector("#otp-modal"));
+            showModal.show();
+        });
+    </script>
+@endpush
