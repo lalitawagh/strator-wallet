@@ -73,7 +73,7 @@
                             </div>
                         @endforeach
 
-                        <a href="{{ route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => $workspace->getKey()]]) }}"
+                        <a href="{{ route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => $workspace?->getKey()]]) }}"
                             class="intro-x w-full block text-center rounded-md py-3 border border-dotted border-theme-15 dark:border-dark-5 text-theme-16 dark:text-gray-600">View
                             More</a>
                     </div>
