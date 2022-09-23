@@ -8,6 +8,7 @@ use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Contracts\Fee;
 use Kanexy\LedgerFoundation\Http\Helper;
 use Kanexy\LedgerFoundation\Http\Requests\StoreFeeRequest;
+use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\FeePolicy;
@@ -69,28 +70,65 @@ class FeeController extends Controller
 
     public function update(StoreFeeRequest $request, $id)
     {
+
         $data = $request->validated();
         $data['id'] = $id;
         $data['amount'] = ($data['fee_type'] == 'amount') ? $data['amount'] : 0;
         $data['percentage'] = ($data['fee_type'] == 'percentage') ? $data['percentage'] : 0;
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
 
-        $settings = collect(Setting::getValue('wallet_fees'))->map(function ($item) use ($id,$data) {
-            if ($item['id'] == $id) {
-                return $data;
-            }
 
-            return $item;
-        });
+        $base_asset_category = Ledger::whereId($data['base_currency'])->first()->asset_category;
+        $exchange_asset_category = Ledger::whereId($data['exchange_currency'])->first()->asset_category;
 
-        Setting::updateOrCreate(['key' => 'wallet_fees'], ['value' => $settings]);
+        if (is_null($base_asset_category)) {
+            return back()->withError('Base currency not exists');
+        }
+
+        if (is_null($exchange_asset_category)) {
+            return back()->withError('Exchange currency not exists');
+        }
+
+        $existExchangeRate = ExchangeRate::where(['base_currency' => $data['base_currency'], 'exchange_currency' => $data['exchange_currency']])->first();
+
+
+        //  if(!is_null($item))
+        // {
+        //     return back()->withError('Exchange Already Exists');
+        //    }
+
+
+        if (!is_null($existExchangeRate) && ($id != $existExchangeRate->id)) {
+            return back()->withError('This exchange rate already exist');
+
+                }
+
+
+
+
+
+
+
+            $settings = collect(Setting::getValue('wallet_fees'))->map(function ($item) use ($id,$data) {
+                if ($item['id'] == $id) {
+                    return $data;
+                }
+
+                return $item;
+            });
+
+            Setting::updateOrCreate(['key' => 'wallet_fees'], ['value' => $settings]);
 
 
         return redirect()->route("dashboard.wallet.fee.index")->with([
             'status' => 'success',
             'message' => 'Fee updated successfully.',
         ]);
+
+
     }
+
+
 
     public function destroy($id, Request $request)
     {

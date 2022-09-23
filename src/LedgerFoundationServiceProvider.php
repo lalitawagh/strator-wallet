@@ -19,6 +19,7 @@ use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletBeneficiary;
 use Kanexy\LedgerFoundation\Livewire\WalletGraph;
 use Kanexy\LedgerFoundation\Livewire\WalletPayoutComponent;
+use Kanexy\LedgerFoundation\Livewire\OtpWalletVerification;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionDetailComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionGraph;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionsListComponent;
@@ -175,6 +176,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Livewire::component('wallet-withdraw-component', WalletWithdrawComponent::class);
         Livewire::component('withdraw-beneficiary', WithdrawBeneficiaryComponent::class);
         Livewire::component('wallet-transaction-graph', WalletTransactionGraph::class);
+        Livewire::component('otp-wallet-verification-component', OtpWalletVerification::class);
 
     }
 }

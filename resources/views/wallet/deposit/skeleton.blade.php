@@ -13,7 +13,7 @@
                     </h2>
                 </div>
                 <!-- BEGIN: Wizard Layout -->
-                <div class="intro-y box py-10 sm:py-10 mt-0 clearfix">
+                <div class="intro-y box py-10 sm:py-10 mt-0 clearfix dark:bg-darkmode-400 dark:border-darkmode-400">
                     @yield('deposit-content')
                 </div>
                 <!-- END: Wizard Layout -->

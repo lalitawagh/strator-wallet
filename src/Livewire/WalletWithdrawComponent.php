@@ -42,13 +42,15 @@ class WalletWithdrawComponent extends Component
 
     public $asset_types;
 
+    public $workspace;
+
     public $selected_currency;
 
     public $phone;
 
     public $country_code;
 
-    public function mount($wallets, $beneficiaries, $countryWithFlags, $defaultCountry, $user, $ledgers, $asset_types)
+    public function mount($wallets, $beneficiaries, $countryWithFlags, $defaultCountry, $user, $ledgers, $asset_types, $workspace)
     {
         $this->wallets = $wallets;
         $this->beneficiaries = $beneficiaries;
@@ -57,6 +59,7 @@ class WalletWithdrawComponent extends Component
         $this->user = $user;
         $this->ledgers = $ledgers;
         $this->asset_types = $asset_types;
+        $this->workspace = $workspace;
         $this->balance = old('balance');
         $this->amount = old('amount');
         $this->selected_wallet = old('wallet');
@@ -80,7 +83,7 @@ class WalletWithdrawComponent extends Component
 
         $walletDefaultCountry = Country::find(Setting::getValue('wallet_default_country'));
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet,$exchange_wallet,$walletDefaultCountry,$this->amount);
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet, $exchange_wallet, $walletDefaultCountry, $this->amount);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
@@ -99,8 +102,7 @@ class WalletWithdrawComponent extends Component
 
     public function render()
     {
-        if(is_numeric($this->amount))
-        {
+        if (is_numeric($this->amount)) {
             $this->remaining_amount =  number_format((float)0, 2, '.', '');;
 
             if ($this->amount) {
