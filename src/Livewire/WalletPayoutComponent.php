@@ -18,6 +18,8 @@ class WalletPayoutComponent extends Component
 
     public $countryWithFlags;
 
+    public $workspace;
+
     public $defaultCountry;
 
     public $user;
@@ -48,7 +50,9 @@ class WalletPayoutComponent extends Component
 
     public $country_code;
 
-    public function mount($wallets, $beneficiaries, $countryWithFlags, $defaultCountry, $user, $ledgers, $asset_types)
+    public $type;
+
+    public function mount($wallets, $beneficiaries, $countryWithFlags, $defaultCountry, $user, $ledgers, $asset_types, $workspace, $type)
     {
         $this->wallets = $wallets;
         $this->beneficiaries = $beneficiaries;
@@ -57,6 +61,8 @@ class WalletPayoutComponent extends Component
         $this->user = $user;
         $this->ledgers = $ledgers;
         $this->asset_types = $asset_types;
+        $this->workspace = $workspace;
+        $this->type = $type;
         $this->balance = old('balance');
         $this->selected_wallet = old('wallet');
         $this->selected_currency = old('receiver_currency');
@@ -70,12 +76,11 @@ class WalletPayoutComponent extends Component
         $this->amount = $value;
         $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
         $receiver_wallet = Wallet::whereId($this->selected_currency)->first();
-        $exchangeFee = collect(Setting::getValue('wallet_fees',[]))->where('base_currency' , $sender_wallet?->ledger_id)->where('exchange_currency' ,$receiver_wallet?->ledger_id)->where('payment_type','payout')->first();
+        $exchangeFee = collect(Setting::getValue('wallet_fees', []))->where('base_currency', $sender_wallet?->ledger_id)->where('exchange_currency', $receiver_wallet?->ledger_id)->where('payment_type', 'payout')->first();
         $this->fee = 0;
 
-        if(isset($exchangeFee) && !empty($this->amount))
-        {
-            $this->fee = ($exchangeFee['fee_type'] == 'percentage') ? $this->amount * ($exchangeFee['percentage']/100) : $exchangeFee['amount'];
+        if (isset($exchangeFee) && !empty($this->amount)) {
+            $this->fee = ($exchangeFee['fee_type'] == 'percentage') ? $this->amount * ($exchangeFee['percentage'] / 100) : $exchangeFee['amount'];
         }
 
         session(['payout_fee' => $this->fee]);
@@ -96,7 +101,7 @@ class WalletPayoutComponent extends Component
 
         $walletDefaultCountry = Country::find(Setting::getValue('wallet_default_country'));
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet,$exchange_wallet,$walletDefaultCountry,$this->amount);
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet, $exchange_wallet, $walletDefaultCountry, $this->amount);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
@@ -131,7 +136,7 @@ class WalletPayoutComponent extends Component
 
         $walletDefaultCountry = Country::find(Setting::getValue('wallet_default_country'));
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet,$exchange_wallet,$walletDefaultCountry,$this->amount);
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet, $exchange_wallet, $walletDefaultCountry, $this->amount);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
