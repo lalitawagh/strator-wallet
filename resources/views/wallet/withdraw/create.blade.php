@@ -26,12 +26,10 @@
                             <button class="btn btn-primary w-24" type="submit">Submit</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
-
     <div id="withdrawbenificary-modal" class="modal modal-slide-over z-50" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg ihphone-scroll-height">
             <div class="modal-content">
