@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation\Livewire;
 
 use Kanexy\Cms\Models\OneTimePassword;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
+use Kanexy\Cms\Setting\Models\Setting;
 use Livewire\Component;
 
 class DepositOtpVerificationComponent extends Component
@@ -34,6 +35,21 @@ class DepositOtpVerificationComponent extends Component
         ]);
 
         $oneTimePassword = $this->user->oneTimePasswords()->first();
+        $manualOtp = Setting::getValue('otp');
+
+        if (isset($manualOtp) && ($manualOtp == $data['code'])) {
+            $oneTimePassword->update(['verified_at' => now()]);
+
+            if (!is_null(session()->get('deposit_request.payment_method'))) {
+                return redirect()->route("dashboard.wallet.deposit-payment", ['workspace_id' => session()->get('deposit_request.workspace_id')]);
+            } else {
+
+                return redirect()->route("dashboard.wallet.store-payment-details", ['workspace_id' => session()->get('deposit_request.workspace_id')])->with([
+                    'status' => 'success',
+                    'message' => 'The beneficiary created successfully.',
+                ]);
+            }
+        }
 
         if ($oneTimePassword->code !== $data['code']) {
             $this->addError('code', 'The otp you entered did not match.');
@@ -46,7 +62,10 @@ class DepositOtpVerificationComponent extends Component
                 return redirect()->route("dashboard.wallet.deposit-payment", ['workspace_id' => session()->get('deposit_request.workspace_id')]);
             } else {
 
-                return redirect()->route("dashboard.wallet.store-payment-details", ['workspace_id' => session()->get('deposit_request.workspace_id')]);
+                return redirect()->route("dashboard.wallet.store-payment-details", ['workspace_id' => session()->get('deposit_request.workspace_id')])->with([
+                    'status' => 'success',
+                    'message' => 'The beneficiary created successfully.',
+                ]);
             }
         }
     }
