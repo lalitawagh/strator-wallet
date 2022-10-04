@@ -123,7 +123,6 @@
     </div>
     <!-- END: OTP Modal -->
 </div>
-</div>
 @push('scripts')
     <script>
         window.addEventListener('showOtpModel', event => {
