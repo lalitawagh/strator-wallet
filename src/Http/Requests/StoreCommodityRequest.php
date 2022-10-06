@@ -11,7 +11,12 @@ class StoreCommodityRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can(CommodityTypePolicy::CREATE, CommodityTypeConfiguration::class);
+        if($this->user()->can(CommodityTypePolicy::CREATE, CommodityTypeConfiguration::class))
+        {
+            return $this->user()->can(CommodityTypePolicy::CREATE, CommodityTypeConfiguration::class);
+        }
+
+        return $this->user()->can(CommodityTypePolicy::EDIT, CommodityTypeConfiguration::class);
     }
 
     public function rules()

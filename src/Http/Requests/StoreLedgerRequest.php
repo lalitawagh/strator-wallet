@@ -10,7 +10,12 @@ class StoreLedgerRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can(LedgerPolicy::CREATE, Ledger::class);
+        if($this->user()->can(LedgerPolicy::CREATE, Ledger::class))
+        {
+            return $this->user()->can(LedgerPolicy::CREATE, Ledger::class);
+        }
+        
+        return $this->user()->can(LedgerPolicy::EDIT, Ledger::class);
     }
 
     public function rules()

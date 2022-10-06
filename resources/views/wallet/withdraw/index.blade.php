@@ -24,12 +24,13 @@
                                             aria-labelledby="k-wallet-tab">
 
                                             <div class="intro-y mt-0">
-                                                <div class="text-right flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                                                <div
+                                                    class="text-right flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
                                                     <x-list-view-filters />
                                                     @if ($user->isSubscriber())
-                                                    <a href="{{ route('dashboard.wallet.withdraw.create', ['workspace_id' => $workspace->id]) }}"
-                                                        type="button"
-                                                        class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2 py-2">Withdraw</a>
+                                                        <a href="{{ route('dashboard.wallet.withdraw.create', ['workspace_id' => $workspace->id]) }}"
+                                                            type="button"
+                                                            class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2 py-2">Withdraw</a>
                                                     @endif
                                                 </div>
 
@@ -57,16 +58,14 @@
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round"
-                                                                                    stroke-width="2"
+                                                                                    stroke-linejoin="round" stroke-width="2"
                                                                                     d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                             </svg>
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 down" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round"
-                                                                                    stroke-width="2"
+                                                                                    stroke-linejoin="round" stroke-width="2"
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
@@ -78,16 +77,14 @@
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round"
-                                                                                    stroke-width="2"
+                                                                                    stroke-linejoin="round" stroke-width="2"
                                                                                     d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                             </svg>
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 down" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round"
-                                                                                    stroke-width="2"
+                                                                                    stroke-linejoin="round" stroke-width="2"
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
@@ -99,16 +96,14 @@
                                                                                 class="h-4 w-4 up" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round"
-                                                                                    stroke-width="2"
+                                                                                    stroke-linejoin="round" stroke-width="2"
                                                                                     d="M8 7l4-4m0 0l4 4m-4-4v18" />
                                                                             </svg>
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 class="h-4 w-4 down" fill="#c1c4c9"
                                                                                 viewBox="0 0 24 24" stroke="currentColor">
                                                                                 <path stroke-linecap="round"
-                                                                                    stroke-linejoin="round"
-                                                                                    stroke-width="2"
+                                                                                    stroke-linejoin="round" stroke-width="2"
                                                                                     d="M16 17l-4 4m0 0l-4-4m4 4V3" />
                                                                             </svg>
                                                                         </span>
@@ -359,58 +354,60 @@
                                                                                         </button>
                                                                                         <div class="dropdown-menu w-40">
                                                                                             <ul class="dropdown-content">
-                                                                                                <li>
-                                                                                                    <a href="javascript:void(0);"
-                                                                                                        data-tw-toggle="modal"
-                                                                                                        data-tw-target="#transaction-detail-modal"
-                                                                                                        onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
-                                                                                                        class="flex items-center block Done dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white">
-                                                                                                        <x-feathericon-eye
-                                                                                                            class="w-4 h-4 mr-1" />
-                                                                                                        Show
-                                                                                                    </a>
-                                                                                                </li>
-
-                                                                                                <li>
-                                                                                                    @if (\Illuminate\Support\Facades\Auth::user()->isSuperAdmin() &&
-                                                                                                        $transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
-                                                                                                        <a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => 'Withdraw']) }}"
-                                                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-orange-200">
-                                                                                                            <x-feathericon-check
+                                                                                                @can(\Kanexy\LedgerFoundation\Policies\WithdrawPolicy::SHOW,
+                                                                                                    \Kanexy\LedgerFoundation\Contracts\Withdraw::class)
+                                                                                                    <li>
+                                                                                                        <a href="javascript:void(0);"
+                                                                                                            data-tw-toggle="modal"
+                                                                                                            data-tw-target="#transaction-detail-modal"
+                                                                                                            onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
+                                                                                                            class="flex items-center block Done dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white">
+                                                                                                            <x-feathericon-eye
                                                                                                                 class="w-4 h-4 mr-1" />
-                                                                                                            Accepted
+                                                                                                            Show
                                                                                                         </a>
-                                                                                                    @endif
-                                                                                                </li>
-                                                                                            </ul>
+                                                                                                    </li>
+                                                                                                @endcan
+                                                                                                    <li>
+                                                                                                        @if (\Illuminate\Support\Facades\Auth::user()->isSuperAdmin() &&
+                                                                                                            $transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
+                                                                                                            <a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => 'Withdraw']) }}"
+                                                                                                                class="flex items-center block p-2 transition duration-300 ease-in-out dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-orange-200">
+                                                                                                                <x-feathericon-check
+                                                                                                                    class="w-4 h-4 mr-1" />
+                                                                                                                Accepted
+                                                                                                            </a>
+                                                                                                        @endif
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
                                                                                         </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        @endif
-                                                                    @endforeach
-                                                                @endisset
-                                                            </tbody>
-                                                        </table>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    @endisset
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
+                                                    <!-- END: HTML Table Data -->
+
                                                 </div>
-                                                <!-- END: HTML Table Data -->
 
                                             </div>
-
                                         </div>
                                     </div>
+
+
+
+
                                 </div>
-
-
-
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    @include('ledger-foundation::wallet.transaction-detail-modal')
-@endsection
+        @include('ledger-foundation::wallet.transaction-detail-modal')
+    @endsection
