@@ -11,7 +11,12 @@ class StoreAssetClassRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can(AssetClassPolicy::CREATE, AssetClassConfiguration::class);
+        if($this->user()->can(AssetClassPolicy::CREATE, AssetClassConfiguration::class))
+        {
+            return $this->user()->can(AssetClassPolicy::CREATE, AssetClassConfiguration::class);
+        }
+        
+        return $this->user()->can(AssetClassPolicy::EDIT, AssetClassConfiguration::class);
     }
 
     public function rules()

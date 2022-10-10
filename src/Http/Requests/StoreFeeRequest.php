@@ -10,7 +10,12 @@ class StoreFeeRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can(FeePolicy::CREATE, Fee::class);
+        if($this->user()->can(FeePolicy::CREATE, Fee::class))
+        {
+            return $this->user()->can(FeePolicy::CREATE, Fee::class);
+        }
+
+        return $this->user()->can(FeePolicy::EDIT, Fee::class);
     }
 
     public function rules()

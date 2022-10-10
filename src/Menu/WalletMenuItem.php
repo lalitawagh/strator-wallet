@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Menu\Contracts\Item;
 use Kanexy\Cms\Menu\MenuItem;
 use Kanexy\LedgerFoundation\Enums\Permission;
+use Kanexy\LedgerFoundation\Http\Helper as HttpHelper;
 use Kanexy\PartnerFoundation\Core\Helper;
 
 class WalletMenuItem extends Item
@@ -35,8 +36,11 @@ class WalletMenuItem extends Item
 
         $menus = [
             new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
-            new MenuItem('Withdraw', 'activity', url: route('dashboard.wallet.withdraw.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
         ];
+
+        if ($user->hasPermissionTo(Permission::WITHDRAW_VIEW)) {
+            $menus[] =  new MenuItem('Withdraw', 'activity', url: route('dashboard.wallet.withdraw.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
+        }
 
         if ($user->hasPermissionTo(Permission::PAYOUT_VIEW)) {
             $menus[] = new MenuItem('Transfer', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()], 'type' => 'transfer']));
@@ -48,7 +52,7 @@ class WalletMenuItem extends Item
         }
 
         if ($user->hasAnyPermission([Permission::COMMODITY_TYPE_VIEW, Permission::ASSET_CLASS_VIEW, Permission::ASSET_TYPE_VIEW, Permission::FEE_VIEW, Permission::MASTER_ACCOUNT_VIEW, Permission::LEDGER_VIEW, Permission::EXCHANGE_RATE_VIEW])) {
-            $menus[] = new MenuItem('Configuration', 'activity', url: route('dashboard.wallet.ledger.index'));
+            $menus[] = HttpHelper::getConfigRoute();
         }
 
         return $menus;

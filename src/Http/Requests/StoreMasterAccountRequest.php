@@ -11,6 +11,11 @@ class StoreMasterAccountRequest extends FormRequest
 {
     public function authorize()
     {
+        if($this->user()->can(MasterAccountPolicy::CREATE, MasterAccount::class))
+        {
+            return $this->user()->can(MasterAccountPolicy::CREATE, MasterAccount::class);
+        }
+        
         return $this->user()->can(MasterAccountPolicy::CREATE, MasterAccount::class);
     }
 
