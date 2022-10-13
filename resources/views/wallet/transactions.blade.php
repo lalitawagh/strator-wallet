@@ -72,7 +72,7 @@
                                                                                 class="text-lg font-medium truncate mr-5font-bold leading-8 mt-0 align-self item-center">{{ $ledger?->name }}</span>
                                                                             <div class="ml-auto">
                                                                                 <div
-                                                                                    class="flex mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
+                                                                                    class="flex sm:mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
                                                                                     <img alt=""
                                                                                         class="w-10 h-10 flex-none image-fit rounded-md overflow-hidden rounded-md proof-default"
                                                                                         src="@isset($ledger?->image) {{ \Illuminate\Support\Facades\Storage::disk('azure')->temporaryUrl($ledger->image, now()->addMinutes(5)) }} @endisset">

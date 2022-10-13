@@ -13,12 +13,14 @@ use Kanexy\LedgerFoundation\Contracts\AssetTypeConfiguration;
 use Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration;
 use Kanexy\LedgerFoundation\Contracts\MasterAccount;
 use Kanexy\LedgerFoundation\Contracts\Payout;
+use Kanexy\LedgerFoundation\Contracts\Withdraw;
 use Kanexy\LedgerFoundation\Livewire\DepositOtpVerificationComponent;
 use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletBeneficiary;
 use Kanexy\LedgerFoundation\Livewire\WalletGraph;
 use Kanexy\LedgerFoundation\Livewire\WalletPayoutComponent;
+use Kanexy\LedgerFoundation\Livewire\OtpWalletVerification;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionDetailComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionGraph;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionsListComponent;
@@ -38,6 +40,7 @@ use Kanexy\LedgerFoundation\Policies\FeePolicy;
 use Kanexy\LedgerFoundation\Policies\LedgerPolicy;
 use Kanexy\LedgerFoundation\Policies\MasterAccountPolicy;
 use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
+use Kanexy\LedgerFoundation\Policies\WithdrawPolicy;
 use Kanexy\LedgerFoundation\Setting\GeneralSettingForm;
 use Kanexy\LedgerFoundation\Step\WalletRegistrationStep;
 use Kanexy\LedgerFoundation\Wallet\CustomerRegistrationForm;
@@ -78,6 +81,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         CommodityTypeConfiguration::class => CommodityTypePolicy::class,
         MasterAccount::class => MasterAccountPolicy::class,
         Fee::class => FeePolicy::class,
+        Withdraw::class => WithdrawPolicy::class
     ];
 
 
@@ -175,6 +179,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Livewire::component('wallet-withdraw-component', WalletWithdrawComponent::class);
         Livewire::component('withdraw-beneficiary', WithdrawBeneficiaryComponent::class);
         Livewire::component('wallet-transaction-graph', WalletTransactionGraph::class);
+        Livewire::component('otp-wallet-verification-component', OtpWalletVerification::class);
 
     }
 }
