@@ -44,10 +44,7 @@ class DepositOtpVerificationComponent extends Component
                 return redirect()->route("dashboard.wallet.deposit-payment", ['workspace_id' => session()->get('deposit_request.workspace_id')]);
             } else {
 
-                return redirect()->route("dashboard.wallet.store-payment-details", ['workspace_id' => session()->get('deposit_request.workspace_id')])->with([
-                    'status' => 'success',
-                    'message' => 'The beneficiary created successfully.',
-                ]);
+                return redirect()->route("dashboard.wallet.store-payment-details", ['workspace_id' => session()->get('deposit_request.workspace_id')]);
             }
         }
 
@@ -62,10 +59,7 @@ class DepositOtpVerificationComponent extends Component
                 return redirect()->route("dashboard.wallet.deposit-payment", ['workspace_id' => session()->get('deposit_request.workspace_id')]);
             } else {
 
-                return redirect()->route("dashboard.wallet.store-payment-details", ['workspace_id' => session()->get('deposit_request.workspace_id')])->with([
-                    'status' => 'success',
-                    'message' => 'The beneficiary created successfully.',
-                ]);
+                return redirect()->route("dashboard.wallet.store-payment-details", ['workspace_id' => session()->get('deposit_request.workspace_id')]);
             }
         }
     }
