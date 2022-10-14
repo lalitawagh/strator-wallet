@@ -5,7 +5,6 @@ namespace Kanexy\LedgerFoundation\Livewire;
 use Carbon\Carbon;
 use Kanexy\Cms\Models\OneTimePassword;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
-use Kanexy\Cms\Setting\Models\Setting;
 use Livewire\Component;
 
 class OtpWalletVerification extends Component
@@ -65,28 +64,6 @@ class OtpWalletVerification extends Component
         $this->contact = session('contact');
 
         $oneTimePassword = $this->contact->oneTimePasswords()->first();
-        $manualOtp = Setting::getValue('otp');
-
-        if (isset($manualOtp) && ($manualOtp == $data['code'])) {
-            $oneTimePassword->update(['verified_at' => now()]);
-
-            if ($this->type == 'withdraw') {
-                return redirect()->route('dashboard.wallet.withdraw.create', ['workspace_id' => $this->workspace])->with([
-                    'status' => 'success',
-                    'message' => 'The beneficiary created successfully.',
-                ]);
-            } elseif ($this->type == 'transfer') {
-                return redirect()->route('dashboard.wallet.payout.create', ['workspace_id' => $this->workspace, 'type' => $this->type])->with([
-                    'status' => 'success',
-                    'message' => 'The beneficiary created successfully.',
-                ]);
-            } else {
-                return redirect()->route('dashboard.wallet.payout.create', ['workspace_id' => $this->workspace])->with([
-                    'status' => 'success',
-                    'message' => 'The beneficiary created successfully.',
-                ]);
-            }
-        }
 
         if ($oneTimePassword->code !== $data['code']) {
             $this->addError('code', 'The otp you entered did not match.');
