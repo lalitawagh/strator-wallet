@@ -11,7 +11,7 @@ class WithdrawRequest extends FormRequest
 {
     public function authorize()
     {
-        $this->authorize(WithdrawPolicy::CREATE, Withdraw::class);
+        return $this->user()->can(WithdrawPolicy::CREATE, Withdraw::class);
     }
 
     public function rules()

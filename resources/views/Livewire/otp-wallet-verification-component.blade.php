@@ -46,7 +46,7 @@
                     <label for="code" class="form-label sm:w-16">OTP <span class="text-theme-6">*</span></label>
                     <div class="sm:w-5/6">
                         <input id="code" wire:model.defer="code" name="code" type="text"
-                            class="form-control" required="required">
+                            class="form-control">
                         @error('code')
                             <span class="block text-theme-6 mt-2">{{ $message }}</span>
                         @enderror

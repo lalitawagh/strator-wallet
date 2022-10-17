@@ -52,11 +52,11 @@ class WithdrawPolicy
         }
 
         $workspace = Workspace::findOrFail($workspaceId);
-
+       
         if ($workspace->users()->where('user_id', $user->id)->exists()) {
             return true;
         }
-
+        
         return $user->hasPermissionTo(Permission::WITHDRAW_CREATE);
 
     }
