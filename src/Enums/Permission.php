@@ -48,6 +48,6 @@ class Permission
 
     public const FEE_VIEW   = 'wallet::fee.view';
     public const FEE_CREATE = 'wallet::fee.create';
-    public const FEE_EDIT   = 'wallet::fee.show';
+    public const FEE_EDIT   = 'wallet::fee.edit';
     public const FEE_DELETE   = 'wallet::fee.delete';
 }

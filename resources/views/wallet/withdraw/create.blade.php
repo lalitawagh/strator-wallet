@@ -16,7 +16,7 @@
                     @if (Session::has('error'))
                         <span class="block text-theme-6">{{ Session::get('error') }}</span>
                     @endif
-                    <form action="{{ route('dashboard.wallet.withdraw.store', ['workspace_id' => $workspace->getKey()]) }}"
+                    <form action="{{ route('dashboard.wallet.withdraw.store', ['filter' => ['workspace_id' => $workspace->getKey()]]) }}"
                         method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="workspace_id" value="{{ $workspace->getKey() }}">

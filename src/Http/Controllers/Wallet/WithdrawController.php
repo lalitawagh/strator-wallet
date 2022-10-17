@@ -85,7 +85,6 @@ class WithdrawController extends Controller
 
         /** @var Contact $beneficiary */
         $beneficiary = Contact::findOrFail($request->input('beneficiary_id'));
-        // dd($beneficiary);
 
         $transaction = $this->payoutService->initialize($sender, $beneficiary, $request->validated());
 
