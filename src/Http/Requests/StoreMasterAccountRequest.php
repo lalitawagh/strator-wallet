@@ -16,7 +16,7 @@ class StoreMasterAccountRequest extends FormRequest
             return $this->user()->can(MasterAccountPolicy::CREATE, MasterAccount::class);
         }
         
-        return $this->user()->can(MasterAccountPolicy::CREATE, MasterAccount::class);
+        return $this->user()->can(MasterAccountPolicy::EDIT, MasterAccount::class);
     }
 
     public function rules()
