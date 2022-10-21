@@ -126,8 +126,12 @@ class WithdrawController extends Controller
         $log->target()->associate($transaction);
         $log->save();
 
-
-        $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+        if(config('services.disable_sms_service') == true){
+            $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+        }
+        else{
+            $transaction->generateOtp("sms");
+        }
 
         return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.withdraw.verify', now()->addMinutes(30), ["id" => $transaction->id]), 'sms');
     }
@@ -165,7 +169,7 @@ class WithdrawController extends Controller
         $transaction = Transaction::find($request->id);
         $workspace = Workspace::find($transaction->workspace_id);
         $user = $workspace->users()->first();
-     
+
         $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', 231);
         $masterAccount = Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
         if($masterAccount->balance <  $transaction->amount)
