@@ -135,8 +135,12 @@ class WalletBeneficiary extends Component
 
                 $this->contact = $contact;
 
-                $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
-                // $contact->generateOtp("sms");
+                if(config('services.disable_sms_service') == false){
+                    $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+                }else{
+                    $contact->generateOtp("sms");
+                }
+                
                 $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
                 //$user->generateOtp("sms");
                 session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);
@@ -152,7 +156,10 @@ class WalletBeneficiary extends Component
 
             $oneTimePassword->update(['code' => rand(100000, 999999), 'expires_at' => now()->addMinutes(OneTimePassword::getExpiringDuration())]);
         }
-        $oneTimePassword->holder->notify(new SmsOneTimePasswordNotification($oneTimePassword));
+
+        if(config('services.disable_sms_service') == false){
+            $oneTimePassword->holder->notify(new SmsOneTimePasswordNotification($oneTimePassword));
+        }
 
         $this->sent_resend_otp = true;
     }

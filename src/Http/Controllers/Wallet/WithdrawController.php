@@ -129,7 +129,7 @@ class WithdrawController extends Controller
         $log->target()->associate($transaction);
         $log->save();
 
-        if(config('services.disable_sms_service') == true){
+        if(config('services.disable_sms_service') == false){
             $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
         }
         else{

@@ -69,7 +69,10 @@ class DepositOtpVerificationComponent extends Component
         if ($this->user->hasActiveOneTimePassword("sms")) {
             $oneTimePassword = $this->user->oneTimePasswords()->whereType("sms")->first();
         }
-        $this->user->notify(new SmsOneTimePasswordNotification($oneTimePassword));
+
+        if(config('services.disable_sms_service') == false){
+            $this->user->notify(new SmsOneTimePasswordNotification($oneTimePassword));
+        }
         // $this->user->generateOtp("sms");
         $this->sent_resend_otp = true;
     }
