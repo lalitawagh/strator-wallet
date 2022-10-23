@@ -139,8 +139,13 @@ class DepositController extends Controller
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
 
         $user = Auth::user();
-        $user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
-        // $user->generateOtp("sms");
+        if(config('services.disable_sms_service') == false){
+            $user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
+        }
+        else{
+            $user->generateOtp("sms");
+        }
+
         if (is_null($details)) {
             return redirect()->route('dashboard.wallet.deposit.create');
         }

@@ -160,8 +160,13 @@ class PayoutController extends Controller
         $log->target()->associate($transaction);
         $log->save();
 
-        $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
-        //$transaction->generateOtp("sms");
+        if(config('services.disable_sms_service') == false){
+            $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+        }
+        else{
+            $transaction->generateOtp("sms");
+        }
+
         return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.payout-verify', now()->addMinutes(30), ["id" => $transaction->id]), 'sms');
     }
 
