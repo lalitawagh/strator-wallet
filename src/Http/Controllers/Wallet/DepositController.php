@@ -139,7 +139,7 @@ class DepositController extends Controller
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
 
         $user = Auth::user();
-        if(config('services.disable_sms_service') == true){
+        if(config('services.disable_sms_service') == false){
             $user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
         }
         else{

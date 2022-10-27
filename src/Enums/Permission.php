@@ -42,8 +42,12 @@ class Permission
     public const PAYOUT_CREATE = 'wallet::wallet_payout.create';
     public const PAYOUT_SHOW   = 'wallet::wallet_payout.show';
 
+    public const WITHDRAW_VIEW   = 'wallet::wallet_withdraw.view';
+    public const WITHDRAW_CREATE = 'wallet::wallet_withdraw.create';
+    public const WITHDRAW_SHOW   = 'wallet::wallet_withdraw.show';
+
     public const FEE_VIEW   = 'wallet::fee.view';
     public const FEE_CREATE = 'wallet::fee.create';
-    public const FEE_EDIT   = 'wallet::fee.show';
+    public const FEE_EDIT   = 'wallet::fee.edit';
     public const FEE_DELETE   = 'wallet::fee.delete';
 }

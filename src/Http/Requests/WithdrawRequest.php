@@ -3,13 +3,15 @@
 namespace Kanexy\LedgerFoundation\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Kanexy\LedgerFoundation\Contracts\Withdraw;
 use Kanexy\LedgerFoundation\Model\Wallet;
+use Kanexy\LedgerFoundation\Policies\WithdrawPolicy;
 
 class WithdrawRequest extends FormRequest
 {
     public function authorize()
     {
-        return true;
+        return $this->user()->can(WithdrawPolicy::CREATE, Withdraw::class);
     }
 
     public function rules()

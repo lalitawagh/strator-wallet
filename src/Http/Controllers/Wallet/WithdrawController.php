@@ -10,9 +10,11 @@ use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Contracts\Withdraw;
 use Kanexy\LedgerFoundation\Http\Requests\WithdrawRequest;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
+use Kanexy\LedgerFoundation\Policies\WithdrawPolicy;
 use Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus;
 use Kanexy\PartnerFoundation\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
@@ -34,6 +36,8 @@ class WithdrawController extends Controller
 
     public function index(Request $request)
     {
+        $this->authorize(WithdrawPolicy::VIEW, Withdraw::class);
+
         /** @var $user App\Model\User */
         $user = Auth::user();
         $workspace = null;
@@ -81,7 +85,6 @@ class WithdrawController extends Controller
 
         /** @var Contact $beneficiary */
         $beneficiary = Contact::findOrFail($request->input('beneficiary_id'));
-        // dd($beneficiary);
 
         $transaction = $this->payoutService->initialize($sender, $beneficiary, $request->validated());
 
@@ -126,7 +129,7 @@ class WithdrawController extends Controller
         $log->target()->associate($transaction);
         $log->save();
 
-        if(config('services.disable_sms_service') == true){
+        if(config('services.disable_sms_service') == false){
             $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
         }
         else{

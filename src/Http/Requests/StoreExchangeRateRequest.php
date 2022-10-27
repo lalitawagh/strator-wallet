@@ -11,7 +11,12 @@ class StoreExchangeRateRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can(ExchangeRatePolicy::CREATE, ExchangeRate::class);
+        if($this->user()->can(ExchangeRatePolicy::CREATE, ExchangeRate::class))
+        {
+            return $this->user()->can(ExchangeRatePolicy::CREATE, ExchangeRate::class);
+        }
+
+        return $this->user()->can(ExchangeRatePolicy::EDIT, ExchangeRate::class);
     }
 
     public function rules()
