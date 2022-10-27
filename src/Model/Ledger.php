@@ -27,4 +27,5 @@ class Ledger extends Model
         'withdraw_fee',
         'status',
     ];
+
 }
