@@ -55,7 +55,7 @@ class PayoutController extends Controller
         $countries = Country::get();
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
-        $wallets =  Wallet::forHolder($user)->get();
+        $wallets =  Wallet::forHolder($workspace)->get();
         $ledgers = Ledger::get();
         $asset_types = Setting::getValue('asset_types', []);
         $beneficiaries = ($request->input('type') == 'transfer') ? Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wallet')->whereMobile($user->phone)->latest()->get() : Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wallet')->latest()->get();
@@ -80,7 +80,7 @@ class PayoutController extends Controller
 
         $beneficiary_wallet = NULL;
         if (isset($beneficiary_user)) {
-            $beneficiary_wallet = Wallet::forHolder($beneficiary_user)->whereLedgerId($receiver_ledger?->ledger_id)->first();
+            $beneficiary_wallet = Wallet::forHolder($beneficiary_user->workspaces()->first())->whereLedgerId($receiver_ledger?->ledger_id)->first();
         }
 
         $amount = $data['amount'];

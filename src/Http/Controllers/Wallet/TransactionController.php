@@ -15,7 +15,8 @@ class TransactionController extends Controller
     {
         $transactionType = 'all';
         $user = Auth::user();
-        $wallets = Wallet::forHolder($user)->get();
+        $workspace = $user->workspaces()->first();
+        $wallets = Wallet::forHolder($workspace)->get();
         $walletID = $workspace = null;
 
         if ($request->has('filter.workspace_id')) {
