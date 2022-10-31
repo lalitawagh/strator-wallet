@@ -21,15 +21,15 @@ class WalletController extends Controller
         $workspace = $user->workspaces()->first();
         $membership = $workspace->memberships()->first();
 
-        collect($ledgers)->each(function ($item) use ($user) {
+        collect($ledgers)->each(function ($item) use ($user,$workspace) {
 
             if ($item->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $item->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET) {
                 $data = [
                     "name" => $user->getFullName(),
                     "urn" => Wallet::generateUrn(),
                     "ledger_id" => $item->getKey(),
-                    "holder_type" => $user->getMorphClass(),
-                    "holder_id" => $user->getKey(),
+                    "holder_type" => $workspace->getMorphClass(),
+                    "holder_id" => $workspace->getKey(),
                     "balance" => 0,
                     "status" => WalletStatus::ACTIVE,
                 ];
