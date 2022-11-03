@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Facades\Cms;
 use Kanexy\Cms\Menu\MenuItem;
@@ -161,8 +162,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         });
 
         Cms::setRedirectRouteAfterLogin(function (User $user) {
-            if(!$user->is_banking_user)
-            {
+            if (!$user->is_banking_user) {
                 return route("dashboard.wallet.wallet-dashboard");
             }
         });
@@ -180,6 +180,9 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Livewire::component('withdraw-beneficiary', WithdrawBeneficiaryComponent::class);
         Livewire::component('wallet-transaction-graph', WalletTransactionGraph::class);
         Livewire::component('otp-wallet-verification-component', OtpWalletVerification::class);
+        Livewire::component('confirmation-modal', DeleteConfirmationModal::class);
 
+
+        Blade::component('cms::components.modal', 'modal');
     }
 }

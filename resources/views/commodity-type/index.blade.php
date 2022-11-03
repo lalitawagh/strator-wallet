@@ -87,7 +87,7 @@
                                         Gate::check(
                                             \Kanexy\LedgerFoundation\Policies\CommodityTypePolicy::DELETE,
                                             \Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration::class))
-                                    <th class="whitespace-nowrap text-left w-16">Action</th>
+                                        <th class="whitespace-nowrap text-left w-16">Action</th>
                                     @endif
                                 </tr>
                             </thead>
@@ -111,56 +111,46 @@
                                             {{ trans('ledger-foundation::configuration.' . $commodity_type_list['status']) }}
                                         </td>
                                         @if (Gate::check(
-                                        \Kanexy\LedgerFoundation\Policies\CommodityTypePolicy::EDIT,
-                                        \Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration::class) ||
-                                        Gate::check(
-                                            \Kanexy\LedgerFoundation\Policies\CommodityTypePolicy::DELETE,
-                                            \Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration::class))
-                                        <td class="whitespace-nowrap text-left">
-                                            <div class="dropdown">
-                                                <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
-                                                    data-tw-toggle="dropdown">
-                                                    <span class="w-5 h-5 flex items-center justify-center">
-                                                        <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
-                                                    </span>
-                                                </button>
-                                                <div class="dropdown-menu w-40">
-                                                    <ul class="dropdown-content">
-                                                        @can(\Kanexy\LedgerFoundation\Policies\CommodityTypePolicy::EDIT,
-                                                            \Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration::class)
-                                                            <li>
-                                                                <a href="{{ route('dashboard.wallet.commodity-type.edit', $commodity_type_list['id']) }}"
-                                                                    class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
-                                                                </a>
-                                                            </li>
-                                                        @endcan
-                                                        @can(\Kanexy\LedgerFoundation\Policies\CommodityTypePolicy::DELETE,
-                                                            \Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration::class)
-                                                        <li>
-                                                            <form
-                                                                action="{{ route('dashboard.wallet.commodity-type.destroy', $commodity_type_list['id']) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-
-                                                                <input type="hidden" name="count"
-                                                                    value="{{ $commodity_type_lists->count() }}" />
-                                                                <input type="hidden" name="previousPage"
-                                                                    value="{{ $commodity_type_lists->previousPageUrl() }}" />
-
-                                                                <button type="submit"
-                                                                    class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                    <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
-                                                                    Delete
-                                                                </button>
-                                                            </form>
-                                                        </li>
-                                                        @endcan
-                                                    </ul>
+                                            \Kanexy\LedgerFoundation\Policies\CommodityTypePolicy::EDIT,
+                                            \Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration::class) ||
+                                            Gate::check(
+                                                \Kanexy\LedgerFoundation\Policies\CommodityTypePolicy::DELETE,
+                                                \Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration::class))
+                                            <td class="whitespace-nowrap text-left">
+                                                <div class="dropdown">
+                                                    <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
+                                                        data-tw-toggle="dropdown">
+                                                        <span class="w-5 h-5 flex items-center justify-center">
+                                                            <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
+                                                        </span>
+                                                    </button>
+                                                    <div class="dropdown-menu w-40">
+                                                        <ul class="dropdown-content">
+                                                            @can(\Kanexy\LedgerFoundation\Policies\CommodityTypePolicy::EDIT,
+                                                                \Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration::class)
+                                                                <li>
+                                                                    <a href="{{ route('dashboard.wallet.commodity-type.edit', $commodity_type_list['id']) }}"
+                                                                        class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                        <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
+                                                                    </a>
+                                                                </li>
+                                                            @endcan
+                                                            @can(\Kanexy\LedgerFoundation\Policies\CommodityTypePolicy::DELETE,
+                                                                \Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration::class)
+                                                                <li>
+                                                                    <button type="button" data-tw-toggle="modal"
+                                                                        data-tw-target="#confirmation-modal" x-data={}
+                                                                        onclick="Livewire.emit('showModal','{{ route('dashboard.wallet.commodity-type.destroy', $commodity_type_list['id']) }}');"
+                                                                        class="w-full flex items-center block p-2 transition duration-300 ease-in-out dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                                        <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
+                                                                        Delete
+                                                                    </button>
+                                                                </li>
+                                                            @endcan
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
+                                            </td>
                                         @endif
                                     </tr>
                                     @php
@@ -177,4 +167,6 @@
             </div>
         </div>
     </div>
+    @livewire('confirmation-modal', ['route' => '#', 'method' => 'DELETE', 'icon' => 'x-circle', 'action' => 'Delete'])
+
 @endsection
