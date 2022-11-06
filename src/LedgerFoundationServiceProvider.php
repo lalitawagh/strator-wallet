@@ -180,9 +180,5 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Livewire::component('withdraw-beneficiary', WithdrawBeneficiaryComponent::class);
         Livewire::component('wallet-transaction-graph', WalletTransactionGraph::class);
         Livewire::component('otp-wallet-verification-component', OtpWalletVerification::class);
-        Livewire::component('confirmation-modal', DeleteConfirmationModal::class);
-
-
-        Blade::component('cms::components.modal', 'modal');
     }
 }
