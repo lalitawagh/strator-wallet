@@ -59,7 +59,8 @@ class DepositController extends Controller
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $user = Auth::user();
-        $wallets = Wallet::forHolder($user)->with('ledger')->get();
+        $workspace = $user->workspaces()->first();
+        $wallets = Wallet::forHolder($workspace)->with('ledger')->get();
         $currencies = Ledger::get();
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
         $walletDefaultCountry = Country::find($user->country_id);
@@ -80,7 +81,7 @@ class DepositController extends Controller
 
         $data['amount'] = $data['amount'];
 
-        $exchange_wallet_details = Wallet::forHolder(Auth::user())->whereLedgerId($exchange_ledger?->id)->first();
+        $exchange_wallet_details = Wallet::forHolder($workspace)->whereLedgerId($exchange_ledger?->id)->first();
 
         $amount = $data['amount']  + session('fee');
 
@@ -139,8 +140,13 @@ class DepositController extends Controller
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
 
         $user = Auth::user();
-        $user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
-        // $user->generateOtp("sms");
+        if(config('services.disable_sms_service') == false){
+            $user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
+        }
+        else{
+            $user->generateOtp("sms");
+        }
+
         if (is_null($details)) {
             return redirect()->route('dashboard.wallet.deposit.create');
         }
@@ -445,9 +451,10 @@ class DepositController extends Controller
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $user = Auth::user();
+        $workspace = $user->workspaces()->first();
         $depositRequest = session('deposit_request');
         $ledger = Ledger::whereAssetType($depositRequest['exchange_currency'])->first();
-        $exchange_wallet_details = Wallet::forHolder($user)->whereLedgerId($ledger->getKey())->first();
+        $exchange_wallet_details = Wallet::forHolder($workspace)->whereLedgerId($ledger->getKey())->first();
         $workspace = $user->workspaces()->first();
         $credit_amount = session('exchange_rate') ? ($depositRequest['amount'] / session('exchange_rate')) : $depositRequest['amount'];
         $debit_amount = ($depositRequest['amount'] + $depositRequest['fee']);
