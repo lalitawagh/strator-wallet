@@ -29,7 +29,7 @@ class PayoutPolicy
 
     public function view(User $user)
     {
-        if ($user->hasPermissionTo(Permission::PAYOUT_VIEW)) {
+        if ($user->hasPermissionTo(Permission::PAYOUT_VIEW)  && $user->isSuperAdmin()) {
             return true;
         }
 
@@ -56,14 +56,14 @@ class PayoutPolicy
         if ($workspace->users()->where('user_id', $user->id)->exists()) {
             return true;
         }
-
-        return $user->hasPermissionTo(Permission::PAYOUT_CREATE);
+        return false;
+        // return $user->hasPermissionTo(Permission::PAYOUT_CREATE);
 
     }
 
     public function show(User $user)
     {
-        if ($user->hasPermissionTo(Permission::PAYOUT_SHOW)) {
+        if ($user->hasPermissionTo(Permission::PAYOUT_SHOW) && $user->isSuperAdmin()) {
             return true;
         }
 
