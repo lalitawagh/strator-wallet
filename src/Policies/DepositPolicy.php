@@ -29,7 +29,7 @@ class DepositPolicy
 
     public function view(User $user)
     {
-        if ($user->hasPermissionTo(Permission::DEPOSIT_VIEW) && $user->isSuperAdmin()) {
+        if ($user->hasPermissionTo(Permission::DEPOSIT_VIEW) && !$user->isSubscriber()) {
             return true;
         }
 
@@ -44,6 +44,9 @@ class DepositPolicy
 
     public function create(User $user)
     {
+        if ($user->hasPermissionTo(Permission::DEPOSIT_CREATE) && !$user->isSubscriber()) {
+            return true;
+        }
 
         $workspaceId = request()->input('workspace_id', request()->input('filter.workspace_id'));
 
@@ -58,13 +61,12 @@ class DepositPolicy
         }
 
         return false;
-        // return $user->hasPermissionTo(Permission::DEPOSIT_CREATE);
-
+   
     }
 
     public function show(User $user)
     {
-        if ($user->hasPermissionTo(Permission::DEPOSIT_SHOW)  && $user->isSuperAdmin()) {
+        if ($user->hasPermissionTo(Permission::DEPOSIT_SHOW)  && !$user->isSubscriber()) {
             return true;
         }
 
