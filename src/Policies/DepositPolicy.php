@@ -29,7 +29,7 @@ class DepositPolicy
 
     public function view(User $user)
     {
-        if ($user->hasPermissionTo(Permission::DEPOSIT_VIEW)) {
+        if ($user->hasPermissionTo(Permission::DEPOSIT_VIEW) && $user->isSuperAdmin()) {
             return true;
         }
 
@@ -57,13 +57,14 @@ class DepositPolicy
             return true;
         }
 
-        return $user->hasPermissionTo(Permission::DEPOSIT_CREATE);
+        return false;
+        // return $user->hasPermissionTo(Permission::DEPOSIT_CREATE);
 
     }
 
     public function show(User $user)
     {
-        if ($user->hasPermissionTo(Permission::DEPOSIT_SHOW)) {
+        if ($user->hasPermissionTo(Permission::DEPOSIT_SHOW)  && $user->isSuperAdmin()) {
             return true;
         }
 

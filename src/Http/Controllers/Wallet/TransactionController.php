@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\LedgerFoundation\Model\Wallet;
+use Kanexy\LedgerFoundation\Policies\PayoutPolicy;
 use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 
@@ -13,6 +14,8 @@ class TransactionController extends Controller
 {
     public function index(Request $request)
     {
+        $this->authorize(PayoutPolicy::VIEW, Payout::class);
+
         $transactionType = 'all';
         $user = Auth::user();
         $wallets = Wallet::get();
