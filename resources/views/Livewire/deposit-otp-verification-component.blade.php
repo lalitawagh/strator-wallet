@@ -8,10 +8,10 @@
         <label for="amount" class="form-label sm:w-40"> Mobile <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6 tillselect-marging">
             <div class="input-group flex flex-col sm:flex-row">
-                <div id="input-group-phone" wire:ignore class="input-group-text flex form-inline"
-                    style="padding: 0 5px;">
+                <div id="input-group-phone" wire:ignore class="input-group-text flex form-inline" style="padding: 0 5px;">
 
-                    <span id="countryWithPhoneFlagImg" style="display: flex;
+                    <span id="countryWithPhoneFlagImg"
+                        style="display: flex;
                                 justify-content: center;
                                 align-items: center;
                                 align-self: center;margin-right:10px;">
@@ -22,7 +22,8 @@
                         @endforeach
                     </span>
 
-                    <select id="countryWithPhone" name="country_code" onchange="getFlagImg(this)" data-search="true" class="w-full" >
+                    <select id="countryWithPhone" name="country_code" onchange="getFlagImg(this)" data-search="true"
+                        class="w-full">
                         @foreach ($countryWithFlags as $country)
                             <option data-source="{{ $country->flag }}" value="{{ $country->id }}"
                                 @if ($country->id == old('country_code', $user->country_id)) selected @endif>

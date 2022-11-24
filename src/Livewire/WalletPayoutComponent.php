@@ -52,6 +52,8 @@ class WalletPayoutComponent extends Component
 
     public $type;
 
+    public $self_beneficiary;
+
     public function mount($wallets, $beneficiaries, $countryWithFlags, $defaultCountry, $user, $ledgers, $asset_types, $workspace, $type)
     {
         $this->wallets = $wallets;
@@ -68,6 +70,7 @@ class WalletPayoutComponent extends Component
         $this->selected_currency = old('receiver_currency') ?? '';
         $this->phone = $beneficiaries->first()?->mobile;
         $this->country_code =  $beneficiaries->first()?->meta['country_code'] ?? '231';
+        $this->self_beneficiary = $user->full_name;
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 

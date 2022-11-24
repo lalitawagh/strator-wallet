@@ -1,4 +1,5 @@
 <div>
+
     @if (request()->input('type') == trans('ledger-foundation::configuration.transfer'))
         @php $typename = 'Transfer'; @endphp
     @else
@@ -37,30 +38,44 @@
     <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
         <div wire:ignore class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
             <label for="beneficiary" class="form-label sm:w-30"> Beneficiary <span class="text-theme-6">*</span></label>
-            <div class="sm:w-5/6 tillselect-marging">
-                <div class="w-full relative">
-
-                    <select wire:change="changeBeneficiary($event.target.value)" name="beneficiary" id="beneficiary"
-                        class="form-control" data-search="true">
-                        @foreach ($beneficiaries as $beneficiary)
-                            @if (request()->input('type') == trans('ledger-foundation::configuration.transfer') &&
-                                $beneficiary->mobile != $user->phone)
-                                <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
-                            @else
-                                <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}</option>
-                            @endif
-                        @endforeach
-                    </select>
-
-                    <a data-tw-toggle="modal" data-tw-target="#walletbenificary-modal"
-                        class="absolute top-0 right-0 plus" style="">
-                        <i data-lucide="plus-circle" class="w-4 h-4 ml-4"></i>
-                    </a>
+            @if ($typename == 'Transfer')
+                <div class="sm:w-5/6 tillselect-marging">
+                    <div class="w-full relative">
+                        <input name="beneficiary" id="beneficiary" value="{{ $self_beneficiary }}" type="text"
+                            class="form-control" readonly>
+                    </div>
+                    @error('beneficiary')
+                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                    @enderror
                 </div>
-                @error('beneficiary')
-                    <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                @enderror
-            </div>
+            @else
+                <div class="sm:w-5/6 tillselect-marging">
+                    <div class="w-full relative">
+
+                        <select wire:change="changeBeneficiary($event.target.value)" name="beneficiary" id="beneficiary"
+                            class="form-control" data-search="true">
+                            @foreach ($beneficiaries as $beneficiary)
+                                @if (request()->input('type') == trans('ledger-foundation::configuration.transfer') &&
+                                    $beneficiary->mobile != $user->phone)
+                                    <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}
+                                    </option>
+                                @else
+                                    <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
+
+                        <a data-tw-toggle="modal" data-tw-target="#walletbenificary-modal"
+                            class="absolute top-0 right-0 plus" style="">
+                            <i data-lucide="plus-circle" class="w-4 h-4 ml-4"></i>
+                        </a>
+                    </div>
+                    @error('beneficiary')
+                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                    @enderror
+                </div>
+            @endif
 
         </div>
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
