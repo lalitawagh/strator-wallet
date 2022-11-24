@@ -37,8 +37,7 @@
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
 
-                                    <select name="base_currency" id="base_currency" class="form-control"
-                                        data-search="true">
+                                    <select name="base_currency" id="base_currency" class="form-control" data-search="true">
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}"
                                                 @if (old('base_currency') == $ledger->getKey()) selected @endif>{{ $ledger->name }}
@@ -126,9 +125,9 @@
 
                             <div
                                 class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2 @if (!is_null(old('is_hard_stop'))) @else valid_date hidden @endif">
-                                <label for="valid_date" class="form-label sm:w-30">Valid Date <span
-                                        class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6 relative">
+                                <label for="valid_date" class="form-label valid_date hidden sm:w-30">Valid Date <span
+                                        class="text-theme-6 valid_date hidden">*</span></label>
+                                <div class="sm:w-5/6 relative valid_date hidden">
                                     <input id="valid_date" name="valid_date"
                                         class="form-control datepicker_flatpicker @error('valid_date') border-theme-6 @enderror"
                                         placeholder="DD-MM-YYYY" value="{{ old('valid_date') }}"
