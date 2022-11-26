@@ -19,13 +19,13 @@ class TransactionController extends Controller
         $transactionType = 'all';
         $user = Auth::user();
         $wallets = Wallet::get();
+        $walletID = $workspace = null;
 
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
             $wallets = Wallet::forHolder($workspace)->get();
         }
-       
-        $walletID = $workspace = null;
+        
         $transactions = Transaction::where('meta->account','wallet')->latest()->paginate();
 
         return view("ledger-foundation::wallet.transactions", compact('workspace', 'wallets', 'transactions', 'walletID', 'transactionType'));
