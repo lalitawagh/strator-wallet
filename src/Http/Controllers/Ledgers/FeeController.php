@@ -19,7 +19,7 @@ class FeeController extends Controller
     {
         $this->authorize(FeePolicy::VIEW, Fee::class);
 
-        $fees = Helper::paginate(collect(Setting::getValue('wallet_fees',[]))->reverse());
+        $fees = Helper::paginate(collect(Setting::getValue('wallet_fees', []))->reverse());
 
         return view("ledger-foundation::fees.index", compact('fees'));
     }
@@ -38,17 +38,16 @@ class FeeController extends Controller
         $data = $request->validated();
         $sender_wallet = $data['base_currency'];
         $receiver_wallet = $data['exchange_currency'];
-        $existFee = collect(Setting::getValue('wallet_fees',[]))->where('base_currency' , $sender_wallet)->where('exchange_currency' ,$receiver_wallet)->where('payment_type',$data['payment_type'])->first();
+        $existFee = collect(Setting::getValue('wallet_fees', []))->where('base_currency', $sender_wallet)->where('exchange_currency', $receiver_wallet)->where('payment_type', $data['payment_type'])->first();
 
-        if(!is_null($existFee))
-        {
+        if (!is_null($existFee)) {
             return back()->withError('Exchange Already Exists');
         }
 
         $data['id'] = now()->format('dmYHis');
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
 
-        $settings = collect(Setting::getValue('wallet_fees',[]))->push($data);
+        $settings = collect(Setting::getValue('wallet_fees', []))->push($data);
 
         Setting::updateOrCreate(['key' => 'wallet_fees'], ['value' => $settings]);
 
@@ -62,7 +61,7 @@ class FeeController extends Controller
     {
         $this->authorize(FeePolicy::EDIT, Fee::class);
 
-        $fee = collect(Setting::getValue('wallet_fees',[]))->firstWhere('id', $id);
+        $fee = collect(Setting::getValue('wallet_fees', []))->firstWhere('id', $id);
         $ledgers = Ledger::get();
 
         return view("ledger-foundation::fees.edit", compact('fee', 'ledgers'));
@@ -100,34 +99,24 @@ class FeeController extends Controller
 
         if (!is_null($existExchangeRate) && ($id != $existExchangeRate->id)) {
             return back()->withError('This exchange rate already exist');
+        }
 
-                }
+        $settings = collect(Setting::getValue('wallet_fees'))->map(function ($item) use ($id, $data) {
+            if ($item['id'] == $id) {
+                return $data;
+            }
 
+            return $item;
+        });
 
-
-
-
-
-
-            $settings = collect(Setting::getValue('wallet_fees'))->map(function ($item) use ($id,$data) {
-                if ($item['id'] == $id) {
-                    return $data;
-                }
-
-                return $item;
-            });
-
-            Setting::updateOrCreate(['key' => 'wallet_fees'], ['value' => $settings]);
+        Setting::updateOrCreate(['key' => 'wallet_fees'], ['value' => $settings]);
 
 
         return redirect()->route("dashboard.wallet.fee.index")->with([
             'status' => 'success',
             'message' => 'Fee updated successfully.',
         ]);
-
-
     }
-
 
 
     public function destroy($id, Request $request)

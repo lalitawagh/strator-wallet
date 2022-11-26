@@ -57,12 +57,12 @@ class PayoutController extends Controller
         $countries = Country::get();
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
-        $wallets =  Wallet::forHolder($user)->get();
+        $wallets =  Wallet::forHolder($workspace)->get();
         $ledgers = Ledger::get();
         $asset_types = Setting::getValue('asset_types', []);
         $beneficiaries = ($request->input('type') == 'transfer') ? Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wallet')->whereMobile($user->phone)->latest()->get() : Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wallet')->latest()->get();
 
-        return view("ledger-foundation::wallet.payout.payouts", compact('countryWithFlags', 'defaultCountry', 'user', 'workspace', 'beneficiaries', 'ledgers', 'wallets', 'asset_types','countries'));
+        return view("ledger-foundation::wallet.payout.payouts", compact('countryWithFlags', 'defaultCountry', 'user', 'workspace', 'beneficiaries', 'ledgers', 'wallets', 'asset_types', 'countries'));
     }
 
     public function store(StorePayoutRequest $request)
@@ -75,14 +75,13 @@ class PayoutController extends Controller
         $beneficiary = Contact::find($data['beneficiary']);
         $beneficiary_user = User::wherePhone($beneficiary?->mobile)->first();
 
-        if($sender_wallet->id == $receiver_ledger->id && $beneficiary_user->getKey() == $user->getKey())
-        {
+        if ($sender_wallet->id == $receiver_ledger->id && $beneficiary_user->getKey() == $user->getKey()) {
             return back()->withError("Payout not process with same wallet");
         }
 
         $beneficiary_wallet = NULL;
         if (isset($beneficiary_user)) {
-            $beneficiary_wallet = Wallet::forHolder($beneficiary_user)->whereLedgerId($receiver_ledger?->ledger_id)->first();
+            $beneficiary_wallet = Wallet::forHolder($beneficiary_user->workspaces()->first())->whereLedgerId($receiver_ledger?->ledger_id)->first();
         }
 
         $amount = $data['amount'];
@@ -162,10 +161,9 @@ class PayoutController extends Controller
         $log->target()->associate($transaction);
         $log->save();
 
-        if(config('services.disable_sms_service') == false){
+        if (config('services.disable_sms_service') == false) {
             $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
-        }
-        else{
+        } else {
             $transaction->generateOtp("sms");
         }
 
@@ -268,19 +266,17 @@ class PayoutController extends Controller
             'transfer_status' =>  TransactionStatus::ACCEPTED,
         ];
 
-        $metaInfo = $transaction?->meta ? array_merge($transaction?->meta,$metaDetails) : $metaDetails;
+        $metaInfo = $transaction?->meta ? array_merge($transaction?->meta, $metaDetails) : $metaDetails;
 
         $transaction->meta = $metaInfo;
         $transaction->update();
 
-        if($request->type == 'all')
-        {
+        if ($request->type == 'all') {
             return redirect()->route('dashboard.wallet.transaction.index')->with([
                 'status' => 'success',
                 'message' => 'The payout request accepted successfully.',
             ]);
-        }else
-        {
+        } else {
             return redirect()->route('dashboard.wallet.payout.index')->with([
                 'status' => 'success',
                 'message' => 'The payout request accepted successfully.',
