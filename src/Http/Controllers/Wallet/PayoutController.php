@@ -50,6 +50,8 @@ class PayoutController extends Controller
 
     public function create(Request $request)
     {
+        $this->authorize(PayoutPolicy::CREATE, Payout::class);
+
         $user = Auth::user();
         $countryWithFlags = Country::orderBy("name")->get();
         $countries = Country::get();

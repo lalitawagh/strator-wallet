@@ -29,7 +29,7 @@ class PayoutPolicy
 
     public function view(User $user)
     {
-        if ($user->hasPermissionTo(Permission::PAYOUT_VIEW)) {
+        if ($user->hasPermissionTo(Permission::PAYOUT_VIEW)  && !$user->isSubscriber()) {
             return true;
         }
 
@@ -44,6 +44,9 @@ class PayoutPolicy
 
     public function create(User $user)
     {
+        if ($user->hasPermissionTo(Permission::PAYOUT_CREATE)  && !$user->isSubscriber()) {
+            return true;
+        }
 
         $workspaceId = request()->input('workspace_id', request()->input('filter.workspace_id'));
 
@@ -56,14 +59,13 @@ class PayoutPolicy
         if ($workspace->users()->where('user_id', $user->id)->exists()) {
             return true;
         }
-
-        return $user->hasPermissionTo(Permission::PAYOUT_CREATE);
-
+        return false;
+       
     }
 
     public function show(User $user)
     {
-        if ($user->hasPermissionTo(Permission::PAYOUT_SHOW)) {
+        if ($user->hasPermissionTo(Permission::PAYOUT_SHOW) && !$user->isSubscriber()) {
             return true;
         }
 

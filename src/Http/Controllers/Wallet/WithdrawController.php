@@ -60,6 +60,8 @@ class WithdrawController extends Controller
 
     public function create(Request $request)
     {
+        $this->authorize(WithdrawPolicy::CREATE, Withdraw::class);
+
         $user = Auth::user();
         $countryWithFlags = Country::orderBy("name")->get();
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
