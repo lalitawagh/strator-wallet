@@ -1,4 +1,4 @@
-@if ($isBankingUser == false)
+@if ($isBankingUser == false && request()->input("type") != "standard")
 <div class="form-inline mb-2">
     <label for="phone" class="form-label sm:w-24">Mobile Number <span
             class="text-theme-6">*</span></label>
@@ -75,7 +75,7 @@
 </div>
 @endif
 
-@if ($isBankingUser == false && $defaultCountry->code != 'UK')
+@if ($isBankingUser != 0 && $defaultCountry->code != 'UK')
 <div class="form-inline mb-2">
     <label for="nationality" class="form-label sm:w-24">Nationality <span
             class="text-theme-6">*</span></label>
@@ -111,6 +111,6 @@
         @enderror
     </div>
 </div>
-@elseif ($isBankingUser == false && $defaultCountry->code == 'UK')
+@elseif ($isBankingUser != 0 && $defaultCountry->code == 'UK')
 <input type="hidden" name="country_id" value="{{ $defaultCountry->id }}">
 @endif

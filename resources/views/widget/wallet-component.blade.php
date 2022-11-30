@@ -1,4 +1,4 @@
-<div class="r-box2 intro-y blog col-span-12 sm:col-span-3 box">
+<div class="r-box2 intro-y blog col-span-12 sm:col-span-3 box  sm:mr-2 mb-2">
     <div class="blog__preview"><img alt="" class="rounded-t-md" src="{{ asset('dist/images/r-box2.jpg') }}"></div>
     <div class="flex flex-col items-left px-5 py-3">
         <h2 class="intro-y font-medium text-xl sm:text-2xl">
