@@ -29,7 +29,7 @@ class WithdrawPolicy
 
     public function view(User $user)
     {
-        if ($user->hasPermissionTo(Permission::WITHDRAW_VIEW) && $user->isSuperadmin()) {
+        if ($user->hasPermissionTo(Permission::WITHDRAW_VIEW) && !$user->isSubscriber()) {
             return true;
         }
 
@@ -44,6 +44,9 @@ class WithdrawPolicy
 
     public function create(User $user)
     {
+        if ($user->hasPermissionTo(Permission::WITHDRAW_CREATE) && !$user->isSubscriber()) {
+            return true;
+        }
 
         $workspaceId = request()->input('workspace_id', request()->input('filter.workspace_id'));
 
@@ -57,13 +60,12 @@ class WithdrawPolicy
             return true;
         }
         return false;
-        // return $user->hasPermissionTo(Permission::WITHDRAW_CREATE);
 
     }
 
     public function show(User $user)
     {
-        if ($user->hasPermissionTo(Permission::WITHDRAW_SHOW)  && $user->isSuperadmin()) {
+        if ($user->hasPermissionTo(Permission::WITHDRAW_SHOW)  && !$user->isSubscriber()) {
             return true;
         }
 

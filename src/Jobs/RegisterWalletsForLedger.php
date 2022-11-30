@@ -38,32 +38,37 @@ class RegisterWalletsForLedger implements ShouldQueue
         if ($this->ledger->status == \Kanexy\LedgerFoundation\Enums\LedgerStatus::ACTIVE && $this->ledger->ledger_type == \Kanexy\LedgerFoundation\Enums\LedgerType::WALLET) {
 
             foreach ($users as $user) {
-               
-                $wallet = Wallet::where(['ledger_id' => $this->ledger->getKey(), "holder_type" => $user->getMorphClass(), "holder_id" => $user->getKey()])->first();
 
-                if (!is_null($wallet)) {
-                    $urn = $wallet->urn;
-                } else {
-                    $urn = Wallet::generateUrn();
+                $workspace = $user->workspaces()->first();
+                if(!is_null($workspace))
+                {
+                    $wallet = Wallet::where(['ledger_id' => $this->ledger->getKey(), "holder_type" => $workspace->getMorphClass(), "holder_id" => $workspace->getKey()])->first();
+                
+                    if (!is_null($wallet)) {
+                        $urn = $wallet->urn;
+                    } else {
+                        $urn = Wallet::generateUrn();
+                    }
+
+                    $data = [
+                        "name" => $user->getFullName(),
+                        "urn" => $urn,
+                        "ledger_id" => $this->ledger->getKey(),
+                        "holder_type" => $workspace->getMorphClass(),
+                        "holder_id" => $workspace->getKey(),
+                        "status" => WalletStatus::ACTIVE,
+                    ];
+
+                    Wallet::updateOrCreate(
+                        [
+                            'ledger_id' => $this->ledger->getKey(),
+                            "holder_type" => $workspace->getMorphClass(),
+                            "holder_id" => $workspace->getKey()
+                        ],
+                        $data
+                    );
                 }
-
-                $data = [
-                    "name" => $user->getFullName(),
-                    "urn" => $urn,
-                    "ledger_id" => $this->ledger->getKey(),
-                    "holder_type" => $user->getMorphClass(),
-                    "holder_id" => $user->getKey(),
-                    "status" => WalletStatus::ACTIVE,
-                ];
-
-                Wallet::updateOrCreate(
-                    [
-                        'ledger_id' => $this->ledger->getKey(),
-                        "holder_type" => $user->getMorphClass(),
-                        "holder_id" => $user->getKey()
-                    ],
-                    $data
-                );
+                
             }
         }
     }

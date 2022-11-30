@@ -66,7 +66,7 @@ class WithdrawController extends Controller
         $countryWithFlags = Country::orderBy("name")->get();
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
-        $wallets =  Wallet::forHolder($user)->get();
+        $wallets =  Wallet::forHolder($workspace)->get();
         $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wrappex')->where(['meta->beneficiary_type' => 'withdraw'])->latest()->get();
         $ledgers = Ledger::get();
         $asset_types = Setting::getValue('asset_types', []);
