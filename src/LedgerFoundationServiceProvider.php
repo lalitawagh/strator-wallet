@@ -135,7 +135,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         \Kanexy\Cms\Facades\RegistrationStep::addItem(new WalletRegistrationStep());
 
         \Kanexy\Cms\Facades\Cms::setRegistrationFlow(function (User $user) {
-            if ($user->is_banking_user != true) {
+            if ($user->is_banking_user != 0) {
                 $type = 'wallet_flow';
                 return $type;
             }
@@ -144,7 +144,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
 
 
         \Kanexy\Cms\Facades\Cms::setRedirectRouteAfterRegistrationVerification(function (Request $request, User $user) {
-            if ($user->is_banking_user != true) {
+            if ($user->is_banking_user != 0) {
                 return route("customer.signup.wallet.create");
             }
 
@@ -161,7 +161,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         });
 
         Cms::setRedirectRouteAfterLogin(function (User $user) {
-            if(!$user->is_banking_user)
+            if($user->is_banking_user == 0)
             {
                 return route("dashboard.wallet.wallet-dashboard");
             }
