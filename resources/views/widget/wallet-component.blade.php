@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="flex flex-wrap lg:flex-nowrap items-center justify-center p-5">
-            <a href="{{ route('customer.signup.create') }}"
+            <a id="walletAccountGo" href="{{ route('customer.signup.create') }}"
                 class="btn w-32 btn-rounded-dark dark:bg-dark-2 dark:text-white mt-6 sm:mt-5 sm:mb-4">GO</a>
         </div>
 
