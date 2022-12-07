@@ -52,7 +52,7 @@
             <label for="remaining_amount" class="form-label sm:w-30"> Remaining </label>
             <div class="sm:w-5/6">
                 <input wire:model="remaining_amount" id="remaining_amount" name="remaining_amount" type="text"
-                    class="form-control" placeholder="£ 120.00" readonly>
+                    class="form-control" readonly>
                 @error('remaining_amount')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror
