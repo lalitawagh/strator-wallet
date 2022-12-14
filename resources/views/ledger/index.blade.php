@@ -28,7 +28,7 @@
                     <div>
                         @can(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::CREATE,
                             \Kanexy\LedgerFoundation\Models\Ledger::class)
-                            <a href="{{ route('dashboard.wallet.ledger.create') }}"
+                            <a id="ledgerCreateNew" href="{{ route('dashboard.wallet.ledger.create') }}"
                                 class="btn btn-sm btn-primary shadow-md">Create New</a>
                         @endcan
                     </div>
