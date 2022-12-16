@@ -42,7 +42,7 @@
                     <div>
                         @can(\Kanexy\LedgerFoundation\Policies\AssetClassPolicy::CREATE,
                             \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class)
-                            <a href="{{ route('dashboard.wallet.asset-class.create') }}"
+                            <a id="assetClassCreateNew" href="{{ route('dashboard.wallet.asset-class.create') }}"
                                 class="btn btn-sm btn-primary shadow-md">Create New</a>
                         @endcan
                     </div>
