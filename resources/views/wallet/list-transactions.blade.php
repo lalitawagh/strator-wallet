@@ -5,13 +5,18 @@
             <x-list-view-filters />
             @if (isset($transactionType) && \Illuminate\Support\Facades\Auth::user()->isSubscriber())
                 @if ($transactionType == 'deposit')
-                    <a href="{{ route('dashboard.wallet.deposit.create', ['workspace_id' => $workspace->id]) }}"
+                    <a id="walletDepositBtn"
+                        href="{{ route('dashboard.wallet.deposit.create', ['workspace_id' => $workspace->id]) }}"
                         class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 py-2 sm:mb-0 mb-2">Deposit</a>
                 @elseif ($transactionType == 'payout')
                     @if (request()->input('type') == trans('ledger-foundation::configuration.transfer'))
-                        <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id, 'type' => request()->input('type')]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Transfer</a>
+                        <a id="walletTransfertBtn"
+                            href="{{ route('dashboard.wallet.payout.create', ['workspace_id' => $workspace->id, 'type' => request()->input('type')]) }}"
+                            class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Transfer</a>
                     @else
-                        <a href="{{ route('dashboard.wallet.payout.create',['workspace_id' => $workspace->id]) }}" class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Payout</a>
+                        <a id="walletPayoutBtn"
+                            href="{{ route('dashboard.wallet.payout.create', ['workspace_id' => $workspace->id]) }}"
+                            class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Payout</a>
                     @endif
                 @endif
             @endif
@@ -244,7 +249,6 @@
                                 @isset($transaction?->meta['sender_wallet_account_id'])
                                     @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->meta['sender_wallet_account_id'])->first(); @endphp
                                 @endisset
-                                
                             @endif
                             @php
                                 $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet?->ledger_id)->first();
