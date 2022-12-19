@@ -20,7 +20,7 @@ class WalletDashboardMenuItem extends Item
         /** @var $user App\Model\User */
         $user = Auth::user();
 
-        if(!$user->is_banking_user)
+        if($user->is_banking_user == 0)
         {
             return true;
         }
