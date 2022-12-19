@@ -177,13 +177,11 @@ class PayoutController extends Controller
         $debit_amount =  $transaction->amount;
         $sender_wallet = Wallet::find($transaction->meta['sender_ref_id']);
         $beneficiary_wallet = Wallet::find($transaction->meta['beneficiary_ref_id']);
-        $beneficiary_user = User::find($beneficiary_wallet->holder_id);
-        $beneficiary_workspace = $beneficiary_user->workspaces()->first();
 
         $creditTransaction = Transaction::create([
             'urn' => Transaction::generateUrn(),
             'amount' => $amount,
-            'workspace_id' => $beneficiary_workspace->id,
+            'workspace_id' => $beneficiary_wallet->holder_id,
             'type' => 'credit',
             'payment_method' => 'wallet',
             'note' => null,
@@ -226,7 +224,7 @@ class PayoutController extends Controller
             'sender_currency' => $creditTransaction->meta['sender_currency'],
             'receiver_currency' =>  $creditTransaction->meta['receiver_currency'],
             'exchange_rate' => $creditTransaction->meta['exchange_rate'],
-            'workspace_id' => $beneficiary_workspace->id,
+            'workspace_id' => $beneficiary_wallet->holder_id,
             'type' => 'credit',
             'payment_method' => 'wallet',
             'ref_id' => $transaction->meta['beneficiary_ref_id'],
