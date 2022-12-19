@@ -27,7 +27,8 @@
                     <div>
                         @can(\Kanexy\LedgerFoundation\Policies\FeePolicy::CREATE,
                             \Kanexy\LedgerFoundation\Contracts\Fee::class)
-                            <a href="{{ route('dashboard.wallet.fee.create') }}" class="btn btn-sm btn-primary shadow-md">Create
+                            <a id="feeSetupCreateNew" href="{{ route('dashboard.wallet.fee.create') }}"
+                                class="btn btn-sm btn-primary shadow-md">Create
                                 New</a>
                         @endcan
                     </div>

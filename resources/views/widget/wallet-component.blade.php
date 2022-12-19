@@ -1,4 +1,4 @@
-<div class="r-box2 intro-y blog col-span-12 sm:col-span-3 box">
+<div class="r-box2 intro-y blog col-span-12 sm:col-span-3 box  sm:mr-2 mb-2">
     <div class="blog__preview"><img alt="" class="rounded-t-md" src="{{ asset('dist/images/r-box2.jpg') }}"></div>
     <div class="flex flex-col items-left px-5 py-3">
         <h2 class="intro-y font-medium text-xl sm:text-2xl">
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="flex flex-wrap lg:flex-nowrap items-center justify-center p-5">
-            <a href="{{ route('customer.signup.create') }}"
+            <a id="walletAccountGo" href="{{ route('customer.signup.create') }}"
                 class="btn w-32 btn-rounded-dark dark:bg-dark-2 dark:text-white mt-6 sm:mt-5 sm:mb-4">GO</a>
         </div>
 
