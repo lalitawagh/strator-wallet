@@ -53,6 +53,6 @@
         </div>
     </div>
     <div class="text-right mt-5">
-        <button type="button" wire:click="verifyOtp()" class="btn btn-primary w-24">Next</button>
+        <button id="DepositNext" type="button" wire:click="verifyOtp()" class="btn btn-primary w-24">Next</button>
     </div>
 </div>

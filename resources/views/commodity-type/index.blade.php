@@ -23,7 +23,8 @@
                             stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a class="whitespace-nowrap text-left " href="" class="breadcrumb--active">Commodity Type</a>
+                        <a id="Commodity" class="whitespace-nowrap text-left " href=""
+                            class="breadcrumb--active">Commodity Type</a>
                     </div>
                     <div>
                         @can(\Kanexy\LedgerFoundation\Policies\CommodityTypePolicy::CREATE,
