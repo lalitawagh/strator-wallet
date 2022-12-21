@@ -27,7 +27,7 @@
                     <div>
                         @can(\Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::CREATE,
                             \Kanexy\LedgerFoundation\Models\ExchangeRate::class)
-                            <a href="{{ route('dashboard.wallet.exchange-rate.create') }}"
+                            <a id="exchangeRateCreateNew" href="{{ route('dashboard.wallet.exchange-rate.create') }}"
                                 class="btn btn-sm btn-primary shadow-md">Create New</a>
                         @endcan
                     </div>

@@ -71,9 +71,9 @@
                         </div>
 
                         <div class="text-right mt-5">
-                            <a href="{{ route('dashboard.wallet.asset-class.index') }}"
+                            <a id="assetClassCreateCancel" href="{{ route('dashboard.wallet.asset-class.index') }}"
                                 class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
-                            <button type="submit" class="btn btn-primary w-24">Create</button>
+                            <button id="assetClassCreate" type="submit" class="btn btn-primary w-24">Create</button>
                         </div>
                     </form>
                 </div>

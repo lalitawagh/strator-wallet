@@ -30,7 +30,7 @@
                         @livewire('wallet-payout-component', ['wallets' => $wallets, 'beneficiaries' => $beneficiaries, 'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'user' => $user, 'ledgers' => $ledgers, 'asset_types' => $asset_types, 'workspace' => $workspace, 'type' => request()->input('type')])
 
                         <div class="text-right mt-5">
-                            <button class="btn btn-primary w-24" type="submit">Submit</button>
+                            <button id="payoutSubmit" class="btn btn-primary w-24" type="submit">Submit</button>
                         </div>
                     </form>
 

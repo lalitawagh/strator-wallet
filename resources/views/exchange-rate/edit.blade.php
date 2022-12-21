@@ -38,8 +38,7 @@
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
 
-                                    <select name="base_currency" id="base_currency" class="form-control"
-                                        data-search="true">
+                                    <select name="base_currency" id="base_currency" class="form-control" data-search="true">
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}"
                                                 @if ($exchange_rate->base_currency == $ledger->getKey()) selected @endif>{{ $ledger->name }}
@@ -165,9 +164,9 @@
                         </div>
 
                         <div class="text-right mt-5">
-                            <a href="{{ route('dashboard.wallet.exchange-rate.index') }}"
+                            <a id="exchangeRateEditCancel" href="{{ route('dashboard.wallet.exchange-rate.index') }}"
                                 class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
-                            <button type="submit" class="btn btn-primary w-24">Update</button>
+                            <button id="exchangeRateUpdate" type="submit" class="btn btn-primary w-24">Update</button>
                         </div>
                     </form>
                 </div>
