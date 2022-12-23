@@ -76,18 +76,23 @@ class PayoutController extends Controller
         $beneficiary = Contact::find($data['beneficiary']);
         if (is_null($beneficiary)) {
             $data['phone'] = $user->phone;
-            $contact['mobile'] = CmsHelper::normalizePhone($user->phone);
-            $contact['workspace_id'] = $data['workspace_id'];
-            $contact['ref_type'] = 'wallet';
-            $contact['classification'] = ['beneficiary'];
-            $contact['status'] = 'active';
-            $contact['meta'] = ['country_code' => $data['country_code']];
+            $contact = new Contact();
+            $contact->display_name = $user->full_name;
+            $contact->first_name = $user->first_name;
+            $contact->middle_name = $user->middle_name;
+            $contact->last_name = $user->last_name;
+            $contact->mobile = CmsHelper::normalizePhone($user->phone);
+            $contact->workspace_id = $data['workspace_id'];
+            $contact->ref_type = 'wallet';
+            $contact->classification = ['beneficiary'];
+            $contact->status = 'active';
+            $contact->meta = ['country_code' => $data['country_code']];
+            $contact->holder()->associate($user);
+            $contact->save();
 
-            /** @var Contact $contact */
-            $contact = Contact::create($contact);
+            $beneficiary = Contact::where('holder_id', $data['beneficiary'])->first();
         }
         $beneficiary_user = User::wherePhone($beneficiary?->mobile)->first();
-        // dd($data, $beneficiary, $beneficiary_user);
         if ($sender_wallet->id == $receiver_ledger->id && $beneficiary_user->getKey() == $user->getKey()) {
             return back()->withError("Payout not process with same wallet");
         }
