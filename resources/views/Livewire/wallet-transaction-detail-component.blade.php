@@ -233,7 +233,7 @@
 
             <div class="edit-transaction-content hidden">
                 <form id="transaction-form"
-                    action="{{ route('dashboard.banking.transactions.update', $transaction->getKey()) }}"
+                    action="{{ route('dashboard.transaction-attachment', $transaction->getKey()) }}"
                     method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
