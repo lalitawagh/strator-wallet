@@ -5,7 +5,6 @@ namespace Kanexy\LedgerFoundation\Livewire;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
-use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Livewire\Component;

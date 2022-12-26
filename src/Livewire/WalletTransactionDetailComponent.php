@@ -2,8 +2,8 @@
 
 namespace Kanexy\LedgerFoundation\Livewire;
 
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Kanexy\LedgerFoundation\Model\Wallet;
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 use Livewire\Component;
 
 class WalletTransactionDetailComponent extends Component
@@ -19,7 +19,7 @@ class WalletTransactionDetailComponent extends Component
     public function showTransactionDetail(Transaction $transaction)
     {
         $this->transaction = $transaction;
-        
+
         if(!is_null($transaction->ref_id) && $transaction->ref_type == 'wallet')
         {
             $this->wallet = Wallet::find($transaction->ref_id);

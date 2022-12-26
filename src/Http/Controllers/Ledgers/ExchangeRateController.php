@@ -4,7 +4,6 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Ledgers;
 
 use Illuminate\Http\Request;
 use Kanexy\Cms\Controllers\Controller;
-use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Http\Helper;
 use Kanexy\LedgerFoundation\Http\Requests\StoreExchangeRateRequest;
