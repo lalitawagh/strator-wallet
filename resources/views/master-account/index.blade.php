@@ -37,7 +37,8 @@
                             stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="whitespace-nowrap text-left breadcrumb--active">Master Accounts</a>
+                        <a id="MasterAccounts" href="" class="whitespace-nowrap text-left breadcrumb--active">Master
+                            Accounts</a>
                     </div>
                     <div>
                         @can(\Kanexy\LedgerFoundation\Policies\MasterAccountPolicy::CREATE,

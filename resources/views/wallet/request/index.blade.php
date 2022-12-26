@@ -30,17 +30,19 @@
 
                                                 <div
                                                     class="sm:flex items-center p-2 sm:py-0 border-b border-gray-200 dark:border-dark-5">
-                                                    <div class="w-auto w-auto nav nav-tabs mr-auto hidden sm:flex" role="tablist">
+                                                    <div class="w-auto w-auto nav nav-tabs mr-auto hidden sm:flex"
+                                                        role="tablist">
                                                         <a id="work-in-progress-mobile-new-tab" data-tw-toggle="tab"
                                                             data-tw-target="#work-in-progress-new" href="javascript:;"
-                                                            class="py-2 ml-0 active" role="tab" aria-selected="true">ALL</a>
+                                                            class="py-2 ml-0 active" role="tab"
+                                                            aria-selected="true">ALL</a>
                                                         <!-- <a id="week-work-in-progress-mobile-last-week-tab" data-tw-toggle="tab" data-tw-target="#work-in-progress-last-week" href="javascript:;" class="py-2 ml-6" role="tab" aria-selected="false">ASSIGNED TO ME</a>  -->
                                                     </div>
                                                     <div class="flex items-center md:ml-auto mb-2">
                                                         <div
                                                             class="col-span-6 sm:col-span-3 lg:col-span-2 xl:col-span-1 search sm:block mr-2 ml-auto">
-                                                            <input type="text" list="browsers" name="browser" id="browser"
-                                                                placeholder="Search"
+                                                            <input type="text" list="browsers" name="browser"
+                                                                id="browser" placeholder="Search"
                                                                 class="search__input form-control border-transparent placeholder-theme-13">
                                                             <i data-feather="search"
                                                                 class="search__icon dark:text-gray-300"></i>
@@ -48,19 +50,19 @@
                                                         <div class="dark:text-gray-300">1 of 50</div>
                                                         <a href="javascript:;"
                                                             class="w-5 h-5 ml-1 flex items-center justify-center dark:text-gray-300">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round"
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-chevron-left w-5 h-5">
                                                                 <polyline points="15 18 9 12 15 6"></polyline>
                                                             </svg> </a>
                                                         <a href="javascript:;"
                                                             class="w-5 h-5 mr-2 flex items-center justify-center dark:text-gray-300">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                                stroke-width="1.5" stroke-linecap="round"
-                                                                stroke-linejoin="round"
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="1.5"
+                                                                stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-chevron-right w-5 h-5">
                                                                 <polyline points="9 18 15 12 9 6"></polyline>
                                                             </svg> </a>
@@ -81,9 +83,13 @@
 
                                                     <div class="w-full sm:w-auto flex sm:mt-0 sm:mt-0 mb-2">
                                                         <div class="dropdown mr-2">
-                                                            <button class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 dropdown-toggle btn box flex items-center" aria-expanded="false" data-tw-toggle="dropdown">
-                                                                <i data-lucide="filter" class="w-4 h-4 ml-auto sm:ml-0 mr-2"></i> Filter
-                                                                <i data-lucide="chevron-down" class="w-4 h-4 ml-auto sm:ml-2"></i>
+                                                            <button
+                                                                class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 dropdown-toggle btn box flex items-center"
+                                                                aria-expanded="false" data-tw-toggle="dropdown">
+                                                                <i data-lucide="filter"
+                                                                    class="w-4 h-4 ml-auto sm:ml-0 mr-2"></i> Filter
+                                                                <i data-lucide="chevron-down"
+                                                                    class="w-4 h-4 ml-auto sm:ml-2"></i>
                                                             </button>
                                                             <div class="dropdown-menu filter-dropbox">
                                                                 <ul class="dropdown-content">
@@ -96,81 +102,107 @@
                                                                             <div class="form mb-1">
                                                                                 <select data-search="true"
                                                                                     class="w-full form-control-sm mt-2">
-                                                                                    <option value="1">Column Name</option>
+                                                                                    <option value="1">Column Name
+                                                                                    </option>
                                                                                     <option value="2">Column Name 1
                                                                                     </option>
                                                                                     <option value="3">Column Name 2
                                                                                     </option>
                                                                                 </select>
-                                                                                <span class="float-right ml-2 absolute plus"
+                                                                                <span
+                                                                                    class="float-right ml-2 absolute plus"
                                                                                     style="margin:0;">
-                                                                                    <a href="javascript:;"><i data-lucide="trash-2" class="w-4 h-4 mr-2"></i></a>
+                                                                                    <a href="javascript:;"><i
+                                                                                            data-lucide="trash-2"
+                                                                                            class="w-4 h-4 mr-2"></i></a>
                                                                                 </span>
                                                                             </div>
                                                                             <div class="form mb-1">
                                                                                 <select data-search="true"
                                                                                     class="w-full form-control-sm mt-2">
-                                                                                    <option value="1">Action is true</option>
-                                                                                    <option value="2">Action is false</option>
+                                                                                    <option value="1">Action is true
+                                                                                    </option>
+                                                                                    <option value="2">Action is false
+                                                                                    </option>
                                                                                 </select>
                                                                             </div>
                                                                         </form>
                                                                         <div class="flex mt-3">
                                                                             <div class="w-full px-2">
                                                                                 <div class="form-inline">
-                                                                                    <button type="submit" class="btn btn-elevated-primary btn-sm mr-1">
-                                                                                        <i data-lucide="file-text" class="w-5 h-5 mr-1"></i> Apply
+                                                                                    <button type="submit"
+                                                                                        class="btn btn-elevated-primary btn-sm mr-1">
+                                                                                        <i data-lucide="file-text"
+                                                                                            class="w-5 h-5 mr-1"></i> Apply
                                                                                     </button>
-                                                                                    <a href="javascript:void(0);" class="btn btn-secondary btn-sm mr-1">
-                                                                                        <i data-lucide="plus-circle" class="w-5 h-5 mr-1"></i> Add a condition
+                                                                                    <a href="javascript:void(0);"
+                                                                                        class="btn btn-secondary btn-sm mr-1">
+                                                                                        <i data-lucide="plus-circle"
+                                                                                            class="w-5 h-5 mr-1"></i> Add a
+                                                                                        condition
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     </li>
                                                                     <li>
-                                                                        <a href="" class="dropdown-item"> <i data-lucide="activity" class="w-4 h-4 mr-2"></i> <span class="truncate">Indonesian</span> </a>
+                                                                        <a href="" class="dropdown-item"> <i
+                                                                                data-lucide="activity"
+                                                                                class="w-4 h-4 mr-2"></i> <span
+                                                                                class="truncate">Indonesian</span> </a>
                                                                     </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
 
-                                                        <button type="button" class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 btn box mr-2 flex items-center sm:ml-0"> <i data-lucide="printer" class="w-4 h-4 mr-2"></i> Print </button>
+                                                        <button type="button"
+                                                            class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 btn box mr-2 flex items-center sm:ml-0">
+                                                            <i data-lucide="printer" class="w-4 h-4 mr-2"></i> Print
+                                                        </button>
 
                                                         <div class="dropdown">
-                                                            <button class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 dropdown-toggle btn btn-primary shadow-md flex items-center" aria-expanded="false" data-tw-toggle="dropdown">
-                                                                Export <i class="w-4 h-4 ml-2" data-lucide="chevron-down"></i>
+                                                            <button
+                                                                class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 dropdown-toggle btn btn-primary shadow-md flex items-center"
+                                                                aria-expanded="false" data-tw-toggle="dropdown">
+                                                                Export <i class="w-4 h-4 ml-2"
+                                                                    data-lucide="chevron-down"></i>
                                                             </button>
                                                             <div class="dropdown-menu w-40">
                                                                 <ul class="dropdown-content">
                                                                     <li>
-                                                                        <a id="tabulator-export-xlsx" href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                            <i data-lucide="file-text" class="w-4 h-4 mr-2"></i> Export XLSX
+                                                                        <a id="tabulator-export-xlsx" href="javascript:;"
+                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                            <i data-lucide="file-text"
+                                                                                class="w-4 h-4 mr-2"></i> Export XLSX
                                                                         </a>
                                                                     </li>
                                                                     <li>
-                                                                        <a id="tabulator-export-html" href="javascript:;" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                            <i data-lucide="file-text" class="w-4 h-4 mr-2"></i> Export PDF
+                                                                        <a id="tabulator-export-html" href="javascript:;"
+                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
+                                                                            <i data-lucide="file-text"
+                                                                                class="w-4 h-4 mr-2"></i> Export PDF
                                                                         </a>
                                                                     </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <button type="submit"
+                                                    <button id="RequestSubmit" type="submit"
                                                         class="btn btn-sm btn-primary sm:ml-2 -mt-1 mb-2">Add New</button>
                                                 </div>
                                                 <!-- BEGIN: HTML Table Data -->
                                                 <div class="intro-y p-3 mt-0">
                                                     <div class="intro-y mt-0">
-                                                        <div class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
-                                                            <x-list-view-filters/>
+                                                        <div
+                                                            class="sm:flex items-center sm:py-0 border-b border-gray-200 dark:border-dark-5">
+                                                            <x-list-view-filters />
                                                         </div>
                                                     </div>
                                                     <div class=" overflow-x-auto overflow-y-hidden">
                                                         <!-- <div id="tabulator" class="mt-5 table-report table-report--tabulator"></div> -->
 
-                                                        <table id="tableID" class="shroting display table table-report -mt-2">
+                                                        <table id="tableID"
+                                                            class="shroting display table table-report -mt-2">
                                                             <thead class="short-wrp">
                                                                 <tr>
                                                                     <th>
@@ -186,122 +218,222 @@
                                                                     <th class="whitespace-nowrap text-left">
                                                                         Transaction ID
 
-                                                                    <span class="flex short-icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
                                                                         Date & Time
 
-                                                                    <span class="flex short-icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
                                                                         Sender Name
 
-                                                                    <span class="flex short-icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
                                                                         Receiver Name
 
-                                                                    <span class="flex short-icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
                                                                         Wallet
 
-                                                                    <span class="flex short-icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
                                                                         Debit
 
-                                                                    <span class="flex short-icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
                                                                         Credit
 
-                                                                    <span class="flex short-icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
                                                                         Balance
 
-                                                                    <span class="flex short-icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
                                                                         Status
 
-                                                                    <span class="flex short-icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
                                                                     </th>
                                                                     <th class="whitespace-nowrap text-left">
                                                                         Reference
 
-                                                                    <span class="flex short-icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 up" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18" />
-                                                                        </svg>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 down" fill="#c1c4c9" viewBox="0 0 24 24" stroke="currentColor">
-                                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 17l-4 4m0 0l-4-4m4 4V3" />
-                                                                        </svg>
-                                                                    </span>
+                                                                        <span class="flex short-icon">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 up" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M8 7l4-4m0 0l4 4m-4-4v18" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-4 w-4 down" fill="#c1c4c9"
+                                                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round"
+                                                                                    stroke-width="2"
+                                                                                    d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+                                                                            </svg>
+                                                                        </span>
                                                                     </th>
 
 
@@ -424,7 +556,8 @@
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                                 <label for="" class="form-label sm:w-30"> Attachment </label>
                                 <div class="sm:w-5/6">
-                                    <input id="" name="" type="file" class="form-control w-full " placeholder="">
+                                    <input id="" name="" type="file" class="form-control w-full "
+                                        placeholder="">
                                     <span class="block text-theme-6 mt-2"></span>
                                 </div>
                             </div>
@@ -440,7 +573,8 @@
                         </div>
                     </form>
                     <div class="text-right mt-5">
-                        <a data-tw-toggle="modal" data-tw-target="#wsave-preview-modal" class="btn btn-primary w-24">Save</a>
+                        <a data-tw-toggle="modal" data-tw-target="#wsave-preview-modal"
+                            class="btn btn-primary w-24">Save</a>
                     </div>
                 </div>
             </div>
@@ -467,7 +601,8 @@
                             </div>
                         </div>
                         <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                            <label for="" class="form-label sm:w-30"> Otp <span class="text-theme-6">*</span></label>
+                            <label for="" class="form-label sm:w-30"> Otp <span
+                                    class="text-theme-6">*</span></label>
                             <div class="sm:w-5/6">
                                 <input id="" type="text" class="form-control" value="">
                                 <span class="block text-theme-6 mt-2"></span>
