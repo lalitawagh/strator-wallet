@@ -127,7 +127,8 @@
             <span class="block text-theme-6 mt-2">{{ $message }}</span>
         @enderror
         <div class="text-right mt-5">
-            <button type="button" wire:click="createBeneficiary" class="btn btn-primary w-24">Create</button>
+            <button id="WithdrawCreateBeneficiary" type="button" wire:click="createBeneficiary"
+                class="btn btn-primary w-24">Create</button>
         </div>
     </div>
 </div>

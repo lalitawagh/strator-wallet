@@ -1,4 +1,4 @@
-@extends("ledger-foundation::wallet.deposit.skeleton")
+@extends('ledger-foundation::wallet.deposit.skeleton')
 
 @section('deposit-content')
     <div class="px-5 sm:px-5 mt-0 pt-0">
@@ -8,10 +8,10 @@
                 <span class="block text-theme-6">{{ Session::get('error') }}</span>
             @endif
             <input type="hidden" name="workspace_id" value="{{ request()->input('workspace_id') }}">
-            @livewire('deposit-wallet-component', ['wallets' => $wallets,'currencies' => $currencies, 'walletDefaultCountry' => $walletDefaultCountry])
+            @livewire('deposit-wallet-component', ['wallets' => $wallets, 'currencies' => $currencies, 'walletDefaultCountry' => $walletDefaultCountry])
 
             <div class="text-right mt-5">
-                <button type="submit" class="btn btn-primary w-24">Next</button>
+                <button id="InitialSubmit" type="submit" class="btn btn-primary w-24">Next</button>
             </div>
         </form>
     </div>
