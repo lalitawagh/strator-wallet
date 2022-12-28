@@ -1,4 +1,4 @@
-@extends("ledger-foundation::wallet.deposit.skeleton")
+@extends('ledger-foundation::wallet.deposit.skeleton')
 
 @section('deposit-content')
     <form action="{{ route('dashboard.wallet.store-deposit-overview-detail') }}" method="POST">
@@ -8,7 +8,7 @@
             <div class="flex flex-col pb-5">
                 <span class="font-medium text-base">Deposit Money via <strong>
                         @isset($details['payment_method'])
-                         {{ trans('ledger-foundation::configuration.'.@$details['payment_method'])  }}
+                            {{ trans('ledger-foundation::configuration.' . @$details['payment_method']) }}
                         @else
                             {{ @$details['currency'] }}
                         @endisset
@@ -55,9 +55,10 @@
                 </div>
             </div>
             <div class="text-right mt-5 form-inline text-right mt-5 float-right">
-                <a href="{{ route('dashboard.wallet.deposit.create', ['workspace_id' => $details['workspace_id']]) }}"
+                <a id="DepositPrevious"
+                    href="{{ route('dashboard.wallet.deposit.create', ['workspace_id' => $details['workspace_id']]) }}"
                     class="btn btn-secondary w-20 inline-block mr-2">Previous</a>
-                <button type="submit" class="btn btn-primary w-24">Next</a>
+                <button id="DepositSubmit" type="submit" class="btn btn-primary w-24">Next</a>
             </div>
         </div>
     </form>

@@ -101,7 +101,8 @@
             </div>
         </div>
         <div class="text-right mt-5">
-            <button type="button" wire:click="createBeneficiary" class="btn btn-primary w-24">Create</button>
+            <button id="createBeneficiary" type="button" wire:click="createBeneficiary"
+                class="btn btn-primary w-24">Create</button>
         </div>
     </div>
 </div>
