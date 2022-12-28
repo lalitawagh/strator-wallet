@@ -111,6 +111,6 @@
         @enderror
     </div>
 </div>
-@elseif ($isBankingUser != 0 && $defaultCountry->code == 'UK')
+@elseif ($isBankingUser == false && $defaultCountry->code == 'UK')
 <input type="hidden" name="country_id" value="{{ $defaultCountry->id }}">
 @endif
