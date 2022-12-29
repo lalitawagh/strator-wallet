@@ -26,6 +26,9 @@
                     </div>
                 </div>
                 <div class="p-5">
+                    @if (Session::has('error'))
+                        <span class="block text-theme-6">{{ Session::get('error') }}</span>
+                    @endif
                     <form action="{{ route('dashboard.wallet.master-account.store') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
