@@ -21,7 +21,7 @@
                             class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="breadcrumb--active">Create Fee Setup</a>
+                        <a id="CreateFee" href="" class="breadcrumb--active">Create Fee Setup</a>
                     </div>
                 </div>
                 <div class="p-5">
@@ -36,8 +36,7 @@
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
 
-                                    <select name="base_currency" id="base_currency" class="form-control"
-                                        data-search="true">
+                                    <select name="base_currency" id="base_currency" class="form-control" data-search="true">
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}"
                                                 @if (old('base_currency') == $ledger->getKey()) selected @endif>{{ $ledger->name }}
@@ -165,9 +164,9 @@
                         </div>
 
                         <div class="text-right mt-5">
-                            <a href="{{ route('dashboard.wallet.fee.index') }}"
+                            <a id="feeSetupCreateCancel" href="{{ route('dashboard.wallet.fee.index') }}"
                                 class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
-                            <button type="submit" class="btn btn-primary w-24">Create</button>
+                            <button id="feeSetupCreate" type="submit" class="btn btn-primary w-24">Create</button>
                         </div>
                     </form>
                 </div>

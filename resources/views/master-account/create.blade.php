@@ -22,10 +22,13 @@
                             class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="breadcrumb--active"> Create Master Account</a>
+                        <a id="MasterAccount" href="" class="breadcrumb--active"> Create Master Account</a>
                     </div>
                 </div>
                 <div class="p-5">
+                    @if (Session::has('error'))
+                        <span class="block text-theme-6">{{ Session::get('error') }}</span>
+                    @endif
                     <form action="{{ route('dashboard.wallet.master-account.store') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
@@ -146,9 +149,10 @@
 
 
                         <div class="text-right mt-5">
-                            <a href="{{ route('dashboard.wallet.master-account.index') }}"
+                            <a id="masterAccountsCreateCancel"
+                                href="{{ route('dashboard.wallet.master-account.index') }}"
                                 class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
-                            <button type="submit" class="btn btn-primary w-24">Create</button>
+                            <button id="masterAccountsCreate" type="submit" class="btn btn-primary w-24">Create</button>
                         </div>
                     </form>
                 </div>

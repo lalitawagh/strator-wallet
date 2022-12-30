@@ -3,11 +3,13 @@
 namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
 use App\Models\User;
+use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
+use Kanexy\Cms\Helper as CmsHelper;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
@@ -70,11 +72,27 @@ class PayoutController extends Controller
         $data = $request->validated();
         $user = Auth::user();
         $sender_wallet = Wallet::with('ledger')->find($data['wallet']);
-
         $receiver_ledger = Wallet::find($data['receiver_currency']);
         $beneficiary = Contact::find($data['beneficiary']);
-        $beneficiary_user = User::wherePhone($beneficiary?->mobile)->first();
+        if (is_null($beneficiary)) {
+            $data['phone'] = $user->phone;
+            $contact = new Contact();
+            $contact->display_name = $user->full_name;
+            $contact->first_name = $user->first_name;
+            $contact->middle_name = $user->middle_name;
+            $contact->last_name = $user->last_name;
+            $contact->mobile = CmsHelper::normalizePhone($user->phone);
+            $contact->workspace_id = $data['workspace_id'];
+            $contact->ref_type = 'wallet';
+            $contact->classification = ['beneficiary'];
+            $contact->status = 'active';
+            $contact->meta = ['country_code' => $data['country_code']];
+            $contact->holder()->associate($user);
+            $contact->save();
 
+            $beneficiary = Contact::where('holder_id', $data['beneficiary'])->first();
+        }
+        $beneficiary_user = User::wherePhone($beneficiary?->mobile)->first();
         if ($sender_wallet->id == $receiver_ledger->id && $beneficiary_user->getKey() == $user->getKey()) {
             return back()->withError("Payout not process with same wallet");
         }
@@ -177,13 +195,11 @@ class PayoutController extends Controller
         $debit_amount =  $transaction->amount;
         $sender_wallet = Wallet::find($transaction->meta['sender_ref_id']);
         $beneficiary_wallet = Wallet::find($transaction->meta['beneficiary_ref_id']);
-        $beneficiary_user = User::find($beneficiary_wallet->holder_id);
-        $beneficiary_workspace = $beneficiary_user->workspaces()->first();
 
         $creditTransaction = Transaction::create([
             'urn' => Transaction::generateUrn(),
             'amount' => $amount,
-            'workspace_id' => $beneficiary_workspace->id,
+            'workspace_id' => $beneficiary_wallet->holder_id,
             'type' => 'credit',
             'payment_method' => 'wallet',
             'note' => null,
@@ -226,7 +242,7 @@ class PayoutController extends Controller
             'sender_currency' => $creditTransaction->meta['sender_currency'],
             'receiver_currency' =>  $creditTransaction->meta['receiver_currency'],
             'exchange_rate' => $creditTransaction->meta['exchange_rate'],
-            'workspace_id' => $beneficiary_workspace->id,
+            'workspace_id' => $beneficiary_wallet->holder_id,
             'type' => 'credit',
             'payment_method' => 'wallet',
             'ref_id' => $transaction->meta['beneficiary_ref_id'],

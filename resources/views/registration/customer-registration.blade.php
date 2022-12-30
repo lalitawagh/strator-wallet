@@ -1,6 +1,6 @@
 @if ($isBankingUser == false && request()->input("type") != "standard")
 <div class="form-inline mb-2">
-    <label for="phone" class="form-label sm:w-24">Mobile Number <span
+    <label for="phone" class="form-label sm:w-30">Mobile Number <span
             class="text-theme-6">*</span></label>
     <div class="sm:w-3/5 tillselect-marging">
         <div class="input-group flex flex-col sm:flex-row">
@@ -45,7 +45,7 @@
     </div>
 </div>
 <div class="form-inline mb-2">
-    <label for="password" class="form-label sm:w-24">Select PIN <span
+    <label for="password" class="form-label sm:w-30">Select PIN <span
             class="text-theme-6">*</span></label>
     <div class="sm:w-3/5">
         <input id="password" name="password" value="{{ old('password') }}"
@@ -59,7 +59,7 @@
     </div>
 </div>
 <div class="form-inline mb-2">
-    <label for="password_confirmation" class="form-label sm:w-24">Re-enter PIN <span
+    <label for="password_confirmation" class="form-label sm:w-30">Re-enter PIN <span
             class="text-theme-6">*</span></label>
     <div class="sm:w-3/5">
         <input id="password_confirmation" name="password_confirmation"
@@ -77,7 +77,7 @@
 
 @if ($isBankingUser != 0 && $defaultCountry->code != 'UK')
 <div class="form-inline mb-2">
-    <label for="nationality" class="form-label sm:w-24">Nationality <span
+    <label for="nationality" class="form-label sm:w-30">Nationality <span
             class="text-theme-6">*</span></label>
     <div class="sm:w-3/5 tillselect-marging">
         <select id="nationality" name="nationality" data-search="true"
@@ -94,7 +94,7 @@
     </div>
 </div>
 <div class="form-inline mb-2">
-    <label for="country_id" class="form-label sm:w-24">Residence <span
+    <label for="country_id" class="form-label sm:w-30">Residence <span
             class="text-theme-6">*</span></label>
 
     <div class="sm:w-3/5 tillselect-marging">
@@ -111,6 +111,6 @@
         @enderror
     </div>
 </div>
-@elseif ($isBankingUser != 0 && $defaultCountry->code == 'UK')
+@elseif ($isBankingUser == false && $defaultCountry->code == 'UK')
 <input type="hidden" name="country_id" value="{{ $defaultCountry->id }}">
 @endif

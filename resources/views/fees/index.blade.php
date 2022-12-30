@@ -22,12 +22,14 @@
                             stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="whitespace-nowrap text-left breadcrumb--active">Fee Setup</a>
+                        <a id="Fee" href="" class="whitespace-nowrap text-left breadcrumb--active">Fee
+                            Setup</a>
                     </div>
                     <div>
                         @can(\Kanexy\LedgerFoundation\Policies\FeePolicy::CREATE,
                             \Kanexy\LedgerFoundation\Contracts\Fee::class)
-                            <a href="{{ route('dashboard.wallet.fee.create') }}" class="btn btn-sm btn-primary shadow-md">Create
+                            <a id="feeSetupCreateNew" href="{{ route('dashboard.wallet.fee.create') }}"
+                                class="btn btn-sm btn-primary shadow-md">Create
                                 New</a>
                         @endcan
                     </div>

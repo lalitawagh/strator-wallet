@@ -21,12 +21,13 @@
                             stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="whitespace-nowrap text-left breadcrumb--active">Asset Type</a>
+                        <a id="Asset" href="" class="whitespace-nowrap text-left breadcrumb--active">Asset
+                            Type</a>
                     </div>
                     <div>
                         @can(\Kanexy\LedgerFoundation\Policies\AssetTypePolicy::CREATE,
                             \Kanexy\LedgerFoundation\Contracts\AssetTypeConfiguration::class)
-                            <a href="{{ route('dashboard.wallet.asset-type.create') }}"
+                            <a id="assetTypeCreateNew" href="{{ route('dashboard.wallet.asset-type.create') }}"
                                 class="btn btn-sm btn-primary shadow-md">Create New</a>
                         @endcan
                     </div>

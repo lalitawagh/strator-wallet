@@ -22,7 +22,7 @@
                             class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="breadcrumb--active"> Edit Commodity Type</a>
+                        <a id="EditCommodity" href="" class="breadcrumb--active"> Edit Commodity Type</a>
                     </div>
                 </div>
                 <div class="p-5">
@@ -73,9 +73,9 @@
                         </div>
 
                         <div class="text-right mt-5">
-                            <a href="{{ route('dashboard.wallet.commodity-type.index') }}"
+                            <a id="commodityTypeEditCancel" href="{{ route('dashboard.wallet.commodity-type.index') }}"
                                 class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
-                            <button type="submit" class="btn btn-primary w-24">Update</button>
+                            <button id="commodityTypeEditUpdate" type="submit" class="btn btn-primary w-24">Update</button>
                         </div>
                     </form>
                 </div>

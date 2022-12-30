@@ -23,12 +23,12 @@
                             stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="whitespace-nowrap text-left breadcrumb--active">Ledger</a>
+                        <a id="Ledger" href="" class="whitespace-nowrap text-left breadcrumb--active">Ledger</a>
                     </div>
                     <div>
                         @can(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::CREATE,
                             \Kanexy\LedgerFoundation\Models\Ledger::class)
-                            <a href="{{ route('dashboard.wallet.ledger.create') }}"
+                            <a id="ledgerCreateNew" href="{{ route('dashboard.wallet.ledger.create') }}"
                                 class="btn btn-sm btn-primary shadow-md">Create New</a>
                         @endcan
                     </div>
