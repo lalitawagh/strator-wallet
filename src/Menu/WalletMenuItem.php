@@ -7,6 +7,7 @@ use Kanexy\Cms\Menu\Contracts\Item;
 use Kanexy\Cms\Menu\MenuItem;
 use Kanexy\LedgerFoundation\Enums\Permission;
 use Kanexy\LedgerFoundation\Http\Helper as HttpHelper;
+use Kanexy\PartnerFoundation\Core\Enums\Permission as EnumsPermission;
 use Kanexy\PartnerFoundation\Core\Helper;
 
 class WalletMenuItem extends Item
@@ -51,9 +52,15 @@ class WalletMenuItem extends Item
             $menus[] = new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
         }
 
+        if ($user->hasPermissionTo(EnumsPermission::CONTACT_VIEW)) {
+            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
+        }
+
         if ($user->hasAnyPermission([Permission::COMMODITY_TYPE_VIEW, Permission::ASSET_CLASS_VIEW, Permission::ASSET_TYPE_VIEW, Permission::FEE_VIEW, Permission::MASTER_ACCOUNT_VIEW, Permission::LEDGER_VIEW, Permission::EXCHANGE_RATE_VIEW])) {
             $menus[] = HttpHelper::getConfigRoute();
         }
+
+
 
         return $menus;
     }
