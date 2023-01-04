@@ -35,14 +35,14 @@
                     <h2 class="font-medium text-base mr-auto">
                         Broadcast Message
                     </h2>
-                    <button class="btn btn-outline-secondary hidden sm:flex"> <i data-lucide="file"
+                    <button id="DownloadDocsBtn" class="btn btn-outline-secondary hidden sm:flex"> <i data-lucide="file"
                             class="w-4 h-4 mr-2"></i> Download Docs </button>
                     <div class="dropdown sm:hidden">
                         <a class="dropdown-toggle w-5 h-5 block" href="javascript:;" aria-expanded="false"> <i
                                 data-lucide="more-horizontal" class="w-5 h-5 text-gray-600 dark:text-gray-600"></i> </a>
                         <div class="dropdown-menu w-40">
                             <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                                <a href="javascript:;"
+                                <a id="DownloadDocs" href="javascript:;"
                                     class="flex items-center p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                     <i data-lucide="file" class="w-4 h-4 mr-2"></i> Download Docs </a>
                             </div>
@@ -85,7 +85,8 @@
                 <!-- END: Modal Body -->
                 <!-- BEGIN: Modal Footer -->
                 <div class="modal-footer text-right">
-                    <button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
+                    <button id="Cancel" type="button" data-dismiss="modal"
+                        class="btn btn-outline-secondary w-20 mr-1">Cancel</button>
                     <button id="PayoutSave" type="button" class="btn btn-primary w-20">Save</button>
                 </div>
                 <!-- END: Modal Footer -->
@@ -100,7 +101,7 @@
             <div class="modal-content">
                 <div class="modal-header py-2">
                     <h2 class="font-medium text-base mr-auto">Payout Details</h2>
-                    <button class="btn btn-sm btn-elevated-secondary w-24 mr-0 mb-2"> Change Plan </button>
+                    <button id="ChangePlan" class="btn btn-sm btn-elevated-secondary w-24 mr-0 mb-2"> Change Plan </button>
                 </div>
 
                 <div class="modal-body">

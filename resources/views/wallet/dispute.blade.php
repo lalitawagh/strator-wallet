@@ -247,7 +247,27 @@
                                         src="http://localhost:8000/dist/images/user.png">
                                 </div>
                                 <div class="lg:ml-4 text-center lg:text-left mt-3 lg:mt-0">
-                                    <a href="" class="font-medium">Arnold Schwarzenegger</a>
+                                    <a id="ArnoldSchwarzenegger" href="" class="font-medium">Arnold
+                                        Schwarzenegger</a>
+                                    <div class="text-gray-600 text-xs mt-0.5">22-10-2021 4:00 AM</div>
+                                </div>
+                            </div>
+                            <div class="text-center lg:text-left px-0 py-3">
+                                <div>There are many variations of passages of Lorem Ipsum available, but the majority have
+                                    suffered alteration in some form, by injected humour, or randomi</div>
+
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex flex-col items-start px-0 pt-5 border-b border-gray-200 dark:border-dark-5 pb-2 mx-5">
+                            <div class="w-full flex flex-col lg:flex-row items-center">
+                                <div class="w-16 h-16 image-fit">
+                                    <img alt="" class="rounded-full"
+                                        src="http://localhost:8000/dist/images/user.png">
+                                </div>
+                                <div class="lg:ml-4 text-center lg:text-left mt-3 lg:mt-0">
+                                    <a id="ArnoldSch" href="" class="font-medium">Arnold Schwarzenegger</a>
                                     <div class="text-gray-600 text-xs mt-0.5">22-10-2021 4:00 AM</div>
                                 </div>
                             </div>
@@ -285,26 +305,7 @@
                                         src="http://localhost:8000/dist/images/user.png">
                                 </div>
                                 <div class="lg:ml-4 text-center lg:text-left mt-3 lg:mt-0">
-                                    <a href="" class="font-medium">Arnold Schwarzenegger</a>
-                                    <div class="text-gray-600 text-xs mt-0.5">22-10-2021 4:00 AM</div>
-                                </div>
-                            </div>
-                            <div class="text-center lg:text-left px-0 py-3">
-                                <div>There are many variations of passages of Lorem Ipsum available, but the majority have
-                                    suffered alteration in some form, by injected humour, or randomi</div>
-
-                            </div>
-                        </div>
-
-                        <div
-                            class="flex flex-col items-start px-0 pt-5 border-b border-gray-200 dark:border-dark-5 pb-2 mx-5">
-                            <div class="w-full flex flex-col lg:flex-row items-center">
-                                <div class="w-16 h-16 image-fit">
-                                    <img alt="" class="rounded-full"
-                                        src="http://localhost:8000/dist/images/user.png">
-                                </div>
-                                <div class="lg:ml-4 text-center lg:text-left mt-3 lg:mt-0">
-                                    <a href="" class="font-medium">Arnold Schwarzenegger</a>
+                                    <a id="Schwarzenegger" href="" class="font-medium">Arnold Schwarzenegger</a>
                                     <div class="text-gray-600 text-xs mt-0.5">22-10-2021 4:00 AM</div>
                                 </div>
                             </div>
