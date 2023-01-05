@@ -5,6 +5,7 @@ namespace Kanexy\LedgerFoundation\Livewire;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Kanexy\Banking\Models\Account;
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\Models\OneTimePassword;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
