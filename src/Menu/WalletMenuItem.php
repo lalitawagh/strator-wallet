@@ -53,7 +53,7 @@ class WalletMenuItem extends Item
         }
 
         if ($user->hasPermissionTo(EnumsPermission::CONTACT_VIEW)) {
-            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
+            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()], 'ref_type' => 'wallet']));
         }
 
         if ($user->hasAnyPermission([Permission::COMMODITY_TYPE_VIEW, Permission::ASSET_CLASS_VIEW, Permission::ASSET_TYPE_VIEW, Permission::FEE_VIEW, Permission::MASTER_ACCOUNT_VIEW, Permission::LEDGER_VIEW, Permission::EXCHANGE_RATE_VIEW])) {

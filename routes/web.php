@@ -65,7 +65,6 @@ Route::group(['middleware' => ['web', 'auth', VerificationStepMiddleware::class]
     Route::get('wallet-withdraw-accepted/{id}/{type}', [WithdrawController::class, 'withdrawAccepted'])->name("withdrawAccepted");
     Route::get('wallet-deposit-accepted/{id}/{type}', [DepositController::class, 'transferAccepted'])->name("wallet-deposit.transferAccepted");
     Route::get('wallet-deposit-pending/{id}/{type}', [DepositController::class, 'transferPending'])->name("wallet-deposit.transferPending");
-    Route::resource("wallet-beneficary", WalletBeneficiaryController::class)->only('index');
 });
 
 Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {
