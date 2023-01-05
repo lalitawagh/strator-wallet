@@ -109,7 +109,8 @@
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
                                 <label for="" class="form-label sm:w-30"> Attachment </label>
                                 <div class="sm:w-5/6">
-                                    <input id="" name="" type="file" class="form-control w-full " placeholder="">
+                                    <input id="" name="" type="file" class="form-control w-full "
+                                        placeholder="">
                                     <span class="block text-theme-6 mt-2"></span>
                                 </div>
                             </div>
@@ -125,7 +126,8 @@
                         </div>
                     </form>
                     <div class="text-right mt-5">
-                        <a data-tw-toggle="modal" data-tw-target="#wsave-preview-modal" class="btn btn-primary w-24">Save</a>
+                        <a data-tw-toggle="modal" data-tw-target="#wsave-preview-modal"
+                            class="btn btn-primary w-24">Save</a>
                     </div>
                 </div>
             </div>
@@ -152,7 +154,8 @@
                             </div>
                         </div>
                         <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                            <label for="" class="form-label sm:w-30"> Otp <span class="text-theme-6">*</span></label>
+                            <label for="" class="form-label sm:w-30"> Otp <span
+                                    class="text-theme-6">*</span></label>
                             <div class="sm:w-5/6">
                                 <input id="" type="text" class="form-control" value="">
                                 <span class="block text-theme-6 mt-2"></span>
