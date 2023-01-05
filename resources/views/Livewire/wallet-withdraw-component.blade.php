@@ -7,7 +7,7 @@
                     class="form-control" data-search="true" required>
                     <option value="">Select Withdraw From</option>
                     @foreach ($wallets as $wallet)
-                        @if ($wallet->ledger->exchange_type == 'fiat')
+                        @if ($wallet?->ledger->exchange_type == 'fiat')
                             <option value="{{ $wallet->getKey() }}" @if ($selected_wallet == $wallet->getKey()) selected @endif>
                                 {{ \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first()?->name }}
                             </option>
