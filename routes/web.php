@@ -18,6 +18,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\TransactionController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WalletController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\MasterAccountController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\StellerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,7 +65,9 @@ Route::group(['middleware'=>['web','auth',VerificationStepMiddleware::class],'pr
     Route::get('wallet-deposit-accepted/{id}/{type}',[DepositController::class,'transferAccepted'])->name("wallet-deposit.transferAccepted");
     Route::get('wallet-deposit-pending/{id}/{type}',[DepositController::class,'transferPending'])->name("wallet-deposit.transferPending");
 
-
+    Route::get('create-steller-account',[StellerController::class,'createAccount'])->name('create-steller-account');
+    Route::get('get-balance',[StellerController::class,'getBalance'])->name('get-balance');
+    
 });
 
 Route::group(['middleware' =>['web','auth'],'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {

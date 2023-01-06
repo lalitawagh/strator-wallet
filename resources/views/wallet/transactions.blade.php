@@ -69,7 +69,9 @@
                                                                     <div class="box p-5">
                                                                         <div class="flex">
                                                                             <span
-                                                                                class="text-lg font-medium truncate mr-5font-bold leading-8 mt-0 align-self item-center">{{ $ledger?->name }}</span>
+                                                                                class="text-lg font-medium truncate mr-5font-bold leading-8 mt-0 align-self item-center">
+                                                                                @isset($ledger) {{ $ledger?->name }} @else USTD  @endisset
+                                                                            </span>
                                                                             <div class="ml-auto">
                                                                                 <div
                                                                                     class="flex sm:mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
@@ -86,6 +88,16 @@
                                                                         <div class="text-base text-gray-600 mt-1">
                                                                             {{ $wallet?->urn }}</span>
                                                                         </div>
+                                                                        @if(!isset($ledger)) 
+                                                                        <div class="text-sm mt-1">
+                                                                            <p>
+                                                                                Public Key {{ $wallet?->meta['publicKey']}}</span>
+                                                                            </p>
+                                                                            <p>
+                                                                                Secret Key {{ $wallet?->meta['secretKey']}}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                        @endif
                                                                         <div class="flex mt-3">
                                                                             <span
                                                                                 class="text-lg @if ($wallet->status == \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) text-success @else text-theme-6 @endif">
