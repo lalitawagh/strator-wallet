@@ -27,8 +27,11 @@ class DashboardController extends Controller
         if(!is_null($stellerAccount))
         {
             $stellerBalance = $this->stellerService->getBalance($stellerAccount?->meta['publicKey']);
-            $stellerAccount->balance = $stellerBalance['balance'][0]['balance'];
-            $stellerAccount->update();
+            if(isset($stellerBalance['balance']))
+            {
+                $stellerAccount->balance = $stellerBalance['balance'][0]['balance'];
+                $stellerAccount->update();
+            }
         }
        
         return view("ledger-foundation::wallet.dashboard", compact('transactions', 'workspace', 'wallets', 'stellerAccount'));
