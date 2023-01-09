@@ -41,8 +41,10 @@
             @if ($typename == 'Transfer')
                 <div class="sm:w-5/6 tillselect-marging">
                     <div class="w-full relative">
-                        <input name="beneficiary" id="beneficiary" value="{{ $self_beneficiary }}" type="text"
+                        <input name="" id="" value="{{ $self_beneficiary->full_name }}" type="text"
                             class="form-control" readonly>
+                        <input name="beneficiary" id="beneficiary" value="{{ $self_beneficiary->getKey() }}"
+                            type="text" class="form-control" readonly hidden>
                     </div>
                     @error('beneficiary')
                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -66,7 +68,7 @@
                             @endforeach
                         </select>
 
-                        <a data-tw-toggle="modal" data-tw-target="#walletbenificary-modal"
+                        <a id="WalletbenificaryModal" data-tw-toggle="modal" data-tw-target="#walletbenificary-modal"
                             class="absolute top-0 right-0 plus" style="">
                             <i data-lucide="plus-circle" class="w-4 h-4 ml-4"></i>
                         </a>
@@ -113,9 +115,15 @@
                             @endforeach
                         </select>
                     </div>
-                    <input wire:model="phone" id="phone" name="phone" value="{{ old('phone') }}" type="number"
-                        class="form-control @error('phone') border-theme-6 @enderror"
-                        onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);" disabled>
+                    @if (request()->input('type') == trans('ledger-foundation::configuration.transfer'))
+                        <input id="phone" name="phone" value="" type="number"
+                            class="form-control @error('phone') border-theme-6 @enderror" readonly>
+                    @else
+                        <input wire:model="phone" id="phone" name="phone"
+                            value="{{ old('phone', $user->phone) }}" type="number"
+                            class="form-control @error('phone') border-theme-6 @enderror"
+                            onKeyPress="if(this.value.length==11) return false;return onlyNumberKey(event);">
+                    @endif
 
                 </div>
                 @error('country_code')
@@ -133,8 +141,8 @@
             <label for="amount" class="form-label sm:w-30"> Amount to Pay <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
                 <input wire:change="changeAmount($event.target.value)" id="amount" name="amount" type="text"
-                    value=" {{ old('amount', $amount) }}" class="form-control" onKeyPress="return isNumberKey(event);"
-                    onpaste="return false;" required>
+                    value=" {{ old('amount', $amount) }}" class="form-control"
+                    onKeyPress="return isNumberKey(event);" onpaste="return false;" required>
                 @error('amount')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror

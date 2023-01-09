@@ -101,9 +101,9 @@ class WithdrawBeneficiaryComponent extends Component
             'notes' => 'nullable',
             'country_code' => 'nullable',
             'account_number' => 'required|digits:8',
-            'account_name' => 'required',
+            'account_name' => 'required|regex:/(^([a-zA-Z]+)(\d+)?$)/u|max:255',
             'sort_code' => 'required|digits:6',
-        ]);
+        ],['account_name.regex'=>'Account Name Contain Only Letters and Spaces.']);
 
         $data['classification'] = $this->classification;
 

@@ -20,6 +20,12 @@ class Wallet extends Model
         'ledger_id',
         'balance',
         'status',
+        'meta',
+        'type'
+    ];
+
+    protected $casts = [
+        'meta' => 'array',
     ];
 
     public function holder()

@@ -16,14 +16,15 @@
                     @if (Session::has('error'))
                         <span class="block text-theme-6">{{ Session::get('error') }}</span>
                     @endif
-                    <form action="{{ route('dashboard.wallet.withdraw.store', ['filter' => ['workspace_id' => $workspace->getKey()]]) }}"
+                    <form
+                        action="{{ route('dashboard.wallet.withdraw.store', ['filter' => ['workspace_id' => $workspace->getKey()]]) }}"
                         method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="workspace_id" value="{{ $workspace->getKey() }}">
                         @livewire('wallet-withdraw-component', ['wallets' => $wallets, 'beneficiaries' => $beneficiaries, 'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'user' => $user, 'ledgers' => $ledgers, 'asset_types' => $asset_types, 'workspace' => $workspace])
 
                         <div class="text-right mt-5">
-                            <button class="btn btn-primary w-24" type="submit">Submit</button>
+                            <button id="WithdrawSubmit" class="btn btn-primary w-24" type="submit">Submit</button>
                         </div>
                     </form>
                 </div>

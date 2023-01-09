@@ -48,11 +48,11 @@
             @error('code')
                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
             @enderror
-            <a wire:click="resendOtp({{ $oneTimePassword }})" class="block active-clr mt-2"
+            <a id="ResendOTP" wire:click="resendOtp({{ $oneTimePassword }})" class="block active-clr mt-2"
                 style="cursor: pointer;">Resend OTP </a>
         </div>
     </div>
     <div class="text-right mt-5">
-        <button type="button" wire:click="verifyOtp()" class="btn btn-primary w-24">Next</button>
+        <button id="DepositNext" type="button" wire:click="verifyOtp()" class="btn btn-primary w-24">Next</button>
     </div>
 </div>

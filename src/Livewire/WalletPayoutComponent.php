@@ -2,6 +2,7 @@
 
 namespace Kanexy\LedgerFoundation\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
@@ -69,7 +70,7 @@ class WalletPayoutComponent extends Component
         $this->selected_currency = old('receiver_currency') ?? '';
         $this->phone = $beneficiaries->first()?->mobile;
         $this->country_code =  $beneficiaries->first()?->meta['country_code'] ?? '231';
-        $this->self_beneficiary = $user->full_name;
+        $this->self_beneficiary = Auth::user();
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 

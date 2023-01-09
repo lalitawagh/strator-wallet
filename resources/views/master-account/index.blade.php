@@ -25,19 +25,21 @@
                 <div
                     class="overflow-x-auto overflow-y-hidden sm:flex gap-2 gap-2 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5 text-right">
                     <div class="breadcrumb mr-auto sm:flex justify-around">
-                        <a class="whitespace-nowrap text-left " href="">Wallet</a><svg
-                            xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                        <a class="whitespace-nowrap text-left " href="" class="">Configuration</a><svg
+                        <a id="Wallet" class="whitespace-nowrap text-left " href="">Wallet</a><svg
                             xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="whitespace-nowrap text-left breadcrumb--active">Master Accounts</a>
+                        <a id="Configuration" class="whitespace-nowrap text-left " href=""
+                            class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg" width="24px"
+                            height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                        <a id="MasterAccounts" href="" class="whitespace-nowrap text-left breadcrumb--active">Master
+                            Accounts</a>
                     </div>
                     <div>
                         @can(\Kanexy\LedgerFoundation\Policies\MasterAccountPolicy::CREATE,
@@ -187,8 +189,8 @@
                                                 \Kanexy\LedgerFoundation\Contracts\MasterAccount::class))
                                             <td class="whitespace-nowrap text-left">
                                                 <div class="dropdown">
-                                                    <button class="dropdown-toggle btn px-2 box" aria-expanded="false"
-                                                        data-tw-toggle="dropdown">
+                                                    <button id="Setting" class="dropdown-toggle btn px-2 box"
+                                                        aria-expanded="false" data-tw-toggle="dropdown">
                                                         <span class="w-5 h-5 flex items-center justify-center">
                                                             <i data-lucide="settings" class="w-5 h-5 text-gray-600"></i>
                                                         </span>
@@ -198,7 +200,8 @@
                                                             @can(\Kanexy\LedgerFoundation\Policies\MasterAccountPolicy::EDIT,
                                                                 \Kanexy\LedgerFoundation\Contracts\MasterAccount::class)
                                                                 <li>
-                                                                    <a href="{{ route('dashboard.wallet.master-account.edit', $master_account['id']) }}"
+                                                                    <a id="Edit"
+                                                                        href="{{ route('dashboard.wallet.master-account.edit', $master_account['id']) }}"
                                                                         class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                         <i data-lucide="edit-2" class="w-4 h-4 mr-2"></i> Edit
                                                                     </a>
@@ -214,7 +217,7 @@
                                                                         @csrf
                                                                         @method('DELETE')
 
-                                                                        <button type="submit"
+                                                                        <button id="Delete" type="submit"
                                                                             class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
                                                                             <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
                                                                             Delete
