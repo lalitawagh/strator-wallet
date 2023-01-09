@@ -88,7 +88,7 @@
                                                                         <div class="text-base text-gray-600 mt-1">
                                                                             {{ $wallet?->urn }}</span>
                                                                         </div>
-                                                                        @if(!isset($ledger) && !is_null($wallet?->meta['publicKey'])) 
+                                                                        @if(!isset($ledger) && isset($wallet?->meta['publicKey'])) 
                                                                         <div class="text-sm mt-1">
                                                                             <p>
                                                                                 Public Key {{ $wallet?->meta['publicKey']}}</span>
