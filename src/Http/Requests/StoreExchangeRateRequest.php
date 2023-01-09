@@ -5,7 +5,6 @@ namespace Kanexy\LedgerFoundation\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy;
-use Kanexy\LedgerFoundation\Model\Ledger;
 
 class StoreExchangeRateRequest extends FormRequest
 {

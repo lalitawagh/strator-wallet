@@ -3,7 +3,7 @@
 namespace Kanexy\LedgerFoundation\Livewire;
 
 use Illuminate\Support\Facades\Auth;
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Livewire\Component;
 
 class WalletTransactionsListComponent extends Component

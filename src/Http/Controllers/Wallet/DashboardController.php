@@ -4,9 +4,9 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Controllers\Controller;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Services\StellerService;
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
 
 class DashboardController extends Controller
 {

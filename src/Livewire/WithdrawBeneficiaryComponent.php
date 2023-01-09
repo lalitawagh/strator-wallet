@@ -5,14 +5,13 @@ namespace Kanexy\LedgerFoundation\Livewire;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Kanexy\Banking\Models\Account;
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\Models\OneTimePassword;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\MobileNumber;
 use Kanexy\Cms\Setting\Models\Setting;
-use Kanexy\PartnerFoundation\Banking\Enums\BankEnum;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
 use Kanexy\PartnerFoundation\Core\Dtos\CreateBeneficiaryDto;
 use Kanexy\PartnerFoundation\Core\Services\WrappexService;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
@@ -128,7 +127,7 @@ class WithdrawBeneficiaryComponent extends Component
             $info['meta'] = [
                 'bank_account_number' => $data['account_number'],
                 'bank_code' => $data['sort_code'],
-                'bank_code_type' => BankEnum::SORTCODE,
+                'bank_code_type' => 'sort-code',
                 'beneficiary_type' => 'withdraw',
                 'bank_account_name' => $data['account_name'],
             ];
