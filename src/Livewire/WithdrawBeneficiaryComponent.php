@@ -13,7 +13,7 @@ use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\MobileNumber;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\PartnerFoundation\Core\Dtos\CreateBeneficiaryDto;
-use Kanexy\PartnerFoundation\Core\Services\WrappexService;
+use Kanexy\Banking\Services\WrappexService;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
