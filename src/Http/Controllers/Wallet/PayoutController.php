@@ -3,7 +3,6 @@
 namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
 use App\Models\User;
-use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
