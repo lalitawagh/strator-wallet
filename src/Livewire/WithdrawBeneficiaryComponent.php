@@ -12,7 +12,7 @@ use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\MobileNumber;
 use Kanexy\Cms\Setting\Models\Setting;
-use Kanexy\PartnerFoundation\Core\Dtos\CreateBeneficiaryDto;
+use Kanexy\Banking\Dtos\CreateBeneficiaryDto;
 use Kanexy\Banking\Services\WrappexService;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
