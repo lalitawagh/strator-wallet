@@ -343,7 +343,7 @@
                                                                                 </td>
                                                                                 <td class="whitespace-nowrap text-left">
                                                                                     <div class="dropdown">
-                                                                                        <button
+                                                                                        <button id="Setting"
                                                                                             class="dropdown-toggle btn px-2 box"
                                                                                             aria-expanded="false"
                                                                                             data-tw-toggle="dropdown">
@@ -358,7 +358,8 @@
                                                                                                 @can(\Kanexy\LedgerFoundation\Policies\WithdrawPolicy::SHOW,
                                                                                                     \Kanexy\LedgerFoundation\Contracts\Withdraw::class)
                                                                                                     <li>
-                                                                                                        <a href="javascript:void(0);"
+                                                                                                        <a id="Show"
+                                                                                                            href="javascript:void(0);"
                                                                                                             data-tw-toggle="modal"
                                                                                                             data-tw-target="#transaction-detail-modal"
                                                                                                             onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
@@ -372,7 +373,8 @@
                                                                                                 <li>
                                                                                                     @if (\Illuminate\Support\Facades\Auth::user()->isSuperAdmin() &&
                                                                                                         $transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
-                                                                                                        <a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => 'Withdraw']) }}"
+                                                                                                        <a id="Accepted"
+                                                                                                            href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => 'Withdraw']) }}"
                                                                                                             class="flex items-center block p-2 transition duration-300 ease-in-out dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-orange-200">
                                                                                                             <x-feathericon-check
                                                                                                                 class="w-4 h-4 mr-1" />

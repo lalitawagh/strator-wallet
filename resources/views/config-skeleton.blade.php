@@ -89,14 +89,14 @@
 
         .configuration-container {
             /* width: calc(100% - 305px);
-                    position: absolute;
-                    padding-left: 250px; */
+                        position: absolute;
+                        padding-left: 250px; */
         }
 
         .configuration-container.active {
             /* width: calc(100% - 305px);
-                    position: absolute;
-                    padding-left: 80px; */
+                        position: absolute;
+                        padding-left: 80px; */
         }
 
 
@@ -128,17 +128,17 @@
         }
 
         /* .configuration-nav .side-nav .side-menu__title {
-            color: #333;
-            display:flex !important;
-        }
-        .configuration-nav .side-nav .side-menu.side-menu--active .side-menu__title,
-        .configuration-nav .side-nav .side-menu.side-menu--active .side-menu__icon {
-            --tw-text-opacity: 1;
-                color: rgb(var(--color-primary)/var(--tw-text-opacity));
-        }
-        .configuration-nav .side-nav .side-menu__icon {
-            color: #333;
-        } */
+                color: #333;
+                display:flex !important;
+            }
+            .configuration-nav .side-nav .side-menu.side-menu--active .side-menu__title,
+            .configuration-nav .side-nav .side-menu.side-menu--active .side-menu__icon {
+                --tw-text-opacity: 1;
+                    color: rgb(var(--color-primary)/var(--tw-text-opacity));
+            }
+            .configuration-nav .side-nav .side-menu__icon {
+                color: #333;
+            } */
         .configuration-nav .side-nav>ul>li>.side-menu.side-menu--active {
             --tw-bg-opacity: 1;
             background-color: transparent !important;
@@ -212,14 +212,14 @@
 
         .configuration-container {
             /* width: calc(100% - 305px);
-            position: absolute;
-            padding-left: 405px; */
+                position: absolute;
+                padding-left: 405px; */
         }
 
         .configuration-container.active {
             /* width: calc(100% - 305px);
-            position: absolute;
-            padding-left: 86px; */
+                position: absolute;
+                padding-left: 86px; */
         }
 
         .configuration-nav .side-nav .side-menu__icon svg {
@@ -227,16 +227,16 @@
         }
 
         /* .configuration-nav .side-nav, .configuration-nav .side-nav .side-menu__title {
-            display: block;
-        } */
+                display: block;
+            } */
         .configuration-nav.side-nav--simple .side-menu__sub-open {
             display: contents !important;
         }
 
         /* .valid_date_show
-        {
-            display: flex;
-        } */
+            {
+                display: flex;
+            } */
 
         @media (max-width:767px) {
             .configarrow-toggle {
@@ -290,9 +290,10 @@
             <div class="mt-0 lg:mt-0" x-data="toggleConfigurationSidebarMenu()">
                 <div class="relative flex items-center p-3">
                     <div class="breadcrumb mr-auto hidden sm:flex">
-                        <a href="">Wallets</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
+                        <a id="Wallets" href="">Wallets</a><svg xmlns="http://www.w3.org/2000/svg" width="24px"
+                            height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
                         <a href="" class="">Configuration</a>
@@ -301,7 +302,7 @@
                 <div class="side-nav p-5 border-t border-gray-200 dark:border-dark-5">
                     <ul>
                         <li>
-                            <a href="#" class="side-menu">
+                            <a id="General" href="#" class="side-menu">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                 <div class="side-menu__title"> General </div>
                             </a>
@@ -309,7 +310,7 @@
                         @can(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::VIEW,
                             \Kanexy\LedgerFoundation\Model\Ledger::class)
                             <li>
-                                <a href="{{ route('dashboard.wallet.ledger.index') }}"
+                                <a id="Ledgers" href="{{ route('dashboard.wallet.ledger.index') }}"
                                     class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.ledger.index' ||
                                         Route::current()->getName() == 'dashboard.wallet.ledger.create' ||
                                         Route::current()->getName() == 'dashboard.wallet.ledger.edit') side-menu--active @endif">
@@ -319,7 +320,7 @@
                             </li>
                         @endcan
                         <li>
-                            <a href="javascript:;.html"
+                            <a id="ConfigFields" href="javascript:;.html"
                                 class="side-menu
                                 @if (Route::current()->getName() == 'dashboard.wallet.asset-type.index' ||
                                     Route::current()->getName() == 'dashboard.wallet.asset-type.create' ||
@@ -352,7 +353,7 @@
                             @can(\Kanexy\LedgerFoundation\Policies\AssetTypePolicy::VIEW,
                                 \Kanexy\LedgerFoundation\Contracts\AssetTypeConfiguration::class)
                             <li>
-                                <a href="{{ route('dashboard.wallet.asset-type.index') }}"
+                                <a id="AssetType" href="{{ route('dashboard.wallet.asset-type.index') }}"
                                     class="side-menu  @if (Route::current()->getName() == 'dashboard.wallet.asset-type.index' ||
                                         Route::current()->getName() == 'dashboard.wallet.asset-type.create' ||
                                         Route::current()->getName() == 'dashboard.wallet.asset-type.edit') side-menu--active @endif">
@@ -364,7 +365,7 @@
                         @can(\Kanexy\LedgerFoundation\Policies\AssetClassPolicy::VIEW,
                             \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class)
                             <li>
-                                <a href="{{ route('dashboard.wallet.asset-class.index') }}"
+                                <a id="AssetClass" href="{{ route('dashboard.wallet.asset-class.index') }}"
                                     class="side-menu
                                     @if (Route::current()->getName() == 'dashboard.wallet.asset-class.index' ||
                                         Route::current()->getName() == 'dashboard.wallet.asset-class.create' ||
@@ -377,7 +378,7 @@
                         @can(\Kanexy\LedgerFoundation\Policies\CommodityTypePolicy::VIEW,
                             \Kanexy\LedgerFoundation\Contracts\CommodityTypeConfiguration::class)
                             <li>
-                                <a href="{{ route('dashboard.wallet.commodity-type.index') }}"
+                                <a id="CommodityType" href="{{ route('dashboard.wallet.commodity-type.index') }}"
                                     class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.commodity-type.index' ||
                                         Route::current()->getName() == 'dashboard.wallet.commodity-type.create' ||
                                         Route::current()->getName() == 'dashboard.wallet.commodity-type.edit') side-menu--active @endif">
@@ -391,7 +392,7 @@
                     @can(\Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::VIEW,
                         \Kanexy\LedgerFoundation\Models\ExchangeRate::class)
                         <li>
-                            <a href="{{ route('dashboard.wallet.exchange-rate.index') }}"
+                            <a id="ExchangeRate" href="{{ route('dashboard.wallet.exchange-rate.index') }}"
                                 class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.exchange-rate.index' ||
                                     Route::current()->getName() == 'dashboard.wallet.exchange-rate.create' ||
                                     Route::current()->getName() == 'dashboard.wallet.exchange-rate.edit') side-menu--active @endif">
@@ -403,7 +404,7 @@
                     @can(\Kanexy\LedgerFoundation\Policies\MasterAccountPolicy::VIEW,
                         \Kanexy\LedgerFoundation\Contracts\MasterAccount::class)
                         <li>
-                            <a href="{{ route('dashboard.wallet.master-account.index') }}"
+                            <a id="MasterAccount" href="{{ route('dashboard.wallet.master-account.index') }}"
                                 class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.master-account.index' ||
                                     Route::current()->getName() == 'dashboard.wallet.master-account.create' ||
                                     Route::current()->getName() == 'dashboard.wallet.master-account.edit') side-menu--active @endif">
@@ -414,7 +415,7 @@
                     @endcan
                     @can(\Kanexy\LedgerFoundation\Policies\FeePolicy::VIEW, \Kanexy\LedgerFoundation\Contracts\Fee::class)
                         <li>
-                            <a href="{{ route('dashboard.wallet.fee.index') }}"
+                            <a id="FeesSetup" href="{{ route('dashboard.wallet.fee.index') }}"
                                 class="side-menu @if (Route::current()->getName() == 'dashboard.wallet.fee.index' ||
                                     Route::current()->getName() == 'dashboard.wallet.fee.create' ||
                                     Route::current()->getName() == 'dashboard.wallet.fee.edit') side-menu--active @endif">
@@ -424,26 +425,26 @@
                         </li>
                     @endcan
                     <li>
-                        <a href="#" class="side-menu">
+                        <a id="Notifications" href="#" class="side-menu">
                             <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="side-menu__title"> Notifications </div>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="side-menu">
+                        <a id="ForEx" href="#" class="side-menu">
                             <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="side-menu__title"> ForEx </div>
                         </a>
                     </li>
 
                     <li>
-                        <a href="#" class="side-menu">
+                        <a id="PaymentMethods" href="#" class="side-menu">
                             <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="side-menu__title"> Payment Methods </div>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="side-menu">
+                        <a id="Preferences" href="#" class="side-menu">
                             <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                             <div class="side-menu__title"> Preferences </div>
                         </a>

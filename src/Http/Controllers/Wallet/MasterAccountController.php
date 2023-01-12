@@ -33,6 +33,12 @@ class MasterAccountController extends Controller
     public function store(StoreMasterAccountRequest $request)
     {
         $data = $request->validated();
+
+        $existCountry = collect(Setting::getValue('wallet_master_accounts', []))->where('country', $data['country'])->first();
+
+        if (!is_null($existCountry)) {
+            return back()->withError('Master Account alreday exists with this country');
+        }
     
         $data['id'] = now()->format('dmYHis');
 
@@ -60,6 +66,12 @@ class MasterAccountController extends Controller
     {
         $data = $request->validated();
         $data['id'] = $id;
+
+        $existCountry = collect(Setting::getValue('wallet_master_accounts', []))->where('country', $data['country'])->first();
+
+        if (!is_null($existCountry) && ($id != $existCountry['id'])) {
+            return back()->withError('Master Account alreday exists with this country');
+        }
 
         $settings = collect(Setting::getValue('wallet_master_accounts'))->map(function ($item) use ($id,$data) {
             if ($item['id'] == $id) {

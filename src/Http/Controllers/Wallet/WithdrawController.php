@@ -49,9 +49,8 @@ class WithdrawController extends Controller
 
         $transactions = Transaction::where(["meta->transaction_type" => $transactionType])->latest()->paginate();
 
-        if($user->isSubscriber())
-        {
-            $transactions = Transaction::where(["meta->transaction_type" => $transactionType,'initiator_id' => $user->id])->latest()->paginate();
+        if ($user->isSubscriber()) {
+            $transactions = Transaction::where(["meta->transaction_type" => $transactionType, 'initiator_id' => $user->id])->latest()->paginate();
         }
 
 
@@ -66,7 +65,7 @@ class WithdrawController extends Controller
         $countryWithFlags = Country::orderBy("name")->get();
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
         $workspace = Workspace::findOrFail($request->input('workspace_id'));
-        $wallets =  Wallet::forHolder($workspace)->get();
+        $wallets =  Wallet::forHolder($workspace)->with('ledger')->get();
         $beneficiaries = Contact::beneficiaries()->verified()->forWorkspace($workspace)->whereRefType('wrappex')->where(['meta->beneficiary_type' => 'withdraw'])->latest()->get();
         $ledgers = Ledger::get();
         $asset_types = Setting::getValue('asset_types', []);
@@ -78,7 +77,7 @@ class WithdrawController extends Controller
     {
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
-        $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', 231);
+        $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts', []))->firstWhere('country', 231);
         $wallet = Wallet::find($request->input('sender_wallet_account_id'));
         $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $wallet->ledger->asset_type);
 
@@ -99,10 +98,10 @@ class WithdrawController extends Controller
             'balance' => $wallet?->balance ? ($wallet?->balance - ($request->input('amount'))) : 0,
         ];
 
-        $meta = array_merge($transaction->meta,$metaDetails);
+        $meta = array_merge($transaction->meta, $metaDetails);
         $transaction->workspace_id = $workspace->id;
         $transaction->meta = $meta;
-        $transaction->attachment =  $request->has('attachment') ? $request->file('attachment')->store('Images', 'azure'): null;
+        $transaction->attachment =  $request->has('attachment') ? $request->file('attachment')->store('Images', 'azure') : null;
         $transaction->status = 'draft';
         $transaction->update();
 
@@ -131,10 +130,9 @@ class WithdrawController extends Controller
         $log->target()->associate($transaction);
         $log->save();
 
-        if(config('services.disable_sms_service') == false){
+        if (config('services.disable_sms_service') == false) {
             $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
-        }
-        else{
+        } else {
             $transaction->generateOtp("sms");
         }
 
@@ -175,12 +173,10 @@ class WithdrawController extends Controller
         $workspace = Workspace::find($transaction->workspace_id);
         $user = $workspace->users()->first();
 
-        $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', 231);
+        $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts', []))->firstWhere('country', 231);
         $masterAccount = Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
-        if($masterAccount->balance <  $transaction->amount)
-        {
-            if($request->type == 'all')
-            {
+        if ($masterAccount->balance <  $transaction->amount) {
+            if ($request->type == 'all') {
                 return redirect()->route('dashboard.wallet.transaction.index')->with([
                     'status' => 'error',
                     'message' => 'Please add funds to your MTC account.',
@@ -195,20 +191,16 @@ class WithdrawController extends Controller
 
         $this->payoutService->process($transaction);
 
-        if($request->type == 'all')
-        {
+        if ($request->type == 'all') {
             return redirect()->route('dashboard.wallet.transaction.index')->with([
                 'status' => 'success',
                 'message' => 'The withdraw request transaction processing the payment.It may take a while.',
             ]);
-        }else
-        {
+        } else {
             return redirect()->route('dashboard.wallet.withdraw.index')->with([
                 'status' => 'success',
                 'message' => 'The withdraw request transaction processing the payment.It may take a while.',
             ]);
         }
-
-
     }
 }
