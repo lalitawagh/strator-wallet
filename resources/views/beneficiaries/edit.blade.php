@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="p-5">
-                    <form action="{{ route('dashboard.banking.beneficiaries.update', $beneficiary->id) }}" method="POST"
+                    <form action="{{ route('dashboard.wallet.beneficiaries.update', $beneficiary->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -270,7 +270,7 @@
 
                         <div class="text-right mt-5">
                             <a id="BeneficiaryEditeCancel"
-                                href="{{ route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => $beneficiary->workspace_id]]) }}"
+                                href="{{ route('dashboard.wallet.beneficiaries.index', ['filter' => ['workspace_id' => $beneficiary->workspace_id]]) }}"
                                 class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
                             <button id="BeneficiaryUpdate" type="submit" class="btn btn-primary w-24">Update</button>
                         </div>

@@ -19,7 +19,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\TransactionController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WalletController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\MasterAccountController;
-use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WalletBeneficiaryController;
+use Kanexy\LedgerFoundation\Http\Controllers\WalletBeneficiaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +65,7 @@ Route::group(['middleware' => ['web', 'auth', VerificationStepMiddleware::class]
     Route::get('wallet-withdraw-accepted/{id}/{type}', [WithdrawController::class, 'withdrawAccepted'])->name("withdrawAccepted");
     Route::get('wallet-deposit-accepted/{id}/{type}', [DepositController::class, 'transferAccepted'])->name("wallet-deposit.transferAccepted");
     Route::get('wallet-deposit-pending/{id}/{type}', [DepositController::class, 'transferPending'])->name("wallet-deposit.transferPending");
+    Route::resource('beneficiaries', WalletBeneficiaryController::class);
 });
 
 Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {
