@@ -68,7 +68,8 @@ Route::group(['middleware' => ['web', 'auth', VerificationStepMiddleware::class]
 
     Route::get('create-steller-account',[StellerController::class,'createAccount'])->name('create-steller-account');
     Route::get('get-balance',[StellerController::class,'getBalance'])->name('get-balance');
-    
+    Route::get('crypto-portfolio',[StellerController::class,'dashboard'])->name('stellar-dashboard');
+
 });
 
 Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {

@@ -18,6 +18,11 @@ class StellerController extends Controller
         $this->stellerService = $stellerService;
     }
 
+    public function  dashboard()
+    {
+        return view('ledger-foundation::wallet.stellar.dashboard');
+    }
+
     public function createAccount()
     {
         $user = auth()->user();
@@ -33,7 +38,7 @@ class StellerController extends Controller
             new CreateStellerAccountDto($data)
         );
 
-       
+
         $info = [
             "name" => $user->getFullName(),
             "urn" => Wallet::generateUrn(),
@@ -65,7 +70,7 @@ class StellerController extends Controller
     {
         $details = $this->stellerService->getBalance(
             'GDVK7DLQBNQW4UKAWBGWZJNJANJOPA4TTVECJ6XF35JDEMW6IO5M5DHI'
-        ); 
+        );
         dd($details);
     }
 
