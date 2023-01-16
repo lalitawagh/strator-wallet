@@ -18,6 +18,8 @@ class WalletRegistrationStep extends Item
 
     protected string $role = Role::SUBSCRIBER;
 
+    public int $priority = 5000;
+
     public function getItems(): array
     {
         $steps = [];

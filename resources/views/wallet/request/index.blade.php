@@ -47,7 +47,7 @@
                                                             <i data-feather="search"
                                                                 class="search__icon dark:text-gray-300"></i>
                                                         </div>
-                                                        <div class="dark:text-gray-300">1 of 50</div>
+                                                        {{-- <div class="dark:text-gray-300">1 of 50</div>
                                                         <a href="javascript:;"
                                                             class="w-5 h-5 ml-1 flex items-center justify-center dark:text-gray-300">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -65,12 +65,12 @@
                                                                 stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-chevron-right w-5 h-5">
                                                                 <polyline points="9 18 15 12 9 6"></polyline>
-                                                            </svg> </a>
+                                                            </svg> </a> --}}
 
-                                                        <a href="#"
+                                                        <a id="List" href="#"
                                                             class="ml-auto w-5 h-5 ml-2 mr-2 flex items-center justify-center dark:text-gray-300">
                                                             <i class="w-4 h-4" data-feather="list"></i></a>
-                                                        <a href="#"
+                                                        <a id="Grid" href="#"
                                                             class="w-5 h-5 mr-2 flex items-center justify-center dark:text-gray-300">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
                                                                 viewBox="0 0 20 20" fill="#c1c4c9">
@@ -83,7 +83,7 @@
 
                                                     <div class="w-full sm:w-auto flex sm:mt-0 sm:mt-0 mb-2">
                                                         <div class="dropdown mr-2">
-                                                            <button
+                                                            <button id="Filter"
                                                                 class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 dropdown-toggle btn box flex items-center"
                                                                 aria-expanded="false" data-tw-toggle="dropdown">
                                                                 <i data-lucide="filter"
@@ -109,8 +109,7 @@
                                                                                     <option value="3">Column Name 2
                                                                                     </option>
                                                                                 </select>
-                                                                                <span
-                                                                                    class="float-right ml-2 absolute plus"
+                                                                                <span class="float-right ml-2 absolute plus"
                                                                                     style="margin:0;">
                                                                                     <a href="javascript:;"><i
                                                                                             data-lucide="trash-2"
@@ -130,12 +129,13 @@
                                                                         <div class="flex mt-3">
                                                                             <div class="w-full px-2">
                                                                                 <div class="form-inline">
-                                                                                    <button type="submit"
+                                                                                    <button id="Apply" type="submit"
                                                                                         class="btn btn-elevated-primary btn-sm mr-1">
                                                                                         <i data-lucide="file-text"
                                                                                             class="w-5 h-5 mr-1"></i> Apply
                                                                                     </button>
-                                                                                    <a href="javascript:void(0);"
+                                                                                    <a id="AddCondition"
+                                                                                        href="javascript:void(0);"
                                                                                         class="btn btn-secondary btn-sm mr-1">
                                                                                         <i data-lucide="plus-circle"
                                                                                             class="w-5 h-5 mr-1"></i> Add a
@@ -146,7 +146,8 @@
                                                                         </div>
                                                                     </li>
                                                                     <li>
-                                                                        <a href="" class="dropdown-item"> <i
+                                                                        <a id="Indonesian" href=""
+                                                                            class="dropdown-item"> <i
                                                                                 data-lucide="activity"
                                                                                 class="w-4 h-4 mr-2"></i> <span
                                                                                 class="truncate">Indonesian</span> </a>
@@ -155,13 +156,13 @@
                                                             </div>
                                                         </div>
 
-                                                        <button type="button"
+                                                        <button type="button" id="Print"
                                                             class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 btn box mr-2 flex items-center sm:ml-0">
                                                             <i data-lucide="printer" class="w-4 h-4 mr-2"></i> Print
                                                         </button>
 
                                                         <div class="dropdown">
-                                                            <button
+                                                            <button id="Export"
                                                                 class="btn-sm py-2 border-slate-300 dark:border-darkmode-400 dropdown-toggle btn btn-primary shadow-md flex items-center"
                                                                 aria-expanded="false" data-tw-toggle="dropdown">
                                                                 Export <i class="w-4 h-4 ml-2"

@@ -4,8 +4,6 @@ namespace Kanexy\LedgerFoundation\Menu;
 
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Menu\Contracts\Item;
-use Kanexy\Cms\Menu\MenuItem;
-use Kanexy\PartnerFoundation\Core\Helper;
 
 class WalletDashboardMenuItem extends Item
 {

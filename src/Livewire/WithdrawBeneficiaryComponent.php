@@ -5,16 +5,15 @@ namespace Kanexy\LedgerFoundation\Livewire;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Kanexy\Banking\Models\Account;
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\Models\OneTimePassword;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\MobileNumber;
 use Kanexy\Cms\Setting\Models\Setting;
-use Kanexy\PartnerFoundation\Banking\Enums\BankEnum;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
-use Kanexy\PartnerFoundation\Core\Dtos\CreateBeneficiaryDto;
-use Kanexy\PartnerFoundation\Core\Services\WrappexService;
+use Kanexy\Banking\Dtos\CreateBeneficiaryDto;
+use Kanexy\Banking\Services\WrappexService;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
@@ -102,9 +101,9 @@ class WithdrawBeneficiaryComponent extends Component
             'notes' => 'nullable',
             'country_code' => 'nullable',
             'account_number' => 'required|digits:8',
-            'account_name' => 'required',
+            'account_name' => 'required|regex:/(^([a-zA-Z]+)(\d+)?$)/u|max:255',
             'sort_code' => 'required|digits:6',
-        ]);
+        ],['account_name.regex'=>'Account Name Contain Only Letters and Spaces.']);
 
         $data['classification'] = $this->classification;
 
@@ -128,7 +127,7 @@ class WithdrawBeneficiaryComponent extends Component
             $info['meta'] = [
                 'bank_account_number' => $data['account_number'],
                 'bank_code' => $data['sort_code'],
-                'bank_code_type' => BankEnum::SORTCODE,
+                'bank_code_type' => 'sort-code',
                 'beneficiary_type' => 'withdraw',
                 'bank_account_name' => $data['account_name'],
             ];

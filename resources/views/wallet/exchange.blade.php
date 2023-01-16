@@ -44,7 +44,7 @@
                                                             <i data-lucide="search"
                                                                 class="search__icon dark:text-gray-300"></i>
                                                         </div>
-                                                        <div class="dark:text-gray-300">1 of 50</div>
+                                                        {{-- <div class="dark:text-gray-300">1 of 50</div>
                                                         <a href="javascript:;"
                                                             class="w-5 h-5 ml-1 flex items-center justify-center dark:text-gray-300">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -62,12 +62,12 @@
                                                                 stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-chevron-right w-5 h-5">
                                                                 <polyline points="9 18 15 12 9 6"></polyline>
-                                                            </svg> </a>
+                                                            </svg> </a> --}}
 
-                                                        <a href="#"
+                                                        <a id="List" href="#"
                                                             class="ml-auto w-5 h-5 ml-2 mr-2 flex items-center justify-center dark:text-gray-300">
                                                             <i class="w-4 h-4" data-lucide="list"></i></a>
-                                                        <a href="#"
+                                                        <a id="Grid" href="#"
                                                             class="w-5 h-5 mr-2 flex items-center justify-center dark:text-gray-300">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
                                                                 viewBox="0 0 20 20" fill="#c1c4c9">
@@ -81,7 +81,7 @@
                                                     <div class="flex sm:flex sm:mt-0 sm:mt-0 mb-2">
                                                         <div class="dropdown sm:w-auto mr-2">
 
-                                                            <button
+                                                            <button id="Filter"
                                                                 class="dropdown-toggle btn btn-sm py-2 btn-outline-secondary w-full sm:w-auto"
                                                                 aria-expanded="false" data-tw-toggle="dropdown">
                                                                 <span class="w-5 h-5 flex items-center justify-center">
@@ -111,8 +111,7 @@
                                                                                     <option value="3">Column Name 2
                                                                                     </option>
                                                                                 </select>
-                                                                                <span
-                                                                                    class="float-right ml-2 absolute plus"
+                                                                                <span class="float-right ml-2 absolute plus"
                                                                                     style="margin:0;">
                                                                                     <a href="javascript:;"><i
                                                                                             data-lucide="trash-2"
@@ -156,7 +155,7 @@
                                                             <i data-lucide="printer" class="w-4 h-4 mr-2"></i> Print
                                                         </button>
                                                         <div class="dropdown sm:w-auto">
-                                                            <button
+                                                            <button id="Export"
                                                                 class="dropdown-toggle btn btn-sm py-2 btn-outline-secondary w-full sm:w-auto"
                                                                 aria-expanded="false" data-tw-toggle="dropdown">
                                                                 <span class="w-5 h-5 flex items-center justify-center">

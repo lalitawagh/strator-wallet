@@ -34,9 +34,11 @@ class StorePayoutRequest extends FormRequest
     public function messages()
     {
         return [
-            'wallet.required'            => 'The payout from field is required.',
-            'receiver_currency.required' => 'The payout to field is required.',
-            'beneficiary.required'       => 'The beneficiary field is required.',
+            'wallet.required'            => 'Please Select Transfer Account.',
+            'receiver_currency.required' => 'Please Select Acceptor Account.',
+            'beneficiary.required'       => 'Enter Beneficiary Account.',
+            'amount.required'            => 'Enter the Amount to Pay.',
+            'balance.required'           => 'Check Your Balance Once.',
         ];
     }
 }
