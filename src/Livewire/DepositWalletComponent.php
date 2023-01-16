@@ -40,7 +40,7 @@ class DepositWalletComponent extends Component
         $this->wallets = $wallets;
         $this->currencies = $currencies;
         $this->walletDefaultCountry = $walletDefaultCountry;
-        $this->selected_wallet = old('wallet', '');
+        $this->selected_wallet = session('wallet');
         $this->currency = session('currency');
         if (!is_null(session('currency'))) {
             $exchange_wallet = Ledger::whereId($this->currency)->first();
