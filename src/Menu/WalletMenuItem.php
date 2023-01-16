@@ -39,9 +39,12 @@ class WalletMenuItem extends Item
             new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
         ];
 
-        if ($user->hasPermissionTo(Permission::WITHDRAW_VIEW)) {
-            $menus[] =  new MenuItem('Withdraw', 'activity', url: route('dashboard.wallet.withdraw.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
+        if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){
+            if ($user->hasPermissionTo(Permission::WITHDRAW_VIEW)) {
+                $menus[] =  new MenuItem('Withdraw', 'activity', url: route('dashboard.wallet.withdraw.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
+            }
         }
+
 
         if ($user->hasPermissionTo(Permission::PAYOUT_VIEW)) {
             $menus[] = new MenuItem('Transfer', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()], 'type' => 'transfer']));

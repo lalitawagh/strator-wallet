@@ -80,6 +80,29 @@
                     </div>
                 </div>
             </div>
+            <div class="grid grid-cols-12 gap-3">
+                <div class="col-span-12 md:col-span-4 lg:col-span-4 mt-3">
+                    <div
+                    class="dark:bg-darkmode-400 dark:border-darkmode-400 shadow-lg p-3 rounded-2xl bg-white col-span-12 md:col-span-4 lg:col-span-4 mt-3">
+                    @if(is_null($stellerAccount))
+                    <div class="mt-2">
+                        <h2 class="text-lg font-medium truncate mb-3">
+                            Do you want to Open Stellar Account ?
+                        </h2>
+                        <a href="{{ route('dashboard.wallet.create-steller-account') }}" class="btn btn-primary"> Open account </a>
+                    </div>
+                    @else
+                    <div class="mt-2">
+                        <h2 class="text-lg font-medium truncate mb-3">
+                           Steller Account Created
+                        </h2>
+                        <a href="{{ route('dashboard.wallet.transaction.index',['filter' => ['workspace_id' => $workspace->id]]) }}" class="btn btn-primary"> Check Account </a>
+                    </div>
+                    @endif
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>

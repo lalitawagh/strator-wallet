@@ -68,7 +68,7 @@
                             @endforeach
                         </select>
 
-                        <a data-tw-toggle="modal" data-tw-target="#walletbenificary-modal"
+                        <a id="WalletbenificaryModal" data-tw-toggle="modal" data-tw-target="#walletbenificary-modal"
                             class="absolute top-0 right-0 plus" style="">
                             <i data-lucide="plus-circle" class="w-4 h-4 ml-4"></i>
                         </a>
