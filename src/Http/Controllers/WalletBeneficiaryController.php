@@ -2,25 +2,25 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Helper;
+use Illuminate\Http\Request;
+use Kanexy\Banking\Models\Account;
 use Kanexy\Cms\I18N\Models\Country;
-use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
+use Spatie\QueryBuilder\QueryBuilder;
+use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
-use Kanexy\PartnerFoundation\Banking\Requests\StoreBeneficiaryRequest;
-use Kanexy\PartnerFoundation\Banking\Requests\UpdateBeneficiaryRequest;
-use Kanexy\PartnerFoundation\Core\Dtos\CreateBeneficiaryDto;
-use Kanexy\PartnerFoundation\Core\Services\WrappexService;
+use Spatie\QueryBuilder\AllowedFilter;
+use Kanexy\Banking\Services\WrappexService;
+use Kanexy\Banking\Dtos\CreateBeneficiaryDto;
+use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
+use Kanexy\Banking\Requests\StoreBeneficiaryRequest;
+use Kanexy\Banking\Requests\UpdateBeneficiaryRequest;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactDeleted;
-use Kanexy\PartnerFoundation\Cxrm\Events\ContactDeleting;
-use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
-use Kanexy\PartnerFoundation\Cxrm\Policies\ContactPolicy;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
+use Kanexy\PartnerFoundation\Cxrm\Events\ContactDeleting;
+use Kanexy\PartnerFoundation\Cxrm\Policies\ContactPolicy;
+use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 
 class WalletBeneficiaryController extends Controller
 {
