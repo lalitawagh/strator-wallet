@@ -37,6 +37,8 @@ class WalletMenuItem extends Item
         $menus = [
             new MenuItem('Crypto Portfolio', 'activity', url: route('dashboard.wallet.stellar-dashboard', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
         ];
+        $menus[] =
+            new MenuItem('Crypto Dashboard', 'activity', url: route('dashboard.wallet.crypto-account', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
 
 
         $childMenus = [
