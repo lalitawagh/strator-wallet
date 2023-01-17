@@ -13,14 +13,14 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Kanexy\Banking\Services\WrappexService;
 use Kanexy\Banking\Dtos\CreateBeneficiaryDto;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
-use Kanexy\Banking\Requests\StoreBeneficiaryRequest;
-use Kanexy\Banking\Requests\UpdateBeneficiaryRequest;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactDeleted;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactDeleting;
 use Kanexy\PartnerFoundation\Cxrm\Policies\ContactPolicy;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
+use Kanexy\LedgerFoundation\Http\Requests\StoreBeneficiaryRequest;
+use Kanexy\LedgerFoundation\Http\Requests\UpdateBeneficiaryRequest;
 
 class WalletBeneficiaryController extends Controller
 {
