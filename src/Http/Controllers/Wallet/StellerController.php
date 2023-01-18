@@ -18,10 +18,16 @@ class StellerController extends Controller
         $this->stellerService = $stellerService;
     }
 
+    public function  index()
+    {
+        return view('ledger-foundation::wallet.stellar.crypto-account');
+    }
+
     public function  dashboard()
     {
         return view('ledger-foundation::wallet.stellar.dashboard');
     }
+
 
     public function createAccount()
     {
