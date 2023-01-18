@@ -48,6 +48,7 @@ Route::group(['middleware' => ['web', 'auth', VerificationStepMiddleware::class]
     Route::resource('exchange', ExchangeController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('withdraw', WithdrawController::class)->only(['index', 'create', 'store']);
     Route::resource("exchange-rate", ExchangeRateController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
+    Route::resource('stellar-payouts', \Kanexy\LedgerFoundation\Http\Controllers\Wallet\StellarPayouts::class)->only(['index', 'create', 'store', 'show']);
     Route::name('deposit-overview')->get('deposit-overview', [DepositController::class, 'showDepositOverview']);
     Route::name('store-deposit-overview-detail')->post('store-deposit-overview-detail', [DepositController::class, 'storeDepositOverviewDetail']);
     Route::name('deposit-otp-confirmation')->get('deposit-otp-confirmation', [DepositController::class, 'showDepositOtpConfirmation']);
