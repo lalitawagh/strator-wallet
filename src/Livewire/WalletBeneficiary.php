@@ -94,7 +94,7 @@ class WalletBeneficiary extends Component
     public function createBeneficiary()
     {
         $data = $this->validate([
-            'first_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
+            'first_name' => ['required', new AlphaSpaces, 'regex:/(^([a-zA-z]+)(\d+)?$)/u', 'string', 'max:40'],
             'middle_name' => ['nullable', new AlphaSpaces, 'string', 'max:40'],
             'last_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
             'email' => 'nullable|email',
@@ -102,6 +102,8 @@ class WalletBeneficiary extends Component
             'notes' => 'nullable',
             'nick_name' => 'nullable',
             'country_code' => 'nullable',
+        ],[
+            'mobile.required'=>'Phone is required'
         ]);
 
         /** @var \App\Models\User $user */
@@ -140,7 +142,7 @@ class WalletBeneficiary extends Component
                 }else{
                     $contact->generateOtp("sms");
                 }
-                
+
                 $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
                 //$user->generateOtp("sms");
                 session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);
