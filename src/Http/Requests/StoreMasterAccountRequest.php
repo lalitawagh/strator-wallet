@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Kanexy\LedgerFoundation\Contracts\MasterAccount;
 use Kanexy\LedgerFoundation\Policies\MasterAccountPolicy;
+use Kanexy\Cms\Rules\AlphaSpaces;
 
 class StoreMasterAccountRequest extends FormRequest
 {
@@ -24,8 +25,8 @@ class StoreMasterAccountRequest extends FormRequest
         return [
             'country'               =>    ['required','exists:countries,id'],
             'status'                =>    ['required'],
-            'account_holder_name'   =>    ['required','string','regex:/^[\p{L}\s-]+$/u','max:40'],
-            'account_branch'        =>    ['required','string','regex:/^[\p{L}\s-]+$/u','max:40'],
+            'account_holder_name'   =>    ['required','string',new AlphaSpaces,'max:40'],
+            'account_branch'        =>    ['required','string',new AlphaSpaces,'max:40'],
             'account_number'        =>    ['required','numeric'],
             'sort_code'             =>    [Rule::requiredIf(request()->get('country') == 231),'nullable','numeric','digits:6'],
             'ifsc_code'             =>    [Rule::requiredIf(request()->get('country') != 231),'nullable'],

@@ -94,7 +94,7 @@ class WalletBeneficiary extends Component
     public function createBeneficiary()
     {
         $data = $this->validate([
-            'first_name' => ['required', new AlphaSpaces, 'regex:/(^([a-zA-z]+)(\d+)?$)/u', 'string', 'max:40'],
+            'first_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
             'middle_name' => ['nullable', new AlphaSpaces, 'string', 'max:40'],
             'last_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
             'email' => 'nullable|email',
@@ -103,7 +103,7 @@ class WalletBeneficiary extends Component
             'nick_name' => 'nullable',
             'country_code' => 'nullable',
         ],[
-            'mobile.required'=>'Phone is required'
+            'mobile.required'=>'Phone Feild is required'
         ]);
 
         /** @var \App\Models\User $user */
