@@ -8,9 +8,9 @@
                 <select wire:change="getWalletBalance($event.target.value)" name="wallet" id="wallet"
                         class="form-control" data-search="true" required>
                     <option value="" hidden> Select Payout From </option>
-                    <option>USDC</option>
-                    <option>XLM</option>
-                    <option>GBP</option>
+                    @foreach ($ledgers as $ledger)
+                    <option value="{{ $ledger->name }}">{{ $ledger->name }}</option>
+                    @endforeach
                 </select>
                 @error('wallet')
                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -18,14 +18,17 @@
             </div>
         </div>
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
-            <label for="balance" class="form-label sm:w-30"> Balance </label>
+            <label for="amount" class="form-label sm:w-30"> Amount to Pay <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
-                <input wire:model="balance" id="balance" name="balance" type="text" class="form-control" readonly>
-                @error('balance')
+                <input wire:change="changeAmount($event.target.value)" id="amount" name="amount" type="text"
+                       value=" {{ old('amount', $amount) }}" class="form-control"
+                       onKeyPress="return isNumberKey(event);" onpaste="return false;" required>
+                @error('amount')
                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror
             </div>
         </div>
+        
     </div>
     <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
         <div wire:ignore class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
@@ -36,7 +39,10 @@
 
                         <select wire:change="changeBeneficiary($event.target.value)" name="beneficiary" id="beneficiary"
                                 class="form-control" data-search="true">
-                           <option></option>
+                            @foreach ($beneficiaries as $beneficiary)
+                                <option value="{{ $beneficiary->getKey() }}">{{ $beneficiary->getFullName() }}
+                                </option>
+                            @endforeach
                         </select>
 
                         <a id="stellar-beneficiary" data-tw-toggle="modal" data-tw-target="#stellar-beneficiary-modal"
@@ -107,14 +113,12 @@
             </div>
         </div>
     </div>
-    <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
+    <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0 hidden">
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
-            <label for="amount" class="form-label sm:w-30"> Amount to Pay <span class="text-theme-6">*</span></label>
+            <label for="balance" class="form-label sm:w-30"> Balance </label>
             <div class="sm:w-5/6">
-                <input wire:change="changeAmount($event.target.value)" id="amount" name="amount" type="text"
-                       value=" {{ old('amount', $amount) }}" class="form-control"
-                       onKeyPress="return isNumberKey(event);" onpaste="return false;" required>
-                @error('amount')
+                <input wire:model="balance" id="balance" name="balance" type="text" class="form-control" readonly>
+                @error('balance')
                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror
             </div>
@@ -140,9 +144,9 @@
                 <select name="receiver_currency" id="receiver_currency"
                         wire:change="changeCurrency($event.target.value)" class="form-control" data-search="true"
                         required>
-                    <option>USDC</option>
-                    <option>XLM</option>
-                    <option>GBP</option>
+                    @foreach ($stellarCurrencies as $stellarCurrency)
+                        <option value="{{ $stellarCurrency }}">{{ $stellarCurrency }}</option>
+                    @endforeach
                 </select>
                 @error('receiver_currency')
                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
@@ -214,11 +218,12 @@
                         OTP Verification
                     </h2>
                     <div class="items-center justify-center mt-0">
+                       
                         {{-- <a data-tw-toggle="modal" data-tw-target="#review-transfer"
                             class="btn-sm bg-indigo-600 btn-primary text-white font-bold py-3 px-6 rounded">Confirm</a> --}}
                     </div>
                 </div>
-                @livewire('otp-wallet-verification-component', ['countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'user' => $user, 'workspace' => $workspace, 'type' => $type])
+                @livewire('otp-wallet-verification-component', ['countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'user' => $user, 'workspace' => $workspace, 'type' => 'stellar'])
             </div>
         </div>
     </div>
@@ -226,7 +231,7 @@
 </div>
 @push('scripts')
     <script>
-        window.addEventListener('showOtpModel', event => {
+        window.addEventListener('showStellarOtpModel', event => {
             const mySlideOver = tailwind.Modal.getOrCreateInstance(document.querySelector(
                 "#stellar-beneficiary-modal"));
             mySlideOver.hide();

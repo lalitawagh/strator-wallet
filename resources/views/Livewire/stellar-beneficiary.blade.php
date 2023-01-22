@@ -99,6 +99,14 @@
                     <span class="block text-theme-6 mt-2"></span>
                 </div>
             </div>
+            <div class="col-span-12 md:col-span-12 lg:col-span-12 sm:col-span-12 form-inline mt-2">
+                <label for="" class="form-label sm:w-28"> Public Key </label>
+                <div class="sm:w-5/6">
+                    <input id="" type="text" class="form-control" wire:model="public_key">
+                    <span class="block text-theme-6 mt-2"></span>
+                </div>
+            </div>
+
         </div>
         <div class="text-right mt-5">
             <button id="createBeneficiary" type="button" wire:click="createBeneficiary"

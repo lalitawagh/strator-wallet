@@ -17,10 +17,10 @@
                           method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="workspace_id" value="{{ $workspace->getKey() }}">
-                        @livewire('stellar-payout-component', ['wallets' => $wallets, 'beneficiaries' => $beneficiaries, 'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'user' => $user, 'ledgers' => $ledgers, 'asset_types' => $asset_types, 'workspace' => $workspace])
+                        @livewire('stellar-payout-component', ['wallets' => $wallets, 'beneficiaries' => $beneficiaries, 'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'user' => $user, 'ledgers' => $ledgers, 'asset_types' => $asset_types, 'workspace' => $workspace,'stellarCurrencies' => $stellarCurrencies])
 
                         <div class="text-right mt-5">
-                            <button id="payoutSubmit" class="btn btn-primary w-24" type="submit">Submit</button>
+                            <button id="payoutSubmit" class="btn btn-primary w-24" type="submit">Next</button>
                         </div>
                     </form>
 
@@ -32,7 +32,7 @@
     <div id="stellar-beneficiary-modal" class="modal modal-slide-over z-50" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg ihphone-scroll-height">
             <div class="modal-content">
-                @livewire('stellar-beneficiary', ['workspace' => $workspace, 'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'type' => request()->input('type')])
+                @livewire('stellar-beneficiary', ['workspace' => $workspace, 'countryWithFlags' => $countryWithFlags, 'defaultCountry' => $defaultCountry, 'type' => 'stellar'])
             </div>
         </div>
     </div>
@@ -56,4 +56,11 @@
             $('#countryWithPhoneFlagImg').html('<img src="' + img + '">');
         }
     </script>
+    <script>
+        $url = window.location.pathname.split('/');
+        if ($url[3] == 'stellar-payouts') {
+            $('#color-scheme-content').addClass('dark');
+        }
+    </script>
+
 @endpush

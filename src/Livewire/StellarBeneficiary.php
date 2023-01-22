@@ -10,6 +10,7 @@ use Kanexy\Cms\Models\OneTimePassword;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\MobileNumber;
+use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Livewire\Component;
@@ -33,6 +34,8 @@ class StellarBeneficiary extends Component
     public $email;
 
     public $nick_name;
+
+    public $public_key;
 
     public $notes;
 
@@ -58,8 +61,11 @@ class StellarBeneficiary extends Component
 
     public $type;
 
+    public $stellarAccount;
+
     public function mount($workspace, $countryWithFlags, $defaultCountry, $type)
     {
+      
         $this->workspace = $workspace;
         $this->countryWithFlags = $countryWithFlags;
         $this->defaultCountry = $defaultCountry;
@@ -79,11 +85,26 @@ class StellarBeneficiary extends Component
     public function getMembershipDetails()
     {
         $this->mobile = Helper::normalizePhone($this->mobile);
-        $workspace = User::wherePhone($this->mobile)->first()?->workspaces()->first();
-        $membership = $workspace?->memberships()->first();
+        $user = User::wherePhone($this->mobile)->first();
+        $workspace =  $user?->workspaces()->first();
+        $this->stellarAccount = Wallet::whereHolderId($workspace?->id)->whereType('steller')->first();
+        $this->membership_urn = NULL;
+        $this->first_name = NULL;
+        $this->middle_name = NULL;
+        $this->last_name = NULL;
+        $this->public_key = NULL;
+        $this->membership_name = NULL;
+        if(!is_null($this->stellarAccount))
+        {
+            $membership = $workspace?->memberships()->first();
+            $this->public_key = $this->stellarAccount?->meta['publicKey'];
+            $this->membership_urn = $membership?->urn;
+            $this->membership_name = $membership?->name;
+            $this->first_name = $user->first_name;
+            $this->middle_name = $user->middle_name;
+            $this->last_name = $user->last_name;
+        }
 
-        $this->membership_urn = $membership?->urn;
-        $this->membership_name = $membership?->name;
     }
 
     public function changeCountryCode($value)
@@ -101,7 +122,7 @@ class StellarBeneficiary extends Component
             'mobile' => ['required', new MobileNumber],
             'notes' => 'nullable',
             'nick_name' => 'nullable',
-            'country_code' => 'nullable',
+            'country_code' => 'nullable'
         ]);
 
         /** @var \App\Models\User $user */
@@ -123,10 +144,10 @@ class StellarBeneficiary extends Component
 
                 $data['mobile'] = Helper::normalizePhone($data['mobile']);
                 $data['workspace_id'] = $this->workspace->id;
-                $data['ref_type'] = 'wallet';
+                $data['ref_type'] = 'stellar';
                 $data['classification'] = $this->classification;
                 $data['status'] = 'active';
-                $data['meta'] = ['country_code' => $data['country_code']];
+                $data['meta'] = ['country_code' => $data['country_code'],'beneficiary_public_key' => $this->public_key];
 
                 /** @var Contact $contact */
                 $contact = Contact::create($data);
@@ -145,7 +166,7 @@ class StellarBeneficiary extends Component
                 //$user->generateOtp("sms");
                 session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);
                 $this->beneficiary_created = true;
-                $this->dispatchBrowserEvent('showOtpModel', ['modalType' => $this->type]);
+                $this->dispatchBrowserEvent('showStellarOtpModel', ['modalType' => $this->type]);
             }
         }
     }
@@ -170,7 +191,7 @@ class StellarBeneficiary extends Component
         $data = $this->validate([
             'code' => 'required',
         ]);
-
+        dd('xxxx');
         $oneTimePassword = $this->contact->oneTimePasswords()->first();
 
         if ($oneTimePassword->code !== $data['code']) {
@@ -179,8 +200,8 @@ class StellarBeneficiary extends Component
             $this->addError('code', 'The otp you entered has expired.');
         } else {
             $oneTimePassword->update(['verified_at' => now()]);
-
-            return redirect()->route("dashboard.wallet.payout.create", ['workspace_id' => $this->workspace->id])->with([
+           
+            return redirect()->route("dashboard.wallet.stellar-payouts.create", ['workspace_id' => $this->workspace->id])->with([
                 'status' => 'success',
                 'message' => 'The beneficiary created successfully.',
             ]);
@@ -189,6 +210,6 @@ class StellarBeneficiary extends Component
 
     public function render()
     {
-        return view('ledger-foundation::Livewire.wallet-beneficiary');
+        return view('ledger-foundation::Livewire.stellar-beneficiary');
     }
 }

@@ -54,7 +54,9 @@ class StellarPayoutComponent extends Component
 
     public $self_beneficiary;
 
-    public function mount($wallets, $beneficiaries, $countryWithFlags, $defaultCountry, $user, $ledgers, $asset_types, $workspace)
+    public $stellarCurrencies;
+
+    public function mount($wallets, $beneficiaries, $countryWithFlags, $defaultCountry, $user, $ledgers, $asset_types, $workspace,$stellarCurrencies)
     {
         $this->wallets = $wallets;
         $this->beneficiaries = $beneficiaries;
@@ -62,6 +64,7 @@ class StellarPayoutComponent extends Component
         $this->defaultCountry = $defaultCountry;
         $this->user = $user;
         $this->ledgers = $ledgers;
+        $this->stellarCurrencies = $stellarCurrencies;
         $this->asset_types = $asset_types;
         $this->workspace = $workspace;
         $this->balance = old('balance');
