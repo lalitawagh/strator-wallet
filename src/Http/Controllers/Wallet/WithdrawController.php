@@ -10,29 +10,19 @@ use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Kanexy\LedgerFoundation\Contracts\Withdraw;
 use Kanexy\LedgerFoundation\Http\Requests\WithdrawRequest;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Policies\WithdrawPolicy;
-use Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
-use Kanexy\PartnerFoundation\Banking\Services\PayoutService;
+use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
 use Kanexy\PartnerFoundation\Core\Models\Log;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class WithdrawController extends Controller
 {
-    private PayoutService $payoutService;
-
-    public function __construct(PayoutService $payoutService)
-    {
-        $this->payoutService = $payoutService;
-    }
 
     public function index(Request $request)
     {
@@ -80,14 +70,17 @@ class WithdrawController extends Controller
         $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts', []))->firstWhere('country', 231);
         $wallet = Wallet::find($request->input('sender_wallet_account_id'));
         $asset_type = collect(Setting::getValue('asset_types', []))->firstWhere('id', $wallet->ledger->asset_type);
+        if (!is_null(PartnerFoundation::getBankingPayment($request)) && PartnerFoundation::getBankingPayment($request) == true) {
+            $wrappexService = new \Kanexy\Banking\Services\WrappexService();
+            $payoutService = new \Kanexy\Banking\Services\PayoutService($wrappexService);
+            /** @var Account $sender */
+            $sender = \Kanexy\Banking\Models\Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
 
-        /** @var Account $sender */
-        $sender = Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
+            /** @var Contact $beneficiary */
+            $beneficiary = Contact::findOrFail($request->input('beneficiary_id'));
 
-        /** @var Contact $beneficiary */
-        $beneficiary = Contact::findOrFail($request->input('beneficiary_id'));
-
-        $transaction = $this->payoutService->initialize($sender, $beneficiary, $request->validated());
+            $transaction =  $payoutService->initialize($sender, $beneficiary, $request->validated());
+        }
 
         $metaDetails = [
             'sender_wallet_account_id' => $request->input('sender_wallet_account_id'),
@@ -173,25 +166,33 @@ class WithdrawController extends Controller
         $workspace = Workspace::find($transaction->workspace_id);
         $user = $workspace->users()->first();
 
-        $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts', []))->firstWhere('country', 231);
-        $masterAccount = Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
-        if ($masterAccount->balance <  $transaction->amount) {
-            if ($request->type == 'all') {
-                return redirect()->route('dashboard.wallet.transaction.index')->with([
+        $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', 231);
+        if (!is_null(PartnerFoundation::getBankingPayment($request)) && PartnerFoundation::getBankingPayment($request) == true) {
+            $wrappexService = new \Kanexy\Banking\Services\WrappexService();
+            $payoutService = new \Kanexy\Banking\Services\PayoutService($wrappexService);
+
+            $masterAccount = \Kanexy\Banking\Models\Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
+            if($masterAccount->balance <  $transaction->amount)
+            {
+                if($request->type == 'all')
+                {
+                    return redirect()->route('dashboard.wallet.transaction.index')->with([
+                        'status' => 'error',
+                        'message' => 'Please add funds to your MTC account.',
+                    ]);
+                }
+
+                return redirect()->route('dashboard.wallet.withdraw.index')->with([
                     'status' => 'error',
                     'message' => 'Please add funds to your MTC account.',
                 ]);
             }
 
-            return redirect()->route('dashboard.wallet.withdraw.index')->with([
-                'status' => 'error',
-                'message' => 'Please add funds to your MTC account.',
-            ]);
+            $payoutService->process($transaction);
         }
 
-        $this->payoutService->process($transaction);
-
-        if ($request->type == 'all') {
+        if($request->type == 'all')
+        {
             return redirect()->route('dashboard.wallet.transaction.index')->with([
                 'status' => 'success',
                 'message' => 'The withdraw request transaction processing the payment.It may take a while.',

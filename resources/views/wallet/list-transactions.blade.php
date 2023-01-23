@@ -391,9 +391,8 @@
                                                                 </a></li>
                                                         @endif
 
-                                                        @if ($transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
-                                                            <li><a id="PartnerAccepted"
-                                                                    href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
+                                                        @if ($transaction->status == \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::PENDING_CONFIRMATION)
+                                                            <li><a id="PartnerAccepted" href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
                                                                     class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white">
                                                                     <x-feathericon-check class="w-4 h-4 mr-1" />
                                                                     Accepted

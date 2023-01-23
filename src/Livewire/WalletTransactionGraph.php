@@ -3,8 +3,8 @@
 namespace Kanexy\LedgerFoundation\Livewire;
 
 use Illuminate\Support\Facades\Auth;
-use Kanexy\PartnerFoundation\Banking\Enums\TransactionType;
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
+use Kanexy\PartnerFoundation\Core\Enums\TransactionType;
 use Kanexy\PartnerFoundation\Core\Helper;
 use Livewire\Component;
 
