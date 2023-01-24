@@ -28,6 +28,15 @@ class StellerController extends Controller
         return view('ledger-foundation::wallet.stellar.dashboard');
     }
 
+    public function  exchange()
+    {
+        return view('ledger-foundation::wallet.stellar.stellar-exchange');
+    }
+
+    public function  buying()
+    {
+        return view('ledger-foundation::wallet.stellar.buying-crypto');
+    }
 
     public function createAccount()
     {

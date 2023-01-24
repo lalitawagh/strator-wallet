@@ -835,7 +835,7 @@
     <div class="seller-menu gap-6 gap-6 px-5 pt-5 pb-3">
         <ul>
             <li>
-                <a class="cryptoMenu-active" href="">
+                <a href="{{ route('dashboard.wallet.crypto-account') }}">
                     <img src="{{ asset('dist/images/crypto/menu-icon1.svg') }}">
                 </a>
             </li>
@@ -845,13 +845,13 @@
                 </a>
             </li>
             <li>
-                <a href="">
-                    <img src="{{ asset('dist/images/crypto/menu-icon3.svg') }}">
+                <a href="{{ route('dashboard.wallet.stellar-exchange') }}">
+                    <img src="{{ asset('dist/images/crypto/menu-icon4.svg') }}">
                 </a>
             </li>
             <li>
-                <a href="">
-                    <img src="{{ asset('dist/images/crypto/menu-icon4.svg') }}">
+                <a href="{{ route('dashboard.wallet.buying-crypto') }}">
+                    <img src="{{ asset('dist/images/crypto/menu-icon3.svg') }}">
                 </a>
             </li>
 
