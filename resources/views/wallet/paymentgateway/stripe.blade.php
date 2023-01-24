@@ -38,7 +38,7 @@
 
     <div class="text-right mt-5 form-inline text-right mt-5 float-right">
         <a id="StripePrevious"
-            href="{{ route('dashboard.wallet.deposit-overview', ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]) }}"
+            href="{{ route('dashboard.wallet.deposit-overview', ['workspace_id' => app('activeWorkspaceId')]) }}"
             class="btn btn-secondary w-20 inline-block mr-2">Previous</a>
         <button id="StripeSubmit" type="submit" class="btn btn-primary w-24">Submit</button>
     </div>
