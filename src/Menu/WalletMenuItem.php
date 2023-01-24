@@ -35,40 +35,38 @@ class WalletMenuItem extends Item
         /** @var $user App\Model\User */
         $user = Auth::user();
         $menus = [
-            new MenuItem('Crypto Portfolio', 'activity', url: route('dashboard.wallet.stellar-dashboard', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            new MenuItem('Crypto Portfolio', 'activity', url: route('dashboard.wallet.stellar-dashboard', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
         ];
         $menus = [
-            new MenuItem('Crypto Exchange', 'activity', url: route('dashboard.wallet.stellar-exchange', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            new MenuItem('Crypto Exchange', 'activity', url: route('dashboard.wallet.stellar-exchange', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
         ];
         $menus = [
-            new MenuItem('Crypto Buying', 'activity', url: route('dashboard.wallet.buying-crypto', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            new MenuItem('Crypto Buying', 'activity', url: route('dashboard.wallet.buying-crypto', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
         ];
-        $menus[] =
-            new MenuItem('Crypto Dashboard', 'activity', url: route('dashboard.wallet.crypto-account', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
-
 
         $childMenus = [
-            new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
+            
         ];
 
         if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){
             if ($user->hasPermissionTo(Permission::WITHDRAW_VIEW)) {
-                $childMenus[] =  new MenuItem('Withdraw', 'activity', url: route('dashboard.wallet.withdraw.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
+                $childMenus[] =  new MenuItem('Withdraw', 'activity', url: route('dashboard.wallet.withdraw.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
             }
         }
 
 
         if ($user->hasPermissionTo(Permission::PAYOUT_VIEW)) {
-            $childMenus[] = new MenuItem('Transfer', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()], 'type' => 'transfer']));
-            $childMenus[] = new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
+            $childMenus[] = new MenuItem('Transfer', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')], 'type' => 'transfer']));
+            $childMenus[] = new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
         }
 
         if ($user->hasPermissionTo(Permission::DEPOSIT_VIEW)) {
-            $childMenus[] = new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
+            $childMenus[] = new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
         }
 
         if ($user->hasPermissionTo(EnumsPermission::CONTACT_VIEW)) {
-            $childMenus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()], 'ref_type' => 'wallet']));
+            $childMenus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')], 'ref_type' => 'wallet']));
         }
 
         if ($user->hasAnyPermission([Permission::COMMODITY_TYPE_VIEW, Permission::ASSET_CLASS_VIEW, Permission::ASSET_TYPE_VIEW, Permission::FEE_VIEW, Permission::MASTER_ACCOUNT_VIEW, Permission::LEDGER_VIEW, Permission::EXCHANGE_RATE_VIEW])) {
