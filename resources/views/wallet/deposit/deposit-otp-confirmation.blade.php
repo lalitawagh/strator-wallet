@@ -13,3 +13,12 @@
         </form>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    $url = window.location.pathname.split('/');
+    if ($url[3] == 'stellar-payment-otp-confirmation') {
+        $('#color-scheme-content').addClass('dark');
+    }
+</script>
+@endpush

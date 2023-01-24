@@ -55,7 +55,6 @@ class WalletMenuItem extends Item
             }
         }
 
-
         if ($user->hasPermissionTo(Permission::PAYOUT_VIEW)) {
             $childMenus[] = new MenuItem('Transfer', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')], 'type' => 'transfer']));
             $childMenus[] = new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
@@ -65,8 +64,10 @@ class WalletMenuItem extends Item
             $childMenus[] = new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
         }
 
-        if ($user->hasPermissionTo(EnumsPermission::CONTACT_VIEW)) {
-            $childMenus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')], 'ref_type' => 'wallet']));
+        if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) {
+            if ($user->hasPermissionTo(EnumsPermission::CONTACT_VIEW)) {
+                $childMenus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')], 'ref_type' => 'wallet']));
+            }
         }
 
         if ($user->hasAnyPermission([Permission::COMMODITY_TYPE_VIEW, Permission::ASSET_CLASS_VIEW, Permission::ASSET_TYPE_VIEW, Permission::FEE_VIEW, Permission::MASTER_ACCOUNT_VIEW, Permission::LEDGER_VIEW, Permission::EXCHANGE_RATE_VIEW])) {

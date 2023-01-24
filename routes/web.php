@@ -19,6 +19,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\TransactionController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WalletController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\MasterAccountController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\StellarPayouts;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\StellerController;
 
 /*
@@ -48,6 +49,7 @@ Route::group(['middleware' => ['web', 'auth', VerificationStepMiddleware::class]
     Route::resource('exchange', ExchangeController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('withdraw', WithdrawController::class)->only(['index', 'create', 'store']);
     Route::resource("exchange-rate", ExchangeRateController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
+    Route::resource('stellar-payouts', \Kanexy\LedgerFoundation\Http\Controllers\Wallet\StellarPayouts::class)->only(['index', 'create', 'store', 'show']);
     Route::name('deposit-overview')->get('deposit-overview', [DepositController::class, 'showDepositOverview']);
     Route::name('store-deposit-overview-detail')->post('store-deposit-overview-detail', [DepositController::class, 'storeDepositOverviewDetail']);
     Route::name('deposit-otp-confirmation')->get('deposit-otp-confirmation', [DepositController::class, 'showDepositOtpConfirmation']);
@@ -73,7 +75,11 @@ Route::group(['middleware' => ['web', 'auth', VerificationStepMiddleware::class]
     Route::get('crypto-buying',[StellerController::class,'buying'])->name('buying-crypto');
     
     Route::get('crypto-account',[StellerController::class,'index'])->name('crypto-account');
-
+    Route::get('stellar-exchange-rate',[StellerController::class,'exchangeRateView'])->name('stellar-exchange-rate');
+    Route::post('stellar-exchange-rate',[StellerController::class,'getExchangeRate'])->name('stellar-exchange-rate');
+    Route::get('stellar-payment-method', [StellarPayouts::class,'getPaymentView'])->name('stellar-payment-method');
+    Route::post('stellar-payment-details', [StellarPayouts::class,'storePaymentDetails'])->name('stellar-payment-details');
+    Route::get('stellar-payment-otp-confirmation', [StellarPayouts::class,'showStellarOtpConfirmation'])->name('stellar-payment-otp-confirmation');
 });
 
 Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {
