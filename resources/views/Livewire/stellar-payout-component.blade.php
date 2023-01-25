@@ -8,8 +8,10 @@
                 <select wire:change="getWalletBalance($event.target.value)" name="wallet" id="wallet"
                         class="form-control" data-search="true" required>
                     <option value="" hidden> Select Payout From </option>
-                    @foreach ($ledgers as $ledger)
-                    <option value="{{ $ledger->name }}">{{ $ledger->name }}</option>
+                    @foreach ($wallets as $wallet)
+                        @if($wallet?->ledger?->exchange_type == 'fiat')
+                            <option value="{{ $wallet?->id }}">{{ $wallet?->ledger->name }}</option>
+                        @endif
                     @endforeach
                 </select>
                 @error('wallet')
@@ -18,16 +20,15 @@
             </div>
         </div>
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
-            <label for="amount" class="form-label sm:w-30"> Amount to Pay <span class="text-theme-6">*</span></label>
+            <label for="balance" class="form-label sm:w-30"> Balance </label>
             <div class="sm:w-5/6">
-                <input wire:change="changeAmount($event.target.value)" id="amount" name="amount" type="text"
-                       value=" {{ old('amount', $amount) }}" class="form-control"
-                       onKeyPress="return isNumberKey(event);" onpaste="return false;" required>
-                @error('amount')
+                <input wire:model="balance" id="balance" name="balance" type="text" class="form-control" readonly>
+                @error('balance')
                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror
             </div>
         </div>
+       
         
     </div>
     <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
@@ -113,12 +114,14 @@
             </div>
         </div>
     </div>
-    <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0 hidden">
+    <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
-            <label for="balance" class="form-label sm:w-30"> Balance </label>
+            <label for="amount" class="form-label sm:w-30"> Amount to Pay <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
-                <input wire:model="balance" id="balance" name="balance" type="text" class="form-control" readonly>
-                @error('balance')
+                <input wire:change="changeAmount($event.target.value)" id="amount" name="amount" type="text"
+                       value=" {{ old('amount', $amount) }}" class="form-control"
+                       onKeyPress="return isNumberKey(event);" onpaste="return false;" required>
+                @error('amount')
                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror
             </div>
@@ -186,29 +189,29 @@
             </div>
         </div>
     </div>
-{{--    <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">--}}
-{{--        @if (isset($fee) && is_numeric($amount))--}}
-{{--            @php--}}
-{{--                $exchange_rate = $exchange_rate ?? number_format((float) $exchange_rate, 2, '.', '');--}}
-{{--                $total = $exchange_rate != 0 ? ($amount - $fee) / $exchange_rate : '';--}}
-{{--            @endphp--}}
-
-{{--            <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">--}}
-{{--                <label for="exchange_fee" class="form-label sm:w-30"> </label>--}}
-{{--                <div class="sm:w-5/6">--}}
-{{--                    Ex Fees : {{ number_format((float) $fee, 2, '.', '') }}, Ex Rate :--}}
-{{--                    @isset($exchange_rate)--}}
-{{--                        1 {{ $base_currency }} = {{ number_format((float) $exchange_rate, 2, '.', '') }}--}}
-{{--                        {{ $exchange_currency }}--}}
-{{--                    @endisset--}}
-{{--                    @isset($amount)--}}
-{{--                        <p>Debit : {{ number_format((float) $amount, 2, '.', '') }} {{ $exchange_currency }} , Credit :--}}
-{{--                            {{ number_format((float) $total, 2, '.', '') }} {{ $base_currency }} </p>--}}
-{{--                    @endisset--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        @endif--}}
-{{--    </div>--}}
+    <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
+        @if (isset($fee) && is_numeric($amount))
+            @php
+                $exchange_rate = $exchange_rate ?? number_format((float) $exchange_rate, 2, '.', '');
+               
+            @endphp
+  
+            <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
+                <label for="exchange_fee" class="form-label sm:w-30"> </label>
+                <div class="sm:w-5/6">
+                    Ex Fees : {{ number_format((float) $fee, 2, '.', '') }}, Ex Rate :
+                    @isset($exchange_rate)
+                        1 {{ $base_currency }} = {{ number_format((float) $exchange_rate, 2, '.', '') }}
+                        {{ $exchange_currency }}
+                    @endisset
+                    @isset($amount)
+                        <p>Debit : {{ number_format((float) $amount, 2, '.', '') }} {{ $base_currency }} , Credit :
+                            {{ number_format((float) ($amount * $exchange_rate), 2, '.', '') }} {{ $exchange_currency }} </p>
+                    @endisset
+                </div>
+            </div>
+        @endif
+    </div>
     <!-- BEGIN: OTP Modal -->
     <div id="otp-modal" class="modal modal-slide-over otp-modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">

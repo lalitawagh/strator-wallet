@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
@@ -41,7 +42,7 @@ class StellarPayouts extends Controller
         $countries = Country::get();
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
         $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
-        $wallets =  Wallet::forHolder($workspace)->get();
+        $wallets =  Wallet::forHolder($workspace)->with('ledger')->get();
         $ledgers = Ledger::whereExchangeType('fiat')->get();
         $stellarCurrencies = ['USDC','XLM','ETH','YUSDC'];
         $asset_types = Setting::getValue('asset_types', []);
@@ -56,87 +57,43 @@ class StellarPayouts extends Controller
         $data = $request->validated();
         $data['type'] = 'stellar';
 
-        session(['stellar_request' => $data]);
-        
-        return redirect()->route('dashboard.wallet.stellar-payment-otp-confirmation',['workspace_id' => $data['workspace_id']]);
-    }
-
-    public function showStellarOtpConfirmation()
-    {
-        $details = session('stellar_request');
-        $countryWithFlags = Country::orderBy("name")->get();
-        $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
-
-        $user = Auth::user();
-        if(config('services.disable_sms_service') == false){
-            $user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
-        }
-        else{
-            $user->generateOtp("sms");
-        }
-
-        if (is_null($details)) {
-            return redirect()->route('dashboard.wallet.stellar-payouts.create', ['filter' => ['workspace_id' => $details['workspace_id']]]);
-        }
-
-        return view("ledger-foundation::wallet.deposit.deposit-otp-confirmation", compact('details', 'countryWithFlags', 'defaultCountry', 'user'));
-    }
-
-    public function getPaymentView()
-    {
-        $stellarPayoutDetails = session('stellar_request');
-        
-        return view("ledger-foundation::wallet.stellar.payouts.payment",compact('stellarPayoutDetails'));
-    }
-
-    public function storePaymentDetails(Request $request)
-    {
-        $data = $request->validate([
-            'card_number' => ['required'],
-            'year' => ['required'],
-            'month' => ['required'],
-            'cvc' => ['required'], 
-        ]);
-
-        $stellarPayoutDetails = session('stellar_request');
-        $stellarPayoutDetails['card_details'] = $data;
-
-        session(['stellar_request' => $stellarPayoutDetails]);
-        
         $user = Auth::user();
 
-        $beneficiary = Contact::find($stellarPayoutDetails['beneficiary']);
-        $stellarAccount = Wallet::whereHolderId($stellarPayoutDetails['workspace_id'])->whereType('steller')->first();
+        $beneficiary = Contact::find($data['beneficiary']);
+        $stellarAccount = Wallet::whereHolderId($data['workspace_id'])->whereType('steller')->first();
+        $senderCurrency = Wallet::with('ledger')->find($data['wallet']);
        
         $transaction = Transaction::create([
             'urn' => Transaction::generateUrn(),
-            'amount' => $stellarPayoutDetails['amount'],
-            'workspace_id' => $stellarPayoutDetails['workspace_id'],
-            'type' => 'credit',
+            'amount' => $data['amount'],
+            'workspace_id' => $data['workspace_id'],
+            'type' => 'debit',
             'payment_method' => 'stripe',
             'note' => null,
-            'ref_id' => $stellarAccount->urn,
-            'ref_type' => 'stellar',
-            'settled_amount' =>$stellarPayoutDetails['amount'],
-            'settled_currency' => $stellarPayoutDetails['wallet'],
+            'ref_id' =>  $data['wallet'],
+            'ref_type' => 'wallet',
+            'settled_amount' =>$data['amount'],
+            'settled_currency' => $senderCurrency?->ledger?->name,
             'settlement_date' => date('Y-m-d'),
             'settled_at' => now(),
             'initiator_id' => optional($user)->getKey(),
             'initiator_type' => optional($user)->getMorphClass(),
             'transaction_fee' =>  0,
             'status' => TransactionStatus::PENDING_CONFIRMATION,
-            'note' => $stellarPayoutDetails['note'],
+            'note' => $data['note'],
             'meta' => [
-                'reference' => $stellarPayoutDetails['reference'],
+                'reference' => $data['reference'],
                 'sender_name' => $user->getFullName(),
                 'beneficiary_id' => $beneficiary->id,
                 'beneficiary_ref_type' => 'stellar',
                 'beneficiary_name' => $beneficiary->getFullName(),
-                'sender_currency' => $stellarPayoutDetails['wallet'],
-                'receiver_currency' => $stellarPayoutDetails['receiver_currency'],
+                'sender_wallet_account_id' => $data['wallet'],
+                'sender_currency' => $senderCurrency?->ledger?->name,
+                'receiver_currency' => $data['receiver_currency'],
                 'exchange_rate' => null,
-                'transaction_type' => 'deposit',
+                'transaction_type' => 'payout',
                 'transfer_status' => 'pending',
+                'balance' => 0,
                 'account' => 'stellar',
             ],
         ]);
@@ -147,17 +104,17 @@ class StellarPayouts extends Controller
         }
 
         $meta = [
-            'amount' => $stellarPayoutDetails['amount'],
-            'sender_currency' => $stellarPayoutDetails['wallet'],
-            'receiver_currency' => $stellarPayoutDetails['receiver_currency'],
+            'amount' => $data['amount'],
+            'sender_currency' => $senderCurrency?->ledger?->name,
+            'receiver_currency' => $data['receiver_currency'],
             'exchange_rate' =>  null,
-            'workspace_id' => $stellarPayoutDetails['workspace_id'],
-            'type' => 'credit',
+            'workspace_id' => $data['workspace_id'],
+            'type' => 'debit',
             'payment_method' => 'stripe',
             'ref_id' => $stellarAccount->urn,
             'ref_type' => 'stellar',
-            'settled_amount' => $stellarPayoutDetails['amount'],
-            'settled_currency' =>$stellarPayoutDetails['wallet'],
+            'settled_amount' => $data['amount'],
+            'settled_currency' =>$senderCurrency?->ledger?->name,
             'settlement_date' => date('Y-m-d'),
             'transaction_fee' =>  0,
             'status' => 'accepted',
@@ -171,19 +128,34 @@ class StellarPayouts extends Controller
         $log->target()->associate($transaction);
         $log->save();
 
+        if (config('services.disable_sms_service') == false) {
+            $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+        } else {
+            $transaction->generateOtp("sms");
+        }
+
+        return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.stellar-payout-verify', now()->addMinutes(30), ["id" => $transaction->id]), 'sms');
+
+    }
+
+    public function verify(Request $request)
+    {
+        $transaction = Transaction::find($request->query('id'));
+        $beneficiary = Contact::find($transaction?->meta['beneficiary_id']);
+       
         $exchangeApi = [
             'transaction_id' => $transaction->id,
-            'amount' => $stellarPayoutDetails['amount'],
+            'amount' => $transaction->amount,
             'type' => 0,
-            'conversion_currency' => $stellarPayoutDetails['receiver_currency'],
+            'conversion_currency' => $transaction?->meta['receiver_currency'],
             'beneficiary_public_key' => $beneficiary->meta['beneficiary_public_key'],
-            'card_number' => $data['card_number'],
-            'year' => $data['year'],
-            'month' => $data['month'],
-            'cvc' => $data['cvc'],
-            'currency' => $stellarPayoutDetails['wallet'],
+            'card_number' => config('services.card_number'),
+            'year' =>  config('services.card_year'),
+            'month' =>  config('services.card_month'),
+            'cvc' =>  config('services.card_cvc'),
+            'currency' => $transaction->settled_currency,
         ];
-       
+        // dd($exchangeApi);
         $details = $this->stellerService->exchangeToCrypto(
             new ExchangeToCryptoDto($exchangeApi)
         );
@@ -202,10 +174,24 @@ class StellarPayouts extends Controller
                     $beneificaryAccount->update();
                 }
             }
+            
+            $senderWallet = Wallet::find($transaction->meta['sender_wallet_account_id']);
+            $senderWallet->debit($transaction->amount);
+
+            $metaDetails = ['balance' => ($senderWallet->balance > $transaction->amount) ? ($senderWallet->balance - $transaction->amount) : 0];
+            $meta = array_merge($transaction->meta, $metaDetails);
+
+            $transaction->status = 'accepted';
+            $transaction->meta = $meta;
+            $transaction->update();
+
         }
-        
-        return redirect()->route('dashboard.wallet.stellar-dashboard', ['filter' => ['workspace_id' => $stellarPayoutDetails['workspace_id']]])->with(['message' => 'Processing the payment. It may take a while.', 'status' => 'success']);
+
+        return redirect()->route('dashboard.wallet.stellar-dashboard', ['filter' => ['workspace_id' => $transaction->workspace_id]])->with(['message' => 'Processing the payment. It may take a while.', 'status' => 'success']);
     }
+
+
+    
 
 }
 

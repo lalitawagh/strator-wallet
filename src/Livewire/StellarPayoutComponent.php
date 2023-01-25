@@ -5,6 +5,7 @@ namespace Kanexy\LedgerFoundation\Livewire;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Http\Helper;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
@@ -56,8 +57,10 @@ class StellarPayoutComponent extends Component
 
     public $stellarCurrencies;
 
+
     public function mount($wallets, $beneficiaries, $countryWithFlags, $defaultCountry, $user, $ledgers, $asset_types, $workspace,$stellarCurrencies)
     {
+       
         $this->wallets = $wallets;
         $this->beneficiaries = $beneficiaries;
         $this->countryWithFlags = $countryWithFlags;
@@ -68,8 +71,8 @@ class StellarPayoutComponent extends Component
         $this->asset_types = $asset_types;
         $this->workspace = $workspace;
         $this->balance = old('balance');
-        $this->selected_wallet = old('wallet') ?? '';
-        $this->selected_currency = old('receiver_currency') ?? '';
+        $this->selected_wallet = old('wallet') ? old('wallet')  : $this->selected_wallet;
+        $this->selected_currency = old('receiver_currency') ? old('receiver_currency'): $this->selected_currency;
         $this->phone = $beneficiaries->first()?->mobile;
         $this->country_code =  $beneficiaries->first()?->meta['country_code'] ?? '231';
         $this->self_beneficiary = Auth::user();
@@ -79,16 +82,6 @@ class StellarPayoutComponent extends Component
     public function changeAmount($value)
     {
         $this->amount = $value;
-        $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
-        $receiver_wallet = Wallet::whereId($this->selected_currency)->first();
-        $exchangeFee = collect(Setting::getValue('wallet_fees', []))->where('base_currency', $sender_wallet?->ledger_id)->where('exchange_currency', $receiver_wallet?->ledger_id)->where('payment_type', 'payout')->first();
-        $this->fee = 0;
-
-        if (isset($exchangeFee) && !empty($this->amount)) {
-            $this->fee = ($exchangeFee['fee_type'] == 'percentage') ? $this->amount * ($exchangeFee['percentage'] / 100) : $exchangeFee['amount'];
-        }
-
-        session(['payout_fee' => $this->fee]);
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
@@ -102,25 +95,41 @@ class StellarPayoutComponent extends Component
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
         $this->selected_wallet = $value;
         $sender_wallet = Wallet::whereId($value)->first();
-        $exchange_wallet = Wallet::whereId($this->selected_currency)->first();
+        $exchange_wallet = $this->selected_currency;
 
-        $walletDefaultCountry = Country::find(Setting::getValue('wallet_default_country'));
+        if(!is_null($this->selected_currency))
+        {
+            $this->amount =  !is_null($this->amount) ?  $this->amount : 1;
+            $this->base_currency = $sender_wallet?->ledger?->name;
+            $this->exchange_currency = $this->selected_currency;
+            $this->fee = 0;
+    
+            $info = [
+                'type' => 0,
+                'amount' => 1,
+                'currency' => $this->base_currency,
+                'conversionCurrency' =>  $this->exchange_currency,
+            ];
+           
+            
+         
+            $details = Helper::getStellarExchangeRate($info);
+    
+            $exchangedAmount = $details['exchangedAmount'];
+            $this->exchange_rate =  @$exchangedAmount ?? 1;
+            
+           
+            session([
+                'payout_fee' => $this->fee,
+                'payout_exchange_rate' => $this->exchange_rate,
+                'payout_exchange_currency' => $this->base_currency,
+                'payout_base_currency' => $this->exchange_currency,
+                'payout_wallet' => $this->selected_wallet,
+                'payout_currency' => $value
+            ]);
+        }
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet, $exchange_wallet, $walletDefaultCountry, $this->amount);
-
-        $this->base_currency = @$exchange_rate_details['base_currency_name'];
-        $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
-        $this->exchange_rate =  @$exchange_rate_details['exchange_rate'] ?? 1;
-        $this->fee = @$exchange_rate_details['fee'];
-
-        session([
-            'payout_fee' => $this->fee,
-            'payout_exchange_rate' => $this->exchange_rate,
-            'payout_exchange_currency' => $this->base_currency,
-            'payout_base_currency' => $this->exchange_currency,
-            'payout_wallet' => $this->selected_wallet,
-            'payout_currency' => $value
-        ]);
+       
     }
 
 
@@ -137,25 +146,38 @@ class StellarPayoutComponent extends Component
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
         $this->selected_currency = $value;
         $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
-        $exchange_wallet = Wallet::whereId($value)->first();
+        $exchange_wallet = $value;
 
-        $walletDefaultCountry = Country::find(Setting::getValue('wallet_default_country'));
+        if(!is_null($this->selected_wallet))
+        {
+            $this->amount =  !is_null($this->amount) ?  $this->amount : 1;
+            $this->base_currency = $sender_wallet?->ledger?->name;
+            $this->exchange_currency = $this->selected_currency;
+            $this->fee = 0;
+            
+            $info = [
+                'type' => 0,
+                'amount' => 1,
+                'currency' => $this->base_currency,
+                'conversionCurrency' =>  $this->exchange_currency,
+            ];
+            
+            
+        
+            $details = Helper::getStellarExchangeRate($info);
+        
+            $exchangedAmount = $details['exchangedAmount'];
+            $this->exchange_rate =  @$exchangedAmount ?? 1;
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForPayout($sender_wallet, $exchange_wallet, $walletDefaultCountry, $this->amount);
-
-        $this->base_currency = @$exchange_rate_details['base_currency_name'];
-        $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
-        $this->exchange_rate =  @$exchange_rate_details['exchange_rate'] ?? 1;
-        $this->fee = @$exchange_rate_details['fee'];
-
-        session([
-            'payout_fee' => $this->fee,
-            'payout_exchange_rate' => $this->exchange_rate,
-            'payout_exchange_currency' => $this->base_currency,
-            'payout_base_currency' => $this->exchange_currency,
-            'payout_wallet' => $this->selected_wallet,
-            'payout_currency' => $value
-        ]);
+            session([
+                'payout_fee' => $this->fee,
+                'payout_exchange_rate' => $this->exchange_rate,
+                'payout_exchange_currency' => $this->base_currency,
+                'payout_base_currency' => $this->exchange_currency,
+                'payout_wallet' => $this->selected_wallet,
+                'payout_currency' => $value
+            ]);
+        }
     }
 
     public function render()
@@ -169,4 +191,5 @@ class StellarPayoutComponent extends Component
 
         return view('ledger-foundation::Livewire.stellar-payout-component');
     }
+
 }

@@ -23,16 +23,17 @@
                     <button
                         class="nav-link w-full py-2 active" data-tw-toggle="pill" data-tw-target="#seller-detail2"
                         type="button" role="tab" aria-controls="seller-detail2" aria-selected="false">
-                        <img src="{{ asset('dist/images/crypto/7.png') }}"> USDC
+                        <img src="{{ asset('dist/images/crypto/5.png') }}"> XLM
                     </button>
                 </li>
                 <li id="example-6-tab" class="nav-item flex-1" role="presentation">
                     <button
-                        class="nav-link w-full py-2" data-tw-toggle="pill" data-tw-target="#seller-detail3"
+                        class="nav-link w-full py-2 " data-tw-toggle="pill" data-tw-target="#seller-detail3"
                         type="button" role="tab" aria-controls="seller-detail3" aria-selected="false">
-                        <img src="{{ asset('dist/images/crypto/5.png') }}"> XLM
+                        <img src="{{ asset('dist/images/crypto/7.png') }}"> USDC
                     </button>
                 </li>
+                
                 <li id="example-6-tab" class="nav-item flex-1" role="presentation">
                     <button
                         class="nav-link w-full py-2" data-tw-toggle="pill" data-tw-target="#seller-detail4"
@@ -63,8 +64,8 @@
                                     <div class="w-full flex-col lg:flex-row items-center">
                                         <div class="flex w-full">
                                             <div class="ml-0 mr-auto">
-                                                <div class="text-xl 2xl:text-2xl font-medium text-warning">0.0637
-                                                    USDC
+                                                <div class="text-xl 2xl:text-2xl font-medium text-warning">{{ @$stellarBalance['balance'][0]['balance'] }}
+                                                    {{ @$stellarBalance['balance'][0]['asset_code'] }}
                                                 </div>
                                             </div>
                                             <div class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
@@ -72,13 +73,13 @@
                                                      src=" https://kanexydevstorage.blob.core.windows.net/kanexy/walletImages/UGqLTzYltFjuNredUZ2l7JHZ0MUNgvWND6jf80LA.jpg?sv=2017-11-09&sr=b&se=2023-01-16T13:45:42Z&sp=r&spr=https&sig=VkNEFk%2FUr5D4POZ2n%2FfzSv6w4RoXT9CXwAq1JuSZBWE%3D ">
                                             </div>
                                         </div>
-                                        <div class="flex-col sm:flex-row">
+                                        {{-- <div class="flex-col sm:flex-row">
                                             <div class="text-left pt-3 mr-auto">
                                                 <div class="text-xl 2xl:text-2xl font-medium text-white">&#163;
                                                     2456.00
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div
                                         class="text-center p-0 md:mt-10 mb-4 border-slate-200/60 dark:border-darkmode-400 usdc-wrapper">
