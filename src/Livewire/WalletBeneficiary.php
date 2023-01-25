@@ -102,6 +102,8 @@ class WalletBeneficiary extends Component
             'notes' => 'nullable',
             'nick_name' => 'nullable',
             'country_code' => 'nullable',
+        ],[
+            'mobile.required'=>'Phone Feild is required'
         ]);
 
         /** @var \App\Models\User $user */
@@ -140,7 +142,7 @@ class WalletBeneficiary extends Component
                 }else{
                     $contact->generateOtp("sms");
                 }
-                
+
                 $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
                 //$user->generateOtp("sms");
                 session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);
