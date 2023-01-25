@@ -7,9 +7,11 @@
                     class="form-control" data-search="true" required>
                     <option value="">Select Withdraw From</option>
                     @foreach ($wallets as $wallet)
-                        <option value="{{ $wallet->getKey() }}" @if ($selected_wallet == $wallet->getKey()) selected @endif>
-                            {{ \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first()?->name }}
-                        </option>
+                        @if ($wallet->ledger?->exchange_type == 'fiat')
+                            <option value="{{ $wallet->getKey() }}" @if ($selected_wallet == $wallet->getKey()) selected @endif>
+                                {{ \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first()?->name }}
+                            </option>
+                        @endif
                     @endforeach
                 </select>
                 @error('sender_wallet_account_id')
@@ -52,7 +54,7 @@
             <label for="remaining_amount" class="form-label sm:w-30"> Remaining </label>
             <div class="sm:w-5/6">
                 <input wire:model="remaining_amount" id="remaining_amount" name="remaining_amount" type="text"
-                    class="form-control" placeholder="£ 120.00" readonly>
+                    class="form-control" readonly>
                 @error('remaining_amount')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror

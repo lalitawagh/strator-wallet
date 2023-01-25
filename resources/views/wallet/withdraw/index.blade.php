@@ -28,7 +28,8 @@
                                                     class="text-right flex-wrap sm:flex items-center justify-end sm:py-0 border-b border-gray-200 dark:border-dark-5">
                                                     <x-list-view-filters />
                                                     @if ($user->isSubscriber())
-                                                        <a href="{{ route('dashboard.wallet.withdraw.create', ['workspace_id' => $workspace->id]) }}"
+                                                        <a id="withdrawButton"
+                                                            href="{{ route('dashboard.wallet.withdraw.create', ['workspace_id' => $workspace->id]) }}"
                                                             type="button"
                                                             class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2 py-2">Withdraw</a>
                                                     @endif
@@ -342,7 +343,7 @@
                                                                                 </td>
                                                                                 <td class="whitespace-nowrap text-left">
                                                                                     <div class="dropdown">
-                                                                                        <button
+                                                                                        <button id="Setting"
                                                                                             class="dropdown-toggle btn px-2 box"
                                                                                             aria-expanded="false"
                                                                                             data-tw-toggle="dropdown">
@@ -357,7 +358,8 @@
                                                                                                 @can(\Kanexy\LedgerFoundation\Policies\WithdrawPolicy::SHOW,
                                                                                                     \Kanexy\LedgerFoundation\Contracts\Withdraw::class)
                                                                                                     <li>
-                                                                                                        <a href="javascript:void(0);"
+                                                                                                        <a id="Show"
+                                                                                                            href="javascript:void(0);"
                                                                                                             data-tw-toggle="modal"
                                                                                                             data-tw-target="#transaction-detail-modal"
                                                                                                             onclick="Livewire.emit('showTransactionDetail', {{ $transaction->getKey() }})"
@@ -368,46 +370,46 @@
                                                                                                         </a>
                                                                                                     </li>
                                                                                                 @endcan
-                                                                                                    <li>
-                                                                                                        @if (\Illuminate\Support\Facades\Auth::user()->isSuperAdmin() &&
-                                                                                                            $transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
-                                                                                                            <a href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => 'Withdraw']) }}"
-                                                                                                                class="flex items-center block p-2 transition duration-300 ease-in-out dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-orange-200">
-                                                                                                                <x-feathericon-check
-                                                                                                                    class="w-4 h-4 mr-1" />
-                                                                                                                Accepted
-                                                                                                            </a>
-                                                                                                        @endif
-                                                                                                    </li>
-                                                                                                </ul>
-                                                                                            </div>
+                                                                                                <li>
+                                                                                                    @if (\Illuminate\Support\Facades\Auth::user()->isSuperAdmin() &&
+                                                                                                        $transaction->status == \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::PENDING_CONFIRMATION)
+                                                                                                        <a id="Accepted" href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => 'Withdraw']) }}"
+                                                                                                            class="flex items-center block p-2 transition duration-300 ease-in-out dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-orange-200">
+                                                                                                            <x-feathericon-check
+                                                                                                                class="w-4 h-4 mr-1" />
+                                                                                                            Accepted
+                                                                                                        </a>
+                                                                                                    @endif
+                                                                                                </li>
+                                                                                            </ul>
                                                                                         </div>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    @endisset
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endif
+                                                                    @endforeach
+                                                                @endisset
+                                                            </tbody>
+                                                        </table>
                                                     </div>
-                                                    <!-- END: HTML Table Data -->
-
                                                 </div>
+                                                <!-- END: HTML Table Data -->
 
                                             </div>
+
                                         </div>
                                     </div>
-
-
-
-
                                 </div>
+
+
+
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        @include('ledger-foundation::wallet.transaction-detail-modal')
-    @endsection
+    </div>
+    @include('ledger-foundation::wallet.transaction-detail-modal')
+@endsection

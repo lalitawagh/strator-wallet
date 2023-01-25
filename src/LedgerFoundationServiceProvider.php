@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Facades\Cms;
-use Kanexy\Cms\Menu\MenuItem;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
 use Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration;
 use Kanexy\LedgerFoundation\Contracts\AssetTypeConfiguration;
@@ -19,7 +18,6 @@ use Kanexy\LedgerFoundation\Livewire\DepositOtpVerificationComponent;
 use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletBeneficiary;
-use Kanexy\LedgerFoundation\Livewire\WalletGraph;
 use Kanexy\LedgerFoundation\Livewire\WalletPayoutComponent;
 use Kanexy\LedgerFoundation\Livewire\OtpWalletVerification;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionDetailComponent;
@@ -129,14 +127,14 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         $this->registerDefaultPolicies();
 
         \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletMenuItem());
-        \Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletDashboardMenuItem());
+        //\Kanexy\Cms\Facades\SidebarMenu::addItem(new WalletDashboardMenuItem());
         \Kanexy\Cms\Facades\MembershipServiceSelection::addItem(new MembershipServiceSelectionContent());
         \Kanexy\Cms\Facades\GeneralSetting::addItem(GeneralSettingForm::class);
         \Kanexy\Cms\Facades\CustomerRegistration::addItem(CustomerRegistrationForm::class);
         \Kanexy\Cms\Facades\RegistrationStep::addItem(new WalletRegistrationStep());
 
         \Kanexy\Cms\Facades\Cms::setRegistrationFlow(function (User $user) {
-            if ($user->is_banking_user != true) {
+            if ($user->is_banking_user == 0) {
                 $type = 'wallet_flow';
                 return $type;
             }
@@ -145,7 +143,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
 
 
         \Kanexy\Cms\Facades\Cms::setRedirectRouteAfterRegistrationVerification(function (Request $request, User $user) {
-            if ($user->is_banking_user != true) {
+            if ($user->is_banking_user == 0) {
                 return route("customer.signup.wallet.create");
             }
 
@@ -162,7 +160,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         });
 
         Cms::setRedirectRouteAfterLogin(function (User $user) {
-            if (!$user->is_banking_user) {
+            if ($user->is_banking_user == 0) {
                 return route("dashboard.wallet.wallet-dashboard");
             }
         });

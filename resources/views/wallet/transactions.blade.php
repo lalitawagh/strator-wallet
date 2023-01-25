@@ -35,7 +35,7 @@
                         Transactions
                     </h2>
                 </div>
-                <div class="p-5">
+                <div class="p-3 sm:p-5">
                     <div id="before-slider-loader" class="z-50 static w-full">
                         <img src="https://paladins-draft.com/img/circle_loading.gif" width="64" height="64"
                             class="m-auto mt-1/4 m-20">
@@ -43,9 +43,9 @@
                     </div>
                     <div id="after-slider-loader" style="display:none;">
                         @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber() && is_null($walletID))
-                            <div id="multiple-item-slider" class="wallet-slide preview pb-10" role="tablist">
-                                <div class="mx-6">
-                                    <div class="multiple-items">
+                            <div id="center-mode-slider" class="wallet-slide preview pb-10" role="tablist">
+                                <div class="mx-2 sm:mx-5">
+                                    <div class="center-mode">
                                         @foreach ($wallets as $key => $wallet)
                                             @php
                                                 $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet->ledger_id)->first();
@@ -62,14 +62,16 @@
                                                             onclick="walletTabSelect('{{ $wallet->getKey() }}')"
                                                             data-tw-toggle="tab"
                                                             class="flex-1 items-center px-3 py-2 mt-2 pb-5 font-medium wallet-slide-tab @if ($key == 0) active @endif">
-                                                            <div class="col-span-12 sm:col-span-4 xl:col-span-4 intro-y"
+                                                            <div class="col-span-12 sm:col-span-12 xl:col-span-4 intro-y"
                                                                 id="k-wallet" data-tw-toggle="tab"
                                                                 data-tw-target="#k-wallet">
                                                                 <div class="report-box zoom-in">
                                                                     <div class="box p-5">
                                                                         <div class="flex">
                                                                             <span
-                                                                                class="text-lg font-medium truncate mr-5font-bold leading-8 mt-0 align-self item-center">{{ $ledger?->name }}</span>
+                                                                                class="text-lg font-medium truncate mr-5font-bold leading-8 mt-0 align-self item-center">
+                                                                                @isset($ledger) {{ $ledger?->name }} @else USTD  @endisset
+                                                                            </span>
                                                                             <div class="ml-auto">
                                                                                 <div
                                                                                     class="flex sm:mt-4 lg:mt-0 lg:w-12 lg:h-12 image-fit">
@@ -86,6 +88,16 @@
                                                                         <div class="text-base text-gray-600 mt-1">
                                                                             {{ $wallet?->urn }}</span>
                                                                         </div>
+                                                                        @if(!isset($ledger) && isset($wallet?->meta['publicKey'])) 
+                                                                        <div class="text-sm mt-1">
+                                                                            <p>
+                                                                                Public Key {{ $wallet?->meta['publicKey']}}</span>
+                                                                            </p>
+                                                                            <p>
+                                                                                Secret Key {{ $wallet?->meta['secretKey']}}</span>
+                                                                            </p>
+                                                                        </div>
+                                                                        @endif
                                                                         <div class="flex mt-3">
                                                                             <span
                                                                                 class="text-lg @if ($wallet->status == \Kanexy\LedgerFoundation\Enums\WalletStatus::ACTIVE) text-success @else text-theme-6 @endif">

@@ -40,7 +40,7 @@ class DepositWalletComponent extends Component
         $this->wallets = $wallets;
         $this->currencies = $currencies;
         $this->walletDefaultCountry = $walletDefaultCountry;
-        $this->selected_wallet = session('wallet');
+        $this->selected_wallet = session('selected_wallet');
         $this->currency = session('currency');
         if (!is_null(session('currency'))) {
             $exchange_wallet = Ledger::whereId($this->currency)->first();
@@ -57,10 +57,10 @@ class DepositWalletComponent extends Component
         $exchange_wallet = Ledger::whereId($this->currency)->first();
 
         $base_asset_category = $sender_wallet->ledger?->asset_category;
-        $exchange_asset_category =$exchange_wallet?->asset_category;
-        $this->exchange_asset_category =$exchange_wallet?->asset_category;
+        $exchange_asset_category = $exchange_wallet?->asset_category;
+        $this->exchange_asset_category = $exchange_wallet?->asset_category;
 
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForDeposit($sender_wallet, $exchange_wallet, $this->currency,$this->amount);
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForDeposit($sender_wallet, $exchange_wallet, $this->currency, $this->amount);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
@@ -83,15 +83,15 @@ class DepositWalletComponent extends Component
     {
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
         $this->currency = $value;
-       
+
         $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
         $exchange_wallet = Ledger::whereId($value)->first();
 
         $this->exchange_asset_category = $exchange_wallet?->asset_category;
         $base_asset_category = $sender_wallet?->ledger?->asset_category;
-        $exchange_asset_category =$exchange_wallet?->asset_category;
-      
-        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForDeposit($sender_wallet, $exchange_wallet, $value,$this->amount);
+        $exchange_asset_category = $exchange_wallet?->asset_category;
+
+        $exchange_rate_details = ExchangeRate::getExchangeRateDetailsForDeposit($sender_wallet, $exchange_wallet, $value, $this->amount);
 
         $this->base_currency = @$exchange_rate_details['base_currency_name'];
         $this->exchange_currency = @$exchange_rate_details['exchange_currency_name'];
@@ -116,11 +116,10 @@ class DepositWalletComponent extends Component
         $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
         $receiver_wallet = Ledger::whereId($this->currency)->first();
 
-        $exchangeFee = collect(Setting::getValue('wallet_fees',[]))->where('base_currency' , $sender_wallet?->ledger_id)->where('exchange_currency' ,$receiver_wallet?->id)->where('payment_type','deposit')->first();
+        $exchangeFee = collect(Setting::getValue('wallet_fees', []))->where('base_currency', $sender_wallet?->ledger_id)->where('exchange_currency', $receiver_wallet?->id)->where('payment_type', 'deposit')->first();
         $this->fee = 0;
-        if(isset($exchangeFee) && !empty($this->amount))
-        {
-            $this->fee = ($exchangeFee['fee_type'] == 'percentage') ? $this->amount * ($exchangeFee['percentage']/100) : $exchangeFee['amount'];
+        if (isset($exchangeFee) && !empty($this->amount)) {
+            $this->fee = ($exchangeFee['fee_type'] == 'percentage') ? $this->amount * ($exchangeFee['percentage'] / 100) : $exchangeFee['amount'];
         }
 
         session(['fee' => $this->fee]);

@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use Kanexy\Cms\Middleware\VerificationStepMiddleware;
 use Kanexy\LedgerFoundation\Http\Controllers\LedgerFoundationController;
@@ -18,6 +19,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\TransactionController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WalletController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\MasterAccountController;
+use Kanexy\LedgerFoundation\Http\Controllers\Wallet\StellerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,10 +32,10 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\MasterAccountController;
 |
 */
 
-Route::group(['middleware'=>['web','auth',VerificationStepMiddleware::class],'prefix'=>'dashboard/wallet','as'=>'dashboard.wallet.'],function()  {
-    Route::name('wallet-dashboard')->get('/', [DashboardController::class,'index']);
-    Route::resource("master-account",MasterAccountController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
-    Route::resource("asset-class",AssetClassController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
+Route::group(['middleware' => ['web', 'auth', VerificationStepMiddleware::class], 'prefix' => 'dashboard/wallet', 'as' => 'dashboard.wallet.'], function () {
+    Route::name('wallet-dashboard')->get('/', [DashboardController::class, 'index']);
+    Route::resource("master-account", MasterAccountController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
+    Route::resource("asset-class", AssetClassController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('asset-type', AssetTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('fee', FeeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::resource('commodity-type', CommodityTypeController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
@@ -45,7 +47,7 @@ Route::group(['middleware'=>['web','auth',VerificationStepMiddleware::class],'pr
     Route::resource('transaction', TransactionController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('exchange', ExchangeController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('withdraw', WithdrawController::class)->only(['index', 'create', 'store']);
-    Route::resource("exchange-rate",ExchangeRateController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
+    Route::resource("exchange-rate", ExchangeRateController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
     Route::name('deposit-overview')->get('deposit-overview', [DepositController::class, 'showDepositOverview']);
     Route::name('store-deposit-overview-detail')->post('store-deposit-overview-detail', [DepositController::class, 'storeDepositOverviewDetail']);
     Route::name('deposit-otp-confirmation')->get('deposit-otp-confirmation', [DepositController::class, 'showDepositOtpConfirmation']);
@@ -64,9 +66,11 @@ Route::group(['middleware'=>['web','auth',VerificationStepMiddleware::class],'pr
     Route::get('wallet-deposit-accepted/{id}/{type}',[DepositController::class,'transferAccepted'])->name("wallet-deposit.transferAccepted");
     Route::get('wallet-deposit-pending/{id}/{type}',[DepositController::class,'transferPending'])->name("wallet-deposit.transferPending");
 
-
+    Route::get('create-steller-account',[StellerController::class,'createAccount'])->name('create-steller-account');
+    Route::get('get-balance',[StellerController::class,'getBalance'])->name('get-balance');
+    
 });
 
-Route::group(['middleware' =>['web','auth'],'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {
+Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {
     Route::resource('wallet', WalletController::class)->only(['index', 'create', 'store', 'show']);
 });

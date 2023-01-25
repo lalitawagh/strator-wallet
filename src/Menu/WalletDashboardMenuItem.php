@@ -4,8 +4,6 @@ namespace Kanexy\LedgerFoundation\Menu;
 
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Menu\Contracts\Item;
-use Kanexy\Cms\Menu\MenuItem;
-use Kanexy\PartnerFoundation\Core\Helper;
 
 class WalletDashboardMenuItem extends Item
 {
@@ -20,7 +18,7 @@ class WalletDashboardMenuItem extends Item
         /** @var $user App\Model\User */
         $user = Auth::user();
 
-        if(!$user->is_banking_user)
+        if($user->is_banking_user == 0)
         {
             return true;
         }

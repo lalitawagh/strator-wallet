@@ -4,10 +4,12 @@ namespace Kanexy\LedgerFoundation\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Ledger extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $fillable = [
         'name',
@@ -27,4 +29,9 @@ class Ledger extends Model
         'withdraw_fee',
         'status',
     ];
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->useLogName('Wallet-Ledger')->logOnly(['*'])->logOnlyDirty();
+        // Chain fluent methods for configuration options
+    }
 }

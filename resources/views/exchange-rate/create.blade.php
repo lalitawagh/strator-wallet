@@ -10,18 +10,19 @@
                     class="flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
                     <div class="breadcrumb mr-auto hidden sm:flex">
-                        <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                        <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg"
-                            width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        <a id="Wallet" href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px"
+                            height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
                             class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="breadcrumb--active">Create Exchange rate</a>
+                        <a id="Configuration" href="" class="">Configuration</a><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                        <a id="CreateExchange" href="" class="breadcrumb--active">Create Exchange rate</a>
                     </div>
                 </div>
                 <div class="p-5">
@@ -37,8 +38,7 @@
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
 
-                                    <select name="base_currency" id="base_currency" class="form-control"
-                                        data-search="true">
+                                    <select name="base_currency" id="base_currency" class="form-control" data-search="true">
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}"
                                                 @if (old('base_currency') == $ledger->getKey()) selected @endif>{{ $ledger->name }}
@@ -126,9 +126,9 @@
 
                             <div
                                 class="col-span-12 md:col-span-8 xl:col-span-6 form-inline mt-2 @if (!is_null(old('is_hard_stop'))) @else valid_date hidden @endif">
-                                <label for="valid_date" class="form-label sm:w-30">Valid Date <span
-                                        class="text-theme-6">*</span></label>
-                                <div class="sm:w-5/6 relative">
+                                <label for="valid_date" class="form-label valid_date hidden sm:w-30">Valid Date <span
+                                        class="text-theme-6 valid_date hidden">*</span></label>
+                                <div class="sm:w-5/6 relative valid_date hidden">
                                     <input id="valid_date" name="valid_date"
                                         class="form-control datepicker_flatpicker @error('valid_date') border-theme-6 @enderror"
                                         placeholder="DD-MM-YYYY" value="{{ old('valid_date') }}"
@@ -168,9 +168,9 @@
 
 
                         <div class="text-right mt-5">
-                            <a href="{{ route('dashboard.wallet.exchange-rate.index') }}"
+                            <a id="exchangeRateCreateCancel" href="{{ route('dashboard.wallet.exchange-rate.index') }}"
                                 class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
-                            <button type="submit" class="btn btn-primary w-24">Create</button>
+                            <button id="exchangeRateCreate" type="submit" class="btn btn-primary w-24">Create</button>
                         </div>
                     </form>
                 </div>

@@ -10,18 +10,19 @@
                     class="flex gap-2 sm:gap-0 flex-wrap items-center px-5 py-5 sm:py-3 border-b border-gray-200 dark:border-dark-5">
 
                     <div class="breadcrumb mr-auto hidden sm:flex">
-                        <a href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                        <a href="" class="">Configuration</a><svg xmlns="http://www.w3.org/2000/svg"
-                            width="24px" height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        <a id="Wallet" href="">Wallet</a><svg xmlns="http://www.w3.org/2000/svg" width="24px"
+                            height="24px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round"
                             class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
                             <polyline points="9 18 15 12 9 6"></polyline>
                         </svg>
-                        <a href="" class="breadcrumb--active">Edit Fee Setup</a>
+                        <a id="Configuration" href="" class="">Configuration</a><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" class="feather feather-chevron-right breadcrumb__icon breadcrumb__icon">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                        <a id="EditFee" href="" class="breadcrumb--active">Edit Fee Setup</a>
                     </div>
                 </div>
                 <div class="p-5">
@@ -38,8 +39,7 @@
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
 
-                                    <select name="base_currency" id="base_currency" class="form-control"
-                                        data-search="true">
+                                    <select name="base_currency" id="base_currency" class="form-control" data-search="true">
                                         @foreach ($ledgers as $ledger)
                                             <option value="{{ $ledger->getKey() }}"
                                                 @if (old('base_currency', $fee['base_currency']) == $ledger->getKey()) selected @endif>{{ $ledger->name }}
@@ -168,9 +168,9 @@
                         </div>
 
                         <div class="text-right mt-5">
-                            <a href="{{ route('dashboard.wallet.fee.index') }}"
+                            <a id="feeSetupEditCancel" href="{{ route('dashboard.wallet.fee.index') }}"
                                 class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
-                            <button type="submit" class="btn btn-primary w-24">Update</button>
+                            <button id="feeSetupUpdate" type="submit" class="btn btn-primary w-24">Update</button>
                         </div>
                     </form>
                 </div>

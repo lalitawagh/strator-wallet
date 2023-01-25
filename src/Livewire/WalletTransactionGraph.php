@@ -3,8 +3,8 @@
 namespace Kanexy\LedgerFoundation\Livewire;
 
 use Illuminate\Support\Facades\Auth;
-use Kanexy\PartnerFoundation\Banking\Enums\TransactionType;
-use Kanexy\PartnerFoundation\Banking\Models\Transaction;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
+use Kanexy\PartnerFoundation\Core\Enums\TransactionType;
 use Kanexy\PartnerFoundation\Core\Helper;
 use Livewire\Component;
 
@@ -28,7 +28,7 @@ class WalletTransactionGraph extends Component
             $months[] = date('F', mktime(0, 0, 0, $m, 1));
         }
 
-        $currentWorkspaceId = Helper::activeWorkspaceId();
+        $currentWorkspaceId = app('activeWorkspaceId');
         $creditTransactionGraphData = Transaction::whereWorkspaceId($currentWorkspaceId)->whereType(TransactionType::CREDIT)->whereRefId($value)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('meta->account', 'wallet')->get();
 
         $debitTransactionGraphData = Transaction::whereWorkspaceId($currentWorkspaceId)->whereType(TransactionType::DEBIT)->whereRefId($value)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('meta->account', 'wallet')->get();
@@ -75,7 +75,7 @@ class WalletTransactionGraph extends Component
             $months[] = date('F', mktime(0, 0, 0, $m, 1));
         }
 
-        $currentWorkspaceId = Helper::activeWorkspaceId();
+        $currentWorkspaceId = app('activeWorkspaceId');
         $creditTransactionGraphData = Transaction::whereWorkspaceId($currentWorkspaceId)->whereType(TransactionType::CREDIT)->whereRefId($value)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('meta->account', 'wallet')->get();
 
         $debitTransactionGraphData = Transaction::whereWorkspaceId($currentWorkspaceId)->whereType(TransactionType::DEBIT)->whereRefId($value)->groupBy(["label"])->selectRaw("ROUND(sum(amount),2) as data, MONTHNAME(created_at) as label")->where('meta->account', 'wallet')->get();
