@@ -10,26 +10,16 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\Setting\Models\Setting;
 use Spatie\QueryBuilder\AllowedFilter;
-use Kanexy\Banking\Services\WrappexService;
-use Kanexy\Banking\Dtos\CreateBeneficiaryDto;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
-use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactDeleted;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactDeleting;
 use Kanexy\PartnerFoundation\Cxrm\Policies\ContactPolicy;
-use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
-use Kanexy\LedgerFoundation\Http\Requests\StoreBeneficiaryRequest;
 use Kanexy\LedgerFoundation\Http\Requests\UpdateBeneficiaryRequest;
 
 class WalletBeneficiaryController extends Controller
 {
-    private WrappexService $service;
 
-    public function __construct(WrappexService $service)
-    {
-        $this->service = $service;
-    }
 
     public function index(Request $request)
     {
@@ -52,29 +42,12 @@ class WalletBeneficiaryController extends Controller
         return view("ledger-foundation::beneficiaries.index", compact('beneficiaries', 'workspace'));
     }
 
-    public function create(Request $request)
-    {
-        $this->authorize(ContactPolicy::CREATE, Contact::class);
-
-        $workspace = Workspace::findOrFail($request->input('workspace_id'));
-
-        $countries = Country::get();
-        $defaultCountry = Setting::getValue('default_country');
-
-        $accounts = Account::whereNotNull('account_number')->latest()->get(['id', 'name', 'account_number']);
-
-        return view("ledger-foundation::beneficiaries.create", compact('countries', 'defaultCountry', 'workspace', 'accounts'));
-    }
-
-
-
     public function edit(Contact $beneficiary)
     {
         $this->authorize(ContactPolicy::EDIT, $beneficiary);
 
         $countries = Country::get();
         $defaultCountry = Setting::getValue('default_country');
-
         return view("ledger-foundation::beneficiaries.edit", compact('beneficiary', 'countries', 'defaultCountry'));
     }
 
@@ -93,7 +66,7 @@ class WalletBeneficiaryController extends Controller
         }
 
         $beneficiary->update($data);
-
+        dd($beneficiary, $data);
         return redirect()->route("dashboard.wallet.beneficiaries.index", ['filter' => ['workspace_id' => $beneficiary->workspace_id]])->with([
             'status' => 'success',
             'message' => 'The beneficiary updated successfully.',
@@ -114,16 +87,5 @@ class WalletBeneficiaryController extends Controller
             'status' => 'success',
             'message' => 'The beneficiary deleted successfully.',
         ]);
-    }
-
-    public function getPartnerAccount(Request $request)
-    {
-        $account_id = $request->input('account_id') ?? '';
-
-        if (!empty($account_id)) {
-            $account_details = Account::with('workspaces')->findOrFail($account_id);
-        }
-
-        return $account_details->toArray();
     }
 }

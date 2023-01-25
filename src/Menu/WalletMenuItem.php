@@ -56,17 +56,12 @@ class WalletMenuItem extends Item
         }
 
         if ($user->hasPermissionTo(EnumsPermission::CONTACT_VIEW)) {
-            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.wallet.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')], 'ref_type' => 'wallet']));
+            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.wallet.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
         }
 
         if ($user->hasAnyPermission([Permission::COMMODITY_TYPE_VIEW, Permission::ASSET_CLASS_VIEW, Permission::ASSET_TYPE_VIEW, Permission::FEE_VIEW, Permission::MASTER_ACCOUNT_VIEW, Permission::LEDGER_VIEW, Permission::EXCHANGE_RATE_VIEW])) {
             $menus[] = HttpHelper::getConfigRoute();
         }
-
-        if ($user->hasPermissionTo(EnumsPermission::CONTACT_VIEW)) {
-            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.wallet.beneficiaries.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
-        }
-
 
         return $menus;
     }
