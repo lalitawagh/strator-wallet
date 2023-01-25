@@ -37,14 +37,16 @@ class WalletMenuItem extends Item
         $menus = [
             new MenuItem('Crypto Portfolio', 'activity', url: route('dashboard.wallet.stellar-dashboard', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
         ];
-        // $menus[] =
-        //     new MenuItem('Crypto Dashboard', 'activity', url: route('dashboard.wallet.crypto-account', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
-
-        // $menus[] =new MenuItem('Stellar Payout', 'activity', url: route('dashboard.wallet.stellar-payouts.create', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
-
+        $menus = [
+            new MenuItem('Crypto Exchange', 'activity', url: route('dashboard.wallet.stellar-exchange', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
+        ];
+        $menus = [
+            new MenuItem('Crypto Buying', 'activity', url: route('dashboard.wallet.buying-crypto', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
+        ];
 
         $childMenus = [
             new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
+            
         ];
 
         if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){

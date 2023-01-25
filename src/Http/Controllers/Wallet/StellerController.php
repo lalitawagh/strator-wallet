@@ -61,6 +61,14 @@ class StellerController extends Controller
         return view('ledger-foundation::wallet.stellar.dashboard',compact('stellarAccount','stellarCurrencies','stellarBalance'));
     }
 
+    public function  exchange()
+    {
+        return view('ledger-foundation::wallet.stellar.stellar-exchange');
+    }
+
+    public function  buying()
+    {
+        return view('ledger-foundation::wallet.stellar.buying-crypto');
     public function exchangeRateView()
     {
         $stellarAccount = Wallet::whereHolderId(Helper::activeWorkspaceId())->whereType('steller')->first();

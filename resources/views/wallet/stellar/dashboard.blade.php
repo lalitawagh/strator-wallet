@@ -1,6 +1,6 @@
     @extends('ledger-foundation::layouts.master')
     @push('styles')
-        <link rel="stylesheet" href="{{ asset('dist/css/stellar.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('dist/css/stellar.css') }}" />
     @endpush
 
     @section('content')
@@ -250,7 +250,7 @@
                                 </div>
                                 <div class="dropdown md:ml-auto mt-5 md:mt-0">
                                     <button class="dropdown-toggle btn btn-outline-secondary font-normal"
-                                            aria-expanded="false" data-tw-toggle="dropdown"> Monthaly <i
+                                        aria-expanded="false" data-tw-toggle="dropdown"> Monthaly <i
                                             data-lucide="chevron-down" class="w-4 h-4 ml-2"></i></button>
                                     <div class="dropdown-menu w-40">
                                         <ul class="dropdown-content overflow-y-auto h-32">
@@ -287,115 +287,115 @@
                         <div class="intro-y overflow-x-auto overflow-y-hidden mt-8 sm:mt-0">
                             <table class="table table-report sm:mt-2 seller-list">
                                 <thead>
-                                <tr>
-                                    <th class="whitespace-nowrap">Coin</th>
-                                    <th class="whitespace-nowrap">Price</th>
-                                    <th class="whitespace-nowrap">In</th>
-                                    <th class="whitespace-nowrap">24 Volume</th>
-                                    <th class="whitespace-nowrap">Market Cop</th>
-                                    <th class="whitespace-nowrap">Last 7 Days</th>
-                                </tr>
+                                    <tr>
+                                        <th class="whitespace-nowrap">Coin</th>
+                                        <th class="whitespace-nowrap">Price</th>
+                                        <th class="whitespace-nowrap">In</th>
+                                        <th class="whitespace-nowrap">24 Volume</th>
+                                        <th class="whitespace-nowrap">Market Cop</th>
+                                        <th class="whitespace-nowrap">Last 7 Days</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="flex items-center">
-                                            <div class="w-8 h-8 flex-none rounded-md overflow-hidden mr-2">
-                                                <img alt="rounded-md border border-white"
-                                                     src=" https://kanexydevstorage.blob.core.windows.net/kanexy/walletImages/UGqLTzYltFjuNredUZ2l7JHZ0MUNgvWND6jf80LA.jpg?sv=2017-11-09&amp;sr=b&amp;se=2023-01-16T13:45:42Z&amp;sp=r&amp;spr=https&amp;sig=VkNEFk%2FUr5D4POZ2n%2FfzSv6w4RoXT9CXwAq1JuSZBWE%3D ">
-                                            </div>
-                                            <div class="">
-                                                <div class="font-medium">Bitcoin</div>
-                                            </div>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="w-8 h-8 flex-none rounded-md overflow-hidden mr-2">
+                                                    <img alt="rounded-md border border-white"
+                                                        src=" https://kanexydevstorage.blob.core.windows.net/kanexy/walletImages/UGqLTzYltFjuNredUZ2l7JHZ0MUNgvWND6jf80LA.jpg?sv=2017-11-09&amp;sr=b&amp;se=2023-01-16T13:45:42Z&amp;sp=r&amp;spr=https&amp;sig=VkNEFk%2FUr5D4POZ2n%2FfzSv6w4RoXT9CXwAq1JuSZBWE%3D ">
+                                                </div>
+                                                <div class="">
+                                                    <div class="font-medium">Bitcoin</div>
+                                                </div>
 
-                                        </div>
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        + 0.84756 BTC
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        <div class="text-success">+$98</div>
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        + 0.84756 BTC
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        + 0.84756 BTC
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        <div class="px-10 sm:px-0">
-                                            <div class="">
-                                                <canvas class="simple-line-chart-3"></canvas>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="flex items-center">
-                                            <div class="w-8 h-8 flex-none rounded-md overflow-hidden mr-2">
-                                                <img alt="rounded-md border border-white"
-                                                     src=" https://kanexydevstorage.blob.core.windows.net/kanexy/walletImages/UGqLTzYltFjuNredUZ2l7JHZ0MUNgvWND6jf80LA.jpg?sv=2017-11-09&amp;sr=b&amp;se=2023-01-16T13:45:42Z&amp;sp=r&amp;spr=https&amp;sig=VkNEFk%2FUr5D4POZ2n%2FfzSv6w4RoXT9CXwAq1JuSZBWE%3D ">
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            + 0.84756 BTC
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            <div class="text-success">+$98</div>
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            + 0.84756 BTC
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            + 0.84756 BTC
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            <div class="px-10 sm:px-0">
+                                                <div class="">
+                                                    <canvas class="simple-line-chart-3"></canvas>
+                                                </div>
                                             </div>
-                                            <div class="">
-                                                <div class="font-medium">Bitcoin</div>
-                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="w-8 h-8 flex-none rounded-md overflow-hidden mr-2">
+                                                    <img alt="rounded-md border border-white"
+                                                        src=" https://kanexydevstorage.blob.core.windows.net/kanexy/walletImages/UGqLTzYltFjuNredUZ2l7JHZ0MUNgvWND6jf80LA.jpg?sv=2017-11-09&amp;sr=b&amp;se=2023-01-16T13:45:42Z&amp;sp=r&amp;spr=https&amp;sig=VkNEFk%2FUr5D4POZ2n%2FfzSv6w4RoXT9CXwAq1JuSZBWE%3D ">
+                                                </div>
+                                                <div class="">
+                                                    <div class="font-medium">Bitcoin</div>
+                                                </div>
 
-                                        </div>
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        + 0.84756 BTC
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        <div class="text-danger">+$98</div>
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        + 0.84756 BTC
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        + 0.84756 BTC
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        <div class="px-10 sm:px-0">
-                                            <div class="">
-                                                <canvas class="simple-line-chart-4"></canvas>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="flex items-center">
-                                            <div class="w-8 h-8 flex-none rounded-md overflow-hidden mr-2">
-                                                <img alt="rounded-md border border-white"
-                                                     src=" https://kanexydevstorage.blob.core.windows.net/kanexy/walletImages/UGqLTzYltFjuNredUZ2l7JHZ0MUNgvWND6jf80LA.jpg?sv=2017-11-09&amp;sr=b&amp;se=2023-01-16T13:45:42Z&amp;sp=r&amp;spr=https&amp;sig=VkNEFk%2FUr5D4POZ2n%2FfzSv6w4RoXT9CXwAq1JuSZBWE%3D ">
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            + 0.84756 BTC
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            <div class="text-danger">+$98</div>
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            + 0.84756 BTC
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            + 0.84756 BTC
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            <div class="px-10 sm:px-0">
+                                                <div class="">
+                                                    <canvas class="simple-line-chart-4"></canvas>
+                                                </div>
                                             </div>
-                                            <div class="">
-                                                <div class="font-medium">Bitcoin</div>
-                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="flex items-center">
+                                                <div class="w-8 h-8 flex-none rounded-md overflow-hidden mr-2">
+                                                    <img alt="rounded-md border border-white"
+                                                        src=" https://kanexydevstorage.blob.core.windows.net/kanexy/walletImages/UGqLTzYltFjuNredUZ2l7JHZ0MUNgvWND6jf80LA.jpg?sv=2017-11-09&amp;sr=b&amp;se=2023-01-16T13:45:42Z&amp;sp=r&amp;spr=https&amp;sig=VkNEFk%2FUr5D4POZ2n%2FfzSv6w4RoXT9CXwAq1JuSZBWE%3D ">
+                                                </div>
+                                                <div class="">
+                                                    <div class="font-medium">Bitcoin</div>
+                                                </div>
 
-                                        </div>
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        + 0.84756 BTC
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        <div class="text-info">+$98</div>
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        + 0.84756 BTC
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        + 0.84756 BTC
-                                    </td>
-                                    <td class="whitespace-nowrap">
-                                        <div class="px-10 sm:px-0">
-                                            <div class="">
-                                                <canvas class="simple-line-chart-3"></canvas>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            + 0.84756 BTC
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            <div class="text-info">+$98</div>
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            + 0.84756 BTC
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            + 0.84756 BTC
+                                        </td>
+                                        <td class="whitespace-nowrap">
+                                            <div class="px-10 sm:px-0">
+                                                <div class="">
+                                                    <canvas class="simple-line-chart-3"></canvas>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
 
                                 </tbody>
                             </table>
@@ -407,31 +407,31 @@
             </div>
             <!-- BEGIN: Weekly Best Sellers -->
             <div class="col-span-12 xl:col-span-4 mt-0">
-                @if(!is_null($stellarAccount))
-                <div class="intro-y box p-3">
-                    <div class="intro-y flex items-center pb-3">
-                        <h2 class="text-lg font-medium mr-auto">Stellar Account
-                        </h2>
-                        {{ $stellarAccount->urn }}
+                @if (!is_null($stellarAccount))
+                    <div class="intro-y box p-3">
+                        <div class="intro-y flex items-center pb-3">
+                            <h2 class="text-lg font-medium mr-auto">Stellar Account
+                            </h2>
+                            {{ $stellarAccount->urn }}
+                        </div>
+                        <div class="intro-y flex items-center pb-3">
+                            <h4 class="text-sm font-medium mr-auto">Public Key
+                            </h4>
+                        </div>
+                        <span class="text-xs">{{ @$stellarAccount?->meta['publicKey'] }}</span>
+                        {{-- <div class="intro-y flex items-center pt-2 ">
+                            <span class="text-sm text-success font-medium mr-auto">
+                                + {{ $stellarAccount?->balance }}
+                            </span>
+                        </div> --}}
                     </div>
-                    <div class="intro-y flex items-center pb-3">
-                        <h4 class="text-sm font-medium mr-auto">Public Key
-                        </h4>
-                    </div>
-                    <span class="text-xs">{{ @$stellarAccount?->meta['publicKey'] }}</span>
-                    {{-- <div class="intro-y flex items-center pt-2 ">
-                        <span class="text-sm text-success font-medium mr-auto">
-                          + {{ $stellarAccount?->balance }}
-                        </span>
-                    </div> --}}
-                </div>
                 @endif
                 <div class="intro-y box p-3 mt-3">
                     <div class="intro-y flex items-center pb-3">
                         <h2 class="text-lg font-medium mr-auto">
                             Transactions
                         </h2>
-                        @if(is_null($stellarAccount))
+                        @if (is_null($stellarAccount))
                             <a class="block" href="{{ route('dashboard.wallet.crypto-account') }}">
                                 <button class="btn btn-sm org-clr py-1 px-2 mr-0 col">Create an Crypto Account</button>
                             </a>
@@ -569,16 +569,42 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('dashboard.wallet.stellar-payouts.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}">
+                    <a
+                        href="{{ route('dashboard.wallet.stellar-payouts.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}">
                         <img src="{{ asset('dist/images/crypto/menu-icon4.svg') }}">
                     </a>
                 </li>
 
             </ul>
         </div>
+        <!-- END: Weekly Best Sellers -->
+        </div>
 
+        <div class="seller-menu gap-6 gap-6 px-5 pt-5 pb-3">
+            <ul>
+                <li>
+                    <a href="{{ route('dashboard.wallet.crypto-account') }}">
+                        <img src="{{ asset('dist/images/crypto/menu-icon1.svg') }}">
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <img src="{{ asset('dist/images/crypto/menu-icon2.svg') }}">
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('dashboard.wallet.stellar-exchange') }}">
+                        <img src="{{ asset('dist/images/crypto/menu-icon4.svg') }}">
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('dashboard.wallet.buying-crypto') }}">
+                        <img src="{{ asset('dist/images/crypto/menu-icon3.svg') }}">
+                    </a>
+                </li>
 
-        
+            </ul>
+        </div>
     @endsection
 
     @push('scripts')
