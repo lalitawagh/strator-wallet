@@ -89,14 +89,14 @@
 
         .configuration-container {
             /* width: calc(100% - 305px);
-                                position: absolute;
-                                padding-left: 250px; */
+                            position: absolute;
+                            padding-left: 250px; */
         }
 
         .configuration-container.active {
             /* width: calc(100% - 305px);
-                                position: absolute;
-                                padding-left: 80px; */
+                            position: absolute;
+                            padding-left: 80px; */
         }
 
 
@@ -128,17 +128,17 @@
         }
 
         /* .configuration-nav .side-nav .side-menu__title {
-                        color: #333;
-                        display:flex !important;
-                    }
-                    .configuration-nav .side-nav .side-menu.side-menu--active .side-menu__title,
-                    .configuration-nav .side-nav .side-menu.side-menu--active .side-menu__icon {
-                        --tw-text-opacity: 1;
-                            color: rgb(var(--color-primary)/var(--tw-text-opacity));
-                    }
-                    .configuration-nav .side-nav .side-menu__icon {
-                        color: #333;
-                    } */
+                    color: #333;
+                    display:flex !important;
+                }
+                .configuration-nav .side-nav .side-menu.side-menu--active .side-menu__title,
+                .configuration-nav .side-nav .side-menu.side-menu--active .side-menu__icon {
+                    --tw-text-opacity: 1;
+                        color: rgb(var(--color-primary)/var(--tw-text-opacity));
+                }
+                .configuration-nav .side-nav .side-menu__icon {
+                    color: #333;
+                } */
         .configuration-nav .side-nav>ul>li>.side-menu.side-menu--active {
             --tw-bg-opacity: 1;
             background-color: transparent !important;
@@ -212,14 +212,14 @@
 
         .configuration-container {
             /* width: calc(100% - 305px);
-                        position: absolute;
-                        padding-left: 405px; */
+                    position: absolute;
+                    padding-left: 405px; */
         }
 
         .configuration-container.active {
             /* width: calc(100% - 305px);
-                        position: absolute;
-                        padding-left: 86px; */
+                    position: absolute;
+                    padding-left: 86px; */
         }
 
         .configuration-nav .side-nav .side-menu__icon svg {
@@ -227,16 +227,16 @@
         }
 
         /* .configuration-nav .side-nav, .configuration-nav .side-nav .side-menu__title {
-                        display: block;
-                    } */
+                    display: block;
+                } */
         .configuration-nav.side-nav--simple .side-menu__sub-open {
             display: contents !important;
         }
 
         /* .valid_date_show
-                    {
-                        display: flex;
-                    } */
+                {
+                    display: flex;
+                } */
 
         @media (max-width:767px) {
             .configarrow-toggle {
@@ -420,7 +420,7 @@
                                         Route::current()->getName() == 'dashboard.wallet.fee.create' ||
                                         Route::current()->getName() == 'dashboard.wallet.fee.edit') side-menu--active @endif">
                                 <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
-                                <div class="side-menu__title"> Fees Setup </div>
+                                <div class="side-menu__title"> Fee Setup </div>
                             </a>
                         </li>
                     @endcan
