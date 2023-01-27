@@ -75,11 +75,10 @@ Route::group(['middleware' => ['web', 'auth', VerificationStepMiddleware::class]
     Route::get('crypto-buying',[StellerController::class,'buying'])->name('buying-crypto');
     
     Route::get('crypto-account',[StellerController::class,'index'])->name('crypto-account');
+    Route::get('stellar-payout-verify',[StellarPayouts::class,'verify'])->name('stellar-payout-verify');
     Route::get('stellar-exchange-rate',[StellerController::class,'exchangeRateView'])->name('stellar-exchange-rate');
     Route::post('stellar-exchange-rate',[StellerController::class,'getExchangeRate'])->name('stellar-exchange-rate');
-    Route::get('stellar-payment-method', [StellarPayouts::class,'getPaymentView'])->name('stellar-payment-method');
-    Route::post('stellar-payment-details', [StellarPayouts::class,'storePaymentDetails'])->name('stellar-payment-details');
-    Route::get('stellar-payment-otp-confirmation', [StellarPayouts::class,'showStellarOtpConfirmation'])->name('stellar-payment-otp-confirmation');
+ 
 });
 
 Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {

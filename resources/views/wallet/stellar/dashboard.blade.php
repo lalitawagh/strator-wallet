@@ -15,38 +15,40 @@
                             <div class="preview">
                                 <div class="mx-0">
                                     <div class="multiple-items">
-                                        <div class="h-24 px-2" style="height: 9rem;">
-                                            <div class="h-full bg-slate-100 dark:bg-darkmode-400 rounded-md">
-                                                <div class="h-full font-medium items-center justify-center text-2xl">
-                                                    <div class="sellerSlide-box">
-                                                        <div class="box p-3">
-                                                            <div class="flex">
-                                                                <div
-                                                                    class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
-                                                                    <img
-                                                                        src="{{ asset('dist/images/crypto/Ethereum.png') }}">
-                                                                </div>
-                                                                <div class="ml-4 mr-auto">
-                                                                    <div class="text-xl 2xl:text-2xl font-medium">Ethereum
-                                                                    </div>
-                                                                    <div class="text-slate-500 text-xs mt-0.5">4 November
-                                                                        2022
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="flex flex-col sm:flex-row">
-                                                                <div class="text-left pt-3 mr-auto">
-                                                                    <div class="text-xl 2xl:text-2xl font-medium">+ 0.84756
-                                                                        BTC
-                                                                    </div>
-                                                                    <div class="text-slate-500 text-xs mt-0.5">$90,510.00
-                                                                    </div>
-                                                                </div>
-                                                                <div class="ml-auto pt-3">
+                                        @foreach ($stellarCurrencies as $stellarCurrency)
+                                            <div class="h-24 px-2" style="height: 9rem;">
+                                                <div class="h-full bg-slate-100 dark:bg-darkmode-400 rounded-md">
+                                                    <div class="h-full font-medium items-center justify-center text-2xl">
+                                                        <div class="sellerSlide-box">
+                                                            <div class="box p-3">
+                                                                <div class="flex">
                                                                     <div
-                                                                        class="bg-success/20 text-success rounded text-xs px-2 mt-1.5">
-                                                                        +150
+                                                                        class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
+                                                                        <img
+                                                                            src="{{ asset('dist/images/crypto/Ethereum.png') }}">
+                                                                    </div>
+                                                                    <div class="ml-4 mr-auto">
+                                                                        <div class="text-xl 2xl:text-2xl font-medium">{{ $stellarCurrency }}
+                                                                        </div>
+                                                                        <div class="text-slate-500 text-xs mt-0.5"> {{ date('D M Y')}}
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="flex flex-col sm:flex-row">
+                                                                    <div class="text-left pt-3 mr-auto">
+                                                                        <div class="text-xl 2xl:text-2xl font-medium">
+                                                                            @if(@$stellarBalance['balance'][0]['asset_code'] == $stellarCurrency) {{ @$stellarBalance['balance'][0]['balance'] }} @else 0.00 @endif
+                                                                            {{ $stellarCurrency }}
+                                                                        </div>
+                                                                        <div class="text-slate-500 text-xs mt-0.5">$90,510.00
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="ml-auto pt-3">
+                                                                        <div
+                                                                            class="bg-success/20 text-success rounded text-xs px-2 mt-1.5">
+                                                                            +150
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -54,9 +56,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endforeach
+                                        
 
-                                        <div class="h-24 px-2" style="height: 9rem;">
+                                        {{-- <div class="h-24 px-2" style="height: 9rem;">
                                             <div class="h-full bg-slate-100 dark:bg-darkmode-400 rounded-md">
                                                 <div class="h-full font-medium items-center justify-center text-2xl">
                                                     <div class="sellerSlide-box">
@@ -212,7 +215,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                     </div>
                                 </div>
@@ -416,11 +419,11 @@
                             </h4>
                         </div>
                         <span class="text-xs">{{ @$stellarAccount?->meta['publicKey'] }}</span>
-                        <div class="intro-y flex items-center pt-2 ">
+                        {{-- <div class="intro-y flex items-center pt-2 ">
                             <span class="text-sm text-success font-medium mr-auto">
                                 + {{ $stellarAccount?->balance }}
                             </span>
-                        </div>
+                        </div> --}}
                     </div>
                 @endif
                 <div class="intro-y box p-3 mt-3">

@@ -40,6 +40,13 @@ class StellerController extends Controller
     public function  dashboard()
     {
         $stellarAccount = Wallet::whereHolderId(Helper::activeWorkspaceId())->whereType('steller')->first();
+
+        if(is_null($stellarAccount))
+        {
+            return redirect()->route('dashboard.wallet.wallet-dashboard');
+        }
+
+        $stellarBalance = NULL;
         if(!is_null($stellarAccount))
         {
             $stellarBalance = $this->stellerService->getBalance($stellarAccount?->meta['publicKey']);
@@ -49,8 +56,9 @@ class StellerController extends Controller
                 $stellarAccount->update();
             }
         }
+        $stellarCurrencies = ['USDC','XLM','ETH','YUSDC'];
 
-        return view('ledger-foundation::wallet.stellar.dashboard',compact('stellarAccount'));
+        return view('ledger-foundation::wallet.stellar.dashboard',compact('stellarAccount','stellarCurrencies','stellarBalance'));
     }
 
     public function  exchange()
@@ -61,13 +69,20 @@ class StellerController extends Controller
     public function  buying()
     {
         return view('ledger-foundation::wallet.stellar.buying-crypto');
+    }
     public function exchangeRateView()
     {
+        $stellarAccount = Wallet::whereHolderId(Helper::activeWorkspaceId())->whereType('steller')->first();
+        if(!is_null($stellarAccount))
+        {
+            $stellarBalance = $this->stellerService->getBalance($stellarAccount?->meta['publicKey']);
+        }
+    
         $exchangedAmount = NULL;
         $currency = NULL;
         $conversionCurrency = NULL;
         $amount = NULL;
-        return view('ledger-foundation::wallet.stellar.stellar-exchange-rate',compact('amount','exchangedAmount','currency','conversionCurrency'));
+        return view('ledger-foundation::wallet.stellar.stellar-exchange-rate',compact('amount','exchangedAmount','currency','conversionCurrency','stellarBalance'));
     }
 
     public function getExchangeRate(Request $request)

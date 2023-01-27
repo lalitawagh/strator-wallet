@@ -26,6 +26,7 @@ class WalletTransactionsListComponent extends Component
         if (!empty($transactions)) {
             $this->transactions = $transactions;
         }
+       
     }
 
     public function render()
