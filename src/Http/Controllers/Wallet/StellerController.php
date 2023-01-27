@@ -3,11 +3,13 @@
 namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\LedgerFoundation\Dtos\CreateStellerAccountDto;
 use Kanexy\LedgerFoundation\Enums\WalletStatus;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Services\StellerService;
+use Kanexy\PartnerFoundation\Core\Helper;
 
 class StellerController extends Controller
 {
@@ -16,6 +18,93 @@ class StellerController extends Controller
     public function __construct(StellerService $stellerService)
     {
         $this->stellerService = $stellerService;
+    }
+
+    public function  index()
+    {
+        $stellarAccount = Wallet::whereHolderId(Helper::activeWorkspaceId())->whereType('steller')->first();
+        if(!is_null($stellarAccount))
+        {
+            $stellarBalance = $this->stellerService->getBalance($stellarAccount?->meta['publicKey']);
+            if(isset($stellarBalance['balance']))
+            {
+                $stellarAccount->balance = $stellarBalance['balance'][0]['balance'];
+                $stellarAccount->update();
+            }
+        }
+        session()->forget('stellar_request');
+
+        return view('ledger-foundation::wallet.stellar.crypto-account',compact('stellarAccount'));
+    }
+
+    public function  dashboard()
+    {
+        $stellarAccount = Wallet::whereHolderId(Helper::activeWorkspaceId())->whereType('steller')->first();
+
+        if(is_null($stellarAccount))
+        {
+            return redirect()->route('dashboard.wallet.wallet-dashboard');
+        }
+
+        $stellarBalance = NULL;
+        if(!is_null($stellarAccount))
+        {
+            $stellarBalance = $this->stellerService->getBalance($stellarAccount?->meta['publicKey']);
+            if(isset($stellarBalance['balance']))
+            {
+                $stellarAccount->balance = $stellarBalance['balance'][0]['balance'];
+                $stellarAccount->update();
+            }
+        }
+        $stellarCurrencies = ['USDC','XLM','ETH','YUSDC'];
+
+        return view('ledger-foundation::wallet.stellar.dashboard',compact('stellarAccount','stellarCurrencies','stellarBalance'));
+    }
+
+    public function  exchange()
+    {
+        return view('ledger-foundation::wallet.stellar.stellar-exchange');
+    }
+
+    public function  buying()
+    {
+        return view('ledger-foundation::wallet.stellar.buying-crypto');
+    }
+    public function exchangeRateView()
+    {
+        $stellarAccount = Wallet::whereHolderId(Helper::activeWorkspaceId())->whereType('steller')->first();
+        if(!is_null($stellarAccount))
+        {
+            $stellarBalance = $this->stellerService->getBalance($stellarAccount?->meta['publicKey']);
+        }
+    
+        $exchangedAmount = NULL;
+        $currency = NULL;
+        $conversionCurrency = NULL;
+        $amount = NULL;
+        return view('ledger-foundation::wallet.stellar.stellar-exchange-rate',compact('amount','exchangedAmount','currency','conversionCurrency','stellarBalance'));
+    }
+
+    public function getExchangeRate(Request $request)
+    {
+        $data = $request->all();
+       
+        $info = [
+            'type' => 0,
+            'amount' => $data['amount'],
+            'currency' => $data['from'],
+            'conversionCurrency' => $data['to'],
+        ];
+        
+        $details = $this->stellerService->getExchangeRate($info);
+
+        $exchangedAmount = $details['exchangedAmount'];
+        $currency = $data['from'];
+        $conversionCurrency = $data['to'];
+        $amount = $data['amount'];
+
+        return view('ledger-foundation::wallet.stellar.stellar-exchange-rate',compact('amount','exchangedAmount','currency','conversionCurrency'));
+       
     }
 
     public function createAccount()
@@ -33,7 +122,7 @@ class StellerController extends Controller
             new CreateStellerAccountDto($data)
         );
 
-       
+
         $info = [
             "name" => $user->getFullName(),
             "urn" => Wallet::generateUrn(),
@@ -55,7 +144,7 @@ class StellerController extends Controller
 
         Wallet::create($info);
 
-        return redirect()->route('dashboard.wallet.wallet-dashboard')->with([
+        return redirect()->route('dashboard.wallet.crypto-account', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])->with([
             'message' => 'Steller Account Created successfully.',
             'status' => 'success',
         ]);
@@ -65,7 +154,7 @@ class StellerController extends Controller
     {
         $details = $this->stellerService->getBalance(
             'GDVK7DLQBNQW4UKAWBGWZJNJANJOPA4TTVECJ6XF35JDEMW6IO5M5DHI'
-        ); 
+        );
         dd($details);
     }
 
