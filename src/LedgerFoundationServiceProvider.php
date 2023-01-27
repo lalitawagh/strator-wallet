@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Facades\Cms;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
@@ -160,8 +161,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         });
 
         Cms::setRedirectRouteAfterLogin(function (User $user) {
-            if($user->is_banking_user == 0)
-            {
+            if ($user->is_banking_user == 0) {
                 return route("dashboard.wallet.wallet-dashboard");
             }
         });
