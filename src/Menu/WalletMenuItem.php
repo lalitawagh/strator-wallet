@@ -49,7 +49,7 @@ class WalletMenuItem extends Item
             
         ];
 
-        if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){
+        if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) {
             if ($user->hasPermissionTo(Permission::WITHDRAW_VIEW)) {
                 $childMenus[] =  new MenuItem('Withdraw', 'activity', url: route('dashboard.wallet.withdraw.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
             }
@@ -64,18 +64,26 @@ class WalletMenuItem extends Item
             $childMenus[] = new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
         }
 
+<<<<<<< HEAD
         if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) {
             if ($user->hasPermissionTo(EnumsPermission::CONTACT_VIEW)) {
                 $childMenus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')], 'ref_type' => 'wallet']));
             }
+=======
+        if ($user->hasPermissionTo(EnumsPermission::CONTACT_VIEW)) {
+            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.wallet.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
+>>>>>>> 3187a5a3e56b371f6b0d43686470a4b7a6d370cd
         }
 
         if ($user->hasAnyPermission([Permission::COMMODITY_TYPE_VIEW, Permission::ASSET_CLASS_VIEW, Permission::ASSET_TYPE_VIEW, Permission::FEE_VIEW, Permission::MASTER_ACCOUNT_VIEW, Permission::LEDGER_VIEW, Permission::EXCHANGE_RATE_VIEW])) {
             $childMenus[] = HttpHelper::getConfigRoute();
         }
 
+<<<<<<< HEAD
         $menus[] =new MenuItem('Fiat Currency', 'activity', childmenu:$childMenus);
 
+=======
+>>>>>>> 3187a5a3e56b371f6b0d43686470a4b7a6d370cd
         return $menus;
     }
 }

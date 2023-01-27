@@ -152,9 +152,10 @@
                                             </svg>
                                         </span>
                                     </th>
-                                    @if (Gate::check(
-                                        \Kanexy\LedgerFoundation\Policies\LedgerPolicy::EDIT,
-                                        \Kanexy\LedgerFoundation\Models\Ledger::class) || Gate::check(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::DELETE, \Kanexy\LedgerFoundation\Models\Ledger::class))
+                                    @if (Gate::check(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::EDIT, \Kanexy\LedgerFoundation\Models\Ledger::class) ||
+                                            Gate::check(
+                                                \Kanexy\LedgerFoundation\Policies\LedgerPolicy::DELETE,
+                                                \Kanexy\LedgerFoundation\Models\Ledger::class))
                                         <th class="whitespace-nowrap text-left">Action</th>
                                     @endif
                                 </tr>
@@ -189,9 +190,10 @@
                                         <td class="whitespace-nowrap text-left">{{ @$assetClass['name'] }}</td>
                                         <td class="whitespace-nowrap text-left">
                                             {{ trans('ledger-foundation::configuration.' . $ledger->status) }}</td>
-                                        @if (Gate::check(
-                                            \Kanexy\LedgerFoundation\Policies\LedgerPolicy::EDIT,
-                                            \Kanexy\LedgerFoundation\Models\Ledger::class) || Gate::check(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::DELETE, \Kanexy\LedgerFoundation\Models\Ledger::class))
+                                        @if (Gate::check(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::EDIT, \Kanexy\LedgerFoundation\Models\Ledger::class) ||
+                                                Gate::check(
+                                                    \Kanexy\LedgerFoundation\Policies\LedgerPolicy::DELETE,
+                                                    \Kanexy\LedgerFoundation\Models\Ledger::class))
                                             <td class="whitespace-nowrap text-left">
                                                 <div class="dropdown">
                                                     <button id="Setting" class="dropdown-toggle btn px-2 box"
@@ -215,23 +217,12 @@
                                                             @can(\Kanexy\LedgerFoundation\Policies\LedgerPolicy::DELETE,
                                                                 \Kanexy\LedgerFoundation\Models\Ledger::class)
                                                                 <li>
-                                                                    <form
-                                                                        action="{{ route('dashboard.wallet.ledger.destroy', $ledger->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-
-                                                                        <input type="hidden" name="count"
-                                                                            value="{{ $ledgers->count() }}" />
-                                                                        <input type="hidden" name="previousPage"
-                                                                            value="{{ $ledgers->previousPageUrl() }}" />
-
-                                                                        <button id="Delete" type="submit"
-                                                                            class="w-full flex items-center block p-2 transition duration-300 ease-in-out hover:bg-red-200 dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                            <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
-                                                                            Delete
-                                                                        </button>
-                                                                    </form>
+                                                                    <button type="button" x-data={}
+                                                                        onclick="Livewire.emit('showModal','{{ route('dashboard.wallet.ledger.destroy', $ledger->id) }}','DELETE', 'x-circle','Delete');"
+                                                                        class="w-full flex items-center block p-2 transition duration-300 ease-in-out dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                                        <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
+                                                                        Delete
+                                                                    </button>
                                                                 </li>
                                                             @endcan
                                                         </ul>
