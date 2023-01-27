@@ -39,7 +39,7 @@ class WalletMenuItem extends Item
             new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
         ];
 
-        if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){
+        if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) {
             if ($user->hasPermissionTo(Permission::WITHDRAW_VIEW)) {
                 $menus[] =  new MenuItem('Withdraw', 'activity', url: route('dashboard.wallet.withdraw.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
             }
@@ -56,14 +56,12 @@ class WalletMenuItem extends Item
         }
 
         if ($user->hasPermissionTo(EnumsPermission::CONTACT_VIEW)) {
-            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')], 'ref_type' => 'wallet']));
+            $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.wallet.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
         }
 
         if ($user->hasAnyPermission([Permission::COMMODITY_TYPE_VIEW, Permission::ASSET_CLASS_VIEW, Permission::ASSET_TYPE_VIEW, Permission::FEE_VIEW, Permission::MASTER_ACCOUNT_VIEW, Permission::LEDGER_VIEW, Permission::EXCHANGE_RATE_VIEW])) {
             $menus[] = HttpHelper::getConfigRoute();
         }
-
-
 
         return $menus;
     }
