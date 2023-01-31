@@ -21,6 +21,7 @@ use Kanexy\LedgerFoundation\Http\Controllers\Wallet\WithdrawController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\MasterAccountController;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\StellarPayouts;
 use Kanexy\LedgerFoundation\Http\Controllers\Wallet\StellerController;
+use Kanexy\LedgerFoundation\Http\Controllers\WalletBeneficiaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,17 +70,16 @@ Route::group(['middleware' => ['web', 'auth', VerificationStepMiddleware::class]
     Route::get('wallet-deposit-accepted/{id}/{type}', [DepositController::class, 'transferAccepted'])->name("wallet-deposit.transferAccepted");
     Route::get('wallet-deposit-pending/{id}/{type}', [DepositController::class, 'transferPending'])->name("wallet-deposit.transferPending");
 
-    Route::get('create-steller-account',[StellerController::class,'createAccount'])->name('create-steller-account');
-    Route::get('get-balance',[StellerController::class,'getBalance'])->name('get-balance');
-    Route::get('crypto-portfolio',[StellerController::class,'dashboard'])->name('stellar-dashboard');
-    Route::get('crypto-exchange',[StellerController::class,'exchange'])->name('stellar-exchange');
-    Route::get('crypto-buying',[StellerController::class,'buying'])->name('buying-crypto');
-    
-    Route::get('crypto-account',[StellerController::class,'index'])->name('crypto-account');
-    Route::get('stellar-payout-verify',[StellarPayouts::class,'verify'])->name('stellar-payout-verify');
-    Route::get('stellar-exchange-rate',[StellerController::class,'exchangeRateView'])->name('stellar-exchange-rate');
-    Route::post('stellar-exchange-rate',[StellerController::class,'getExchangeRate'])->name('stellar-exchange-rate');
- 
+    Route::get('create-steller-account', [StellerController::class, 'createAccount'])->name('create-steller-account');
+    Route::get('get-balance', [StellerController::class, 'getBalance'])->name('get-balance');
+    Route::get('crypto-portfolio', [StellerController::class, 'dashboard'])->name('stellar-dashboard');
+    Route::get('crypto-exchange', [StellerController::class, 'exchange'])->name('stellar-exchange');
+    Route::get('crypto-buying', [StellerController::class, 'buying'])->name('buying-crypto');
+
+    Route::get('crypto-account', [StellerController::class, 'index'])->name('crypto-account');
+    Route::get('stellar-payout-verify', [StellarPayouts::class, 'verify'])->name('stellar-payout-verify');
+    Route::get('stellar-exchange-rate', [StellerController::class, 'exchangeRateView'])->name('stellar-exchange-rate');
+    Route::post('stellar-exchange-rate', [StellerController::class, 'getExchangeRate'])->name('stellar-exchange-rate');
 });
 
 Route::group(['middleware' => ['web', 'auth'], 'prefix' => 'customer/signup', 'as' => 'customer.signup.'], function () {
