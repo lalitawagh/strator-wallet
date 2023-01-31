@@ -97,13 +97,11 @@ class WalletBeneficiary extends Component
             'first_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
             'middle_name' => ['nullable', new AlphaSpaces, 'string', 'max:40'],
             'last_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
-            'email' => 'nullable|email',
             'mobile' => ['required', new MobileNumber],
+            'email' => 'nullable|email',
             'notes' => 'nullable',
             'nick_name' => 'nullable',
             'country_code' => 'nullable',
-        ],[
-            'mobile.required'=>'Phone Feild is required'
         ]);
 
         /** @var \App\Models\User $user */
