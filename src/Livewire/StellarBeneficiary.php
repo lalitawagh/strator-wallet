@@ -128,11 +128,7 @@ class StellarBeneficiary extends Component
         /** @var \App\Models\User $user */
         $user = auth()->user();
 
-        if ($this->type == 'transfer' && $data['mobile'] != $user->phone) {
-            $this->addError('mobile', 'You can create self beneficiary');
-        }
-
-        $existContact = Contact::where(['workspace_id' => $this->workspace->id, 'mobile' => Helper::normalizePhone($data['mobile']), 'ref_type' => 'wallet'])->first();
+        $existContact = Contact::where(['workspace_id' => $this->workspace->id, 'mobile' => Helper::normalizePhone($data['mobile']), 'ref_type' => 'stellar'])->first();
 
         if (!is_null($existContact)) {
             $this->addError('mobile', 'Beneficiary already exist');
@@ -191,7 +187,7 @@ class StellarBeneficiary extends Component
         $data = $this->validate([
             'code' => 'required',
         ]);
-        dd('xxxx');
+        
         $oneTimePassword = $this->contact->oneTimePasswords()->first();
 
         if ($oneTimePassword->code !== $data['code']) {

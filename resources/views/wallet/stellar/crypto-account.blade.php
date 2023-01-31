@@ -144,4 +144,12 @@
         }
 
     </script>
+        @push('scripts')
+        <script>
+            $url = window.location.pathname.split('/');
+            if ($url[3] == 'crypto-account') {
+                $('#color-scheme-content').addClass('dark');
+            }
+        </script>
+    @endpush
 @endpush
