@@ -12,7 +12,7 @@
             </label>
             <div class="sm:w-5/6 tillselect-marging" wire:ignore>
                 <select wire:change="getWalletBalance($event.target.value)" name="wallet" id="wallet"
-                    class="form-control" data-search="true" required>
+                    class="form-control" data-search="true" >
                     <option value="" hidden> Select {{ $typename }} From </option>
                     @foreach ($wallets as $wallet)
                         <option value="{{ $wallet->getKey() }}" @if (old('wallet', $selected_wallet) == $wallet->getKey()) selected @endif>
@@ -142,7 +142,7 @@
             <div class="sm:w-5/6">
                 <input wire:change="changeAmount($event.target.value)" id="amount" name="amount" type="text"
                     value=" {{ old('amount', $amount) }}" class="form-control"
-                    onKeyPress="return isNumberKey(event);" onpaste="return false;" required>
+                    onKeyPress="return isNumberKey(event);" onpaste="return false;" >
                 @error('amount')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror
@@ -168,7 +168,7 @@
             <div class="sm:w-5/6 tillselect-marging">
                 <select name="receiver_currency" id="receiver_currency"
                     wire:change="changeCurrency($event.target.value)" class="form-control" data-search="true"
-                    required>
+                    >
                     <option value="" hidden> Select {{ $typename }} To </option>
                     @foreach ($wallets as $wallet)
                         <option value="{{ $wallet->getKey() }}" @if ($selected_currency == $wallet->getKey()) selected @endif>
@@ -185,7 +185,7 @@
             <label for="reference" class="form-label sm:w-30"> Reference <span class="text-theme-6">*</span></label>
             <div class="sm:w-5/6">
                 <input id="reference" name="reference" type="text" class="form-control"
-                    value="{{ old('reference') }}" required>
+                    value="{{ old('reference') }}" >
                 @error('reference')
                     <span class="block text-theme-6 mt-2">{{ $message }}</span>
                 @enderror
