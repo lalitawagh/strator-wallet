@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Menu\MenuItem;
 use Kanexy\LedgerFoundation\Enums\Permission;
+use Kanexy\LedgerFoundation\Services\StellerService;
 
 class Helper
 {
@@ -46,5 +47,14 @@ class Helper
         } elseif ($user->hasPermissionTo(Permission::EXCHANGE_RATE_VIEW)) {
             return new MenuItem('Configuration', 'activity', url: route('dashboard.wallet.exchange-rate.index'));
         }
+    }
+
+    public  static function getStellarExchangeRate($info)
+    {
+        $stellerService = new StellerService();
+        $details = $stellerService->getExchangeRate($info);
+
+        return $details;
+       
     }
 }

@@ -97,11 +97,11 @@
                                         </span>
                                     </th>
                                     @if (Gate::check(
-                                        \Kanexy\LedgerFoundation\Policies\AssetClassPolicy::EDIT,
-                                        \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class) ||
-                                        Gate::check(
-                                            \Kanexy\LedgerFoundation\Policies\AssetClassPolicy::DELETE,
-                                            \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class))
+                                            \Kanexy\LedgerFoundation\Policies\AssetClassPolicy::EDIT,
+                                            \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class) ||
+                                            Gate::check(
+                                                \Kanexy\LedgerFoundation\Policies\AssetClassPolicy::DELETE,
+                                                \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class))
                                         <th class="whitespace-nowrap text-left w-20">Action
                                         </th>
                                     @endif
@@ -127,11 +127,11 @@
                                             {{ trans('ledger-foundation::configuration.' . $asset_class_list['status']) }}
                                         </td>
                                         @if (Gate::check(
-                                            \Kanexy\LedgerFoundation\Policies\AssetClassPolicy::EDIT,
-                                            \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class) ||
-                                            Gate::check(
-                                                \Kanexy\LedgerFoundation\Policies\AssetClassPolicy::DELETE,
-                                                \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class))
+                                                \Kanexy\LedgerFoundation\Policies\AssetClassPolicy::EDIT,
+                                                \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class) ||
+                                                Gate::check(
+                                                    \Kanexy\LedgerFoundation\Policies\AssetClassPolicy::DELETE,
+                                                    \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class))
                                             <td class="whitespace-nowrap text-left">
                                                 <div class="dropdown">
                                                     <button id="Settings" class="dropdown-toggle btn px-2 box"
@@ -155,23 +155,12 @@
                                                             @can(\Kanexy\LedgerFoundation\Policies\AssetClassPolicy::DELETE,
                                                                 \Kanexy\LedgerFoundation\Contracts\AssetClassConfiguration::class)
                                                                 <li>
-                                                                    <form
-                                                                        action="{{ route('dashboard.wallet.asset-class.destroy', $asset_class_list['id']) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-
-                                                                        <input type="hidden" name="count"
-                                                                            value="{{ $asset_class_lists->count() }}" />
-                                                                        <input type="hidden" name="previousPage"
-                                                                            value="{{ $asset_class_lists->previousPageUrl() }}" />
-
-                                                                        <button id="Delete" type="submit"
-                                                                            class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                            <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
-                                                                            Delete
-                                                                        </button>
-                                                                    </form>
+                                                                    <button type="button" x-data={}
+                                                                        onclick="Livewire.emit('showModal','{{ route('dashboard.wallet.asset-class.destroy', $asset_class_list['id']) }}','DELETE', 'x-circle','Delete');"
+                                                                        class="w-full flex items-center block p-2 transition duration-300 ease-in-out dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                                        <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
+                                                                        Delete
+                                                                    </button>
                                                                 </li>
                                                             @endcan
                                                         </ul>

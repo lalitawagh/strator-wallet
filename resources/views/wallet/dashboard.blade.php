@@ -89,7 +89,7 @@
                         <h2 class="text-lg font-medium truncate mb-3">
                             Do you want to Open Stellar Account ?
                         </h2>
-                        <a href="{{ route('dashboard.wallet.create-steller-account') }}" class="btn btn-primary"> Open account </a>
+                        <a href="{{ route('dashboard.wallet.crypto-account') }}" class="btn btn-primary"> Create an Crypto Account </a>
                     </div>
                     @else
                     <div class="mt-2">

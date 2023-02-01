@@ -34,36 +34,44 @@ class WalletMenuItem extends Item
     {
         /** @var $user App\Model\User */
         $user = Auth::user();
-
         $menus = [
-            new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])),
+            new MenuItem('Crypto Portfolio', 'activity', url: route('dashboard.wallet.stellar-dashboard', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
         ];
 
-        if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))){
+        $menus[] = new MenuItem('Crypto Exchange', 'activity', url: route('dashboard.wallet.stellar-exchange', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
+        $menus[] = new MenuItem('Crypto Buying', 'activity', url: route('dashboard.wallet.buying-crypto', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
+
+        $childMenus = [
+            new MenuItem('Transactions', 'activity', url: route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]])),
+
+        ];
+
+        if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) {
             if ($user->hasPermissionTo(Permission::WITHDRAW_VIEW)) {
-                $menus[] =  new MenuItem('Withdraw', 'activity', url: route('dashboard.wallet.withdraw.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
+                $childMenus[] =  new MenuItem('Withdraw', 'activity', url: route('dashboard.wallet.withdraw.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
             }
         }
 
-
         if ($user->hasPermissionTo(Permission::PAYOUT_VIEW)) {
-            $menus[] = new MenuItem('Transfer', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()], 'type' => 'transfer']));
-            $menus[] = new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
+            $childMenus[] = new MenuItem('Transfer', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')], 'type' => 'transfer']));
+            $childMenus[] = new MenuItem('Payouts', 'activity', url: route('dashboard.wallet.payout.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
         }
 
         if ($user->hasPermissionTo(Permission::DEPOSIT_VIEW)) {
-            $menus[] = new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]]));
+            $childMenus[] = new MenuItem('Deposits', 'activity', url: route('dashboard.wallet.deposit.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
         }
 
-        // if ($user->hasPermissionTo(EnumsPermission::CONTACT_VIEW)) {
-        //     $menus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.banking.beneficiaries.index', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()], 'ref_type' => 'wallet']));
-        // }
+        if (!is_null(\Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation::getBankingPayment(request()))) {
+            if ($user->hasPermissionTo(EnumsPermission::CONTACT_VIEW)) {
+                $childMenus[] = new MenuItem('Beneficiaries', 'activity', url: route('dashboard.wallet.beneficiaries.index', ['filter' => ['workspace_id' => app('activeWorkspaceId')]]));
+            }
+        }
 
         if ($user->hasAnyPermission([Permission::COMMODITY_TYPE_VIEW, Permission::ASSET_CLASS_VIEW, Permission::ASSET_TYPE_VIEW, Permission::FEE_VIEW, Permission::MASTER_ACCOUNT_VIEW, Permission::LEDGER_VIEW, Permission::EXCHANGE_RATE_VIEW])) {
-            $menus[] = HttpHelper::getConfigRoute();
+            $childMenus[] = HttpHelper::getConfigRoute();
         }
 
-
+        $menus[] = new MenuItem('Fiat Currency', 'activity', childmenu: $childMenus);
 
         return $menus;
     }

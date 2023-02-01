@@ -109,11 +109,11 @@
                                         </span>
                                     </th>
                                     @if (Gate::check(
-                                        \Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::EDIT,
-                                        \Kanexy\LedgerFoundation\Models\ExchangeRate::class) ||
-                                        Gate::check(
-                                            \Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::DELETE,
-                                            \Kanexy\LedgerFoundation\Models\ExchangeRate::class))
+                                            \Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::EDIT,
+                                            \Kanexy\LedgerFoundation\Models\ExchangeRate::class) ||
+                                            Gate::check(
+                                                \Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::DELETE,
+                                                \Kanexy\LedgerFoundation\Models\ExchangeRate::class))
                                         <th class="whitespace-nowrap text-left">Action</th>
                                     @endif
                                 </tr>
@@ -139,11 +139,11 @@
                                         <td class="whitespace-nowrap text-left">{{ $exchange_rate?->valid_date }}</td>
                                         <td class="whitespace-nowrap text-left">{{ $exchange_rate?->exchange_rate }}</td>
                                         @if (Gate::check(
-                                            \Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::EDIT,
-                                            \Kanexy\LedgerFoundation\Models\ExchangeRate::class) ||
-                                            Gate::check(
-                                                \Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::DELETE,
-                                                \Kanexy\LedgerFoundation\Models\ExchangeRate::class))
+                                                \Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::EDIT,
+                                                \Kanexy\LedgerFoundation\Models\ExchangeRate::class) ||
+                                                Gate::check(
+                                                    \Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::DELETE,
+                                                    \Kanexy\LedgerFoundation\Models\ExchangeRate::class))
                                             <td class="whitespace-nowrap text-left">
                                                 <div class="dropdown">
                                                     <button id="Setting" class="dropdown-toggle btn px-2 box"
@@ -168,23 +168,12 @@
                                                             @can(\Kanexy\LedgerFoundation\Policies\ExchangeRatePolicy::DELETE,
                                                                 \Kanexy\LedgerFoundation\Models\ExchangeRate::class)
                                                                 <li>
-                                                                    <form
-                                                                        action="{{ route('dashboard.wallet.exchange-rate.destroy', $exchange_rate?->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-
-                                                                        <input type="hidden" name="count"
-                                                                            value="{{ $exchange_rates->count() }}" />
-                                                                        <input type="hidden" name="previousPage"
-                                                                            value="{{ $exchange_rates->previousPageUrl() }}" />
-
-                                                                        <button id="Delete" type="submit"
-                                                                            class="w-full flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                                                                            <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
-                                                                            Delete
-                                                                        </button>
-                                                                    </form>
+                                                                    <button type="button" x-data={}
+                                                                        onclick="Livewire.emit('showModal','{{ route('dashboard.wallet.exchange-rate.destroy', $exchange_rate?->id) }}','DELETE', 'x-circle','Delete');"
+                                                                        class="w-full flex items-center block p-2 transition duration-300 ease-in-out dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                                        <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
+                                                                        Delete
+                                                                    </button>
                                                                 </li>
                                                             @endcan
                                                         </ul>

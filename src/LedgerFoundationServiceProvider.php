@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Kanexy\Cms\Facades\Cms;
 use Kanexy\Cms\Traits\InteractsWithMigrations;
@@ -16,6 +17,8 @@ use Kanexy\LedgerFoundation\Contracts\Withdraw;
 use Kanexy\LedgerFoundation\Livewire\DepositOtpVerificationComponent;
 use Kanexy\LedgerFoundation\Livewire\DepositWalletComponent;
 use Kanexy\LedgerFoundation\Livewire\LedgerConfigFieldComponent;
+use Kanexy\LedgerFoundation\Livewire\StellarBeneficiary;
+use Kanexy\LedgerFoundation\Livewire\StellarPayoutComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletBeneficiary;
 use Kanexy\LedgerFoundation\Livewire\WalletPayoutComponent;
 use Kanexy\LedgerFoundation\Livewire\OtpWalletVerification;
@@ -24,7 +27,6 @@ use Kanexy\LedgerFoundation\Livewire\WalletTransactionGraph;
 use Kanexy\LedgerFoundation\Livewire\WalletTransactionsListComponent;
 use Kanexy\LedgerFoundation\Livewire\WalletWithdrawComponent;
 use Kanexy\LedgerFoundation\Livewire\WithdrawBeneficiaryComponent;
-use Kanexy\LedgerFoundation\Menu\WalletDashboardMenuItem;
 use Kanexy\LedgerFoundation\Menu\WalletMenuItem;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
@@ -159,8 +161,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         });
 
         Cms::setRedirectRouteAfterLogin(function (User $user) {
-            if($user->is_banking_user == 0)
-            {
+            if ($user->is_banking_user == 0) {
                 return route("dashboard.wallet.wallet-dashboard");
             }
         });
@@ -178,6 +179,8 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Livewire::component('withdraw-beneficiary', WithdrawBeneficiaryComponent::class);
         Livewire::component('wallet-transaction-graph', WalletTransactionGraph::class);
         Livewire::component('otp-wallet-verification-component', OtpWalletVerification::class);
+        Livewire::component('stellar-payout-component', StellarPayoutComponent::class);
+        Livewire::component('stellar-beneficiary', StellarBeneficiary::class);
 
     }
 }

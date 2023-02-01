@@ -18,10 +18,8 @@ class GeneralSettingForm extends Item
 
     public function render()
     {
-        $settings = Setting::pluck('value', 'key');
-        $plans = Plan::get();
-        $countries = Country::get();
-
-        return view("ledger-foundation::setting.general-setting-form", compact('countries', 'plans', 'settings'));
+        $settings = app('settingDetails');
+       
+        return view("ledger-foundation::setting.general-setting-form", compact('settings'));
     }
 }
