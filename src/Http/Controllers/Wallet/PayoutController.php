@@ -34,6 +34,11 @@ class PayoutController extends Controller
 
         $workspace = null;
         $transactionType = 'payout';
+        if(!is_null($request->input('type')))
+        {
+            $transactionType = 'transfer';
+        }
+        
 
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
@@ -44,7 +49,7 @@ class PayoutController extends Controller
                 AllowedFilter::exact('workspace_id'),
             ]);
 
-        $transactions = $transactions->where('status', '!=', TransactionStatus::PENDING_CONFIRMATION)->where("meta->transaction_type", 'payout')->latest()->paginate();
+        $transactions = $transactions->where('status', '!=', TransactionStatus::PENDING_CONFIRMATION)->where("meta->transaction_type", $transactionType)->latest()->paginate();
 
         return view("ledger-foundation::wallet.payout.index", compact('workspace', 'transactions', 'transactionType'));
     }

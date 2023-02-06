@@ -243,7 +243,7 @@
 
                         @foreach ($transactions as $index => $transaction)
                             @if ((isset($transaction->meta['transaction_type']) && @$transaction->meta['transaction_type'] == 'deposit') ||
-                                @$transaction->meta['transaction_type'] == 'payout')
+                                @$transaction->meta['transaction_type'] == 'payout' ||  @$transaction->meta['transaction_type'] == 'transfer')
                                 @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
                             @else
                                 @isset($transaction?->meta['sender_wallet_account_id'])
@@ -256,6 +256,9 @@
                             @if (isset($transaction->meta['transaction_type']) &&
                                 @$transaction->meta['transaction_type'] == 'payout' &&
                                 @$transaction->status == 'pending-confirmation')
+                            @elseif (isset($transaction->meta['transaction_type']) &&
+                                @$transaction->meta['transaction_type'] == 'transfer' &&
+                                @$transaction->status == 'draft')
                             @elseif (isset($transaction->meta['transaction_type']) &&
                                 @$transaction->meta['transaction_type'] == 'withdraw' &&
                                 @$transaction->status == 'draft')
