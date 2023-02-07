@@ -133,9 +133,9 @@
                                         <td class="whitespace-nowrap text-left capitalize">{{ $beneficiary->type }}</td>
                                         <td class="whitespace-nowrap text-left capitalize">
                                             @if ($beneficiary->ref_type == 'wrappex')
-                                                Local
+                                                Withdraw Wallet
                                             @else
-                                                International
+                                                Wallet
                                             @endif
                                         </td>
                                         <td class="whitespace-nowrap text-left">
@@ -159,23 +159,17 @@
                                                             </li>
                                                         @endcan
 
-                                                        <li>
-                                                            @can(\Kanexy\PartnerFoundation\Cxrm\Policies\ContactPolicy::DELETE,
-                                                                $beneficiary)
-                                                                <form
-                                                                    action="{{ route('dashboard.wallet.beneficiaries.destroy', $beneficiary->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
-
-                                                                    <button id="Delete" type="submit"
-                                                                        class="w-full flex items-center block p-2 transition duration-300 ease-in-out dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
-                                                                        <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
-                                                                        Delete
-                                                                    </button>
-                                                                </form>
-                                                            @endcan
-                                                        </li>
+                                                        @can(\Kanexy\PartnerFoundation\Cxrm\Policies\ContactPolicy::DELETE,
+                                                            $beneficiary)
+                                                            <li>
+                                                                <button type="button" x-data={}
+                                                                    onclick="Livewire.emit('showModal','{{ route('dashboard.wallet.beneficiaries.destroy', $beneficiary->id) }}','DELETE', 'x-circle','Delete');"
+                                                                    class="w-full flex items-center block p-2 transition duration-300 ease-in-out dark:bg-dark-1 hover:bg-red-200 dark:hover:bg-dark-2 rounded-md">
+                                                                    <i data-lucide="trash" class="w-4 h-4 mr-2"></i>
+                                                                    Delete
+                                                                </button>
+                                                            </li>
+                                                        @endcan
                                                     </ul>
                                                 </div>
                                             </div>
@@ -194,4 +188,5 @@
             </div>
         </div>
     </div>
+    @livewire('confirmation-modal')
 @endsection
