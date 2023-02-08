@@ -2,6 +2,7 @@
 
 namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,11 @@ class PayoutController extends Controller
 
         $workspace = null;
         $transactionType = 'payout';
+        if(!is_null($request->input('type')))
+        {
+            $transactionType = 'transfer';
+        }
+        
 
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
@@ -43,7 +49,7 @@ class PayoutController extends Controller
                 AllowedFilter::exact('workspace_id'),
             ]);
 
-        $transactions = $transactions->where('status', '!=', TransactionStatus::PENDING_CONFIRMATION)->where("meta->transaction_type", 'payout')->latest()->paginate();
+        $transactions = $transactions->where('status', '!=', TransactionStatus::PENDING_CONFIRMATION)->where("meta->transaction_type", $transactionType)->latest()->paginate();
 
         return view("ledger-foundation::wallet.payout.index", compact('workspace', 'transactions', 'transactionType'));
     }
@@ -71,8 +77,9 @@ class PayoutController extends Controller
         $user = Auth::user();
         $sender_wallet = Wallet::with('ledger')->find($data['wallet']);
         $receiver_ledger = Wallet::find($data['receiver_currency']);
-        $beneficiary = Contact::find($data['beneficiary']);
-        if (is_null($beneficiary)) {
+        $beneficiary = Contact::where(['mobile' => Auth::user()->phone, 'ref_type' => 'wallet'])->beneficiaries()->first();
+       
+        if (is_null(Contact::find($data['beneficiary'])) && is_null($beneficiary)) {
             $data['phone'] = $user->phone;
             $contact = new Contact();
             $contact->display_name = $user->full_name;
@@ -86,13 +93,16 @@ class PayoutController extends Controller
             $contact->status = 'active';
             $contact->meta = ['country_code' => $data['country_code']];
             $contact->holder()->associate($user);
+            $contact->verified_at = Carbon::now();
             $contact->save();
 
-            $beneficiary = Contact::where('holder_id', $data['beneficiary'])->first();
+            $beneficiary = Contact::find($contact->id);
         }
-        $beneficiary_user = User::wherePhone($beneficiary?->mobile)->first();
+       
+        $beneficiary_user =  User::wherePhone($beneficiary?->mobile)->first();
+       
         if ($sender_wallet->id == $receiver_ledger->id && $beneficiary_user->getKey() == $user->getKey()) {
-            return back()->withError("Payout not process with same wallet");
+            return back()->withError("Transaction not process with same wallet");
         }
 
         $beneficiary_wallet = NULL;
@@ -140,7 +150,7 @@ class PayoutController extends Controller
                 'sender_currency' => session('payout_base_currency') ? session('payout_base_currency') : null,
                 'receiver_currency' => session('payout_exchange_currency') ? session('payout_exchange_currency') : null,
                 'exchange_rate' => session('payout_exchange_rate') ? session('payout_exchange_rate') : null,
-                'transaction_type' => 'payout',
+                'transaction_type' => $request->input('type') ? $request->input('type') : 'payout',
                 'balance' => $sender_wallet?->balance ? ($sender_wallet?->balance - ($amount)) : 0,
                 'transfer_status' => 'pending',
                 'account' => 'wallet',
@@ -223,7 +233,7 @@ class PayoutController extends Controller
                 'sender_currency' => $transaction->meta['sender_currency'],
                 'receiver_currency' => $transaction->meta['receiver_currency'],
                 'exchange_rate' => $transaction->meta['exchange_rate'],
-                'transaction_type' => 'payout',
+                'transaction_type' => $transaction->meta['transaction_type'],
                 'balance' => $beneficiary_wallet?->balance ? ($beneficiary_wallet?->balance + $amount) : 0,
                 'transfer_status' => $transaction->meta['transfer_status'],
                 'account' => 'wallet',
@@ -265,6 +275,14 @@ class PayoutController extends Controller
         $beneficiary_wallet->credit($amount);
 
         session()->forget(['payout_fee', 'payout_exchange_rate', 'payout_exchange_currency', 'payout_base_currency', 'payout_wallet', 'payout_currency']);
+
+        if($transaction->meta['transaction_type'] == 'transfer')
+        {
+            return redirect()->route("dashboard.wallet.payout.index", ['filter' => ['workspace_id' => $transaction->workspace_id], 'type' => 'transfer'])->with([
+                'message' => 'Processing the payment. It may take a while.',
+                'status' => 'success',
+            ]);
+        }
 
         return redirect()->route("dashboard.wallet.payout.index", ['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
             'message' => 'Processing the payment. It may take a while.',

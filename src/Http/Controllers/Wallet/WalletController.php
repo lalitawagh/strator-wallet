@@ -32,6 +32,7 @@ class WalletController extends Controller
                     "holder_id" => $workspace->getKey(),
                     "balance" => 0,
                     "status" => WalletStatus::ACTIVE,
+                    'type' => 'wallet'
                 ];
 
                 Wallet::create($data);

@@ -40,4 +40,14 @@ class StellerService
             ->throw()
             ->json();
     }
+
+    public function getCurrentRate($currency)
+    {
+        return Http::acceptJson()
+            ->get('https://kanexy-stellar-uat.azurewebsites.net/api/stellar/getCryptoPrice/'.$currency.'')
+            ->throw()
+            ->json();
+    }
+
+    
 }

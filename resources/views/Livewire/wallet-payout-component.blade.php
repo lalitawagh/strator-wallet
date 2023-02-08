@@ -3,8 +3,9 @@
     @if (request()->input('type') == trans('ledger-foundation::configuration.transfer'))
         @php $typename = 'Transfer'; @endphp
     @else
-        @php $typename = 'Payouts'; @endphp
+        @php $typename = 'Payout'; @endphp
     @endif
+    <input type="hidden" wire:ignore name="type" value="{{ old('type',request()->input('type')) }}">
     <div class="grid grid-cols-12 md:gap-0 lg:gap-3 xl:gap-10 mt-0">
         <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
             <label for="wallet" class="form-label sm:w-30">
@@ -41,9 +42,9 @@
             @if ($typename == 'Transfer')
                 <div class="sm:w-5/6 tillselect-marging">
                     <div class="w-full relative">
-                        <input name="" id="" value="{{ $self_beneficiary->full_name }}" type="text"
+                        <input name="" id="" value="@if(!is_null($self_beneficiary)){{$self_beneficiary->first_name }} {{ $self_beneficiary->last_name }} @else  {{ auth()->user()->full_name }} @endif" type="text"
                             class="form-control" readonly>
-                        <input name="beneficiary" id="beneficiary" value="{{ $self_beneficiary->getKey() }}"
+                        <input name="beneficiary" id="beneficiary" value="@if(!is_null($self_beneficiary)){{ $self_beneficiary->id }} @else 0 @endif"
                             type="text" class="form-control" readonly hidden>
                     </div>
                     @error('beneficiary')

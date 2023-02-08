@@ -1,9 +1,6 @@
-    @extends('ledger-foundation::layouts.master')
-    @push('styles')
-        <link rel="stylesheet" href="{{ asset('dist/css/stellar.css') }}" />
-    @endpush
-
-    @section('content')
+    @extends('ledger-foundation::wallet.stellar.skeleton')
+   
+    @section('stellar-content')
         <div class="grid grid-cols-12 gap-6 mt-5">
             <div class="col-span-12 xl:col-span-8 mt-0">
                 <!-- BEGIN: Single Item -->
@@ -30,7 +27,7 @@
                                                                     <div class="ml-4 mr-auto">
                                                                         <div class="text-xl 2xl:text-2xl font-medium">{{ $stellarCurrency }}
                                                                         </div>
-                                                                        <div class="text-slate-500 text-xs mt-0.5"> {{ date('D M Y')}}
+                                                                        <div class="text-slate-500 text-xs mt-0.5"> {{ date('D d M Y')}}
                                                                         </div>
                                                                     </div>
 
@@ -47,7 +44,7 @@
                                                                     <div class="ml-auto pt-3">
                                                                         <div
                                                                             class="bg-success/20 text-success rounded text-xs px-2 mt-1.5">
-                                                                            +150
+                                                                            {{ \Kanexy\LedgerFoundation\Http\Helper::getStellarCurrentRate($stellarCurrency) }}
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -57,166 +54,6 @@
                                                 </div>
                                             </div>
                                         @endforeach
-                                        
-
-                                        {{-- <div class="h-24 px-2" style="height: 9rem;">
-                                            <div class="h-full bg-slate-100 dark:bg-darkmode-400 rounded-md">
-                                                <div class="h-full font-medium items-center justify-center text-2xl">
-                                                    <div class="sellerSlide-box">
-                                                        <div class="box p-3">
-                                                            <div class="flex">
-                                                                <div
-                                                                    class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
-                                                                    <img src="{{ asset('dist/images/crypto/Solana.png') }}">
-                                                                </div>
-                                                                <div class="ml-4 mr-auto">
-                                                                    <div class="text-xl 2xl:text-2xl font-medium">Solana
-                                                                    </div>
-                                                                    <div class="text-slate-500 text-xs mt-0.5">4 November
-                                                                        2022
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="flex flex-col sm:flex-row">
-                                                                <div class="text-left pt-3 mr-auto">
-                                                                    <div class="text-xl 2xl:text-2xl font-medium">+ 0.84756
-                                                                        BTC
-                                                                    </div>
-                                                                    <div class="text-slate-500 text-xs mt-0.5">$90,510.00
-                                                                    </div>
-                                                                </div>
-                                                                <div class="ml-auto pt-3">
-                                                                    <div
-                                                                        class="bg-pending/10 text-success rounded text-xs px-2 mt-1.5">
-                                                                        +150
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="h-24 px-2" style="height: 9rem;">
-                                            <div class="h-full bg-slate-100 dark:bg-darkmode-400 rounded-md">
-                                                <div class="h-full font-medium items-center justify-center text-2xl">
-                                                    <div class="sellerSlide-box">
-                                                        <div class="box p-3">
-                                                            <div class="flex">
-                                                                <div
-                                                                    class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
-                                                                    <img src="{{ asset('dist/images/crypto/EOSIO.png') }}">
-                                                                </div>
-                                                                <div class="ml-4 mr-auto">
-                                                                    <div class="text-xl 2xl:text-2xl font-medium">EOSIO
-                                                                    </div>
-                                                                    <div class="text-slate-500 text-xs mt-0.5">4 November
-                                                                        2022
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="flex flex-col sm:flex-row">
-                                                                <div class="text-left pt-3 mr-auto">
-                                                                    <div class="text-xl 2xl:text-2xl font-medium">+ 0.84756
-                                                                        BTC
-                                                                    </div>
-                                                                    <div class="text-slate-500 text-xs mt-0.5">$90,510.00
-                                                                    </div>
-                                                                </div>
-                                                                <div class="ml-auto pt-3">
-                                                                    <div
-                                                                        class="bg-primary/10 text-success rounded text-xs px-2 mt-1.5">
-                                                                        +150
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="h-24 px-2" style="height: 9rem;">
-                                            <div class="h-full bg-slate-100 dark:bg-darkmode-400 rounded-md">
-                                                <div class="h-full font-medium items-center justify-center text-2xl">
-                                                    <div class="sellerSlide-box">
-                                                        <div class="box p-3">
-                                                            <div class="flex">
-                                                                <div
-                                                                    class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
-                                                                    <img
-                                                                        src="{{ asset('dist/images/crypto/Cardano.png') }}">
-                                                                </div>
-                                                                <div class="ml-4 mr-auto">
-                                                                    <div class="text-xl 2xl:text-2xl font-medium">Cardano
-                                                                    </div>
-                                                                    <div class="text-slate-500 text-xs mt-0.5">4 November
-                                                                        2022
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="flex flex-col sm:flex-row">
-                                                                <div class="text-left pt-3 mr-auto">
-                                                                    <div class="text-xl 2xl:text-2xl font-medium">+ 0.84756
-                                                                        BTC
-                                                                    </div>
-                                                                    <div class="text-slate-500 text-xs mt-0.5">$90,510.00
-                                                                    </div>
-                                                                </div>
-                                                                <div class="ml-auto pt-3">
-                                                                    <div
-                                                                        class="bg-success/20 text-success rounded text-xs px-2 mt-1.5">
-                                                                        +150
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="h-24 px-2" style="height: 9rem;">
-                                            <div class="h-full bg-slate-100 dark:bg-darkmode-400 rounded-md">
-                                                <div class="h-full font-medium items-center justify-center text-2xl">
-                                                    <div class="sellerSlide-box">
-                                                        <div class="box p-3">
-                                                            <div class="flex">
-                                                                <div
-                                                                    class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
-                                                                    <img src="{{ asset('dist/images/crypto/Monero.png') }}">
-                                                                </div>
-                                                                <div class="ml-4 mr-auto">
-                                                                    <div class="text-xl 2xl:text-2xl font-medium">Monero
-                                                                    </div>
-                                                                    <div class="text-slate-500 text-xs mt-0.5">4 November
-                                                                        2022
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="flex flex-col sm:flex-row">
-                                                                <div class="text-left pt-3 mr-auto">
-                                                                    <div class="text-xl 2xl:text-2xl font-medium">+ 0.84756
-                                                                        BTC
-                                                                    </div>
-                                                                    <div class="text-slate-500 text-xs mt-0.5">$90,510.00
-                                                                    </div>
-                                                                </div>
-                                                                <div class="ml-auto pt-3">
-                                                                    <div
-                                                                        class="bg-primary/10 text-success rounded text-xs px-2 mt-1.5">
-                                                                        +150
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
-
                                     </div>
                                 </div>
                             </div>
@@ -274,7 +111,7 @@
                 </div>
 
                 <!-- BEGIN: Weekly Top Products -->
-                <div class="intro-y box mb-3 p-5">
+                {{-- <div class="intro-y box mb-3 p-5">
                     <div class="col-span-12 mt-0">
                         <div class="intro-y block sm:flex items-center h-10">
                             <h2 class="text-lg font-medium truncate mr-5">
@@ -402,7 +239,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> --}}
                 <!-- END: Weekly Top Products -->
             </div>
             <!-- BEGIN: Weekly Best Sellers -->
@@ -438,149 +275,29 @@
                         @endif
                     </div>
                     <div class="mt-0">
-                        <div class="intro-y">
-                            <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
-                                <div class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
-                                    <img src="{{ asset('dist/images/crypto/Ethereum.png') }}">
-                                </div>
-                                <div class="ml-4 mr-auto">
-                                    <div class="font-medium">Bruce Willis</div>
-                                    <div class="text-success text-xs mt-0.5">4 November 2022</div>
-                                </div>
+                        @foreach ($transactions as $transaction)
+                            <div class="intro-y">
+                                <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
+                                    <div class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
+                                        <img src="{{ asset('dist/images/crypto/Ethereum.png') }}">
+                                    </div>
+                                    <div class="ml-4 mr-auto">
+                                        <div class="font-medium">{{ $transaction->meta['beneficiary_name']}}</div>
+                                        <div class="text-success text-xs mt-0.5">{{ date('d M Y',strtotime($transaction->created_at))}}</div>
+                                    </div>
 
-                                <div class="text-right">
-                                    <div class="font-medium">+ 0.84756 BTC</div>
-                                    <div class="text-slate-500 text-xs mt-0.5">$90,510.00</div>
+                                    <div class="text-right">
+                                        <div class="font-medium">{{ $transaction->amount }} {{ $transaction->meta['receiver_currency'] }}</div>
+                                        <div class="text-slate-500 text-xs mt-0.5">{{ $transaction->amount }} {{ $transaction->meta['sender_currency'] }}</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="intro-y">
-                            <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
-                                <div class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
-                                    <img src="{{ asset('dist/images/crypto/Solana.png') }}">
-                                </div>
-                                <div class="ml-4 mr-auto">
-                                    <div class="font-medium">Angelina Jolie</div>
-                                    <div class="text-success text-xs mt-0.5">8 October 2022</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="font-medium">+ 0.84756 BTC</div>
-                                    <div class="text-slate-500 text-xs mt-0.5">$90,510.00</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="intro-y">
-                            <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
-                                <div class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
-                                    <img src="{{ asset('dist/images/crypto/EOSIO.png') }}">
-                                </div>
-                                <div class="ml-4 mr-auto">
-                                    <div class="font-medium">Denzel Washington</div>
-                                    <div class="text-success text-xs mt-0.5">14 March 2021</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="font-medium">+ 0.84756 BTC</div>
-                                    <div class="text-slate-500 text-xs mt-0.5">$90,510.00</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="intro-y">
-                            <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
-                                <div class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
-                                    <img src="{{ asset('dist/images/crypto/Cardano.png') }}">
-                                </div>
-                                <div class="ml-4 mr-auto">
-                                    <div class="font-medium">Al Pacino</div>
-                                    <div class="text-success text-xs mt-0.5">20 July 2022</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="font-medium">+ 0.84756 BTC</div>
-                                    <div class="text-slate-500 text-xs mt-0.5">$90,510.00</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="intro-y">
-                            <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
-                                <div class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
-                                    <img src="{{ asset('dist/images/crypto/Monero.png') }}">
-                                </div>
-                                <div class="ml-4 mr-auto">
-                                    <div class="font-medium">Angelina Jolie</div>
-                                    <div class="text-success text-xs mt-0.5">8 October 2022</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="font-medium">+ 0.84756 BTC</div>
-                                    <div class="text-slate-500 text-xs mt-0.5">$90,510.00</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="intro-y">
-                            <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
-                                <div class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
-                                    <img src="{{ asset('dist/images/crypto/Tether.png') }}">
-                                </div>
-                                <div class="ml-4 mr-auto">
-                                    <div class="font-medium">Denzel Washington</div>
-                                    <div class="text-success text-xs mt-0.5">14 March 2021</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="font-medium">+ 0.84756 BTC</div>
-                                    <div class="text-slate-500 text-xs mt-0.5">$90,510.00</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="intro-y">
-                            <div class="box px-2 py-2 mb-2 flex items-center zoom-in">
-                                <div class="w-8 h-8 flex-none image-fit rounded-md overflow-hidden">
-                                    <img src="{{ asset('dist/images/crypto/Ethereum.png') }}">
-                                </div>
-                                <div class="ml-4 mr-auto">
-                                    <div class="font-medium">Al Pacino</div>
-                                    <div class="text-success text-xs mt-0.5">20 July 2022</div>
-                                </div>
-                                <div class="text-right">
-                                    <div class="font-medium">+ 0.84756 BTC</div>
-                                    <div class="text-slate-500 text-xs mt-0.5">$90,510.00</div>
-                                </div>
-                            </div>
-                        </div>
-
+                        @endforeach
                     </div>
                 </div>
             </div>
             <!-- END: Weekly Best Sellers -->
         </div>
-
-        <div class="seller-menu gap-6 gap-6 px-5 pt-5 pb-3">
-            <ul>
-                <li>
-                    <a class="cryptoMenu-active" href="">
-                        <img src="{{ asset('dist/images/crypto/menu-icon1.svg') }}">
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('dashboard.wallet.stellar-exchange-rate') }}">
-                        <img src="{{ asset('dist/images/crypto/menu-icon2.svg') }}">
-                    </a>
-                </li>
-                <li>
-                    <a href="">
-                        <img src="{{ asset('dist/images/crypto/menu-icon3.svg') }}">
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="{{ route('dashboard.wallet.stellar-payouts.create', ['filter' => ['workspace_id' => \Kanexy\PartnerFoundation\Core\Helper::activeWorkspaceId()]]) }}">
-                        <img src="{{ asset('dist/images/crypto/menu-icon4.svg') }}">
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-        <!-- END: Weekly Best Sellers -->
-        </div>
-
-        
     @endsection
 
     @push('scripts')
