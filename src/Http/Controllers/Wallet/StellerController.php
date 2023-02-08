@@ -9,7 +9,11 @@ use Kanexy\LedgerFoundation\Dtos\CreateStellerAccountDto;
 use Kanexy\LedgerFoundation\Enums\WalletStatus;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\LedgerFoundation\Services\StellerService;
+use Kanexy\PartnerFoundation\Core\Enums\TransactionStatus;
 use Kanexy\PartnerFoundation\Core\Helper;
+use Spatie\QueryBuilder\AllowedFilter;
+use Kanexy\PartnerFoundation\Core\Models\Transaction;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class StellerController extends Controller
 {
@@ -58,7 +62,15 @@ class StellerController extends Controller
         }
         $stellarCurrencies = ['USDC','XLM','ETH','YUSDC'];
 
-        return view('ledger-foundation::wallet.stellar.dashboard',compact('stellarAccount','stellarCurrencies','stellarBalance'));
+        $transactions = QueryBuilder::for(Transaction::class)
+            ->allowedFilters([
+                AllowedFilter::exact('workspace_id'),
+            ]);
+           
+
+        $transactions = $transactions->where('status', '!=', TransactionStatus::PENDING_CONFIRMATION)->where("meta->account", 'stellar')->latest()->get();
+        
+        return view('ledger-foundation::wallet.stellar.dashboard',compact('stellarAccount','stellarCurrencies','stellarBalance','transactions'));
     }
 
     public function  exchange()
@@ -72,6 +84,8 @@ class StellerController extends Controller
     }
     public function exchangeRateView()
     {
+        $stellarCurrencies = ['USDC','XLM','ETH','YUSDC'];
+       
         $stellarAccount = Wallet::whereHolderId(Helper::activeWorkspaceId())->whereType('steller')->first();
         if(!is_null($stellarAccount))
         {
@@ -82,7 +96,7 @@ class StellerController extends Controller
         $currency = NULL;
         $conversionCurrency = NULL;
         $amount = NULL;
-        return view('ledger-foundation::wallet.stellar.stellar-exchange-rate',compact('amount','exchangedAmount','currency','conversionCurrency','stellarBalance'));
+        return view('ledger-foundation::wallet.stellar.stellar-exchange-rate',compact('amount','exchangedAmount','currency','conversionCurrency','stellarBalance', 'stellarCurrencies'));
     }
 
     public function getExchangeRate(Request $request)

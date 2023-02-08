@@ -1,6 +1,6 @@
-@extends('ledger-foundation::layouts.master')
-
-@section('content')
+@extends('ledger-foundation::wallet.stellar.skeleton')
+   
+@section('stellar-content')
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="col-span-12 xl:col-span-12 mt-0">
             <div class="box dark-black">

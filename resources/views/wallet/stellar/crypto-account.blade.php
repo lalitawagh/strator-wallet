@@ -35,10 +35,7 @@
         <div class="col-span-12 xl:col-span-2 mt-0"></div>
     </div>
 
-    <!--Copy modal-->
-    <!-- BEGIN: Modal Toggle -->
 
-    <!-- BEGIN: Modal Content -->
     <div id="copyModal" class="modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content"> <a data-tw-dismiss="modal" href="javascript:;"> <i data-lucide="x"
@@ -82,8 +79,7 @@
                 </div>
             </div>
         </div>
-    </div> <!-- END: Modal Content -->
-    <!--Copy modal-->
+    </div> 
     <div id="keyQmodal" class="modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

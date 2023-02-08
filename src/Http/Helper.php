@@ -57,4 +57,12 @@ class Helper
         return $details;
        
     }
+
+    public  static function getStellarCurrentRate($currency)
+    {
+        $stellerService = new StellerService();
+        $details = $stellerService->getCurrentRate($currency);
+       
+        return @$details['price'];
+    }
 }

@@ -49,6 +49,7 @@ use Kanexy\PartnerFoundation\Core\Facades\PartnerFoundation;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Kanexy\LedgerFoundation\Livewire\StellarExchangeRateConvert;
 
 class LedgerFoundationServiceProvider extends PackageServiceProvider
 {
@@ -181,6 +182,8 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Livewire::component('otp-wallet-verification-component', OtpWalletVerification::class);
         Livewire::component('stellar-payout-component', StellarPayoutComponent::class);
         Livewire::component('stellar-beneficiary', StellarBeneficiary::class);
+        Livewire::component('stellar-exchange-rate-convert', StellarExchangeRateConvert::class);
+        
 
     }
 }
