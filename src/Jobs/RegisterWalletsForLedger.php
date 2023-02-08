@@ -57,6 +57,7 @@ class RegisterWalletsForLedger implements ShouldQueue
                         "holder_type" => $workspace->getMorphClass(),
                         "holder_id" => $workspace->getKey(),
                         "status" => WalletStatus::ACTIVE,
+                        "type" => 'wallet'
                     ];
 
                     Wallet::updateOrCreate(
