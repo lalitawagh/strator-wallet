@@ -23,6 +23,11 @@
             border-bottom-width: 2px;
             font-weight: 500;
         }
+
+        #multiple-item-slider button {
+            display: block;
+            top: -50px;
+        }
     </style>
 @endpush
 
@@ -45,7 +50,7 @@
                         @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber() && is_null($walletID))
                             <div id="multiple-item-slider" class="wallet-slide preview pb-5" role="tablist">
                                 <div class="preview">
-                                    <div class="mx-0">
+                                    <div class="mx-6">
                                         <div class="multiple-items">
                                             @foreach ($wallets as $key => $wallet)
                                                 @php
