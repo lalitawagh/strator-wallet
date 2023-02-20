@@ -70,7 +70,8 @@ class WalletPayoutComponent extends Component
         $this->selected_currency = old('receiver_currency') ?? '';
         $this->phone = $beneficiaries->first()?->mobile;
         $this->country_code =  $beneficiaries->first()?->meta['country_code'] ?? '231';
-        $this->self_beneficiary = Contact::beneficiaries()->verified()->whereMobile(Auth::user()->phone)->where('ref_type','wallet')->first();
+        $this->self_beneficiary = Contact::whereMobile(Auth::user()->phone)->where('ref_type','wallet')->beneficiaries()->first();
+
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 
