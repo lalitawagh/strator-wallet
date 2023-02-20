@@ -65,9 +65,9 @@
                                                         <div
                                                             class="h-full font-medium items-center justify-center text-2xl">
                                                             <div id="{{ $key }}-tab" href="javascript:void(0);"
-                                                                onclick="walletTabSelect('{{ $wallet->getKey() }}')"
+                                                                onclick="walletTabSelect('{{ $wallet->getKey() }}','{{ $key }}')"
                                                                 data-tw-toggle="tab"
-                                                                class="flex-1 items-center px-3 py-2 mt-2 pb-5 font-medium wallet-slide-tab @if ($key == 0) active @endif">
+                                                                class="flex-1 items-center px-3 py-2 mt-2 pb-5 font-medium wallet-slide-tab @if ($key == 0) active @endif {{ $key }}-tab">
                                                                 <div class="col-span-12 sm:col-span-12 xl:col-span-4 intro-y p-3"
                                                                     id="k-wallet" data-tw-toggle="tab"
                                                                     data-tw-target="#k-wallet">
@@ -247,8 +247,10 @@
 @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
     @push('scripts')
         <script>
-            function walletTabSelect(walletID) {
+            function walletTabSelect(walletID, key) {
                 $('.wallet-slide-tab').removeClass('active');
+                // console.log('#' + key + '-tab');
+                $('.' + key + '-tab').addClass('active');
                 Livewire.emit('transactionList', walletID)
             }
             $(document).ready(function() {
