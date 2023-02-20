@@ -77,7 +77,7 @@ class PayoutController extends Controller
         $user = Auth::user();
         $sender_wallet = Wallet::with('ledger')->find($data['wallet']);
         $receiver_ledger = Wallet::find($data['receiver_currency']);
-        $beneficiary = Contact::where(['mobile' => Auth::user()->phone, 'ref_type' => 'wallet'])->beneficiaries()->first();
+        $beneficiary = Contact::where(['id' => $data['beneficiary'], 'ref_type' => 'wallet'])->beneficiaries()->first();
        
         if (is_null(Contact::find($data['beneficiary'])) && is_null($beneficiary)) {
             $data['phone'] = $user->phone;
