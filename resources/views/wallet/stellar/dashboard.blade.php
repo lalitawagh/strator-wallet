@@ -1,5 +1,5 @@
     @extends('ledger-foundation::wallet.stellar.skeleton')
-   
+
     @section('stellar-content')
         <div class="grid grid-cols-12 gap-6 mt-5">
             <div class="col-span-12 xl:col-span-8 mt-0">
@@ -25,9 +25,11 @@
                                                                             src="{{ asset('dist/images/crypto/Ethereum.png') }}">
                                                                     </div>
                                                                     <div class="ml-4 mr-auto">
-                                                                        <div class="text-xl 2xl:text-2xl font-medium">{{ $stellarCurrency }}
+                                                                        <div class="text-xl 2xl:text-2xl font-medium">
+                                                                            {{ $stellarCurrency }}
                                                                         </div>
-                                                                        <div class="text-slate-500 text-xs mt-0.5"> {{ date('D d M Y')}}
+                                                                        <div class="text-slate-500 text-xs mt-0.5">
+                                                                            {{ date('D d M Y') }}
                                                                         </div>
                                                                     </div>
 
@@ -35,10 +37,15 @@
                                                                 <div class="flex flex-col sm:flex-row">
                                                                     <div class="text-left pt-3 mr-auto">
                                                                         <div class="text-xl 2xl:text-2xl font-medium">
-                                                                            @if(@$stellarBalance['balance'][0]['asset_code'] == $stellarCurrency) {{ @$stellarBalance['balance'][0]['balance'] }} @else 0.00 @endif
+                                                                            @if (@$stellarBalance['balance'][0]['asset_code'] == $stellarCurrency)
+                                                                                {{ @$stellarBalance['balance'][0]['balance'] }}
+                                                                            @else
+                                                                                0.00
+                                                                            @endif
                                                                             {{ $stellarCurrency }}
                                                                         </div>
-                                                                        <div class="text-slate-500 text-xs mt-0.5">$90,510.00
+                                                                        <div class="text-slate-500 text-xs mt-0.5">
+                                                                            $90,510.00
                                                                         </div>
                                                                     </div>
                                                                     <div class="ml-auto pt-3">
@@ -282,13 +289,16 @@
                                         <img src="{{ asset('dist/images/crypto/Ethereum.png') }}">
                                     </div>
                                     <div class="ml-4 mr-auto">
-                                        <div class="font-medium">{{ $transaction->meta['beneficiary_name']}}</div>
-                                        <div class="text-success text-xs mt-0.5">{{ date('d M Y',strtotime($transaction->created_at))}}</div>
+                                        <div class="font-medium">{{ $transaction->meta['beneficiary_name'] }}</div>
+                                        <div class="text-success text-xs mt-0.5">
+                                            {{ date('d M Y', strtotime($transaction->created_at)) }}</div>
                                     </div>
 
                                     <div class="text-right">
-                                        <div class="font-medium">{{ $transaction->amount }} {{ $transaction->meta['receiver_currency'] }}</div>
-                                        <div class="text-slate-500 text-xs mt-0.5">{{ $transaction->amount }} {{ $transaction->meta['sender_currency'] }}</div>
+                                        <div class="font-medium">{{ $transaction->amount }}
+                                            {{ $transaction->meta['receiver_currency'] }}</div>
+                                        <div class="text-slate-500 text-xs mt-0.5">{{ $transaction->amount }}
+                                            {{ $transaction->meta['sender_currency'] }}</div>
                                     </div>
                                 </div>
                             </div>

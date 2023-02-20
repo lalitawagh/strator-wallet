@@ -168,6 +168,5 @@
             </div>
         </div>
     </div>
-    @livewire('confirmation-modal', ['route' => '#', 'method' => 'DELETE', 'icon' => 'x-circle', 'action' => 'Delete'])
 
 @endsection
