@@ -3,6 +3,7 @@
 namespace Kanexy\LedgerFoundation\Livewire;
 
 use Kanexy\Cms\Models\OneTimePassword;
+use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
 use Livewire\Component;
@@ -66,14 +67,19 @@ class DepositOtpVerificationComponent extends Component
 
     public function resendOtp(OneTimePassword $oneTimePassword)
     {
-        if ($this->user->hasActiveOneTimePassword("sms")) {
-            $oneTimePassword = $this->user->oneTimePasswords()->whereType("sms")->first();
+        $otpService = Setting::getValue('transaction_otp_service');
+        if ($this->user->hasActiveOneTimePassword($otpService)) {
+            $oneTimePassword = $this->user->oneTimePasswords()->whereType($otpService)->first();
         }
-
-        if(config('services.disable_sms_service') == false){
+        
+        if($otpService == 'email' && config('services.disable_email_service') == false)
+        {
+            $this->user->notify(new EmailOneTimePasswordNotification($oneTimePassword));
+        }else if($otpService == 'sms' && config('services.disable_sms_service') == false)
+        {
             $this->user->notify(new SmsOneTimePasswordNotification($oneTimePassword));
         }
-        // $this->user->generateOtp("sms");
+
         $this->sent_resend_otp = true;
     }
 
