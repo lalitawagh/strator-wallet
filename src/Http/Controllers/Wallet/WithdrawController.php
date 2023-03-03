@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
+use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
@@ -123,13 +124,26 @@ class WithdrawController extends Controller
         $log->target()->associate($transaction);
         $log->save();
 
-        if (config('services.disable_sms_service') == false) {
-            $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
-        } else {
-            $transaction->generateOtp("sms");
+        $otpService = Setting::getValue('transaction_otp_service');
+        if($otpService == 'email')
+        {
+            if(config('services.disable_email_service') == false){
+                $transaction->notify(new EmailOneTimePasswordNotification($transaction->generateOtp("email")));
+            }
+            else{
+                $transaction->generateOtp("email");
+            }
+        }else
+        {
+            if(config('services.disable_sms_service') == false){
+                $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+            }
+            else{
+                $transaction->generateOtp("sms");
+            }
         }
 
-        return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.withdraw.verify', now()->addMinutes(30), ["id" => $transaction->id]), 'sms');
+        return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.withdraw.verify', now()->addMinutes(30), ["id" => $transaction->id]), $otpService);
     }
 
     public function verify(Request $request)
