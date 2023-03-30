@@ -18,11 +18,18 @@ class StellerService
 
     public function getBalance($publicKey)
     {
-        $url = 'https://kanexy-stellar-uat.azurewebsites.net/api/stellar/getBalance/'.$publicKey;
+        try {
+            $url = 'https://kanexy-stellar-uat.azurewebsites.net/api/stellar/getBalance/'.$publicKey;
        
-        return Http::acceptJson()->get($url)
-            ->throw()
-            ->json();
+            $response =  Http::acceptJson()->get($url)
+                ->throw()
+                ->json();
+            $response['code'] = 200;
+        } catch (\Throwable $th) {
+            $response['code'] = 400;
+            $response['message'] = $th->getMessage();
+        }
+        return $response;
     }
 
     public function exchangeToCrypto(ExchangeToCryptoDto $exchangeToCryptoDto)

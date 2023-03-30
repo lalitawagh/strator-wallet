@@ -8,16 +8,16 @@
         <div class="w-full leading-relaxed text-gray-600 mt-2">
             <div class="mt-5">
                 <div class="flex items-center">
-                    <div class="w-2 h-2 w-2 h-2 bg-gray-700 rounded-full mr-3 rounded-full mr-3"></div>
+                    <div class="w-4 h-2 bg-gray-700 rounded-full mr-3 rounded-full mr-3"></div>
                     <span class="">Sign up to use business toolkit, send invoices and wallet transfer
                         .</span>
                 </div>
                 <div class="flex items-center mt-4">
-                    <div class="w-2 h-2 w-2 h-2 bg-gray-700 rounded-full mr-3 rounded-full mr-3"></div>
+                    <div class="w-2 h-2 bg-gray-700 rounded-full mr-3 rounded-full mr-3"></div>
                     <span class="">Wallet and Merchant accounting.</span>
                 </div>
                 <div class="flex items-center mt-4">
-                    <div class="w-2 h-2 w-2 h-2 bg-gray-700 rounded-full mr-3 rounded-full mr-3"></div>
+                    <div class="w-2 h-2 bg-gray-700 rounded-full mr-3 rounded-full mr-3"></div>
                     <span class="">Leverage our marketplace.</span>
                 </div>
             </div>
