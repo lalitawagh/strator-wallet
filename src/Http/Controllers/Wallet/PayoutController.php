@@ -206,7 +206,10 @@ class PayoutController extends Controller
                 $transaction->generateOtp("sms");
             }
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 835519d037eaf75c26b78bb2a887b3052b3c6152
         return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.payout-verify', now()->addMinutes(30), ["id" => $transaction->id]), $otpService);
     }
 

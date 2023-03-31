@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Kanexy\Banking\Models\Account;
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\Models\OneTimePassword;
+use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\MobileNumber;
