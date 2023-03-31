@@ -29,19 +29,21 @@ class CustomerRegistrationForm extends Item
 
     public function render()
     {
-        $isBankingUser = (request()->input("type", false) == "business" || ! is_null(session('contactId'))) ? 1 : 0;
-
-        $titles = Title::orderBy('id', 'asc')->pluck("name", "id");
-        $nationalities = Nationality::pluck("nationality", "alpha_2_code");
-        $countries = Country::orderBy("name")->pluck("name", "id");
-        $countryWithFlags = Country::orderBy("name")->get();
-        $defaultCountry= NULL;
-        if(!is_null(Setting::getValue("wallet_default_country")))
+        $isBankingUser = !is_null(request()->input("type")) ? 1 : 0;
+        if($isBankingUser == 0)
         {
-            $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
+            $titles = Title::orderBy('id', 'asc')->pluck("name", "id");
+            $nationalities = Nationality::pluck("nationality", "alpha_2_code");
+            $countries = Country::orderBy("name")->pluck("name", "id");
+            $countryWithFlags = Country::orderBy("name")->get();
+            $defaultCountry= NULL;
+            if(!is_null(Setting::getValue("wallet_default_country")))
+            {
+                $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
+            }
+            $user = NULL;
+            return view("ledger-foundation::registration.customer-registration", compact("titles", "countries", "defaultCountry", "countryWithFlags", "isBankingUser", "nationalities", "user"));
         }
-
-        $user = NULL;
-        return view("ledger-foundation::registration.customer-registration", compact("titles", "countries", "defaultCountry", "countryWithFlags", "isBankingUser", "nationalities", "user"));
+        
     }
 }

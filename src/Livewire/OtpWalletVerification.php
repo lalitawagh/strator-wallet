@@ -7,6 +7,7 @@ use Kanexy\Cms\Models\OneTimePassword;
 use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\PartnerFoundation\Core\Helper;
 use Livewire\Component;
 
 class OtpWalletVerification extends Component
@@ -64,11 +65,11 @@ class OtpWalletVerification extends Component
     }
 
     public function verifyOtp()
-    {
+    { 
         $data = $this->validate([
             'code' => 'required',
         ]);
-
+       
         $this->contact = session('contact');
 
         $oneTimePassword = $this->contact->oneTimePasswords()->first();
@@ -84,6 +85,11 @@ class OtpWalletVerification extends Component
                 ]);
             } elseif ($this->type == 'transfer') {
                 return redirect()->route('dashboard.wallet.payout.create', ['workspace_id' => $this->workspace, 'type' => $this->type])->with([
+                    'status' => 'success',
+                    'message' => 'The beneficiary created successfully.',
+                ]);
+            }elseif ($this->type == 'stellar') {
+                return redirect()->route('dashboard.wallet.stellar-payouts.create', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])->with([
                     'status' => 'success',
                     'message' => 'The beneficiary created successfully.',
                 ]);
@@ -114,6 +120,11 @@ class OtpWalletVerification extends Component
                 ]);
             } elseif ($this->type == 'transfer') {
                 return redirect()->route('dashboard.wallet.payout.create', ['workspace_id' => $this->workspace, 'type' => $this->type])->with([
+                    'status' => 'success',
+                    'message' => 'The beneficiary created successfully.',
+                ]);
+            }elseif ($this->type == 'stellar') {
+                return redirect()->route('dashboard.wallet.stellar-payouts.create', ['filter' => ['workspace_id' => Helper::activeWorkspaceId()]])->with([
                     'status' => 'success',
                     'message' => 'The beneficiary created successfully.',
                 ]);

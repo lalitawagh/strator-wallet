@@ -9,15 +9,13 @@
                         href="{{ route('dashboard.wallet.deposit.create', ['workspace_id' => $workspace->id]) }}"
                         class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 py-2 sm:mb-0 mb-2">Deposit</a>
                 @elseif ($transactionType == 'payout')
-                    @if (request()->input('type') == trans('ledger-foundation::configuration.transfer'))
-                        <a id="walletTransfertBtn"
-                            href="{{ route('dashboard.wallet.payout.create', ['workspace_id' => $workspace->id, 'type' => request()->input('type')]) }}"
-                            class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Transfer</a>
-                    @else
                         <a id="walletPayoutBtn"
                             href="{{ route('dashboard.wallet.payout.create', ['workspace_id' => $workspace->id]) }}"
                             class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Payout</a>
-                    @endif
+                @elseif ($transactionType == 'transfer')
+                        <a id="walletTransfertBtn"
+                            href="{{ route('dashboard.wallet.payout.create', ['workspace_id' => $workspace->id, 'type' => request()->input('type')]) }}"
+                            class="btn btn-sm btn-primary shadow-md sm:ml-2 sm:ml-2 sm:-mt-2 sm:mb-0 mb-2">Transfer</a>
                 @endif
             @endif
         </div>
@@ -243,7 +241,7 @@
 
                         @foreach ($transactions as $index => $transaction)
                             @if ((isset($transaction->meta['transaction_type']) && @$transaction->meta['transaction_type'] == 'deposit') ||
-                                @$transaction->meta['transaction_type'] == 'payout')
+                                @$transaction->meta['transaction_type'] == 'payout' ||  @$transaction->meta['transaction_type'] == 'transfer')
                                 @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
                             @else
                                 @isset($transaction?->meta['sender_wallet_account_id'])
@@ -256,6 +254,9 @@
                             @if (isset($transaction->meta['transaction_type']) &&
                                 @$transaction->meta['transaction_type'] == 'payout' &&
                                 @$transaction->status == 'pending-confirmation')
+                            @elseif (isset($transaction->meta['transaction_type']) &&
+                                @$transaction->meta['transaction_type'] == 'transfer' &&
+                                @$transaction->status == 'draft')
                             @elseif (isset($transaction->meta['transaction_type']) &&
                                 @$transaction->meta['transaction_type'] == 'withdraw' &&
                                 @$transaction->status == 'draft')
@@ -391,9 +392,8 @@
                                                                 </a></li>
                                                         @endif
 
-                                                        @if ($transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
-                                                            <li><a id="PartnerAccepted"
-                                                                    href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
+                                                        @if ($transaction->status == \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::PENDING_CONFIRMATION)
+                                                            <li><a id="PartnerAccepted" href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => $transactionType]) }}"
                                                                     class="flex items-center block dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white">
                                                                     <x-feathericon-check class="w-4 h-4 mr-1" />
                                                                     Accepted

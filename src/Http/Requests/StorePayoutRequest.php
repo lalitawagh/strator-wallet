@@ -34,11 +34,12 @@ class StorePayoutRequest extends FormRequest
     public function messages()
     {
         return [
-            'wallet.required'            => 'Please Select Transfer Account.',
-            'receiver_currency.required' => 'Please Select Acceptor Account.',
+            'wallet.required'            => 'Please Select Transfer  from.',
+            'receiver_currency.required' => 'Please Select Transfer To.',
             'beneficiary.required'       => 'Enter Beneficiary Account.',
-            'amount.required'            => 'Enter the Amount to Pay.',
-            'balance.required'           => 'Check Your Balance Once.',
+            'amount.required'            => 'Please Select Amount to pay.',
+            'balance.required'           => 'Please Check Your Balance.',
         ];
+
     }
 }

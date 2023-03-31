@@ -372,9 +372,8 @@
                                                                                                 @endcan
                                                                                                 <li>
                                                                                                     @if (\Illuminate\Support\Facades\Auth::user()->isSuperAdmin() &&
-                                                                                                        $transaction->status == \Kanexy\PartnerFoundation\Banking\Enums\TransactionStatus::PENDING_CONFIRMATION)
-                                                                                                        <a id="Accepted"
-                                                                                                            href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => 'Withdraw']) }}"
+                                                                                                        $transaction->status == \Kanexy\PartnerFoundation\Core\Enums\TransactionStatus::PENDING_CONFIRMATION)
+                                                                                                        <a id="Accepted" href="{{ route('dashboard.wallet.withdrawAccepted', ['id' => $transaction->getKey(), 'type' => 'Withdraw']) }}"
                                                                                                             class="flex items-center block p-2 transition duration-300 ease-in-out dropdown-item flex items-center block p-2 transition duration-300 ease-in-out bg-white hover:bg-orange-200">
                                                                                                             <x-feathericon-check
                                                                                                                 class="w-4 h-4 mr-1" />

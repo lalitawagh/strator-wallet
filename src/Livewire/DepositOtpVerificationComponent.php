@@ -41,9 +41,12 @@ class DepositOtpVerificationComponent extends Component
         if (isset($manualOtp) && ($manualOtp == $data['code'])) {
             $oneTimePassword->update(['verified_at' => now()]);
 
+      
             if (!is_null(session()->get('deposit_request.payment_method'))) {
                 return redirect()->route("dashboard.wallet.deposit-payment", ['workspace_id' => session()->get('deposit_request.workspace_id')]);
-            } else {
+            }else if (!is_null(session()->get('stellar_request')) && session()->get('stellar_request.type') == 'stellar') { 
+                return redirect()->route("dashboard.wallet.stellar-payment-method", ['workspace_id' => session()->get('stellar_request.workspace_id')]);
+            }else {
 
                 return redirect()->route("dashboard.wallet.store-payment-details", ['workspace_id' => session()->get('deposit_request.workspace_id')]);
             }
@@ -58,7 +61,9 @@ class DepositOtpVerificationComponent extends Component
 
             if (!is_null(session()->get('deposit_request.payment_method'))) {
                 return redirect()->route("dashboard.wallet.deposit-payment", ['workspace_id' => session()->get('deposit_request.workspace_id')]);
-            } else {
+            } else if (!is_null(session()->get('stellar_request')) && session()->get('stellar_request.type') == 'stellar') { 
+                return redirect()->route("dashboard.wallet.stellar-payment-method", ['workspace_id' => session()->get('stellar_request.workspace_id')]);
+            }else {
 
                 return redirect()->route("dashboard.wallet.store-payment-details", ['workspace_id' => session()->get('deposit_request.workspace_id')]);
             }
@@ -71,7 +76,6 @@ class DepositOtpVerificationComponent extends Component
         if ($this->user->hasActiveOneTimePassword($otpService)) {
             $oneTimePassword = $this->user->oneTimePasswords()->whereType($otpService)->first();
         }
-        
         if($otpService == 'email' && config('services.disable_email_service') == false)
         {
             $this->user->notify(new EmailOneTimePasswordNotification($oneTimePassword));

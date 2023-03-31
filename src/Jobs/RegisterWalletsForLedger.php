@@ -2,6 +2,7 @@
 
 namespace Kanexy\LedgerFoundation\Jobs;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -9,7 +10,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Kanexy\LedgerFoundation\Enums\WalletStatus;
 use Kanexy\LedgerFoundation\Model\Wallet;
-use Kanexy\Cms\Models\User;
 
 class RegisterWalletsForLedger implements ShouldQueue
 {
@@ -57,6 +57,7 @@ class RegisterWalletsForLedger implements ShouldQueue
                         "holder_type" => $workspace->getMorphClass(),
                         "holder_id" => $workspace->getKey(),
                         "status" => WalletStatus::ACTIVE,
+                        "type" => 'wallet'
                     ];
 
                     Wallet::updateOrCreate(

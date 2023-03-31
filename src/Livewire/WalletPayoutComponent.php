@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Model\ExchangeRate;
-use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Livewire\Component;
@@ -71,7 +70,8 @@ class WalletPayoutComponent extends Component
         $this->selected_currency = old('receiver_currency') ?? '';
         $this->phone = $beneficiaries->first()?->mobile;
         $this->country_code =  $beneficiaries->first()?->meta['country_code'] ?? '231';
-        $this->self_beneficiary = Auth::user();
+        $this->self_beneficiary = Contact::whereMobile(Auth::user()->phone)->where('ref_type','wallet')->beneficiaries()->first();
+
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
 

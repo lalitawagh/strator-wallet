@@ -5,6 +5,7 @@ namespace Kanexy\LedgerFoundation\Livewire;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Kanexy\Banking\Models\Account;
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\Models\OneTimePassword;
 use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
@@ -12,10 +13,9 @@ use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\MobileNumber;
 use Kanexy\Cms\Setting\Models\Setting;
-use Kanexy\PartnerFoundation\Banking\Enums\BankEnum;
-use Kanexy\PartnerFoundation\Banking\Models\Account;
-use Kanexy\PartnerFoundation\Core\Dtos\CreateBeneficiaryDto;
-use Kanexy\PartnerFoundation\Core\Services\WrappexService;
+use Kanexy\Banking\Dtos\CreateBeneficiaryDto;
+use Kanexy\Banking\Services\WrappexService;
+use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
 use Kanexy\PartnerFoundation\Workspace\Models\Workspace;
@@ -103,9 +103,9 @@ class WithdrawBeneficiaryComponent extends Component
             'notes' => 'nullable',
             'country_code' => 'nullable',
             'account_number' => 'required|digits:8',
-            'account_name' => 'required|regex:/(^([a-zA-Z]+)(\d+)?$)/u|max:255',
+            'account_name' => ['required',new AlphaSpaces, 'string'],
             'sort_code' => 'required|digits:6',
-        ],['account_name.regex'=>'Account Name Contain Only Letters and Spaces.']);
+        ]);
 
         $data['classification'] = $this->classification;
 
@@ -119,66 +119,72 @@ class WithdrawBeneficiaryComponent extends Component
 
             $ukMasterAccount =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', 231);
             $account = Account::whereAccountNumber($ukMasterAccount['account_number'])->first();
-            $workspace = Workspace::findOrFail($account->holder_id);
-
-            $info['first_name'] = $data['first_name'];
-            $info['middle_name'] = $data['middle_name'];
-            $info['last_name'] = $data['last_name'];
-            $info['email'] = $data['email'];
-            $info['display_name'] = implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]);
-            $info['meta'] = [
-                'bank_account_number' => $data['account_number'],
-                'bank_code' => $data['sort_code'],
-                'bank_code_type' => BankEnum::SORTCODE,
-                'beneficiary_type' => 'withdraw',
-                'bank_account_name' => $data['account_name'],
-            ];
-            $info['classification'] = $this->classification;
-            $data['meta'] = $info['meta'];
-
-
-            $service = new WrappexService;
-            $beneficiaryRefId = $service->createBeneficiary(
-                new CreateBeneficiaryDto($workspace->ref_id, $info)
-            );
-
-            $data['workspace_id'] = $user->workspaces()->first()?->id;
-            $data['ref_id']       = $beneficiaryRefId;
-            $data['ref_type']     = 'wrappex';
-
-            /** @var Contact $contact */
-            $contact = Contact::create($data);
-
-            event(new ContactCreated($contact));
-
-            /** @var \App\Models\User $user */
-            $user = auth()->user();
-            $this->contact = $contact;
-
-            $otpService = Setting::getValue('transaction_otp_service');
-            if($otpService == 'email')
+            $workspace = Workspace::find($account?->holder_id);
+            if(is_null($workspace))
             {
-                if(config('services.disable_email_service') == false){
-                    $contact->notify(new EmailOneTimePasswordNotification($contact->generateOtp("email")));
-                }
-                else{
-                    $contact->generateOtp("email");
-                }
+                $this->addError('beneficiary','Please check your master account details which you provided that one is incorrect');
             }else
             {
-                if(config('services.disable_sms_service') == false){
-                    $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+                $info['first_name'] = $data['first_name'];
+                $info['middle_name'] = $data['middle_name'];
+                $info['last_name'] = $data['last_name'];
+                $info['email'] = $data['email'];
+                $info['display_name'] = implode(' ', [$data['first_name'], $data['middle_name'], $data['last_name']]);
+                $info['meta'] = [
+                    'bank_account_number' => $data['account_number'],
+                    'bank_code' => $data['sort_code'],
+                    'bank_code_type' => 'sort-code',
+                    'beneficiary_type' => 'withdraw',
+                    'bank_account_name' => $data['account_name'],
+                ];
+                $info['classification'] = $this->classification;
+                $data['meta'] = $info['meta'];
+
+
+                $service = new WrappexService;
+                $beneficiaryRefId = $service->createBeneficiary(
+                    new CreateBeneficiaryDto($workspace->ref_id, $info)
+                );
+
+                $data['workspace_id'] = $user->workspaces()->first()?->id;
+                $data['ref_id']       = $beneficiaryRefId;
+                $data['ref_type']     = 'wrappex';
+
+                /** @var Contact $contact */
+                $contact = Contact::create($data);
+
+                event(new ContactCreated($contact));
+
+                /** @var \App\Models\User $user */
+                $user = auth()->user();
+                $this->contact = $contact;
+
+                $otpService = Setting::getValue('transaction_otp_service');
+                if($otpService == 'email')
+                {
+                    if(config('services.disable_email_service') == false){
+                        $contact->notify(new EmailOneTimePasswordNotification($contact->generateOtp("email")));
+                    }
+                    else{
+                        $contact->generateOtp("email");
+                    }
+                }else
+                {
+                    if(config('services.disable_sms_service') == false){
+                        $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+                    }
+                    else{
+                        $contact->generateOtp("sms");
+                    }
                 }
-                else{
-                    $contact->generateOtp("sms");
-                }
+                // $contact->generateOtp("sms");
+                $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
+                //$user->generateOtp("sms");
+                session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);
+                $this->beneficiary_created = true;
+                $this->dispatchBrowserEvent('showOtpModel');
             }
-            // $contact->generateOtp("sms");
-            $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
-            //$user->generateOtp("sms");
-            session(['contact' => $contact, 'oneTimePassword' => $this->oneTimePassword]);
-            $this->beneficiary_created = true;
-            $this->dispatchBrowserEvent('showOtpModel');
+            
         }
 
     }
