@@ -7,9 +7,11 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Helper;
 use Kanexy\Cms\Models\OneTimePassword;
+use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Rules\AlphaSpaces;
 use Kanexy\Cms\Rules\MobileNumber;
+use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\LedgerFoundation\Model\Wallet;
 use Kanexy\PartnerFoundation\Cxrm\Events\ContactCreated;
 use Kanexy\PartnerFoundation\Cxrm\Models\Contact;
@@ -152,10 +154,23 @@ class StellarBeneficiary extends Component
 
                 $this->contact = $contact;
 
-                if(config('services.disable_sms_service') == false){
-                    $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
-                }else{
-                    $contact->generateOtp("sms");
+                $otpService = Setting::getValue('transaction_otp_service');
+                if($otpService == 'email')
+                {
+                    if(config('services.disable_email_service') == false){
+                        $contact->notify(new EmailOneTimePasswordNotification($contact->generateOtp("email")));
+                    }
+                    else{
+                        $contact->generateOtp("email");
+                    }
+                }else
+                {
+                    if(config('services.disable_sms_service') == false){
+                        $contact->notify(new SmsOneTimePasswordNotification($contact->generateOtp("sms")));
+                    }
+                    else{
+                        $contact->generateOtp("sms");
+                    }
                 }
 
                 $this->oneTimePassword = $this->contact->oneTimePasswords()->first()->id;
@@ -174,7 +189,12 @@ class StellarBeneficiary extends Component
             $oneTimePassword->update(['code' => rand(100000, 999999), 'expires_at' => now()->addMinutes(OneTimePassword::getExpiringDuration())]);
         }
 
-        if(config('services.disable_sms_service') == false){
+        $otpService = Setting::getValue('transaction_otp_service');
+        if($otpService == 'email' && config('services.disable_email_service') == false)
+        {
+            $oneTimePassword->holder->notify(new EmailOneTimePasswordNotification($oneTimePassword));
+        }else if($otpService == 'sms' && config('services.disable_sms_service') == false)
+        {
             $oneTimePassword->holder->notify(new SmsOneTimePasswordNotification($oneTimePassword));
         }
 

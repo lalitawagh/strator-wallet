@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation\Livewire;
 
 use Carbon\Carbon;
 use Kanexy\Cms\Models\OneTimePassword;
+use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
 use Kanexy\PartnerFoundation\Core\Helper;
@@ -51,7 +52,12 @@ class OtpWalletVerification extends Component
             $oneTimePassword->update(['code' => rand(100000, 999999), 'expires_at' => now()->addMinutes(OneTimePassword::getExpiringDuration())]);
         }
         
-        if(config('services.disable_sms_service') == false){
+        $otpService = Setting::getValue('transaction_otp_service');
+        if($otpService == 'email' && config('services.disable_email_service') == false)
+        {
+            $oneTimePassword->holder->notify(new EmailOneTimePasswordNotification($oneTimePassword));
+        }else if($otpService == 'sms' && config('services.disable_sms_service') == false)
+        {
             $oneTimePassword->holder->notify(new SmsOneTimePasswordNotification($oneTimePassword));
         }
 
