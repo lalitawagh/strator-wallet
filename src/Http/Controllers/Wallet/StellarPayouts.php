@@ -19,6 +19,7 @@ use Kanexy\LedgerFoundation\Services\StellerService;
 use Kanexy\PartnerFoundation\Core\Enums\TransactionStatus;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Illuminate\Support\Str;
+use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\PartnerFoundation\Core\Models\Log;
 
 class StellarPayouts extends Controller
@@ -128,13 +129,26 @@ class StellarPayouts extends Controller
         $log->target()->associate($transaction);
         $log->save();
 
-        if (config('services.disable_sms_service') == false) {
-            $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
-        } else {
-            $transaction->generateOtp("sms");
+        $otpService = Setting::getValue('transaction_otp_service');
+        if($otpService == 'email')
+        {
+            if(config('services.disable_email_service') == false){
+                $transaction->notify(new EmailOneTimePasswordNotification($transaction->generateOtp("email")));
+            }
+            else{
+                $transaction->generateOtp("email");
+            }
+        }else
+        {
+            if(config('services.disable_sms_service') == false){
+                $transaction->notify(new SmsOneTimePasswordNotification($transaction->generateOtp("sms")));
+            }
+            else{
+                $transaction->generateOtp("sms");
+            }
         }
 
-        return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.stellar-payout-verify', now()->addMinutes(30), ["id" => $transaction->id]), 'sms');
+        return $transaction->redirectForVerification(URL::temporarySignedRoute('dashboard.wallet.stellar-payout-verify', now()->addMinutes(30), ["id" => $transaction->id]), $otpService);
 
     }
 
