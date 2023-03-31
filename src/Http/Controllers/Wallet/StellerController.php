@@ -54,7 +54,7 @@ class StellerController extends Controller
         if(!is_null($stellarAccount))
         {
             $stellarBalance = $this->stellerService->getBalance($stellarAccount?->meta['publicKey']);
-            if(isset($stellarBalance['balance']))
+            if(isset($stellarBalance['code']) && $stellarBalance['code'] == 200)
             {
                 $stellarAccount->balance = $stellarBalance['balance'][0]['balance'];
                 $stellarAccount->update();

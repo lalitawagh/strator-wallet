@@ -29,11 +29,9 @@ class CustomerRegistrationForm extends Item
 
     public function render()
     {
-        if(is_null(request()->input("type")))
+        $isBankingUser = !is_null(request()->input("type")) ? 1 : 0;
+        if($isBankingUser == 0)
         {
-           
-            $isBankingUser = (request()->input("type", false) == "business" || ! is_null(session('contactId'))) ? 1 : 0;
-
             $titles = Title::orderBy('id', 'asc')->pluck("name", "id");
             $nationalities = Nationality::pluck("nationality", "alpha_2_code");
             $countries = Country::orderBy("name")->pluck("name", "id");
