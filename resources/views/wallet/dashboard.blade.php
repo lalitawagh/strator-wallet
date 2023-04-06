@@ -24,7 +24,7 @@
                         </h2>
                         @foreach ($transactions as $transaction)
                             @if ((isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit') ||
-                                $transaction->meta['transaction_type'] == 'payout')
+                                $transaction->meta['transaction_type'] == 'payout' ||  $transaction->meta['transaction_type'] == 'transfer')
                                 @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
                             @else
                                 @if(!is_null(@$transaction?->meta['sender_wallet_account_id']))
