@@ -27,7 +27,9 @@
                                 $transaction->meta['transaction_type'] == 'payout')
                                 @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
                             @else
-                                @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->meta['sender_wallet_account_id'])->first(); @endphp
+                                @if(!is_null(@$transaction?->meta['sender_wallet_account_id']))
+                                    @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction?->meta['sender_wallet_account_id'])->first();@endphp
+                                @endif
                             @endif
                             @php
                                 $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet?->ledger_id)->first();
