@@ -182,8 +182,12 @@ class DepositController extends Controller
 
         $wallet = Wallet::find($details['wallet']);
 
+        /* TODO : we need to fix master account crud*/
+        $country = Country::whereCurrency($details['currency'])->first();
+        $countryId = ($details['currency'] == 'GBP') ? 231 : $country->id;
+        /* TODO : we need to fix master account crud*/
 
-        $depositMasterAccountDetails =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', $user->country_id);
+        $depositMasterAccountDetails =  collect(Setting::getValue('wallet_master_accounts',[]))->firstWhere('country', $countryId);
 
         if (is_null($details)) {
             return redirect()->route('dashboard.wallet.deposit.create');

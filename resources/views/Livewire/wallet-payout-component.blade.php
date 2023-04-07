@@ -219,7 +219,9 @@
         @if (isset($fee) && is_numeric($amount))
             @php
                 $exchange_rate = $exchange_rate ?? number_format((float) $exchange_rate, 2, '.', '');
+                
                 $total = $exchange_rate != 0 ? ($amount - $fee) / $exchange_rate : '';
+               
             @endphp
 
             <div class="col-span-12 md:col-span-8 lg:col-span-6 sm:col-span-8 form-inline mt-2">
@@ -227,8 +229,8 @@
                 <div class="sm:w-5/6">
                     Ex Fees : {{ number_format((float) $fee, 2, '.', '') }}, Ex Rate :
                     @isset($exchange_rate)
-                        1 {{ $base_currency }} = {{ number_format((float) $exchange_rate, 2, '.', '') }}
-                        {{ $exchange_currency }}
+                        1 {{ $exchange_currency }} = {{ number_format((float) $exchange_rate, 2, '.', '') }}
+                        {{ $base_currency }}
                     @endisset
                     @isset($amount)
                         <p>Debit : {{ number_format((float) $amount, 2, '.', '') }} {{ $exchange_currency }} , Credit :

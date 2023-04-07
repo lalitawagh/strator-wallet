@@ -24,11 +24,11 @@
                         </h2>
                         @foreach ($transactions as $transaction)
                             @if ((isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit') ||
-                                $transaction->meta['transaction_type'] == 'payout' || $transaction->meta['transaction_type'] == 'transfer')
+                                $transaction->meta['transaction_type'] == 'payout' ||  $transaction->meta['transaction_type'] == 'transfer')
                                 @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
                             @else
                                 @if(!is_null(@$transaction?->meta['sender_wallet_account_id']))
-                                    @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction?->meta['sender_wallet_account_id'])->first();@endphp
+                                @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction?->meta['sender_wallet_account_id'])->first();@endphp
                                 @endif
                             @endif
                             @php
@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-12 gap-3">
+            <!-- <div class="grid grid-cols-12 gap-3">
                 <div class="col-span-12 md:col-span-4 lg:col-span-4 mt-3">
                     <div
                     class="dark:bg-darkmode-400 dark:border-darkmode-400 shadow-lg p-3 rounded-2xl bg-white col-span-12 md:col-span-4 lg:col-span-4 mt-3">
@@ -103,7 +103,7 @@
                     @endif
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
         </div>
