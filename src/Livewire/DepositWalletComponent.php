@@ -53,8 +53,11 @@ class DepositWalletComponent extends Component
     {
         $this->selected_wallet = $base_currency;
         $this->dispatchBrowserEvent('UpdateLivewireSelect');
+        
         $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
         $exchange_wallet = Ledger::whereId($this->currency)->first();
+
+     
 
         $base_asset_category = $sender_wallet->ledger?->asset_category;
         $exchange_asset_category = $exchange_wallet?->asset_category;
