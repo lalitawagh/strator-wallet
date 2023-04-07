@@ -111,14 +111,11 @@ class StellarPayoutComponent extends Component
                 'conversionCurrency' =>  $this->exchange_currency,
             ];
            
-            
-         
             $details = Helper::getStellarExchangeRate($info);
     
             $exchangedAmount = $details['exchangedAmount'];
             $this->exchange_rate =  @$exchangedAmount ?? 1;
             
-           
             session([
                 'payout_fee' => $this->fee,
                 'payout_exchange_rate' => $this->exchange_rate,
@@ -129,7 +126,6 @@ class StellarPayoutComponent extends Component
             ]);
         }
 
-       
     }
 
 
@@ -163,7 +159,6 @@ class StellarPayoutComponent extends Component
             ];
             
             
-        
             $details = Helper::getStellarExchangeRate($info);
         
             $exchangedAmount = $details['exchangedAmount'];
