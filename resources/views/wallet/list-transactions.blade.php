@@ -240,7 +240,7 @@
                     @isset($transactions)
 
                         @foreach ($transactions as $index => $transaction)
-                            @if ((isset($transaction->meta['transaction_type']) && @$transaction->meta['transaction_type'] == 'deposit') ||
+                            @if ((isset($transaction->meta['transaction_type']) && $transaction->ref_type == 'wallet' && @$transaction->meta['transaction_type'] == 'deposit') ||
                                 @$transaction->meta['transaction_type'] == 'payout' ||  @$transaction->meta['transaction_type'] == 'transfer')
                                 @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
                             @else

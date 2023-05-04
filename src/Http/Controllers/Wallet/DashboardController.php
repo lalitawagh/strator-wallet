@@ -19,6 +19,7 @@ class DashboardController extends Controller
 
     public function index()
     {
+     
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
         $wallets = Wallet::whereHolderId($workspace?->id)->get();
