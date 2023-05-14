@@ -162,7 +162,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         });
 
         Cms::setRedirectRouteAfterLogin(function (User $user) {
-            if ($user->is_banking_user == 0 && is_null($user->type)) {
+            if ($user->is_banking_user == 0) {
                 return route("dashboard.wallet.wallet-dashboard");
             }
         });
