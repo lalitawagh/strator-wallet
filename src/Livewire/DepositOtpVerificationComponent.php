@@ -76,7 +76,6 @@ class DepositOtpVerificationComponent extends Component
         if ($this->user->hasActiveOneTimePassword($otpService)) {
             $oneTimePassword = $this->user->oneTimePasswords()->whereType($otpService)->first();
         }
-
         if($otpService == 'email' && config('services.disable_email_service') == false)
         {
             $this->user->notify(new EmailOneTimePasswordNotification($oneTimePassword));

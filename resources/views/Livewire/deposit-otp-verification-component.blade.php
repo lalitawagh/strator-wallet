@@ -2,6 +2,7 @@
     @if ($sent_resend_otp == true)
         <h4 class="text-success mt-1">OTP Resend Success</h4>
     @else
+
         <h3 class="text-success">OTP is sent to your registered  
             @if(Kanexy\Cms\Setting\Models\Setting::getValue('transaction_otp_service') == 'sms')
             mobile number
@@ -9,6 +10,7 @@
             email
             @endif
             . Please enter.</h3>
+
     @endif
     @if(Kanexy\Cms\Setting\Models\Setting::getValue('transaction_otp_service') == 'sms')
         <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
