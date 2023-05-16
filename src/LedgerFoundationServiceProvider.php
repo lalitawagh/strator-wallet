@@ -162,11 +162,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         });
 
         Cms::setRedirectRouteAfterLogin(function (User $user) {
-<<<<<<< HEAD
-            if ($user->is_banking_user == 0 && is_null($user->type)) {
-=======
             if ($user->is_banking_user == 0) {
->>>>>>> c47185aa523cbaf2a0f983ec7ab00e341b303187
                 return route("dashboard.wallet.wallet-dashboard");
             }
         });
@@ -188,9 +184,5 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Livewire::component('stellar-beneficiary', StellarBeneficiary::class);
         Livewire::component('stellar-exchange-rate-convert', StellarExchangeRateConvert::class);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> c47185aa523cbaf2a0f983ec7ab00e341b303187
     }
 }
