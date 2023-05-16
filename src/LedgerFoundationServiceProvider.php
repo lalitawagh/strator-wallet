@@ -162,7 +162,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         });
 
         Cms::setRedirectRouteAfterLogin(function (User $user) {
-            if ($user->is_banking_user == 0) {
+            if ($user->is_banking_user == 0 && is_null($user->type)) {
                 return route("dashboard.wallet.wallet-dashboard");
             }
         });
@@ -183,6 +183,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Livewire::component('stellar-payout-component', StellarPayoutComponent::class);
         Livewire::component('stellar-beneficiary', StellarBeneficiary::class);
         Livewire::component('stellar-exchange-rate-convert', StellarExchangeRateConvert::class);
+
 
     }
 }
