@@ -136,7 +136,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         \Kanexy\Cms\Facades\RegistrationStep::addItem(new WalletRegistrationStep());
 
         \Kanexy\Cms\Facades\Cms::setRegistrationFlow(function (User $user) {
-            if ($user->is_banking_user == 0) {
+            if ($user->is_banking_user == 0 && is_null($user->type)) {
                 $type = 'wallet_flow';
                 return $type;
             }
@@ -145,7 +145,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
 
 
         \Kanexy\Cms\Facades\Cms::setRedirectRouteAfterRegistrationVerification(function (Request $request, User $user) {
-            if ($user->is_banking_user == 0) {
+            if ($user->is_banking_user == 0 && is_null($user->type)) {
                 return route("customer.signup.wallet.create");
             }
 
@@ -162,7 +162,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         });
 
         Cms::setRedirectRouteAfterLogin(function (User $user) {
-            if ($user->is_banking_user == 0) {
+            if ($user->is_banking_user == 0 && is_null($user->type)) {
                 return route("dashboard.wallet.wallet-dashboard");
             }
         });
@@ -183,7 +183,7 @@ class LedgerFoundationServiceProvider extends PackageServiceProvider
         Livewire::component('stellar-payout-component', StellarPayoutComponent::class);
         Livewire::component('stellar-beneficiary', StellarBeneficiary::class);
         Livewire::component('stellar-exchange-rate-convert', StellarExchangeRateConvert::class);
-        
+
 
     }
 }
