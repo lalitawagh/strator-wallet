@@ -22,18 +22,17 @@ class DashboardController extends Controller
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
         $wallets = Wallet::whereHolderId($workspace?->id)->get();
-        $transactions = Transaction::where("workspace_id", $workspace?->id)->where('meta->account','wallet')->latest()->take(5)->get();
+        $transactiondata = Transaction::where('meta->account', 'wallet')->latest()->take(5)->get();
+        $transactions = Transaction::where("workspace_id", $workspace?->id)->where('meta->account', 'wallet')->latest()->take(5)->get();
         $stellerAccount = Wallet::whereHolderId($workspace?->id)->whereType('steller')->first();
-        if(!is_null($stellerAccount))
-        {
+        if (!is_null($stellerAccount)) {
             $stellerBalance = $this->stellerService->getBalance($stellerAccount?->meta['publicKey']);
-            if(isset($stellerBalance['balance']))
-            {
+            if (isset($stellerBalance['balance'])) {
                 $stellerAccount->balance = $stellerBalance['balance'][0]['balance'];
                 $stellerAccount->update();
             }
         }
-       
-        return view("ledger-foundation::wallet.dashboard", compact('transactions', 'workspace', 'wallets', 'stellerAccount'));
+
+        return view("ledger-foundation::wallet.dashboard", compact('transactions', 'transactiondata', 'workspace', 'wallets', 'stellerAccount'));
     }
 }
