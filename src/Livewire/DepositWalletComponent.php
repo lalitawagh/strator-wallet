@@ -2,12 +2,13 @@
 
 namespace Kanexy\LedgerFoundation\Livewire;
 
+use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Setting\Models\Setting;
-use Kanexy\LedgerFoundation\Model\ExchangeRate;
+use Illuminate\Support\Facades\Session;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
-use Livewire\Component;
+use Kanexy\LedgerFoundation\Model\ExchangeRate;
 
 class DepositWalletComponent extends Component
 {
@@ -40,7 +41,6 @@ class DepositWalletComponent extends Component
         $this->wallets = $wallets;
         $this->currencies = $currencies;
         $this->walletDefaultCountry = $walletDefaultCountry;
-        $this->selected_wallet = session('wallet');
         $this->currency = session('currency');
         if (!is_null(session('currency'))) {
             $exchange_wallet = Ledger::whereId($this->currency)->first();
@@ -75,7 +75,7 @@ class DepositWalletComponent extends Component
             'exchange_rate' => $this->exchange_rate,
             'exchange_currency' => $this->exchange_currency,
             'base_currency' => $this->base_currency,
-            'wallet' => $this->selected_wallet,
+            'wallet' => $base_currency,
             'currency' => $this->currency,
             'base_asset_category' => $base_asset_category,
             'exchange_asset_category' => $exchange_asset_category
