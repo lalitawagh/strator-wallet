@@ -22,29 +22,31 @@
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 sm:col-span-12 form-inline mt-2">
                                 <label for="" class="form-label sm:w-30"> Name <span
                                         class="text-theme-6">*</span></label>
-                                <div class="sm:w-2/6 pr-2 mb-2 sm:mb-0">
-                                    <input id="" type="text" name="first_name" class="form-control"
-                                        value="{{ $beneficiary?->first_name }}" placeholder="First Name">
-                                    @error('first_name')
-                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="sm:w-2/6 pr-2 mb-2 sm:mb-0">
-                                    <input id="" type="text" name="middle_name"
-                                        value="{{ $beneficiary?->middle_name }}" class="form-control"
-                                        placeholder="Middle Name">
-                                    <span class="block text-theme-6 mt-2"></span>
-                                </div>
-                                <div class="sm:w-2/6 pr-2 mb-2 sm:mb-0">
-                                    <input id="" type="text" name="last_name" class="form-control"
-                                        value="{{ $beneficiary?->last_name }}" placeholder="Last Name">
-                                    @error('last_name')
-                                        <span class="block text-theme-6 mt-2">{{ $message }}</span>
-                                    @enderror
+                                <div class="sm:w-5/6 flex">
+                                    <div class="pr-2 mb-2 sm:mb-0">
+                                        <input id="" type="text" name="first_name" class="form-control"
+                                            value="{{ $beneficiary?->first_name }}" placeholder="First Name">
+                                        @error('first_name')
+                                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="pr-2 mb-2 sm:mb-0">
+                                        <input id="" type="text" name="middle_name"
+                                            value="{{ $beneficiary?->middle_name }}" class="form-control"
+                                            placeholder="Middle Name">
+                                        <span class="block text-theme-6 mt-2"></span>
+                                    </div>
+                                    <div class="pr-2 mb-2 sm:mb-0">
+                                        <input id="" type="text" name="last_name" class="form-control"
+                                            value="{{ $beneficiary?->last_name }}" placeholder="Last Name">
+                                        @error('last_name')
+                                            <span class="block text-theme-6 mt-2">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-0">
-                                <label for="phone" class="form-label sm:w-28"> Mobile <span
+                                <label for="phone" class="form-label sm:w-30"> Mobile <span
                                         class="text-theme-6">*</span></label>
                                 <div class="sm:w-5/6 tillselect-marging">
                                     <div class="input-group flex flex-col sm:flex-row mb-2 mt-0">
@@ -88,7 +90,7 @@
                                 </div>
                             </div>
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2 mb-2 sm:mb-0 sm:mt-0">
-                                <label for="" class="form-label sm:w-28"> Email </label>
+                                <label for="" class="form-label sm:w-30"> Email </label>
                                 <div class="sm:w-5/6">
                                     <input id="" type="text" name="email" value="{{ $beneficiary?->email }}"
                                         class="form-control">
@@ -98,7 +100,7 @@
                                 </div>
                             </div>
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
-                                <label for="" class="form-label sm:w-28"> Notes </label>
+                                <label for="" class="form-label sm:w-30"> Notes </label>
                                 <div class="sm:w-5/6">
                                     <input id="" type="text" name="notes" value="{{ $beneficiary?->notes }}"
                                         class="form-control">
@@ -106,7 +108,7 @@
                                 </div>
                             </div>
                             <div class="col-span-12 md:col-span-12 lg:col-span-12 sm:col-span-12 form-inline mt-2">
-                                <label for="" class="form-label sm:w-28"> Nick Name </label>
+                                <label for="" class="form-label sm:w-30"> Nick Name </label>
                                 <div class="sm:w-5/6">
                                     <input id="" type="text" name="nick_name"
                                         value="{{ $beneficiary?->nick_name }}" class="form-control">
@@ -115,7 +117,7 @@
                             </div>
                         </div>
 
-                        <div class="text-right mt-5">
+                        <div class="text-right mt-5 sm:mr-2">
                             <a id="BeneficiaryEditeCancel"
                                 href="{{ route('dashboard.wallet.beneficiaries.index', ['filter' => ['workspace_id' => $beneficiary->workspace_id]]) }}"
                                 class="btn btn-secondary w-24 inline-block mr-1">Cancel</a>
