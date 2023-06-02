@@ -7,10 +7,10 @@
                 @foreach ($wallets as $wallet)
                     @php $assetType = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types', []))->firstWhere('id', $wallet->ledger?->asset_type);@endphp
                     @if($walletDefaultCountry->code != 'UK' && isset($assetType) && $walletDefaultCountry->currency == $assetType['name'])
-                    <option value="{{ $wallet->getKey() }}" @if (old('wallet') == $wallet->getKey()) selected @endif>
+                    <option value="{{ $wallet->getKey() }}" @if ($selected_wallet == $wallet->getKey()) selected @endif>
                         {{ $wallet->ledger?->name }}</option>
                     @elseif($walletDefaultCountry->code == 'UK')
-                    <option value="{{ $wallet->getKey() }}" @if (old('wallet') == $wallet->getKey()) selected @endif>
+                    <option value="{{ $wallet->getKey() }}" @if ($selected_wallet == $wallet->getKey()) selected @endif>
                         {{ $wallet->ledger?->name }}</option>
                     @endif
                 @endforeach
@@ -39,11 +39,11 @@
                 @foreach ($currencies as $currency)
                     @php $assetType = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types', []))->firstWhere('id', $currency->asset_type);@endphp
                     @if($walletDefaultCountry->code != 'UK' && isset($assetType) && $walletDefaultCountry->currency == $assetType['name'])
-                    <option value="{{ $currency->getKey() }}" @if (old('currency') == $currency->getKey()) selected @endif>
+                    <option value="{{ $currency->getKey() }}" @if ($selected_currency == $currency->getKey()) selected @endif>
                         {{ $currency->name }}</option>
                     @elseif($walletDefaultCountry->code == 'UK')
                         @if(@$assetType['asset_category'] == 'fiat_currency')
-                            <option value="{{ $currency->getKey() }}" @if (old('currency') == $currency->getKey()) selected @endif>
+                            <option value="{{ $currency->getKey() }}" @if ($selected_currency == $currency->getKey()) selected @endif>
                                 {{ $currency->name }}</option>
                         @endif
                     @endif
@@ -63,10 +63,10 @@
                 @php
                     $payment_methods = \Kanexy\LedgerFoundation\Enums\PaymentMethod::toArray();
                 @endphp
-                <select class="form-control" name="payment_method" id="payment_method" required>
+                <select class="form-control" wire:change="changePaymentMethod($event.target.value)" name="payment_method" id="payment_method" required>
                     <option value="">Select Payment Method</option>
                     @foreach ($payment_methods as $payment_method)
-                        <option value="{{ $payment_method }}" @if (old('payment_method') == $payment_method) selected @endif>
+                        <option value="{{ $payment_method }}" @if ($selected_payment == $payment_method) selected @endif>
                             {{ trans('ledger-foundation::configuration.' . $payment_method) }} </option>
                     @endforeach
                 </select>

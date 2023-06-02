@@ -13,6 +13,10 @@ class DepositWalletComponent extends Component
 {
     public $selected_wallet;
 
+    public $selected_currency;
+
+    public $selected_payment;
+
     public $currency;
 
     public $wallets;
@@ -51,7 +55,6 @@ class DepositWalletComponent extends Component
     public function changeBaseCurrency($base_currency)
     {
         $this->selected_wallet = $base_currency;
-        $this->dispatchBrowserEvent('UpdateLivewireSelect');
         
         $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
         $exchange_wallet = Ledger::whereId($this->currency)->first();
@@ -83,7 +86,7 @@ class DepositWalletComponent extends Component
 
     public function changeCurrency($value)
     {
-        $this->dispatchBrowserEvent('UpdateLivewireSelect');
+        $this->selected_currency=$value;
         $this->currency = $value;
 
         $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
@@ -112,6 +115,11 @@ class DepositWalletComponent extends Component
         ]);
     }
 
+    public function changePaymentMethod($method){
+        
+        $this->selected_payment=$method;
+    }
+
     public function changeAmount($value)
     {
         $this->amount = $value;
@@ -125,10 +133,10 @@ class DepositWalletComponent extends Component
         }
 
         session(['fee' => $this->fee]);
-        $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
     public function render()
     {
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
         return view('ledger-foundation::Livewire.deposit-wallet-component');
     }
 }
