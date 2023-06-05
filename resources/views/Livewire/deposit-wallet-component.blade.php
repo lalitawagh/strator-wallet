@@ -39,11 +39,11 @@
                 @foreach ($currencies as $currency)
                     @php $assetType = collect(\Kanexy\Cms\Setting\Models\Setting::getValue('asset_types', []))->firstWhere('id', $currency->asset_type);@endphp
                     @if($walletDefaultCountry->code != 'UK' && isset($assetType) && $walletDefaultCountry->currency == $assetType['name'])
-                    <option value="{{ $currency->getKey() }}" @if ($selected_wallet == $currency->getKey()) selected @endif>
+                    <option value="{{ $currency->getKey() }}" @if ($selected_currency == $currency->getKey()) selected @endif>
                         {{ $currency->name }}</option>
                     @elseif($walletDefaultCountry->code == 'UK')
                         @if(@$assetType['asset_category'] == 'fiat_currency')
-                            <option value="{{ $currency->getKey() }}" @if ($selected_wallet == $currency->getKey()) selected @endif>
+                            <option value="{{ $currency->getKey() }}" @if ($selected_currency == $currency->getKey()) selected @endif>
                                 {{ $currency->name }}</option>
                         @endif
                     @endif
@@ -63,10 +63,10 @@
                 @php
                     $payment_methods = \Kanexy\LedgerFoundation\Enums\PaymentMethod::toArray();
                 @endphp
-                <select class="form-control" name="payment_method" id="payment_method" required>
+                <select class="form-control" wire:change="changePaymentMethod($event.target.value)" name="payment_method" id="payment_method" required>
                     <option value="">Select Payment Method</option>
                     @foreach ($payment_methods as $payment_method)
-                        <option value="{{ $payment_method }}" @if (old('payment_method') == $payment_method) selected @endif>
+                        <option value="{{ $payment_method }}" @if ($selected_payment == $payment_method) selected @endif>
                             {{ trans('ledger-foundation::configuration.' . $payment_method) }} </option>
                     @endforeach
                 </select>
@@ -80,7 +80,7 @@
     <div class="col-span-12 md:col-span-12 lg:col-span-12 form-inline mt-2">
         <label for="reference" class="form-label sm:w-40"> Reference <span class="text-theme-6">*</span></label>
         <div class="sm:w-5/6">
-            <input id="reference" type="text" class="form-control" name="reference" required>
+            <input id="reference" type="text" class="form-control" name="reference" required value="{{old('reference')}}">
             @error('reference')
                 <span class="block text-theme-6 mt-2">{{ $message }}</span>
             @enderror
