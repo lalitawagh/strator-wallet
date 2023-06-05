@@ -2,16 +2,20 @@
 
 namespace Kanexy\LedgerFoundation\Livewire;
 
+use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Kanexy\Cms\Setting\Models\Setting;
-use Kanexy\LedgerFoundation\Model\ExchangeRate;
 use Kanexy\LedgerFoundation\Model\Ledger;
 use Kanexy\LedgerFoundation\Model\Wallet;
-use Livewire\Component;
+use Kanexy\LedgerFoundation\Model\ExchangeRate;
 
 class DepositWalletComponent extends Component
 {
     public $selected_wallet;
+
+    public $selected_currency;
+
+    public $selected_payment;
 
     public $currency;
 
@@ -40,7 +44,6 @@ class DepositWalletComponent extends Component
         $this->wallets = $wallets;
         $this->currencies = $currencies;
         $this->walletDefaultCountry = $walletDefaultCountry;
-        $this->selected_wallet = session('wallet');
         $this->currency = session('currency');
         if (!is_null(session('currency'))) {
             $exchange_wallet = Ledger::whereId($this->currency)->first();
@@ -52,7 +55,6 @@ class DepositWalletComponent extends Component
     public function changeBaseCurrency($base_currency)
     {
         $this->selected_wallet = $base_currency;
-        $this->dispatchBrowserEvent('UpdateLivewireSelect');
         
         $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
         $exchange_wallet = Ledger::whereId($this->currency)->first();
@@ -84,7 +86,7 @@ class DepositWalletComponent extends Component
 
     public function changeCurrency($value)
     {
-        $this->dispatchBrowserEvent('UpdateLivewireSelect');
+        $this->selected_currency=$value;
         $this->currency = $value;
 
         $sender_wallet = Wallet::whereId($this->selected_wallet)->first();
@@ -113,6 +115,11 @@ class DepositWalletComponent extends Component
         ]);
     }
 
+    public function changePaymentMethod($method){
+        
+        $this->selected_payment=$method;
+    }
+
     public function changeAmount($value)
     {
         $this->amount = $value;
@@ -126,10 +133,10 @@ class DepositWalletComponent extends Component
         }
 
         session(['fee' => $this->fee]);
-        $this->dispatchBrowserEvent('UpdateLivewireSelect');
     }
     public function render()
     {
+        $this->dispatchBrowserEvent('UpdateLivewireSelect');
         return view('ledger-foundation::Livewire.deposit-wallet-component');
     }
 }
