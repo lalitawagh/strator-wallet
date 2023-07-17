@@ -138,6 +138,16 @@ class ExchangeRate extends Model
         return ExchangeRate::query()->with('ledger')->latest();
     }
 
+    public static function setArchived()
+    {
+        return false;
+    }
+
+    public static function setUnArchived()
+    {
+        return false;
+    }
+
     public static function columns()
     {
         return [

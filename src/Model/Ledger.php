@@ -58,6 +58,16 @@ class Ledger extends Model
         return Ledger::query()->latest();
     }
 
+    public static function setArchived()
+    {
+        return false;
+    }
+
+    public static function setUnArchived()
+    {
+        return false;
+    }
+
     public static function columns()
     {
 
