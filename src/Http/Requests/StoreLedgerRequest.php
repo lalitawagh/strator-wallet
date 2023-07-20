@@ -22,7 +22,7 @@ class StoreLedgerRequest extends FormRequest
     {
         return [
             'name'               => ['required', new AlphaSpaces],
-            'code'               => 'required',
+            'code'               => ['required','regex:/^[A-Za-z\s]+$/u', 'max:40'],
             'ledger_type'        => 'required',
             'symbol'             => 'nullable',
             'exchange_type'      => 'required',
@@ -34,6 +34,14 @@ class StoreLedgerRequest extends FormRequest
             'commodity_category' => 'required_if:asset_category,commodity',
             'image'              => 'nullable',
             'status'             => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'code.regex' => 'The code field may only contain letters and spaces.',
+            'code.max' => 'The code field cannot be longer than 40 characters.',
         ];
     }
 }

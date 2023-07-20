@@ -158,6 +158,8 @@ class Ledger extends Model
                     'active' => 'Active',
                     'inactive' => 'Inactive',
                     'new' => 'New',
+                    'hold' => 'Hold',
+                    'suspended' => 'Suspended',
                 ])
                 ->filter(function (Builder $builder, string $value) {
 

@@ -164,12 +164,12 @@
                                         <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::INACTIVE }}"
                                             @if (old('status') === \Kanexy\LedgerFoundation\Enums\LedgerStatus::INACTIVE) checked @endif>
                                             {{ trans('ledger-foundation::configuration.inactive') }}</option>
-                                        <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::HOLD }}"
+                                        {{-- <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::HOLD }}"
                                             @if (old('status') === \Kanexy\LedgerFoundation\Enums\LedgerStatus::HOLD) checked @endif>
                                             {{ trans('ledger-foundation::configuration.hold') }}</option>
                                         <option value="{{ \Kanexy\LedgerFoundation\Enums\LedgerStatus::SUSPENDED }}"
                                             @if (old('suspended') === \Kanexy\LedgerFoundation\Enums\LedgerStatus::SUSPENDED) checked @endif>
-                                            {{ trans('ledger-foundation::configuration.suspended') }}</option>
+                                            {{ trans('ledger-foundation::configuration.suspended') }}</option> --}}
                                     </select>
                                     @error('status')
                                         <span class="block text-theme-6 mt-2">{{ $message }}</span>
