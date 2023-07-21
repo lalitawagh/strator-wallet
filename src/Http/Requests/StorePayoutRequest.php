@@ -39,6 +39,7 @@ class StorePayoutRequest extends FormRequest
             'beneficiary.required'       => 'Enter Beneficiary Account.',
             'amount.required'            => 'Please Select Amount to pay.',
             'balance.required'           => 'Please Check Your Balance.',
+            'reference.required'           => 'Please Enter Reference.',
         ];
 
     }
