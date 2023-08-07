@@ -21,7 +21,7 @@ class StorePayoutRequest extends FormRequest
             'beneficiary'       => 'required',
             'country_code'      => 'required',
             'phone'             => 'nullable',
-            'amount'            => 'required',
+            'amount'            => 'required|numeric|gt:0',
             'remaining_amount'  => 'required',
             'receiver_currency' => 'required',
             'reference'         => 'required',
