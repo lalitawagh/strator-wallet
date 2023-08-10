@@ -18,12 +18,12 @@ class TransactionController extends Controller
 
         $transactionType = 'all';
         $user = Auth::user();
-        $wallets = Wallet::where('type','wallet')->get();
+        $wallets = Wallet::where('type','wallet')->where('status','active')->get();
         $walletID = $workspace = null;
 
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
-            $wallets = Wallet::forHolder($workspace)->where('type','wallet')->get();
+            $wallets = Wallet::forHolder($workspace)->where('type','wallet')->where('status','active')->get();
         }
        
         $transactions = Transaction::where('meta->account','wallet')->latest()->paginate();
