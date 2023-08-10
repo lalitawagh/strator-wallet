@@ -21,7 +21,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
         $workspace = $user->workspaces()->first();
-        $wallets = Wallet::whereHolderId($workspace?->id)->get();
+        $wallets = Wallet::whereHolderId($workspace?->id)->where('status','active')->get();
         $transactiondata = Transaction::where('meta->account', 'wallet')->latest()->take(5)->get();
         $transactions = Transaction::where("workspace_id", $workspace?->id)->where('meta->account', 'wallet')->latest()->take(5)->get();
         $stellerAccount = Wallet::whereHolderId($workspace?->id)->whereType('steller')->first();
