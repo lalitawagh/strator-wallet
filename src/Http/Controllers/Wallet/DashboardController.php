@@ -32,7 +32,6 @@ class DashboardController extends Controller
                 $stellerAccount->update();
             }
         }
-
         return view("ledger-foundation::wallet.dashboard", compact('transactions', 'transactiondata', 'workspace', 'wallets', 'stellerAccount'));
     }
 }

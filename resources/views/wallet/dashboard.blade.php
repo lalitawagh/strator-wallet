@@ -22,60 +22,117 @@
                         <h2 class="text-lg font-medium truncate mb-3">
                             Latest Transactions
                         </h2>
-                        @foreach ($transactions as $transaction)
-                            @if (
-                                (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit') ||
-                                    $transaction->meta['transaction_type'] == 'payout' ||
-                                    $transaction->meta['transaction_type'] == 'transfer')
-                                @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
-                            @else
-                                @if (!is_null(@$transaction?->meta['sender_wallet_account_id']))
+                        @if (\Illuminate\Support\Facades\Auth::user()->isSubscriber())
+
+                            @foreach ($transactions as $transaction)
+                                @if ((isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit') ||
+                                    $transaction->meta['transaction_type'] == 'payout' ||  $transaction->meta['transaction_type'] == 'transfer')
+                                    @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
+                                @else
+                                    @if(!is_null(@$transaction?->meta['sender_wallet_account_id']))
                                     @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction?->meta['sender_wallet_account_id'])->first();@endphp
+                                    @endif
                                 @endif
-                            @endif
-                            @php
-                                $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet?->ledger_id)->first();
-                            @endphp
-                            <div class="intro-x">
-                                <div
-                                    class="rounded-xl btn-secondary hover:bg-theme-1 hover:text-dark px-5 py-3 mb-3 flex items-center zoom-in">
-                                    <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
-                                        <img alt="" src="https://dev.kanexy.com/dist/images/user.png">
-                                    </div>
-                                    <div class="ml-4 mr-auto">
-                                        <div class="font-medium">
-                                            @if (
-                                                (isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'wallet-withdraw') ||
+                                @php
+                                    $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet?->ledger_id)->first();
+                                @endphp
+                                <div class="intro-x">
+                                    <div
+                                        class="rounded-xl btn-secondary hover:bg-theme-1 hover:text-white px-5 py-3 mb-3 flex items-center zoom-in">
+                                        <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                                            <img alt="" src="https://dev.kanexy.com/dist/images/user.png">
+                                        </div>
+                                        <div class="ml-4 mr-auto">
+                                            <div class="font-medium">
+                                                @if ((isset($transaction->meta['transaction_type']) &&
+                                                    $transaction->meta['transaction_type'] == 'wallet-withdraw') ||
                                                     $transaction->meta['transaction_type'] == 'withdraw')
-                                                {{ @$transaction->meta['beneficiary_name'] }}
-                                            @else
-                                                @if ($transaction->type === 'debit')
                                                     {{ @$transaction->meta['beneficiary_name'] }}
                                                 @else
-                                                    {{ @$transaction->meta['sender_name'] }}
+                                                    @if ($transaction->type === 'debit')
+                                                        {{ @$transaction->meta['beneficiary_name'] }}
+                                                    @else
+                                                        {{ @$transaction->meta['sender_name'] }}
+                                                    @endif
                                                 @endif
+                                            </div>
+                                            <div class="text-xs mt-0.5">{{ date('d M Y', strtotime($transaction->created_at)) }}
+                                            </div>
+                                        </div>
+                                        <div
+                                            @if ($transaction->type === 'debit') class="text-theme-6" @else class="text-success" @endif>
+                                            @if ($transaction->type === 'debit')
+                                                -
+                                            @else
+                                                +
+                                            @endif
+                                            @if ($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
+                                                {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
+                                            @else
+                                                {{ $ledger?->symbol }}
+                                                {{ number_format((float) $transaction->amount, 2, '.', '') }}
                                             @endif
                                         </div>
-                                        <div class="text-xs mt-0.5">{{ date('d M Y', strtotime($transaction->created_at)) }}
-                                        </div>
-                                    </div>
-                                    <div
-                                        @if ($transaction->type === 'debit') class="text-theme-6" @else class="text-success" @endif>
-                                        @if ($transaction->type === 'debit')
-                                            -
-                                        @else
-                                            +
-                                        @endif
-                                        @if ($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
-                                            {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
-                                        @else
-                                            {{ $ledger?->symbol }}
-                                            {{ number_format((float) $transaction->amount, 2, '.', '') }}
-                                        @endif
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @else
+                       
+                            @foreach ($transactiondata as $transaction)
+                                    @if ((isset($transaction->meta['transaction_type']) && $transaction->meta['transaction_type'] == 'deposit') ||
+                                        $transaction->meta['transaction_type'] == 'payout' ||  $transaction->meta['transaction_type'] == 'transfer')
+                                        @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction->ref_id)->first(); @endphp
+                                    @else
+                                        @if(!is_null(@$transaction?->meta['sender_wallet_account_id']))
+                                        @php $wallet = \Kanexy\LedgerFoundation\Model\Wallet::whereId($transaction?->meta['sender_wallet_account_id'])->first();@endphp
+                                        @endif
+                                    @endif
+                                    @php
+                                        $ledger = \Kanexy\LedgerFoundation\Model\Ledger::whereId($wallet?->ledger_id)->first();
+                                    @endphp
+                                    <div class="intro-x">
+                                        <div
+                                            class="rounded-xl btn-secondary hover:bg-theme-1 hover:text-white px-5 py-3 mb-3 flex items-center zoom-in">
+                                            <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                                                <img alt="" src="https://dev.kanexy.com/dist/images/user.png">
+                                            </div>
+                                            <div class="ml-4 mr-auto">
+                                                <div class="font-medium">
+                                                    @if ((isset($transaction->meta['transaction_type']) &&
+                                                        $transaction->meta['transaction_type'] == 'wallet-withdraw') ||
+                                                        $transaction->meta['transaction_type'] == 'withdraw')
+                                                        {{ @$transaction->meta['beneficiary_name'] }}
+                                                    @else
+                                                        @if ($transaction->type === 'debit')
+                                                            {{ @$transaction->meta['beneficiary_name'] }}
+                                                        @else
+                                                            {{ @$transaction->meta['sender_name'] }}
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                                <div class="text-xs mt-0.5">{{ date('d M Y', strtotime($transaction->created_at)) }}
+                                                </div>
+                                            </div>
+                                            <div
+                                                @if ($transaction->type === 'debit') class="text-theme-6" @else class="text-success" @endif>
+                                                @if ($transaction->type === 'debit')
+                                                    -
+                                                @else
+                                                    +
+                                                @endif
+                                                @if ($ledger?->exchange_type == \Kanexy\LedgerFoundation\Enums\ExchangeType::FIAT)
+                                                    {{ \Kanexy\PartnerFoundation\Core\Helper::getFormatAmountWithCurrency($transaction->amount, $ledger?->name) }}
+                                                @else
+                                                    {{ $ledger?->symbol }}
+                                                    {{ number_format((float) $transaction->amount, 2, '.', '') }}
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                            @endforeach
+
+
+                        @endif
 
                         <a id="DashboardViewmore"
                             href="{{ route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => $workspace?->getKey()]]) }}"
@@ -85,27 +142,27 @@
                 </div>
             </div>
             <!-- <div class="grid grid-cols-12 gap-3">
-                    <div class="col-span-12 md:col-span-4 lg:col-span-4 mt-3">
-                        <div
-                        class="dark:bg-darkmode-400 dark:border-darkmode-400 shadow-lg p-3 rounded-2xl bg-white col-span-12 md:col-span-4 lg:col-span-4 mt-3">
-                        @if (is_null($stellerAccount))
-    <div class="mt-2">
-                            <h2 class="text-lg font-medium truncate mb-3">
-                                Do you want to Open Stellar Account ?
-                            </h2>
-                            <a href="{{ route('dashboard.wallet.crypto-account') }}" class="btn btn-primary"> Create an Crypto Account </a>
-                        </div>
-@else
-    <div class="mt-2">
-                            <h2 class="text-lg font-medium truncate mb-3">
-                               Steller Account Created
-                            </h2>
-                            <a href="{{ route('dashboard.wallet.transaction.index', ['filter' => ['workspace_id' => $workspace->id]]) }}" class="btn btn-primary"> Check Account </a>
-                        </div>
-    @endif
-                        </div>
+                <div class="col-span-12 md:col-span-4 lg:col-span-4 mt-3">
+                    <div
+                    class="dark:bg-darkmode-400 dark:border-darkmode-400 shadow-lg p-3 rounded-2xl bg-white col-span-12 md:col-span-4 lg:col-span-4 mt-3">
+                    @if(is_null($stellerAccount))
+                    <div class="mt-2">
+                        <h2 class="text-lg font-medium truncate mb-3">
+                            Do you want to Open Stellar Account ?
+                        </h2>
+                        <a href="{{ route('dashboard.wallet.crypto-account') }}" class="btn btn-primary"> Create an Crypto Account </a>
                     </div>
-                </div> -->
+                    @else
+                    <div class="mt-2">
+                        <h2 class="text-lg font-medium truncate mb-3">
+                           Steller Account Created
+                        </h2>
+                        <a href="{{ route('dashboard.wallet.transaction.index',['filter' => ['workspace_id' => $workspace->id]]) }}" class="btn btn-primary"> Check Account </a>
+                    </div>
+                    @endif
+                    </div>
+                </div>
+            </div> -->
 
 
         </div>
