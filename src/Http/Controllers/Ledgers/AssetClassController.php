@@ -37,6 +37,15 @@ class AssetClassController extends Controller
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
         $data['id'] = now()->format('dmYHis');
 
+        $isExist = collect(Setting::getValue('asset_classes', [])->where('name',$data['name']));
+
+        if(!empty($isExist) && count($isExist)>0){
+            return redirect()->route("dashboard.wallet.asset-class.create")->with([
+                'status' => 'error',
+                'message' => 'Asset class name is already exist.',
+            ]);
+        }
+
         $settings = collect(Setting::getValue('asset_classes', []))->push($data);
 
         Setting::updateOrCreate(['key' => 'asset_classes'], ['value' => $settings]);
