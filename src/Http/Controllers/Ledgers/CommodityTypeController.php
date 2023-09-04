@@ -37,6 +37,15 @@ class CommodityTypeController extends Controller
         $data['status'] = $request->has('status') ? 'active' : 'inactive';
         $data['id'] = now()->format('dmYHis');
 
+        $isExist = collect(Setting::getValue('commodity_types', [])->where('name',$data['name']));
+
+        if(!empty($isExist) && count($isExist)>0){
+            return redirect()->route("dashboard.wallet.commodity-type.create")->with([
+                'status' => 'error',
+                'message' => 'Commodity name is already exist.',
+            ]);
+        }
+
         $settings = collect(Setting::getValue('commodity_types', []))->push($data);
 
         Setting::updateOrCreate(['key' => 'commodity_types'], ['value' => $settings]);

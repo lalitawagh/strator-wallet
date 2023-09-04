@@ -21,7 +21,7 @@ class StoreLedgerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'               => ['required', new AlphaSpaces],
+            'name'               => ['required', new AlphaSpaces,'unique:ledgers,name'],
             'code'               => ['required','regex:/^[A-Za-z\s]+$/u', 'max:40'],
             'ledger_type'        => 'required',
             'symbol'             => 'nullable',
