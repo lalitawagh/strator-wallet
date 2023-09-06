@@ -29,6 +29,16 @@
             top: -50px;
         }
     </style>
+    <style>
+        /* Additional styles for the favorite icon */
+        .favorite-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            color: #959aa3;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -59,7 +69,6 @@
                                                         $first_wallet_id = $wallet->getKey();
                                                     }
                                                 @endphp
-
                                                 <div class="h-60 px-2" style="">
                                                     <div class="h-full bg-slate-100 dark:bg-darkmode-400 rounded-md">
                                                         <div
@@ -71,8 +80,20 @@
                                                                 <div class="col-span-12 sm:col-span-12 xl:col-span-4 intro-y p-3"
                                                                     id="k-wallet" data-tw-toggle="tab"
                                                                     data-tw-target="#k-wallet">
+                                                                    <div class="flex justify-end mt-2 mb-5">
+                                                                        <a href="{{ route('dashboard.wallet.wallet.toggleFavorite', ['wallet' => $wallet->getKey()]) }}"
+                                                                            class="text-gray-500 hover:text-red-500 favorite-icon"
+                                                                            name="favorite"
+                                                                            data-wallet-id="{{ $wallet->getKey() }}">
+                                                                            <i
+                                                                                class="fas fa-heart @if ($wallet->is_favorite) text-red-500 @endif"></i>
+                                                                        </a>
+                                                                    </div>
+
                                                                     <div class="report-box zoom-in">
+
                                                                         <div class="box p-5">
+
                                                                             <div class="flex">
                                                                                 <span
                                                                                     class="text-lg font-medium truncate mr-5font-bold leading-8 mt-0 align-self item-center">
@@ -172,7 +193,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            
+
                                                                             <div class="text-base text-gray-600 mt-1">
                                                                                 {{ $wallet?->urn }}</span>
                                                                             </div>
@@ -256,6 +277,34 @@
             $(document).ready(function() {
                 Livewire.emit('transactionList', '{{ $first_wallet_id ?? null }}');
             });
+
+            $(document).ready(function() {
+                $('.favorite-icon').click(function(e) {
+                    e.preventDefault();
+
+                    var walletId = $(this).data('wallet-id');
+                    var icon = $(this).find('i');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route('dashboard.wallet.wallet.toggleFavorite', ['wallet' => $wallet->getKey()]) }}'
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.favorite) {
+                                icon.addClass('text-red-500');
+                            } else {
+                                icon.removeClass('text-red-500');
+                            }
+                        },
+                        error: function(error) {}
+                    });
+                });
+            });
         </script>
     @endpush
 @endif
+@push('styles')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+@endpush
