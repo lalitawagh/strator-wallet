@@ -41,9 +41,9 @@ class TransactionController extends Controller
     }
 
 
-    public function toggleFavorite(Request $request, Wallet $wallet)
+    public function favourite(Request $request, Wallet $wallet)
     {
-        $wallet->is_favorite = !$wallet->is_favorite;
+        $wallet->is_favourite = !$wallet->is_favourite;
         $wallet->save();
 
         return redirect()->back()->with('custom_message', 'Wallet favorite status updated.');

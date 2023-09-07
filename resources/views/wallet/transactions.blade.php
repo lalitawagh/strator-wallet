@@ -28,9 +28,6 @@
             display: block;
             top: -50px;
         }
-    </style>
-    <style>
-        /* Additional styles for the favorite icon */
         .favorite-icon {
             position: absolute;
             top: 10px;
@@ -38,7 +35,10 @@
             font-size: 1.5rem;
             color: #959aa3;
         }
+
+
     </style>
+
 @endpush
 
 @section('content')
@@ -81,13 +81,13 @@
                                                                     id="k-wallet" data-tw-toggle="tab"
                                                                     data-tw-target="#k-wallet">
                                                                     <div class="flex justify-end mt-2 mb-5">
-                                                                        <a href="{{ route('dashboard.wallet.wallet.toggleFavorite', ['wallet' => $wallet->getKey()]) }}"
+                                                                        <a href="{{ route('dashboard.wallet.favourite', ['wallet' => $wallet->getKey()]) }}"
                                                                             class="text-gray-500 hover:text-red-500 favorite-icon"
                                                                             name="favorite"
                                                                             data-wallet-id="{{ $wallet->getKey() }}">
-                                                                            <i
-                                                                                class="fas fa-heart @if ($wallet->is_favorite) text-red-500 @endif"></i>
-                                                                        </a>
+                                                                            <span data-lucide="heart" class="dat-lucide-icon @if ($wallet->is_favourite) fill-current text-danger @endif" ></span>
+                                                                         </a>
+
                                                                     </div>
 
                                                                     <div class="report-box zoom-in">
@@ -276,31 +276,6 @@
             }
             $(document).ready(function() {
                 Livewire.emit('transactionList', '{{ $first_wallet_id ?? null }}');
-            });
-
-            $(document).ready(function() {
-                $('.favorite-icon').click(function(e) {
-                    e.preventDefault();
-
-                    var walletId = $(this).data('wallet-id');
-                    var icon = $(this).find('i');
-
-                    $.ajax({
-                        type: 'POST',
-                        url: '{{ route('dashboard.wallet.wallet.toggleFavorite', ['wallet' => $wallet->getKey()]) }}'
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            if (response.favorite) {
-                                icon.addClass('text-red-500');
-                            } else {
-                                icon.removeClass('text-red-500');
-                            }
-                        },
-                        error: function(error) {}
-                    });
-                });
             });
         </script>
     @endpush

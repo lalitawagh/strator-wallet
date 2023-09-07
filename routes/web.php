@@ -47,7 +47,7 @@ Route::group(['middleware' => ['web', 'auth', VerificationStepMiddleware::class]
     Route::resource('receive', ReceiveController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('deposit', DepositController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('transaction', TransactionController::class)->only(['index', 'create', 'store', 'show']);
-    Route::get('/wallet/{wallet}/toggle-favorite', [TransactionController::class, 'toggleFavorite'])->name('wallet.toggleFavorite');
+    Route::get('/wallet/{wallet}', [TransactionController::class, 'favourite'])->name('favourite');
     Route::resource('exchange', ExchangeController::class)->only(['index', 'create', 'store', 'show']);
     Route::resource('withdraw', WithdrawController::class)->only(['index', 'create', 'store']);
     Route::resource("exchange-rate", ExchangeRateController::class)->only(['index', 'create', 'store', 'show', 'edit', 'destroy', 'update']);
