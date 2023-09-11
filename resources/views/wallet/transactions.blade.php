@@ -85,7 +85,7 @@
                                                                             class="text-gray-500 hover:text-red-500 favorite-icon"
                                                                             name="favorite"
                                                                             data-wallet-id="{{ $wallet->getKey() }}">
-                                                                            <span data-lucide="heart" class="dat-lucide-icon @if ($wallet->is_favourite) fill-current text-danger @endif" ></span>
+                                                                            <span data-lucide="heart" class="data-lucide-icon @if ($wallet->is_favourite) fill-current text-danger @endif" ></span>
                                                                          </a>
 
                                                                     </div>
@@ -280,6 +280,4 @@
         </script>
     @endpush
 @endif
-@push('styles')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-@endpush
+
