@@ -28,7 +28,17 @@
             display: block;
             top: -50px;
         }
+        .favorite-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            color: #959aa3;
+        }
+
+
     </style>
+
 @endpush
 
 @section('content')
@@ -59,7 +69,6 @@
                                                         $first_wallet_id = $wallet->getKey();
                                                     }
                                                 @endphp
-
                                                 <div class="h-60 px-2" style="">
                                                     <div class="h-full bg-slate-100 dark:bg-darkmode-400 rounded-md">
                                                         <div
@@ -71,8 +80,20 @@
                                                                 <div class="col-span-12 sm:col-span-12 xl:col-span-4 intro-y p-3"
                                                                     id="k-wallet" data-tw-toggle="tab"
                                                                     data-tw-target="#k-wallet">
+                                                                    <div class="flex justify-end mt-2 mb-5">
+                                                                        <a href="{{ route('dashboard.wallet.favourite', ['wallet' => $wallet->getKey()]) }}"
+                                                                            class="text-gray-500 hover:text-red-500 favorite-icon"
+                                                                            name="favorite"
+                                                                            data-wallet-id="{{ $wallet->getKey() }}">
+                                                                            <span data-lucide="heart" class="data-lucide-icon @if ($wallet->is_favourite) fill-current text-danger @endif" ></span>
+                                                                         </a>
+
+                                                                    </div>
+
                                                                     <div class="report-box zoom-in">
+
                                                                         <div class="box p-5">
+
                                                                             <div class="flex">
                                                                                 <span
                                                                                     class="text-lg font-medium truncate mr-5font-bold leading-8 mt-0 align-self item-center">
@@ -172,7 +193,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            
+
                                                                             <div class="text-base text-gray-600 mt-1">
                                                                                 {{ $wallet?->urn }}</span>
                                                                             </div>
@@ -259,3 +280,4 @@
         </script>
     @endpush
 @endif
+
