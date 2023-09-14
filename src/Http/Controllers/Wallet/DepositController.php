@@ -144,10 +144,23 @@ class DepositController extends Controller
         $defaultCountry = Country::find(Setting::getValue("wallet_default_country"));
 
         $user = Auth::user();
-        if (config('services.disable_sms_service') == false) {
-            $user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
-        } else {
-            $user->generateOtp("sms");
+        $otpService = Setting::getValue('transaction_otp_service');
+        if($otpService == 'email')
+        {
+            if(config('services.disable_email_service') == false){
+                $user->notify(new EmailOneTimePasswordNotification($user->generateOtp("email")));
+            }
+            else{
+                $user->generateOtp("email");
+            }
+        }else
+        {
+            if(config('services.disable_sms_service') == false){
+                $user->notify(new SmsOneTimePasswordNotification($user->generateOtp("sms")));
+            }
+            else{
+                $user->generateOtp("sms");
+            }
         }
 
         if (is_null($details)) {
