@@ -5,12 +5,15 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
 use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Mail\WalletManualDepositEmail;
+use Kanexy\LedgerFoundation\Mail\WalletStripeDepositEmail;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Kanexy\LedgerFoundation\Enums\PaymentMethod;
 use Kanexy\LedgerFoundation\Http\Requests\StoreDepositRequest;
@@ -193,21 +196,18 @@ class DepositController extends Controller
             return redirect()->route('dashboard.wallet.deposit.create');
         }
 
-        if($details['payment_method'] == PaymentMethod::MANUAL_TRANSFER)
-        {
-
+        if ($details['payment_method'] == PaymentMethod::MANUAL_TRANSFER) {
             if (session('exchange_rate')) {
                 $amount = ($details['amount']) * session('exchange_rate');
-            }else
-            {
+            } else {
                 $amount = ($details['amount']);
             }
 
-            $transactionExist = isset($details['transaction']) ?  $details['transaction'] : null;
+            $transactionExist = isset($details['transaction']) ? $details['transaction'] : null;
 
             $transaction = Transaction::updateOrCreate([
                 'id' => $transactionExist?->id,
-            ],[
+            ], [
                 'urn' => Transaction::generateUrn(),
                 'amount' => $amount,
                 'workspace_id' => $details['workspace_id'],
@@ -231,20 +231,19 @@ class DepositController extends Controller
                     'beneficiary_wallet_id' => $details['wallet'],
                     'beneficiary_name' => Auth::user()->getFullName(),
                     'exchange_rate' => session('exchange_rate') ? session('exchange_rate') : null,
-                    'base_currency' => @$details['currency'] ?  @$details['currency'] : null,
-                    'exchange_currency' => @$details['exchange_currency'] ?  @$details['exchange_currency'] : null,
+                    'base_currency' => @$details['currency'] ? @$details['currency'] : null,
+                    'exchange_currency' => @$details['exchange_currency'] ? @$details['exchange_currency'] : null,
                     'transaction_type' => 'deposit',
                     'balance' => $wallet?->balance,
                     'account' => 'wallet',
                 ],
             ]);
 
-            if(!isset($details['transaction_log']))
-            {
+            if (!isset($details['transaction_log'])) {
                 $meta = [
                     'amount' => $amount,
-                    'base_currency' => @$details['currency'] ?  @$details['currency'] : null,
-                    'exchange_currency' =>  @$details['exchange_currency'] ?  @$details['exchange_currency'] : null,
+                    'base_currency' => @$details['currency'] ? @$details['currency'] : null,
+                    'exchange_currency' =>  @$details['exchange_currency'] ? @$details['exchange_currency'] : null,
                     'workspace_id' => $details['workspace_id'],
                     'type' => 'credit',
                     'payment_method' => 'manual_transfer',
@@ -267,6 +266,8 @@ class DepositController extends Controller
 
                 $details['transaction_log'] = $log;
             }
+
+
 
             $details['transaction'] = $transaction;
         }
@@ -552,6 +553,20 @@ class DepositController extends Controller
         $this->authorize(DepositPolicy::CREATE, Wallet::class);
 
         $details = session('deposit_request');
+
+        $wallet = Wallet::find($details['wallet']);
+
+        if ($details['payment_method'] == PaymentMethod::MANUAL_TRANSFER) {
+            Mail::to(auth()->user()->email)
+            ->queue(new WalletManualDepositEmail(auth()->user(), $wallet, $details['amount']));
+        }
+
+        if ($details['payment_method'] == PaymentMethod::STRIPE) {
+            Mail::to(auth()->user()->email)
+            ->queue(new WalletStripeDepositEmail(auth()->user(), $wallet, $details['amount'], $details['currency'], $details['exchange_currency']));
+        }
+
+
         $exchange_ledger = Ledger::whereAssetType($details['exchange_currency'])->first();
 
         return view("ledger-foundation::wallet.deposit.deposit-final", compact('details', 'exchange_ledger'));
@@ -576,7 +591,7 @@ class DepositController extends Controller
             'balance' =>  ($wallet?->balance + $transaction->amount),
         ];
 
-        $metaInfo = $transaction?->meta ? array_merge($transaction?->meta,$metaDetails) : $metaDetails;
+        $metaInfo = $transaction?->meta ? array_merge($transaction?->meta, $metaDetails) : $metaDetails;
 
         $transaction->meta = $metaInfo;
         $transaction->status = TransactionStatus::ACCEPTED;
@@ -584,14 +599,12 @@ class DepositController extends Controller
 
         $wallet->credit($transaction->amount);
 
-        if($request->type == 'all')
-        {
+        if ($request->type == 'all') {
             return redirect()->route('dashboard.wallet.transaction.index')->with([
                 'status' => 'success',
                 'message' => 'The deposit request accepted successfully.',
             ]);
-        }else
-        {
+        } else {
             return redirect()->route('dashboard.wallet.deposit.index')->with([
                 'status' => 'success',
                 'message' => 'The deposit request accepted successfully.',
@@ -604,14 +617,12 @@ class DepositController extends Controller
         $transaction = Transaction::find($request->id);
         $transaction->update(['status' => TransactionStatus::PENDING]);
 
-        if($request->type == 'all')
-        {
+        if ($request->type == 'all') {
             return redirect()->route('dashboard.wallet.transaction.index')->with([
                 'status' => 'success',
                 'message' => 'The deposit request pending successfully.',
             ]);
-        }else
-        {
+        } else {
             return redirect()->route('dashboard.wallet.deposit.index')->with([
                 'status' => 'success',
                 'message' => 'The deposit request pending successfully.',

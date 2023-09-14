@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
@@ -14,6 +15,11 @@ use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Mail\PayoutCreditAlertEmail;
+use Kanexy\LedgerFoundation\Mail\PayoutDebitAlertEmail;
+use Kanexy\LedgerFoundation\Mail\TranferConfirmationAlertEmail;
+use Kanexy\LedgerFoundation\Mail\TransferCreditAlertEmail;
+use Kanexy\LedgerFoundation\Mail\TransferDebitAlertEmail;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Kanexy\LedgerFoundation\Contracts\Payout;
 use Kanexy\LedgerFoundation\Http\Requests\StorePayoutRequest;
@@ -35,11 +41,10 @@ class PayoutController extends Controller
 
         $workspace = null;
         $transactionType = 'payout';
-        if(!is_null($request->input('type')))
-        {
+        if (!is_null($request->input('type'))) {
             $transactionType = 'transfer';
         }
-        
+
 
         if ($request->has('filter.workspace_id')) {
             $workspace = Workspace::findOrFail($request->input('filter.workspace_id'));
@@ -79,7 +84,7 @@ class PayoutController extends Controller
         $sender_wallet = Wallet::with('ledger')->find($data['wallet']);
         $receiver_ledger = Wallet::find($data['receiver_currency']);
         $beneficiary = Contact::where(['id' => $data['beneficiary'], 'ref_type' => 'wallet'])->beneficiaries()->first();
-       
+
         if (is_null(Contact::find($data['beneficiary'])) && is_null($beneficiary)) {
             $data['phone'] = $user->phone;
             $contact = new Contact();
@@ -99,14 +104,14 @@ class PayoutController extends Controller
 
             $beneficiary = Contact::find($contact->id);
         }
-       
+
         $beneficiary_user =  User::wherePhone($beneficiary?->mobile)->first();
-       
+
         if ($sender_wallet->id == $receiver_ledger->id && $beneficiary_user->getKey() == $user->getKey()) {
             return back()->withError("Transaction not process with same wallet");
         }
 
-        $beneficiary_wallet = NULL;
+        $beneficiary_wallet = null;
         if (isset($beneficiary_user)) {
             $beneficiary_wallet = Wallet::forHolder($beneficiary_user->workspaces()->first())->whereLedgerId($receiver_ledger?->ledger_id)->first();
         }
@@ -159,7 +164,6 @@ class PayoutController extends Controller
         ]);
 
         if (!empty($request->has('attachment'))) {
-
             $transaction->update(['attachment' => $request->file('attachment')->store('Images', 'azure')]);
         }
 
@@ -258,7 +262,7 @@ class PayoutController extends Controller
 
         $transaction->status = 'accepted';
         $transaction->update();
-
+        // dd($creditTransaction);
         $meta = [
             'amount' => $amount,
             'sender_currency' => $creditTransaction->meta['sender_currency'],
@@ -290,15 +294,35 @@ class PayoutController extends Controller
 
         session()->forget(['payout_fee', 'payout_exchange_rate', 'payout_exchange_currency', 'payout_base_currency', 'payout_wallet', 'payout_currency']);
 
-        if($transaction->meta['transaction_type'] == 'transfer')
-        {
+        $contact = Contact::find($transaction->meta['beneficiary_id']);
+
+        if ($transaction->meta['transaction_type'] == 'transfer') {
+
+
+            Mail::to(auth()->user()->email)
+            ->queue(new TransferDebitAlertEmail(auth()->user(), $creditTransaction, $sender_wallet->name));
+
+            if ($contact->email) {
+                Mail::to($contact->email)->queue(new TransferCreditAlertEmail($contact, $creditTransaction));
+            }
+
             return redirect()->route("dashboard.wallet.payout.index", ['filter' => ['workspace_id' => $transaction->workspace_id], 'type' => 'transfer'])->with([
                 'message' => 'Processing the payment. It may take a while.',
                 'status' => 'success',
             ]);
         }
 
-        return redirect()->route("dashboard.wallet.payout.index", ['filter' => ['workspace_id' => $transaction->workspace_id]])->with([
+        Mail::to(auth()->user()->email)
+            ->queue(new PayoutDebitAlertEmail(auth()->user(), $creditTransaction, $sender_wallet->name));
+
+        if ($contact->email) {
+            Mail::to($contact->email)->queue(new PayoutCreditAlertEmail($contact, $creditTransaction));
+        }
+
+
+        return redirect()->route("dashboard.wallet.payout.index", [
+            'filter' => ['workspace_id' => $transaction->workspace_id]
+            ])->with([
             'message' => 'Processing the payment. It may take a while.',
             'status' => 'success',
         ]);
@@ -316,6 +340,10 @@ class PayoutController extends Controller
 
         $transaction->meta = $metaInfo;
         $transaction->update();
+
+        $transactionInfo = Transaction::find($request->id);
+
+        Mail::to(auth()->user()->email)->queue(new TranferConfirmationAlertEmail($transactionInfo));
 
         if ($request->type == 'all') {
             return redirect()->route('dashboard.wallet.transaction.index')->with([

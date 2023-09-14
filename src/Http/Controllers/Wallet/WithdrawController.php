@@ -4,6 +4,7 @@ namespace Kanexy\LedgerFoundation\Http\Controllers\Wallet;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Kanexy\Cms\Controllers\Controller;
@@ -11,6 +12,7 @@ use Kanexy\Cms\I18N\Models\Country;
 use Kanexy\Cms\Notifications\EmailOneTimePasswordNotification;
 use Kanexy\Cms\Notifications\SmsOneTimePasswordNotification;
 use Kanexy\Cms\Setting\Models\Setting;
+use Kanexy\LedgerFoundation\Mail\WithDrawConfirmationEmail;
 use Kanexy\PartnerFoundation\Core\Models\Transaction;
 use Kanexy\LedgerFoundation\Contracts\Withdraw;
 use Kanexy\LedgerFoundation\Http\Requests\WithdrawRequest;
@@ -212,6 +214,9 @@ class WithdrawController extends Controller
                 'message' => 'The withdraw request transaction processing the payment.It may take a while.',
             ]);
         } else {
+
+            Mail::to(auth()->user()->email)->queue(new WithDrawConfirmationEmail($transaction));
+
             return redirect()->route('dashboard.wallet.withdraw.index')->with([
                 'status' => 'success',
                 'message' => 'The withdraw request transaction processing the payment.It may take a while.',
