@@ -68,7 +68,8 @@ class WalletBeneficiary extends Component
         $this->type = $type;
         $this->user = Auth::user();
         $this->country_code = $this->user->country_id;
-        $this->mobile = !is_null($this->mobile) ?? Helper::normalizePhone($this->mobile);
+        $this->mobile = !is_null($this->mobile) ? Helper::normalizePhone($this->mobile) : null;
+
     }
 
 
