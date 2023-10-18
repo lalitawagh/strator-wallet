@@ -68,7 +68,8 @@ class WalletBeneficiary extends Component
         $this->type = $type;
         $this->user = Auth::user();
         $this->country_code = $this->user->country_id;
-        $this->mobile = !is_null($this->mobile) ?? Helper::normalizePhone($this->mobile);
+        $this->mobile ? Helper::normalizePhone($this->mobile) : null;
+
     }
 
 
@@ -95,6 +96,7 @@ class WalletBeneficiary extends Component
 
     public function createBeneficiary()
     {
+
         $data = $this->validate([
             'first_name' => ['required', new AlphaSpaces, 'string', 'max:40'],
             'middle_name' => ['nullable', new AlphaSpaces, 'string', 'max:40'],
