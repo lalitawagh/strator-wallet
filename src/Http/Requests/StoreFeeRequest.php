@@ -10,8 +10,7 @@ class StoreFeeRequest extends FormRequest
 {
     public function authorize()
     {
-        if($this->user()->can(FeePolicy::CREATE, Fee::class))
-        {
+        if ($this->user()->can(FeePolicy::CREATE, Fee::class)) {
             return $this->user()->can(FeePolicy::CREATE, Fee::class);
         }
 
@@ -25,11 +24,17 @@ class StoreFeeRequest extends FormRequest
             'exchange_currency'      =>    ['required'],
             'payment_type'           =>    ['required'],
             'fee_type'               =>    ['required'],
-            'amount'                 =>    ['required_if:fee_type,==,amount','nullable','numeric','min:0'],
-            'percentage'             =>    ['required_if:fee_type,==,percentage','nullable','numeric','between:0,100'],
-            'status'                 =>    ['nullable','string'],
+            'amount'                 =>    ['required_if:fee_type,==,amount', 'nullable', 'numeric', 'min:0'],
+            'percentage'             =>    ['required_if:fee_type,==,percentage', 'nullable', 'numeric', 'between:0,100'],
+            'status'                 =>    ['nullable', 'string'],
 
         ];
     }
+    public function messages()
+    {
+        return [
 
+            'amount.min' =>  'The amount should not be negative number.',
+        ];
+    }
 }
