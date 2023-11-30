@@ -26,6 +26,7 @@ class StoreLedgerRequest extends FormRequest
             'ledger_type'        => 'required',
             'symbol'             => 'nullable',
             'exchange_type'      => 'required',
+            'exchange_rate'      => 'nullable',
             'exchange_from'      => 'required',
             'asset_category'     => 'required',
             'asset_class'        => 'required',
