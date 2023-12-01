@@ -22,7 +22,7 @@ class StoreLedgerRequest extends FormRequest
     {
         return [
             'name'               => ['required', new AlphaSpaces,'unique:ledgers,name'],
-            'code'               => ['required','regex:/^[A-Za-z\s]+$/u', 'max:40'],
+            'code'               => ['required', 'regex:/^[A-Za-z0-9\s\-_()@]+$/u', 'max:40'],
             'ledger_type'        => 'required',
             'symbol'             => 'nullable',
             'exchange_type'      => 'required',
